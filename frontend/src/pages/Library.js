@@ -1,106 +1,74 @@
 import { ExternalLink, BookOpen, Scale, Shield, TrendingUp } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Library = () => {
-  const sections = [
-    {
-      title: 'Foundational Frameworks',
-      icon: BookOpen,
-      items: [
-        { name: 'NIST AI Risk Management Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework', tag: 'Framework' },
-        { name: 'ISO/IEC 42001 AI Management System', url: 'https://www.iso.org/standard/81230.html', tag: 'Standard' },
-        { name: 'IEEE Ethically Aligned Design', url: 'https://ethicsinaction.ieee.org/', tag: 'Guidelines' },
-        { name: 'OECD AI Principles', url: 'https://oecd.ai/en/ai-principles', tag: 'Policy' }
-      ]
-    },
-    {
-      title: 'Regulatory & Policy Sources',
-      icon: Scale,
-      items: [
-        { name: 'EU AI Act', url: 'https://artificialintelligenceact.eu/', tag: 'Regulation' },
-        { name: 'Canada AIDA (Proposed)', url: 'https://ised-isde.canada.ca/site/innovation-better-canada/en/artificial-intelligence-and-data-act', tag: 'Legislation' },
-        { name: 'US Executive Order on AI (2023)', url: 'https://www.whitehouse.gov/briefing-room/presidential-actions/2023/10/30/executive-order-on-the-safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence/', tag: 'Executive' },
-        { name: 'UK AI Safety Institute', url: 'https://www.gov.uk/government/organisations/ai-safety-institute', tag: 'Government' }
-      ]
-    },
-    {
-      title: 'Standards & Technical Bodies',
-      icon: Shield,
-      items: [
-        { name: 'NIST SP 800-53 (Security Controls)', url: 'https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final', tag: 'Security' },
-        { name: 'Model Cards for Model Reporting', url: 'https://arxiv.org/abs/1810.03993', tag: 'Documentation' },
-        { name: 'Datasheets for Datasets', url: 'https://arxiv.org/abs/1803.09010', tag: 'Documentation' },
-        { name: 'AI Incident Database', url: 'https://incidentdatabase.ai/', tag: 'Research' }
-      ]
-    },
-    {
-      title: 'Ongoing Developments',
-      icon: TrendingUp,
-      items: [
-        { name: 'Stanford HAI Policy Updates', url: 'https://hai.stanford.edu/policy', tag: 'Research' },
-        { name: 'AI Now Institute Reports', url: 'https://ainowinstitute.org/', tag: 'Research' },
-        { name: 'Partnership on AI', url: 'https://partnershiponai.org/', tag: 'Industry' },
-        { name: 'Future of Life Institute', url: 'https://futureoflife.org/ai/', tag: 'Policy' }
-      ]
-    }
+  const { t } = useLanguage();
+
+  const sectionKeys = ['foundational', 'regulatory', 'standards', 'ongoing'];
+  const sectionIcons = [BookOpen, Scale, Shield, TrendingUp];
+  const sectionItems = [
+    [
+      { name: 'NIST AI Risk Management Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework', tag: 'Framework' },
+      { name: 'ISO/IEC 42001 AI Management System', url: 'https://www.iso.org/standard/81230.html', tag: 'Standard' },
+      { name: 'IEEE Ethically Aligned Design', url: 'https://ethicsinaction.ieee.org/', tag: 'Guidelines' },
+      { name: 'OECD AI Principles', url: 'https://oecd.ai/en/ai-principles', tag: 'Policy' }
+    ],
+    [
+      { name: 'EU AI Act', url: 'https://artificialintelligenceact.eu/', tag: 'Regulation' },
+      { name: 'Canada AIDA (Proposed)', url: 'https://ised-isde.canada.ca/site/innovation-better-canada/en/artificial-intelligence-and-data-act', tag: 'Legislation' },
+      { name: 'US Executive Order on AI (2023)', url: 'https://www.whitehouse.gov/briefing-room/presidential-actions/2023/10/30/executive-order-on-the-safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence/', tag: 'Executive' },
+      { name: 'UK AI Safety Institute', url: 'https://www.gov.uk/government/organisations/ai-safety-institute', tag: 'Government' }
+    ],
+    [
+      { name: 'NIST SP 800-53 (Security Controls)', url: 'https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final', tag: 'Security' },
+      { name: 'Model Cards for Model Reporting', url: 'https://arxiv.org/abs/1810.03993', tag: 'Documentation' },
+      { name: 'Datasheets for Datasets', url: 'https://arxiv.org/abs/1803.09010', tag: 'Documentation' },
+      { name: 'AI Incident Database', url: 'https://incidentdatabase.ai/', tag: 'Research' }
+    ],
+    [
+      { name: 'Stanford HAI Policy Updates', url: 'https://hai.stanford.edu/policy', tag: 'Research' },
+      { name: 'AI Now Institute Reports', url: 'https://ainowinstitute.org/', tag: 'Research' },
+      { name: 'Partnership on AI', url: 'https://partnershiponai.org/', tag: 'Industry' },
+      { name: 'Future of Life Institute', url: 'https://futureoflife.org/ai/', tag: 'Policy' }
+    ]
   ];
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="library-page">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#1a2744] mb-4">
-          AI Governance Library
-        </h1>
-        <p className="text-gray-600 mb-8 max-w-2xl">
-          A curated reference hub: frameworks, policy sources, standards, and ongoing developments for AI governance practitioners. These resources inform the analytical approach used in client engagements.
-        </p>
-        <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">
-          FRAMEWORKS · REGULATIONS · STANDARDS · DEVELOPMENTS
-        </p>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#1a2744] mb-4">{t.library.title}</h1>
+        <p className="text-gray-600 mb-8 max-w-2xl">{t.library.description}</p>
+        <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.library.keywords}</p>
 
-        {/* Sections */}
         <div className="space-y-8">
-          {sections.map((section, idx) => (
-            <div key={idx} className="card" data-testid={`library-section-${idx}`}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center">
-                  <section.icon className="w-5 h-5 text-[#6366f1]" />
+          {sectionKeys.map((key, idx) => {
+            const Icon = sectionIcons[idx];
+            return (
+              <div key={key} className="card" data-testid={`library-section-${idx}`}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#6366f1]" /></div>
+                  <h2 className="font-serif text-xl font-semibold text-[#1a2744]">{t.library.sections[key]}</h2>
                 </div>
-                <h2 className="font-serif text-xl font-semibold text-[#1a2744]">
-                  {section.title}
-                </h2>
+                <div className="space-y-3">
+                  {sectionItems[idx].map((item, i) => (
+                    <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center justify-between p-3 rounded-xl bg-[#f8f9fc] hover:bg-[#6366f1]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
+                      <div className="flex items-center gap-3">
+                        <span className="text-gray-700 group-hover:text-[#6366f1] transition-colors">{item.name}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{item.tag}</span>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#6366f1] transition-colors" />
+                    </a>
+                  ))}
+                </div>
               </div>
-              
-              <div className="space-y-3">
-                {section.items.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-3 rounded-xl bg-[#f8f9fc] hover:bg-[#6366f1]/5 transition-colors group"
-                    data-testid={`library-item-${idx}-${i}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-gray-700 group-hover:text-[#6366f1] transition-colors">
-                        {item.name}
-                      </span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">
-                        {item.tag}
-                      </span>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#6366f1] transition-colors" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Note */}
         <div className="mt-8 p-4 bg-[#6366f1]/5 rounded-xl border border-[#6366f1]/20">
           <p className="text-sm text-gray-600">
-            <span className="font-semibold text-[#1a2744]">Note:</span> This library is curated for AI governance practitioners. Links are provided for reference and do not constitute endorsement. Always verify current versions and applicability to your jurisdiction.
+            <span className="font-semibold text-[#1a2744]">{t.library.note}</span> {t.library.noteText}
           </p>
         </div>
       </div>
