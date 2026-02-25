@@ -1,138 +1,148 @@
 export const researchPapers = [
   {
     id: 'hiring-ai-bias',
-    title: 'When Hiring AI Quietly Rewrites Your Talent Pipeline',
+    title: 'Hiring Automation as Gatekeeping Infrastructure',
     date: '2024-11-15',
     context: 'enterprise-saas',
     type: 'briefing',
-    abstract: 'Hiring automation rarely announces itself as policy, but it behaves like policy the moment it reshapes who gets seen. This briefing examines how screening models redistribute attention, compress deliberation, and change what counts as a viable candidate.',
-    content: `Hiring automation rarely announces itself as policy, but it behaves like policy the moment it reshapes who gets seen. Screening models do not simply "rank resumes." They redistribute attention, compress deliberation, and change what counts as a viable candidate. Once that happens, your organization has moved from experimentation to governance territory, even if nobody updated a single HR document.
+    abstract: 'An AI system that filters candidates is not a productivity feature. It is gatekeeping infrastructure. Once it sits upstream of hiring, it allocates opportunity, reshapes labor access, and produces institutional liability.',
+    content: `An AI system that filters candidates is not a productivity feature. It is gatekeeping infrastructure. Once it sits upstream of hiring, it allocates opportunity, reshapes labor access, and produces institutional liability. Screening models do not simply "rank resumes." They redistribute attention, compress deliberation, and change what counts as a viable candidate.
 
 The hard part is that bias does not usually appear as an error message. Bias appears as a pattern that looks like "efficiency" until someone forces the pattern into view. Historical hiring data embeds historical hiring decisions, and optimization often treats those patterns as signals to preserve. That mechanism is predictable. The risk is also predictable. A system can appear accurate while systematically downgrading candidates whose resumes carry markers correlated with gender, race, disability, class, or caregiving status.
 
-We treat hiring AI as high-impact infrastructure because the consequence domain is labor access and institutional liability. Our approach starts with risk classification and moves immediately into enforceable gates. We define fairness and performance thresholds before deployment, test for proxy features rather than pretending protected attributes never enter the system, and require documented approval for launch. We also design monitoring that looks for drift, feedback loops, and changes in applicant pool composition, because the pipeline adapts to the tool over time.
+Amazon reportedly scrapped an internal AI recruiting tool after discovering it systematically downgraded resumes that contained the word "women's," including women's colleges and women's organizations. The model learned from historical hiring data and reproduced patterns that had already favored men in technical roles. This is the predictable outcome of optimizing on a dataset that encodes a biased history while treating that dataset as a neutral training substrate.
 
-The governance failure in the Amazon recruiting tool incident was not "bias exists." The governance failure was that bias was not framed as a deployment-stopping condition with explicit thresholds, test design, and decision rights. In practice, the most damaging bias failures are not subtle philosophical problems. They are process failures: no pre-defined fairness metrics, no proxy-feature review, no structured validation against the actual decision context, and no monitoring plan that treats drift and feedback loops as expected operational realities.
+The governance failure is not "bias exists." The governance failure is that bias was not framed as a deployment-stopping condition with explicit thresholds, test design, and decision rights. In practice, the most damaging bias failures are not subtle philosophical problems. They are process failures: no pre-defined fairness metrics, no proxy-feature review, no structured validation against the actual decision context, and no monitoring plan that treats drift and feedback loops as expected operational realities.
 
-In hiring, you rarely get one clean "protected attribute" column. Discrimination enters through proxies: school names, club membership, gaps in employment, zip codes, even stylistic markers that correlate with gender, class, or race. If governance does not force the team to name proxy risk early, the model will discover proxies on its own, because proxies often improve predictive performance on the target label. That is what optimization does.
+In hiring, you rarely get one clean "protected attribute" column. Discrimination enters through proxies: school names, club membership, gaps in employment, zip codes, even stylistic markers that correlate with gender, class, or race. If governance does not force the team to name proxy risk early, the model will discover proxies on its own, because proxies often improve predictive performance on the target label.
 
 A defensible control baseline for hiring AI is a sequence of enforceable gates. First, risk-tier the use case as high impact. Second, run bias and performance evaluation across relevant groups. Third, audit features and proxies with structured review. Fourth, document decision rights: who can approve launch, who can pause the system, who owns monitoring. Fifth, implement post-launch monitoring that looks for disparate impact and emergent proxy behavior.
 
-If your organization ever needs to defend hiring automation under scrutiny, you do not win with intentions. You win with evidence. We build the evidence trail that proves what you tested, what you accepted, what you rejected, and who held the authority to make that decision.`
+If your organization ever needs to defend hiring automation under scrutiny, you do not win with intentions. You win with evidence.`
   },
   {
     id: 'data-provenance',
-    title: 'When Data Collection Becomes Regulatory Exposure',
+    title: 'Training Data as Legal Act: The Clearview Problem',
     date: '2024-10-28',
     context: 'regulated',
     type: 'briefing',
-    abstract: 'Most AI risk stories begin with the model, because the model is visible. The real exposure often begins earlier, at data ingestion, where organizations accumulate training corpora that remain legally contested.',
-    content: `Most AI risk stories begin with the model, because the model is visible. The real exposure often begins earlier, at data ingestion, where organizations accumulate training corpora that feel useful but remain legally and ethically contested. Once that happens, your system inherits the risk of its inputs, and you carry that risk across every product release, every deployment, and every new jurisdiction.
+    abstract: 'Training data provenance is not a technical footnote. It is a legal act with institutional consequences. When a system is built on scraped personal data at massive scale, the risk is cross-jurisdiction enforcement and durable reputational harm.',
+    content: `Training data provenance is not a technical footnote. It is a legal act with institutional consequences. When a system is built on scraped personal data at massive scale, the risk is not only public backlash. The risk is cross-jurisdiction enforcement and durable reputational harm that attaches to every downstream deployment.
 
-Data provenance is not a technical footnote. Provenance is what makes your system defensible. If your dataset contains personal information, scraped content, biometrics, or unclear permissions, your organization is no longer deciding only how to build. Your organization is deciding what it can justify. Privacy law, consumer protection, and sector-specific regulation do not ask whether your system is innovative. They ask whether your collection and use are lawful, proportionate, and accountable.
+Clearview AI scraped billions of facial images from the web to build a facial recognition database. Regulators in multiple jurisdictions, including Canada and the UK, ruled that the company violated privacy laws. The governance failure themes are clear: the organization treated data collection as something that could be justified after the fact, rather than constrained at the moment of acquisition.
 
-The Clearview AI case illustrates this precisely. Training data provenance is not a technical footnote. It is a legal act with institutional consequences. When a system is built on scraped personal data at massive scale, the risk is not only public backlash. The risk is cross-jurisdiction enforcement and durable reputational harm that attaches to every downstream deployment.
+The mechanism matters. Facial data is not "just images." It is biometric data that enables identification, tracking, and inference. Once you collect at scale, you create the possibility of use cases that exceed initial intent. That expansion dynamic is not hypothetical. It is the default path of powerful databases: new clients, new integrations, new contexts of use.
 
 In privacy regulation, the core questions recur. What lawful basis exists for collection. What consent, if any, was obtained. What purpose limitation was declared. What retention and deletion policies exist. What safeguards exist for sensitive data. What transparency is provided to data subjects. If an organization cannot answer these questions with documents and controls, it has not performed governance. It has performed optimism.
 
-We make data defensible by turning sourcing into a governed pipeline rather than an ad hoc asset grab. We map jurisdictions, define lawful basis and purpose limitation, run privacy impact assessments before ingestion, and implement retention and deletion rules that align with your operational reality. We also build evidence integrity, so you can prove what you did, when you did it, and what was reviewed at the time, rather than reconstructing under pressure.
+This category of incident also exposes a common institutional failure mode: legal review happens too late, and when it arrives, it arrives as cleanup. Governance flips the order. A mature program makes data sourcing a controlled pipeline. Data comes with provenance metadata, collection justification, access rules, retention rules, and a mapped legal basis by jurisdiction.
 
-The practical advantage is speed with confidence. When governance is built into the data layer, product teams stop negotiating the same risk repeatedly, and leadership stops discovering exposure only after public attention arrives. You keep momentum without building on contested ground. The strategic lesson is blunt: you cannot build legitimacy on contested data. If your training corpus is a liability, every deployment inherits that liability.`
+The operational control set is not exotic. It includes a documented data acquisition policy, privacy impact assessments before ingestion, jurisdictional compliance mapping, and explicit executive sign-off for high-risk data strategies. It also includes downstream constraints: if you cannot justify a dataset, you must limit model capabilities or exclude it entirely.
+
+The strategic lesson is blunt: you cannot build legitimacy on contested data. If your training corpus is a liability, every deployment inherits that liability.`
   },
   {
     id: 'forecasting-financial-risk',
-    title: 'When a Forecasting Model Moves Real Money',
+    title: 'Zillow and the $500M Lesson in Model Risk',
     date: '2024-10-12',
     context: 'financial',
     type: 'briefing',
-    abstract: 'Prediction looks calm in a dashboard, because dashboards hide tail risk. This briefing examines what happens when forecasting models couple to real capital allocation and how governance prevents predictable failure.',
-    content: `Prediction looks calm in a dashboard, because dashboards hide tail risk. Once a forecasting model starts allocating capital, pricing inventory, or driving automated buying decisions, small errors stop being small. They compound across volume, across time, and across market shifts that your training data never experienced. A model can be directionally reasonable and still be financially destructive when operationalized at scale.
+    abstract: 'Model failure is not the scandal. The scandal is letting model failure become balance-sheet failure. Zillow shut down its AI-driven home-buying program after losses reportedly around $500M.',
+    content: `Model failure is not the scandal. The scandal is letting model failure become balance-sheet failure. When predictive systems allocate capital, the organization needs model risk management, scenario stress testing, and exposure controls that treat uncertainty as a first-class operating condition.
 
-This is not a warning against analytics. It is a warning against ungoverned coupling between model output and real-world execution. Markets change regimes. Input distributions move. Feedback loops emerge when competitors respond. Operational constraints add friction that models do not represent. If your governance program treats evaluation as a one-time accuracy score, your program is incomplete.
-
-The Zillow Offers shutdown demonstrates this precisely. Model failure is not the scandal. The scandal is letting model failure become balance-sheet failure. When predictive systems allocate capital, the organization needs model risk management, scenario stress testing, and exposure controls that treat uncertainty as a first-class operating condition. The governance lesson is not "AI is bad at housing." The lesson is that a model can be directionally useful and still be financially catastrophic when coupled to aggressive automation, weak stress testing, and insufficient human override authority.
+Zillow shut down its AI-driven home-buying program after significant losses reportedly around $500M, tied to flawed forecasting and operational constraints. The governance lesson is not "AI is bad at housing." The lesson is that a model can be directionally useful and still be financially catastrophic when coupled to aggressive automation, weak stress testing, and insufficient human override authority.
 
 Real markets do not behave like tidy training distributions. They shift with interest rates, local supply shocks, seasonality, and feedback loops. A pricing or forecasting model trained on historical conditions may look strong in backtests and still fail when it encounters a regime change. Governance exists to make that possibility operationally survivable.
 
-We govern these systems as financial-impact infrastructure. That begins with risk classification tied to exposure, not to model novelty. It continues with scenario stress testing, independent validation, and explicit rules for when human adjudication is mandatory. We also design exposure caps and kill-switch authority so that uncertainty does not automatically become loss. Monitoring is built around business outcomes and tail behavior, not only around average performance metrics.
+There are two failure channels here. The first is technical: model error, drift, and miscalibration under changing conditions. The second is organizational: the translation from model output to real-world action. If the system is used to buy homes at scale, small systematic errors multiply. A one percent error is not a rounding problem. It is a portfolio problem. Without caps and controls, the organization converts uncertainty into exposure.
 
-The selling point is not that governance makes models perfect. The selling point is that governance prevents predictable model limitations from becoming preventable financial events. If your organization wants to scale AI into revenue-bearing decisions, you need controls that scale with it.`
+A defensible program treats this as a high-risk financial use case. It requires independent validation, stress tests against plausible worst-case scenarios, and an operating model that includes kill-switch authority. It also requires friction. That is the unpopular word. Friction slows scale, but friction also prevents runaway loss.
+
+Operational controls that matter include exposure caps by region and timeframe, approval thresholds that force human review when the model deviates from market indicators, and a decision register that documents why the institution accepted risk at that moment.
+
+The deeper lesson is about the fiction of automation smoothness. Organizations love the idea that AI converts markets into controllable systems. Markets punish that fantasy. Governance reintroduces humility as an operational constraint.`
   },
   {
     id: 'risk-scores-due-process',
-    title: 'When Risk Scores Replace Due Process',
+    title: 'The Dutch Scandal: Algorithmic Suspicion and State Collapse',
     date: '2024-09-25',
     context: 'public-sector',
     type: 'briefing',
-    abstract: 'Risk scoring systems often arrive as decision support. Over time, they become decision policy through habit. This briefing examines why algorithmic systems in high-stakes environments require contestability architecture.',
-    content: `Risk scoring systems often arrive as decision support. Over time, they become decision policy through habit, workflow pressure, and institutional appetite for "objective" signals. That transition is one of the most common governance failures in high-stakes environments. A score that begins as advice gradually disciplines attention and narrows discretion, while the institution continues to speak as if a human remains fully in control.
+    abstract: 'The Dutch government resigned in 2021 after algorithmic risk scoring falsely accused thousands of families of fraud. This is the archetype of what happens when the state operationalizes suspicion through opaque scoring.',
+    content: `When an algorithmic score triggers enforcement against citizens, the consequence domain becomes democratic legitimacy. That is not rhetorical. It is structural. A system that flags families as fraud risks, without meaningful explanation and appeal, can produce systemic harm at scale, and the institution will eventually face a legitimacy crisis.
 
-When a score influences eligibility, access, enforcement, or resource allocation, the consequence domain becomes institutional legitimacy. People subject to adverse outcomes will demand explanation, contestability, and remedies, and they will do it through courts, regulators, journalists, and internal escalations. A system that cannot be explained in context, or appealed in practice, will not survive scrutiny, even if it can be defended statistically.
+In the Dutch child benefits scandal, algorithmic risk scoring and enforcement practices falsely accused thousands of families of fraud, producing severe financial and social consequences. The Dutch government resigned in 2021. This is the archetype of what happens when the state operationalizes suspicion through opaque scoring.
 
-The Dutch child benefits scandal demonstrates the terminal case. Algorithmic risk scoring and enforcement practices falsely accused thousands of families of fraud, producing severe financial and social consequences. The Dutch government resigned in 2021. This is the archetype of what happens when the state operationalizes suspicion through opaque scoring. The governance failure is not simply "bias." It is lack of due process architecture.
+The governance failure is not simply "bias." It is lack of due process architecture. High-impact decisions require contestability. People must be able to understand the basis of adverse decisions and have a viable pathway to challenge them. Without that, the system becomes a machine for administrative violence.
 
-High-impact decisions require contestability. People must be able to understand the basis of adverse decisions and have a viable pathway to challenge them. Without that, the system becomes a machine for administrative violence. Risk scoring often relies on proxies that correlate with class, ethnicity, immigration status, and neighborhood. Even if the model does not "use race," it can operationalize discrimination through features that function as race-adjacent signals.
+Mechanism matters. Risk scoring often relies on proxies that correlate with class, ethnicity, immigration status, and neighborhood. Even if the model does not "use race," it can operationalize discrimination through features that function as race-adjacent signals. If governance does not impose explainability requirements and feature constraints, the model will discover the easiest predictors of the label, including socially toxic ones.
 
-We build governance that treats due process as a design requirement, not an afterthought. We define what the score is allowed to do, what it is prohibited from doing, and what thresholds force human adjudication. We implement explainability requirements that match the decision context, and we design appeals pathways that can actually overturn outcomes, rather than merely receiving complaints. We also require monitoring for disparate impact and error concentration, because harm often clusters in specific groups and scenarios.
+A second mechanism is institutional overreliance. Once a risk score is embedded, it starts to discipline frontline workers. People defer because the model appears authoritative, and because deferral reduces personal blame. Governance must actively counteract that deferral by designing human oversight that is real: not "a human clicks approve," but a human can intervene with context, supported by explanations and rights.
 
-You do not need a philosophical stance to take this seriously. You only need to recognize that opacity turns routine operations into fragile operations. We make systems robust by making them contestable.`
+A defensible public-sector operating model includes explicit thresholds for mandatory human adjudication, documented explanation obligations, and independent auditing capacity. It also includes an appeals process that is accessible, timely, and structurally capable of overturning automated decisions.
+
+This is where many governance programs fail: they treat oversight as a committee and appeals as a form. Citizens experience oversight as outcomes, not intentions.`
   },
   {
     id: 'vendor-ai-liability',
-    title: 'When Vendors Hold the Model and You Hold the Liability',
+    title: 'COMPAS and the Black Box Defense',
     date: '2024-09-08',
     context: 'procurement',
     type: 'briefing',
-    abstract: 'Vendor AI often arrives as a shortcut to capability. If governance is weak, it becomes a shortcut to accountability collapse. This briefing examines how to govern third-party AI systems.',
-    content: `Vendor AI often arrives as a shortcut to capability. If governance is weak, it becomes a shortcut to accountability collapse. Outsourcing a model does not outsource responsibility, because customers, regulators, and auditors will look to the deploying organization, not to the supplier, when something fails.
+    abstract: 'If a score shapes sentencing outcomes, transparency is not a bonus feature. It is a legitimacy requirement. The COMPAS controversy illustrates why algorithmic systems in criminal justice become public battlegrounds.',
+    content: `If a score shapes sentencing outcomes, transparency is not a bonus feature. It is a legitimacy requirement. The COMPAS controversy illustrates why algorithmic systems in criminal justice become public battlegrounds: because they touch liberty, and because people will not accept opaque infrastructure governing life trajectories.
 
-The practical risk is simple. If your vendor cannot provide validation artifacts, change notifications, monitoring evidence, and clear limitations, you are operating a black box inside your workflow. When the model changes, you may not know. When behavior shifts, you may not be able to diagnose it. When an incident occurs, you may not be able to reconstruct why. That is not only a technical problem. It is a defensibility problem.
+ProPublica's investigation reported racial disparities in recidivism risk scoring, raising questions about fairness metrics, calibration, and accountability. The governance problem here is not only technical disagreement about which fairness definition is "correct." It is institutional incapacity to justify the system's authority.
 
-The COMPAS controversy illustrates why algorithmic systems in criminal justice become public battlegrounds: because they touch liberty, and because people will not accept opaque infrastructure governing life trajectories. The governance problem is not only technical disagreement about which fairness definition is "correct." It is institutional incapacity to justify the system's authority. Risk models can satisfy some fairness metrics while failing others. Governance is the process of choosing, documenting, and defending a fairness definition appropriate to the domain.
+Risk models can satisfy some fairness metrics while failing others. That is not a bug. It is a structural tension. Governance is the process of choosing, documenting, and defending a fairness definition appropriate to the domain, then constraining use accordingly.
 
-We treat third-party AI as part of your system boundary. We classify vendor systems by impact and data sensitivity, then define contractual requirements for auditability and support. We require evidence expectations that align with your risk tier, including evaluation documentation, incident response commitments, and change management procedures. We also implement integration-level monitoring on your side, because visibility should not depend on vendor goodwill. Finally, we build reassessment triggers so that vendor updates automatically prompt governance review rather than quietly landing in production.
+In justice settings, governance must treat a score as advisory, not determinative. The system's role must be bounded, with explicit rules preventing sole reliance. Judges and decision-makers must receive context about limitations and error rates. Institutions must retain audit access and the ability to challenge vendor claims. Without that, the institution cannot credibly claim it is governing the tool. It is renting authority from a black box.
 
-The key governance lesson is that "accuracy" does not settle legitimacy. A system can be statistically impressive and still be unacceptable because it embeds historical injustice, hides causal assumptions, or makes outcomes difficult to contest. Governance must name that gap and build constraints around it.
+A defensible control baseline includes independent validation, documented fairness choices, and periodic revalidation as populations and policing practices change. It also includes contestability: the ability for affected individuals, defenders, or oversight bodies to interrogate why a score was produced and to challenge its relevance.
 
-The result is leverage. You gain the ability to say yes to vendors without surrendering your ability to govern what they do inside your institution.`
+Vendor AI often arrives as a shortcut to capability. If governance is weak, it becomes a shortcut to accountability collapse. Outsourcing a model does not outsource responsibility, because customers, regulators, and auditors will look to the deploying organization, not to the supplier, when something fails.
+
+The key governance lesson is that "accuracy" does not settle legitimacy. A system can be statistically impressive and still be unacceptable because it embeds historical injustice, hides causal assumptions, or makes outcomes difficult to contest. Governance must name that gap and build constraints around it.`
   },
   {
     id: 'shadow-ai-leakage',
-    title: 'When Employees Turn GenAI Into a Leak Vector',
+    title: 'Samsung, ChatGPT, and the Prompt as Leak Vector',
     date: '2024-08-22',
     context: 'enterprise-saas',
     type: 'briefing',
-    abstract: 'The most common GenAI incident is not a model malfunction. It is a workflow leak. This briefing examines how to govern shadow AI usage without blocking legitimate productivity gains.',
-    content: `The most common GenAI incident is not a model malfunction. It is a workflow leak. Employees paste sensitive information into external tools because the tool is fast, the task is urgent, and the boundaries are unclear. This is not a failure of curiosity. It is a failure of institutional design.
+    abstract: 'Shadow AI risk is what happens when institutional policy lags institutional behavior. Samsung reportedly banned ChatGPT after employees pasted proprietary code into the tool. The governance error was not curiosity. It was missing boundaries.',
+    content: `Shadow AI risk is what happens when institutional policy lags institutional behavior. Staff will use tools that increase speed and reduce friction. If the organization does not govern that reality, sensitive information becomes prompt content, and prompt content becomes a leak vector.
 
-Organizations often respond by banning tools, which solves the visible problem while expanding the invisible one. Shadow AI thrives when sanctioned alternatives are slow, unusable, or nonexistent. If you want governance that holds, you need a policy that staff can follow and a secure path that makes compliance realistic.
+Samsung reportedly restricted or banned ChatGPT use after employees pasted proprietary code and confidential content into the tool. The governance error was not that engineers were curious. The governance error was that there was no structured boundary between permissible experimentation and prohibited disclosure.
 
-Samsung reportedly restricted or banned ChatGPT use after employees pasted proprietary code and confidential content into the tool. The governance error was not that engineers were curious. The governance error was that there was no structured boundary between permissible experimentation and prohibited disclosure. This category of incident is operationally predictable. People treat AI tools as "smart text boxes." They forget that the input may be stored, learned, reviewed, or exposed through logs and vendor processes.
+This category of incident is operationally predictable. People treat AI tools as "smart text boxes." They forget that the input may be stored, learned, reviewed, or exposed through logs and vendor processes. Even when vendors promise protections, the organization still has an obligation to manage data handling. If you are serious about governance, you treat prompts as data flows.
 
-We implement GenAI governance as data handling governance. That begins with data classification tied to clear tool rules, so employees know what may be used where, and under what conditions. It continues with secure alternatives for legitimate needs, such as private environments, approved assistants, or controlled retrieval systems. We also build training that uses concrete examples, not vague warnings, because people learn boundaries through scenarios that resemble their actual work. Monitoring and incident reporting complete the loop, because governance improves only when mistakes are surfaced early rather than hidden.
+The control set is straightforward, but it must be enforceable. First, classify data and define what can be used in external tools. Second, provide an approved secure alternative for legitimate use cases, otherwise staff will route around the policy. Third, train people using realistic examples: code snippets, client data, strategy memos, and incident scenarios. Fourth, implement monitoring where feasible, and create a reporting channel that does not punish people for admitting a mistake early.
 
-The control set is straightforward, but it must be enforceable. First, classify data and define what can be used in external tools. Second, provide an approved secure alternative for legitimate use cases. Third, train people using realistic examples. Fourth, implement monitoring where feasible, and create a reporting channel that does not punish people for admitting a mistake early.
+The hardest part is cultural. Organizations often write policies that assume perfect compliance, then act shocked when workflows ignore them. Governance is not the policy document. Governance is the combination of policy, tooling, incentives, and safe reporting.
 
-This is not about restricting innovation. It is about preventing preventable loss of intellectual property, client confidentiality, and regulated data. Good governance protects speed by protecting the organization from the kind of incident that forces speed to stop.`
+If you cannot offer a safe, sanctioned pathway for AI assistance, you will get unsanctioned pathways. Then you will only learn about them when the damage is already done.`
   },
   {
     id: 'chatbot-institutional-speech',
-    title: 'When a Customer Chatbot Turns Into Institutional Speech',
+    title: 'Air Canada and the Chatbot That Became Policy',
     date: '2024-08-05',
     context: 'enterprise-saas',
     type: 'briefing',
-    abstract: 'Customer-facing AI systems are often shipped with disclaimers and optimism. In practice, customers treat them as official. This briefing examines how to govern AI as institutional communication.',
-    content: `Customer-facing AI systems are often shipped with disclaimers and optimism. In practice, customers treat them as official. Screenshots turn outputs into durable evidence. When a chatbot communicates policy, it functions as institutional speech, regardless of how the organization labels it internally.
+    abstract: 'Customer-facing AI does not dilute accountability. It concentrates it. In 2024, Air Canada was ordered to honor a chatbot\'s incorrect refund statement. Screenshots create durable evidence.',
+    content: `Customer-facing AI does not dilute accountability. It concentrates it. When an AI system communicates policy, it becomes institutional speech in the eyes of customers, regulators, and courts.
 
-The governance failure here is rarely "hallucination" alone. The governance failure is deploying a system that can generate policy-relevant statements without controlling its sources, logging its outputs, or defining escalation for ambiguous cases. A disclaimer does not substitute for controls. A banner does not create accountability. A monitoring plan does.
+In 2024, an Air Canada chatbot gave a customer incorrect refund information. The airline was ordered to honor the chatbot's statement. The key governance lesson is not "chatbots hallucinate." The lesson is that the organization deployed a communication channel without adequate controls for policy fidelity, escalation, and correction.
 
-In 2024, an Air Canada chatbot gave a customer incorrect refund information. The airline was ordered to honor the chatbot's statement. The key governance lesson is not "chatbots hallucinate." The lesson is that the organization deployed a communication channel without adequate controls for policy fidelity, escalation, and correction. Users treat chatbots as official. Screenshots create durable evidence. In disputes, institutions often claim the bot is a separate tool, but that defense is weak if the organization failed to implement basic source control and monitoring.
+The mechanism is simple. Users treat chatbots as official. Screenshots create durable evidence. In disputes, institutions often claim the bot is a separate tool, or that disclaimers should limit reliance. That defense is weak if the organization failed to implement basic source control and monitoring.
 
-We govern customer-facing chatbots by scoping capability and enforcing boundaries technically. If the system is allowed to answer policy questions, it must retrieve from approved policy sources with ownership, version history, and review cadence. If the question enters interpretive territory, the system must route to a human agent rather than improvising. We instrument logging for traceability, implement monitoring for high-consequence error patterns, and define remediation timelines that create a documented correction record.
+Governance for customer-facing chatbots begins with capability scoping. The system must be explicitly limited to retrieval from approved policy sources, or it must route the user to a human agent when the question enters interpretive or exception territory. The boundary must be enforced technically, not merely stated in UI copy.
 
-The second anchor is versioning and ownership. Policy pages need owners, review cadence, and change logs. The bot's knowledge layer must be tied to those pages so the organization can show what the system had access to at the time. The third anchor is monitoring and remediation. If the system produces incorrect policy statements, the organization must log it, correct it, and document the correction timeline.
+The second anchor is versioning and ownership. Policy pages need owners, review cadence, and change logs. The bot's knowledge layer must be tied to those pages so the organization can show what the system had access to at the time.
 
-The selling point is trust under scrutiny. When something goes wrong, the organization that can produce an evidence trail remains credible. We build customer-facing AI that ships with defensibility, not just with features.`
+The third anchor is monitoring and remediation. If the system produces incorrect policy statements, the organization must log it, correct it, and document the correction timeline. That documentation is not optional. It is the evidence trail that distinguishes a contained incident from a story about negligence.
+
+The point is not perfection. The point is governability. When something goes wrong, the organization that can produce an evidence trail remains credible, while the organization that can only offer explanations becomes suspect.`
   }
 ];
 
