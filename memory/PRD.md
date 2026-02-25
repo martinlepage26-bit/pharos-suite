@@ -30,7 +30,8 @@ User lost their AI Governance consulting website and needed it recreated from sc
 - [x] Service Menu - 3 packages with deliverables
 - [x] Tool - Full readiness assessment wizard with card deck UI and results drawer
 - [x] FAQ - 6 common questions
-- [x] Research - 7 briefings from real case studies, context filters, paper reader drawer
+- [x] Research - 7 briefings with varied titles, context filters, paper reader drawer
+- [x] Library - Curated AI governance reference hub (frameworks, regulations, standards)
 - [x] About - Practice approach, bio, link to Portfolio
 - [x] Connect - Contact form with mailto
 - [x] Sealed Card Protocol - Full research protocol page with PDF link
