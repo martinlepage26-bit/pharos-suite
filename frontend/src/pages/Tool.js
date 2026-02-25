@@ -188,12 +188,12 @@ const Tool = () => {
         <p className="text-gray-600 max-w-2xl">
           Choose your sector of operation to assess your readiness to audits, regulators, and risk assessment.
         </p>
-        <div className="flex gap-4 mt-4 text-xs tracking-wider text-gray-400 uppercase">
-          <span className={step >= 1 ? 'text-[#1a2744] font-semibold' : ''}>SECTOR</span>
-          <span>·</span>
-          <span className={step >= 2 ? 'text-[#1a2744] font-semibold' : ''}>READINESS</span>
-          <span>·</span>
-          <span className={drawerOpen ? 'text-[#1a2744] font-semibold' : ''}>RESULTS</span>
+        <div className="flex gap-4 mt-4 text-xs tracking-wider uppercase">
+          <span className={step >= 1 ? 'text-[#6366f1] font-semibold' : 'text-gray-400'}>SECTOR</span>
+          <span className="text-gray-300">·</span>
+          <span className={step >= 2 ? 'text-[#6366f1] font-semibold' : 'text-gray-400'}>READINESS</span>
+          <span className="text-gray-300">·</span>
+          <span className={drawerOpen ? 'text-[#6366f1] font-semibold' : 'text-gray-400'}>RESULTS</span>
         </div>
       </div>
 
@@ -210,7 +210,7 @@ const Tool = () => {
             {step === 1 && (
               <div data-testid="step-1-sector">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#f8f9fc] flex items-center justify-center text-[#1a2744] font-bold text-sm">1</span>
+                  <span className="w-7 h-7 rounded-full bg-[#6366f1] text-white flex items-center justify-center font-bold text-sm">1</span>
                   <h2 className="font-serif text-xl font-semibold text-[#1a2744]">Choose your sector</h2>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">
@@ -225,8 +225,8 @@ const Tool = () => {
                       data-testid={`sector-${sector.id}`}
                       className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_10px_20px_rgba(15,23,42,0.06)] hover:translate-y-[-1px] hover:shadow-[0_14px_26px_rgba(15,23,42,0.08)] ${
                         selectedSector === sector.id
-                          ? 'border-[#2e317a]/55 shadow-[0_16px_30px_rgba(15,23,42,0.10)]'
-                          : 'border-gray-200/60 bg-white/90 hover:border-[#2e317a]/25'
+                          ? 'border-[#6366f1]/55 shadow-[0_16px_30px_rgba(99,102,241,0.15)] bg-[#6366f1]/5'
+                          : 'border-gray-200/60 bg-white/90 hover:border-[#6366f1]/25'
                       }`}
                     >
                       <h3 className="font-bold text-[#0b1220]/90 mb-1 text-sm">
@@ -245,7 +245,7 @@ const Tool = () => {
             {step === 2 && (
               <div data-testid="step-2-readiness">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#f8f9fc] flex items-center justify-center text-[#1a2744] font-bold text-sm">2</span>
+                  <span className="w-7 h-7 rounded-full bg-[#6366f1] text-white flex items-center justify-center font-bold text-sm">2</span>
                   <h2 className="font-serif text-xl font-semibold text-[#1a2744]">
                     Question {currentQuestion + 1} of {READINESS_QUESTIONS.length}
                   </h2>
@@ -262,8 +262,8 @@ const Tool = () => {
                       onClick={() => handleAnswer(currentQ.id, option.value, option.score)}
                       className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_12px_22px_rgba(15,23,42,0.08)] ${
                         answers[currentQ.id]?.value === option.value
-                          ? 'border-[#2e317a]/55 shadow-[0_14px_26px_rgba(15,23,42,0.10)] bg-white'
-                          : 'border-gray-200/60 bg-white/90 hover:border-[#2e317a]/25'
+                          ? 'border-[#6366f1]/55 shadow-[0_14px_26px_rgba(99,102,241,0.15)] bg-[#6366f1] text-white'
+                          : 'border-gray-200/60 bg-white/90 hover:border-[#6366f1]/25'
                       }`}
                     >
                       {option.label}
@@ -277,8 +277,8 @@ const Tool = () => {
                     <div 
                       key={i}
                       className={`w-2 h-2 rounded-full transition-colors ${
-                        i === currentQuestion ? 'bg-[#2e317a]' : 
-                        answers[READINESS_QUESTIONS[i].id] ? 'bg-[#2e317a]/40' : 'bg-gray-300'
+                        i === currentQuestion ? 'bg-[#6366f1]' : 
+                        answers[READINESS_QUESTIONS[i].id] ? 'bg-[#6366f1]/40' : 'bg-gray-300'
                       }`}
                     />
                   ))}
@@ -289,7 +289,7 @@ const Tool = () => {
             {/* Actions */}
             <div className="flex items-center gap-2.5 mt-4 pt-4 border-t border-gray-100">
               {(step > 1 || (step === 2 && currentQuestion > 0)) && (
-                <button onClick={handleBack} className="text-gray-600 hover:text-[#1a2744] font-medium text-sm" data-testid="back-btn">
+                <button onClick={handleBack} className="text-gray-600 hover:text-[#6366f1] font-medium text-sm" data-testid="back-btn">
                   Back
                 </button>
               )}
@@ -302,7 +302,7 @@ const Tool = () => {
                 disabled={!canProceed}
                 className={`ml-auto px-5 py-2 rounded-full font-semibold text-sm transition-all ${
                   canProceed
-                    ? 'bg-[#8b8fa3] text-white hover:bg-[#7a7e91]'
+                    ? 'bg-[#6366f1] text-white hover:bg-[#5558e3]'
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
                 data-testid="next-btn"
@@ -313,7 +313,7 @@ const Tool = () => {
 
             {/* Hint */}
             {step === 1 && !selectedSector && (
-              <p className="text-[#b0646f]/95 font-semibold text-sm mt-2.5">
+              <p className="text-[#6366f1]/80 font-semibold text-sm mt-2.5">
                 Select a sector to continue
               </p>
             )}
@@ -333,7 +333,7 @@ const Tool = () => {
             {/* Drawer Header */}
             <div className="flex items-start justify-between gap-3 p-4 border-b border-gray-100">
               <div>
-                <p className="text-xs tracking-widest uppercase text-gray-500">Results</p>
+                <p className="text-xs tracking-widest uppercase text-[#6366f1]">Results</p>
                 <h3 className="font-serif text-xl font-semibold text-[#0b1220]/95 mt-1">
                   Readiness Snapshot
                 </h3>
@@ -359,9 +359,9 @@ const Tool = () => {
                     {/* Score Ring */}
                     <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
                       <div 
-                        className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_14px_26px_rgba(15,23,42,0.10)]"
+                        className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_14px_26px_rgba(99,102,241,0.15)]"
                         style={{
-                          background: `conic-gradient(#2e317a ${percentage * 3.6}deg, rgba(15,23,42,0.08) ${percentage * 3.6}deg 360deg)`
+                          background: `conic-gradient(#6366f1 ${percentage * 3.6}deg, rgba(15,23,42,0.08) ${percentage * 3.6}deg 360deg)`
                         }}
                       >
                         <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0b1220]/90">
@@ -372,7 +372,7 @@ const Tool = () => {
                         <p className="text-xs tracking-wider uppercase text-gray-500 font-bold mb-1">
                           {sectorInfo?.title}
                         </p>
-                        <p className="font-serif font-bold text-xl text-[#0b1220]/95 mb-1">
+                        <p className="font-serif font-bold text-xl text-[#6366f1] mb-1">
                           {risk}
                         </p>
                         <p className="text-[#0b1220]/75 text-sm leading-snug">
@@ -405,7 +405,7 @@ const Tool = () => {
                       </div>
                       <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 font-bold">
                         <span>Total</span>
-                        <span>{score}/{total}</span>
+                        <span className="text-[#6366f1]">{score}/{total}</span>
                       </div>
                     </div>
 
@@ -445,7 +445,7 @@ const Tool = () => {
                       <Link to="/services" className="btn-ghost text-sm">
                         View services
                       </Link>
-                      <button onClick={handleReset} className="text-gray-500 hover:text-gray-700 text-sm ml-auto">
+                      <button onClick={handleReset} className="text-gray-500 hover:text-[#6366f1] text-sm ml-auto">
                         Retake
                       </button>
                     </div>
