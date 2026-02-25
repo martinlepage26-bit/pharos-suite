@@ -3,34 +3,42 @@ import { Link } from 'react-router-dom';
 const FAQ = () => {
   const faqs = [
     {
-      question: "What is an AI Governance Practice?",
-      answer: "It's the simple, steady way you make sure AI is used with care in your organization. Not a big scary rulebook. More like a set of habits that help people build and buy AI without panic: you decide what's low risk and what's high risk, you put a few common-sense checks in place, you're clear about who gets to say \"yes\" (and who needs to be in the loop), and you keep enough notes that you can later show you were paying attention."
+      question: "What is AI Governance Practice?",
+      answer: "AI governance practice is the operational system that makes AI use legible, controllable, and defensible in your organization. It's not a policy document that sits in a drawer. It's a set of working structures: how you classify risk, who approves what, what controls apply at each tier, and how you maintain evidence that decisions were made responsibly. The goal is a system people can actually follow while they work—not a compliance burden that gets ignored until something goes wrong."
     },
     {
-      question: "Is this policy work or operational work?",
-      answer: "It's mostly operational. Policies matter, but only if they turn into steps teams can actually follow while they work. If it doesn't fit how people already ship things, it won't happen. So we start by making it easy: a clear path, a few decision points, and lightweight documentation that doesn't feel like punishment."
+      question: "What's the difference between AI governance and AI ethics?",
+      answer: "AI ethics is about values and principles—what you believe AI should and shouldn't do. AI governance is about operationalization—how you translate those principles into decision rights, controls, and evidence. Ethics tells you that fairness matters. Governance tells you who reviews the fairness metrics, what thresholds trigger escalation, and where the documentation lives. Both matter, but governance is what makes ethics enforceable."
     },
     {
       question: "What do auditors and procurement teams actually want?",
-      answer: "They want to feel safe saying \"yes.\" They're looking for calm, boring proof that someone was responsible on purpose: who made the call, how you decided the risk level, what checks you did, how you handled edge cases, and how you keep an eye on things after launch. Think \"receipts,\" not \"trust us.\"",
-      cta: { text: "Request the Audit Checklist (PDF)", type: "link" }
+      answer: "They want to feel confident saying yes. They're looking for evidence that someone was responsible on purpose: documented risk classification, clear decision authority, defined controls, testing records, and monitoring plans. They want to see that you knew what could go wrong and built structures to catch it. The key insight is that auditors don't evaluate intentions—they evaluate artifacts. If you can't produce the evidence, the governance didn't happen.",
+      cta: { text: "Request the Audit Checklist", link: "/connect" }
     },
     {
       question: "How do you handle third-party/vendor AI?",
-      answer: "We take the pressure off your team by making vendor review predictable. We ask for the right info up front, set simple pass or pause thresholds, and bake it into procurement so it's the same each time. That way you're not scrambling at the last minute trying to figure out what a vendor will and won't tell you."
+      answer: "Vendor AI requires the same governance discipline as internal AI, but with additional controls around visibility, contractual requirements, and reassessment triggers. We build vendor review frameworks that include: due diligence questionnaires, evaluation criteria mapped to your risk tiers, contractual language for auditability and change notification, and integration-level monitoring. The goal is leverage—you can say yes to vendors without surrendering your ability to govern what they do inside your organization."
     },
     {
       question: "Will governance slow our teams down?",
-      answer: "If it's done badly, yes, it becomes a speed bump. If it's done well, it's more like a guardrail. It reduces rework, prevents surprise escalations, and helps teams move forward with confidence because they know what's expected. The vibe is: I'll take care of you, you just keep building."
+      answer: "Bad governance slows teams down. Good governance accelerates them by removing uncertainty. When teams know the rules—what's allowed, what requires approval, what documentation is expected—they stop negotiating the same questions repeatedly. Governance done right is a guardrail, not a speed bump. It reduces rework, prevents surprise escalations, and builds the audit trail as you go rather than scrambling to reconstruct it later."
     },
     {
-      question: "What's a typical engagement?",
-      answer: "We usually start by getting a clear picture of what you're doing today and what could go wrong. Then we set up a simple risk \"traffic light,\" add a small set of checks that match your reality, and name who owns what. After that, we keep things warm with a light ongoing cadence so your documentation and oversight stay current as tools, vendors, and priorities change.",
+      question: "What's a typical engagement look like?",
+      answer: "Most engagements start with a diagnostic: what AI systems exist, what governance structures are in place, and what gaps create risk. Then we build incrementally: risk classification first, then decision rights and approval flows, then controls mapped to tiers, then evidence architecture. The output is a governance operating model your teams can execute. For ongoing support, the Oversight Retainer keeps governance current as your AI portfolio evolves.",
       cta: { buttons: [
         { text: "Assess readiness", link: "/tool", primary: true },
         { text: "View services", link: "/services" },
         { text: "Book a debrief", link: "/connect" }
       ]}
+    },
+    {
+      question: "How do I know if my organization needs AI governance?",
+      answer: "If you're deploying AI systems that affect customers, employees, or business decisions, you need governance. The question isn't whether—it's how much. Start with: Do you have an inventory of AI use cases? Can you classify them by risk? Do you know who can approve what? Can you produce evidence of your controls? If the answer to any of these is 'no' or 'not sure,' governance work is overdue."
+    },
+    {
+      question: "What's the relationship between AI governance and model risk management?",
+      answer: "Model risk management (MRM) is a specific discipline, often required in financial services, focused on the technical validation and monitoring of models. AI governance is broader—it includes MRM but also covers decision rights, procurement, vendor management, documentation standards, and organizational accountability. Think of MRM as one control domain within the larger governance architecture."
     }
   ];
 
@@ -42,10 +50,10 @@ const FAQ = () => {
           FAQ
         </h1>
         <p className="text-gray-600 mb-2 max-w-2xl">
-          Practical answers on risk tiering, controls, evidence, procurement readiness, and vendor oversight.
+          Practical answers on AI risk classification, governance operations, audit readiness, vendor oversight, and evidence architecture.
         </p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">
-          DEFINITIONS · EVIDENCE · ENGAGEMENTS
+          GOVERNANCE · CONTROLS · EVIDENCE · OPERATIONS
         </p>
 
         {/* FAQ Items */}
@@ -59,13 +67,13 @@ const FAQ = () => {
                 {faq.answer}
               </p>
               
-              {faq.cta?.type === 'link' && (
-                <p className="text-sm">
-                  <span className="text-gray-500">Want the evidence list?</span>{' '}
-                  <Link to="/connect" className="text-[#1a2744] font-medium hover:underline">
-                    {faq.cta.text}
-                  </Link>
-                </p>
+              {faq.cta?.text && (
+                <Link 
+                  to={faq.cta.link} 
+                  className="text-[#6366f1] font-medium hover:underline text-sm"
+                >
+                  {faq.cta.text} →
+                </Link>
               )}
               
               {faq.cta?.buttons && (
@@ -74,7 +82,7 @@ const FAQ = () => {
                     <Link 
                       key={i}
                       to={btn.link}
-                      className={btn.primary ? 'btn-secondary' : 'btn-ghost'}
+                      className={btn.primary ? 'btn-primary text-sm' : 'btn-ghost text-sm'}
                     >
                       {btn.text}
                     </Link>
@@ -83,6 +91,17 @@ const FAQ = () => {
               )}
             </div>
           ))}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="mt-12 p-6 bg-gradient-to-r from-[#1a2744] to-[#6366f1] rounded-2xl text-white">
+          <h3 className="font-serif text-xl font-semibold mb-2">Still have questions?</h3>
+          <p className="text-white/80 mb-4">
+            Book a 30-minute debrief to discuss your specific governance challenges.
+          </p>
+          <Link to="/connect" className="inline-block bg-white text-[#1a2744] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+            Book a Debrief
+          </Link>
         </div>
       </div>
     </div>
