@@ -44,6 +44,15 @@ User lost their AI Governance consulting website and needed it recreated from sc
 - Research papers have purple left border
 - Tool uses purple for active selections and progress dots
 
+### Connect Page
+- Tabbed interface: Send Message / Book Debrief
+- Simple booking form with date picker, time slots (Eastern), topic selector
+- Mailto-based (no backend required)
+- Governance resources sidebar
+
+### Admin Passphrase
+- Updated to: `AIG-ctrl-2026!`
+
 ### Research Papers (from LEGIBLE.txt)
 - When Hiring AI Quietly Rewrites Your Talent Pipeline
 - When Data Collection Becomes Regulatory Exposure
