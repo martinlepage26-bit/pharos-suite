@@ -5,23 +5,15 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 
 ## Architecture
 - **Frontend**: React.js, React Router, plain CSS with Tailwind utility classes
-- **Backend**: FastAPI with MongoDB (publications CRUD, booking system)
+- **Backend**: FastAPI with MongoDB (publications CRUD, booking system, email notifications)
 - **Database**: MongoDB — `publications` and `bookings` collections
+- **Email**: Resend API for transactional emails
 - **Content**: Research papers and case studies in static JSON; publications managed via Admin
 - **i18n**: Custom LanguageContext with `translations/en.js` and `translations/fr.js`
 
-## Core Requirements
-- 13-page professional consulting website
-- Bilingual EN/FR with toggle in header
-- Readiness Snapshot assessment tool
-- Case studies, research papers, portfolio
-- Lead magnet (Governance Starter Kit)
-- Calendar-based booking system with backend persistence
-- Admin page for managing publications and viewing bookings
-
 ## What's Implemented
 
-### Pages
+### Pages (13 total)
 1. Home — Hero, capabilities, starter kit CTA, navigation cards
 2. Services — Core offers, pricing factors
 3. Service Menu — 3 packages with deliverables
@@ -37,50 +29,39 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 13. Admin — Publications CRUD + Bookings management (password-protected)
 
 ### Features
-- **Bilingual (EN/FR)**: Full site translation except Portfolio (stays English). Toggle in navbar, localStorage persistence, browser auto-detection.
-- **Readiness Snapshot**: Interactive assessment with 6 sectors, 8 questions, scored results
-- **Lead Magnet**: Governance Starter Kit email capture
-- **Calendar Booking**: Date picker (no weekends/past dates), 14 time slots (9 AM - 4:30 PM ET), booked slots shown unavailable, persisted to MongoDB
-- **Admin Publications**: Full CRUD for portfolio publications, seeded with 6 initial items
-- **Admin Bookings**: View all requests, confirm/cancel/delete, pending counter badge
+- **Bilingual (EN/FR)**: Full site translation except Portfolio. Toggle in navbar.
+- **Calendar Booking**: Date picker, 14 time slots, booked slots unavailable, MongoDB persistence
+- **Admin Publications**: Full CRUD for portfolio publications
+- **Admin Bookings**: View/confirm/cancel/delete requests, pending badge
+- **Email Notifications** (Resend):
+  - New booking → admin notified at martinlepage.ai@gmail.com + martinlepage26@me.com
+  - Confirm booking → client gets confirmation email
+  - Cancel booking → client gets cancellation/reschedule email
 
 ### API Endpoints
-- `GET /api/health` — Health check
-- `GET /api/publications` — List all publications
-- `POST /api/publications` — Create publication
-- `PUT /api/publications/{id}` — Update publication
-- `DELETE /api/publications/{id}` — Delete publication
-- `GET /api/bookings` — List all bookings
-- `POST /api/bookings` — Create booking
-- `PUT /api/bookings/{id}/status` — Update booking status
-- `DELETE /api/bookings/{id}` — Delete booking
-- `GET /api/bookings/booked-slots` — Public: get booked date/time pairs
+- `GET/POST /api/publications`, `PUT/DELETE /api/publications/{id}`
+- `GET/POST /api/bookings`, `DELETE /api/bookings/{id}`
+- `PUT /api/bookings/{id}/status` — triggers confirmation/cancellation emails
+- `GET /api/bookings/booked-slots` — public endpoint for calendar
+- `GET /api/health` — health check
 
 ### Completed Tasks
-- **Session 1**: Full 13-page site built from images
-- **Session 2**: Content population, bug fixes, deployment readiness
-- **Feb 2026**: French language support (100% test pass)
-- **Feb 2026**: Admin publications management + Calendar booking system (100% test pass)
+- **Session 1-2**: Full 13-page site, content, deployment readiness
+- **Feb 2026**: French language support (100% pass)
+- **Feb 2026**: Admin publications + Calendar booking (100% pass)
+- **Feb 2026**: Email notifications via Resend
 
 ## Database Schema
-
 ### publications
-```
-{ id, type, title, venue, year, description, link, internal, status, abstract, created_at }
-```
+`{ id, type, title, venue, year, description, link, internal, status, abstract, created_at }`
 
 ### bookings
-```
-{ id, name, email, organization, date, time, topic, current_state, status, created_at }
-```
+`{ id, name, email, organization, date, time, topic, current_state, status, created_at }`
 
-## Prioritized Backlog
-- P2: Update the admin passphrase for production if needed
-- P3: Email notifications for bookings (currently no automated email)
-
-## Credentials
+## Important Notes
+- **Resend testing mode**: Currently only sends to verified account email (martinlepage26@me.com). To send to all clients, verify a domain at resend.com/domains and update SENDER_EMAIL in backend/.env.
 - Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
-## Mocked Functionality
-- Contact message form: uses mailto links (no backend persistence)
-- Booking confirmation emails: not automated (admin reviews in dashboard)
+## Backlog
+- P2: Verify domain in Resend to send emails to any recipient
+- P2: Update admin passphrase for production
