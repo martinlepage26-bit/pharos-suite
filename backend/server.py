@@ -106,6 +106,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.on_event("startup")
+async def startup_db_client():
+    """Initialize database connection on startup"""
+    await get_database()
+    logger.info("Database connection initialized")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    global client
+    if client:
+        client.close()
+        logger.info("Database connection closed")
