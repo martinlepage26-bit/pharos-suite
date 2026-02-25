@@ -14,6 +14,8 @@ import FAQ from "./pages/FAQ";
 import Research from "./pages/Research";
 import About from "./pages/About";
 import Connect from "./pages/Connect";
+import SealedCard from "./pages/SealedCard";
+import Portfolio from "./pages/Portfolio";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path="/research" element={<Research />} />
             <Route path="/about" element={<About />} />
             <Route path="/connect" element={<Connect />} />
+            <Route path="/sealed-card" element={<SealedCard />} />
+            <Route path="/portfolio" element={<Portfolio />} />
           </Routes>
         </main>
         <Footer />
