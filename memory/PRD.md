@@ -5,9 +5,9 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 
 ## Architecture
 - **Frontend**: React.js, React Router, plain CSS with Tailwind utility classes
-- **Backend**: Minimal FastAPI (health endpoint only)
-- **Database**: MongoDB configured but unused (static content site)
-- **Content**: Static JSON files in `frontend/src/data/`
+- **Backend**: FastAPI with MongoDB (publications CRUD, booking system)
+- **Database**: MongoDB — `publications` and `bookings` collections
+- **Content**: Research papers and case studies in static JSON; publications managed via Admin
 - **i18n**: Custom LanguageContext with `translations/en.js` and `translations/fr.js`
 
 ## Core Requirements
@@ -16,8 +16,8 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - Readiness Snapshot assessment tool
 - Case studies, research papers, portfolio
 - Lead magnet (Governance Starter Kit)
-- Simple booking/contact forms (mailto-based)
-- Hidden admin page for content drafts
+- Calendar-based booking system with backend persistence
+- Admin page for managing publications and viewing bookings
 
 ## What's Implemented
 
@@ -30,37 +30,57 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 6. Research — 7 briefings with reader drawer, context filters
 7. Cases — 5 case studies with detail drawer
 8. About — Practice description, bio, headshot, featured research
-9. Connect — Message form + booking form (both tabs)
+9. Connect — Message form (mailto) + Calendar booking (backend-persisted)
 10. Sealed Card Protocol — Research protocol page
-11. Portfolio — Publications, working papers, engagement areas, expertise
+11. Portfolio — Publications fetched from API, engagement areas, expertise
 12. Library — Curated governance resources with external links
-13. Admin — Post manager + DocSorter tool (hidden, password-protected)
+13. Admin — Publications CRUD + Bookings management (password-protected)
 
 ### Features
-- **Bilingual (EN/FR)**: Full French translation for all pages except Portfolio (stays English per user request). Language toggle in navbar header. Preference saved to localStorage with browser language auto-detection.
+- **Bilingual (EN/FR)**: Full site translation except Portfolio (stays English). Toggle in navbar, localStorage persistence, browser auto-detection.
 - **Readiness Snapshot**: Interactive assessment with 6 sectors, 8 questions, scored results
 - **Lead Magnet**: Governance Starter Kit email capture
-- **Content**: 7 research papers, 5 case studies, curated library links
-- **Deployment Ready**: Health endpoints, env-based config
+- **Calendar Booking**: Date picker (no weekends/past dates), 14 time slots (9 AM - 4:30 PM ET), booked slots shown unavailable, persisted to MongoDB
+- **Admin Publications**: Full CRUD for portfolio publications, seeded with 6 initial items
+- **Admin Bookings**: View all requests, confirm/cancel/delete, pending counter badge
 
-### Completed Tasks (with dates)
+### API Endpoints
+- `GET /api/health` — Health check
+- `GET /api/publications` — List all publications
+- `POST /api/publications` — Create publication
+- `PUT /api/publications/{id}` — Update publication
+- `DELETE /api/publications/{id}` — Delete publication
+- `GET /api/bookings` — List all bookings
+- `POST /api/bookings` — Create booking
+- `PUT /api/bookings/{id}/status` — Update booking status
+- `DELETE /api/bookings/{id}` — Delete booking
+- `GET /api/bookings/booked-slots` — Public: get booked date/time pairs
+
+### Completed Tasks
 - **Session 1**: Full 13-page site built from images
 - **Session 2**: Content population, bug fixes, deployment readiness
-- **Feb 2026**: French language support implemented and tested (100% pass rate)
+- **Feb 2026**: French language support (100% test pass)
+- **Feb 2026**: Admin publications management + Calendar booking system (100% test pass)
+
+## Database Schema
+
+### publications
+```
+{ id, type, title, venue, year, description, link, internal, status, abstract, created_at }
+```
+
+### bookings
+```
+{ id, name, email, organization, date, time, topic, current_state, status, created_at }
+```
 
 ## Prioritized Backlog
-
-### P1
-- Enhance Admin page for managing Portfolio publications without developer help
-
-### P2
-- Replace mailto booking form with calendar integration
-- Update admin passphrase for production
+- P2: Update the admin passphrase for production if needed
+- P3: Email notifications for bookings (currently no automated email)
 
 ## Credentials
 - Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
 ## Mocked Functionality
-- Booking system: mailto links (no calendar integration)
-- Admin page: Frontend-only, no backend persistence
-- Contact form: mailto links
+- Contact message form: uses mailto links (no backend persistence)
+- Booking confirmation emails: not automated (admin reviews in dashboard)
