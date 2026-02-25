@@ -21,9 +21,9 @@ const Navbar = () => {
             key={item.path}
             to={item.path}
             data-testid={`nav-${item.label.toLowerCase()}`}
-            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#1a2744] ${
+            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#6366f1] ${
               location.pathname === item.path
-                ? 'text-[#1a2744] border-b-2 border-[#1a2744] pb-1'
+                ? 'text-[#1a2744] border-b-2 border-[#6366f1] pb-1'
                 : 'text-gray-500'
             }`}
           >
