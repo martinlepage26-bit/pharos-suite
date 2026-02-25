@@ -1,40 +1,14 @@
 import { useState } from 'react';
-
-const CONTEXTS = [
-  {
-    id: 'regulated',
-    title: 'Regulated Systems',
-    description: 'Higher evidence burden, tighter approvals, audit-grade remediation.'
-  },
-  {
-    id: 'enterprise-saas',
-    title: 'Enterprise SaaS',
-    description: 'Governance that ships: release cadence, drift, and vendorized AI features.'
-  },
-  {
-    id: 'procurement',
-    title: 'Procurement & Vendor Risk',
-    description: 'Questionnaires become controls: diligence artifacts, contract-backed proof.'
-  },
-  {
-    id: 'public-sector',
-    title: 'Public Sector & Due Process',
-    description: 'Contestability, appeal pathways, reconstruction under scrutiny.'
-  },
-  {
-    id: 'financial',
-    title: 'Financial & Capital Systems',
-    description: 'Models move money: exposure controls, stress testing, adverse action logic.'
-  },
-  {
-    id: 'governance-architecture',
-    title: 'Governance Architecture & Operating Models',
-    description: 'Decision rights, lifecycle gates, evidence trails that scale.'
-  }
-];
+import { researchPapers, contexts } from '../data/researchPapers';
+import { X, FileText, Calendar, ArrowRight } from 'lucide-react';
 
 const Research = () => {
-  const [selectedContext, setSelectedContext] = useState('regulated');
+  const [selectedContext, setSelectedContext] = useState('all');
+  const [selectedPaper, setSelectedPaper] = useState(null);
+
+  const filteredPapers = selectedContext === 'all' 
+    ? researchPapers 
+    : researchPapers.filter(p => p.context === selectedContext);
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="research-page">
@@ -52,16 +26,16 @@ const Research = () => {
           <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-4">
             How this research works
           </h2>
-          <div className="flex items-center justify-center gap-4 text-sm text-gray-500 mb-6">
-            <span>Signal</span>
-            <span>→</span>
-            <span>Pressure</span>
-            <span>→</span>
-            <span>Control</span>
-            <span>→</span>
-            <span>Artifact</span>
-            <span>→</span>
-            <span>Evidence</span>
+          <div className="flex items-center justify-center gap-4 text-sm mb-6">
+            <span className="text-[#6366f1] font-medium">Signal</span>
+            <span className="text-gray-400">→</span>
+            <span className="text-[#6366f1] font-medium">Pressure</span>
+            <span className="text-gray-400">→</span>
+            <span className="text-[#6366f1] font-medium">Control</span>
+            <span className="text-gray-400">→</span>
+            <span className="text-[#6366f1] font-medium">Artifact</span>
+            <span className="text-gray-400">→</span>
+            <span className="text-[#6366f1] font-medium">Evidence</span>
           </div>
           <p className="text-gray-600 mb-4">
             Governance pressure rarely appears as theory. It appears as audit requests, procurement questionnaires, regulatory expectations, and board oversight.
@@ -72,19 +46,19 @@ const Research = () => {
         </div>
 
         {/* Featured framework */}
-        <div className="mb-12">
+        <div className="mb-12 p-6 bg-gradient-to-r from-[#1a2744] to-[#6366f1] rounded-2xl text-white">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <h2 className="font-serif text-2xl font-semibold text-[#1a2744]">
+            <h2 className="font-serif text-2xl font-semibold">
               Featured framework
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-white/80 text-sm">
               From policy to deployable controls: the AI Governance Engine
             </p>
           </div>
-          <p className="text-gray-600 mb-4">
+          <p className="text-white/90 mb-4">
             A structured operating model that translates governance commitments into measurable controls, lifecycle gates, decision rights, and verification evidence. This framework informs the analytical approach used throughout this research.
           </p>
-          <p className="text-gray-500 text-sm italic">
+          <p className="text-white/70 text-sm italic">
             <span className="font-medium">Professional note:</span> The Engine itself is a proprietary consulting instrument and is not publicly deployed. Research publications reference its conceptual structure without exposing internal scoring models, implementation logic, or client-specific configurations.
           </p>
         </div>
@@ -96,53 +70,133 @@ const Research = () => {
               Operational contexts
             </h2>
             <p className="text-gray-500 text-sm">
-              Pick a context to load a curated stack. Click a title to open a right-side preview panel.
+              Filter briefings by context
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            {CONTEXTS.map((context) => (
+          <div className="flex flex-wrap gap-2 mb-8">
+            <button
+              onClick={() => setSelectedContext('all')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                selectedContext === 'all'
+                  ? 'bg-[#6366f1] text-white'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1] hover:text-[#6366f1]'
+              }`}
+            >
+              All
+            </button>
+            {contexts.map((context) => (
               <button
                 key={context.id}
                 onClick={() => setSelectedContext(context.id)}
                 data-testid={`context-${context.id}`}
-                className={`text-left p-4 rounded-lg border-2 transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   selectedContext === context.id
-                    ? 'border-[#1a2744] bg-white'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
+                    ? 'bg-[#6366f1] text-white'
+                    : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1] hover:text-[#6366f1]'
                 }`}
               >
-                <h3 className="font-serif font-semibold text-[#1a2744] mb-2">
-                  {context.title}
-                </h3>
-                <p className="text-gray-500 text-sm">
-                  {context.description}
-                </p>
+                {context.title}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Stack */}
-        <div className="card">
-          <h3 className="font-serif text-lg font-semibold text-[#1a2744] mb-2">
-            Stack
+        {/* Papers Stack */}
+        <div className="space-y-4">
+          <h3 className="font-serif text-lg font-semibold text-[#1a2744] mb-4">
+            Briefings ({filteredPapers.length})
           </h3>
-          <p className="text-gray-600 text-sm mb-6">
-            This list includes posts and papers, sorted by publish date.
-          </p>
           
-          <div className="bg-[#f8f9fc] rounded-lg p-6">
-            <p className="text-sm text-gray-500 mb-2">
-              {CONTEXTS.find(c => c.id === selectedContext)?.title}
-            </p>
-            <p className="font-medium text-[#1a2744] mb-2">No items yet</p>
-            <p className="text-gray-500 text-sm">
-              Add posts or papers with locus "{selectedContext}" in data/posts.json or data/papers.json
-            </p>
-          </div>
+          {filteredPapers.map((paper) => (
+            <button
+              key={paper.id}
+              onClick={() => setSelectedPaper(paper)}
+              className="w-full text-left card paper-card hover:shadow-md transition-all group"
+              data-testid={`paper-${paper.id}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-4 h-4 text-[#6366f1]" />
+                    <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
+                      {paper.type}
+                    </span>
+                    <span className="text-gray-300">·</span>
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {new Date(paper.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  </div>
+                  <h4 className="font-serif text-lg font-semibold text-[#1a2744] mb-2 group-hover:text-[#6366f1] transition-colors">
+                    {paper.title}
+                  </h4>
+                  <p className="text-gray-600 text-sm line-clamp-2">
+                    {paper.abstract}
+                  </p>
+                </div>
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#6366f1] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
+              </div>
+            </button>
+          ))}
         </div>
       </div>
+
+      {/* Paper Reader Drawer */}
+      {selectedPaper && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/30 z-[4000]" 
+            onClick={() => setSelectedPaper(null)}
+          />
+          <div className="fixed top-0 right-0 h-screen w-full md:w-[600px] bg-white border-l border-gray-200 shadow-2xl z-[4500] flex flex-col overflow-hidden">
+            {/* Header */}
+            <div className="flex items-start justify-between gap-4 p-6 border-b border-gray-100 bg-white">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
+                    {selectedPaper.type}
+                  </span>
+                  <span className="text-gray-300">·</span>
+                  <span className="text-xs text-gray-500">
+                    {new Date(selectedPaper.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                  </span>
+                </div>
+                <h2 className="font-serif text-2xl font-semibold text-[#1a2744]">
+                  {selectedPaper.title}
+                </h2>
+              </div>
+              <button 
+                onClick={() => setSelectedPaper(null)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-auto p-6">
+              <div className="prose prose-gray max-w-none">
+                <p className="text-lg text-gray-700 font-medium mb-6 pb-6 border-b border-gray-100">
+                  {selectedPaper.abstract}
+                </p>
+                {selectedPaper.content.split('\n\n').map((paragraph, i) => (
+                  <p key={i} className="text-gray-600 leading-relaxed mb-4">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 border-t border-gray-100 bg-gray-50">
+              <p className="text-xs text-gray-500 text-center">
+                Context: {contexts.find(c => c.id === selectedPaper.context)?.title || 'General'}
+              </p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
