@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const LOGO_URL = process.env.REACT_APP_LOGO_URL || "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/98548zap_logo.png";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="py-6 px-6 md:px-12 bg-[#f8f9fc] border-t border-gray-200" data-testid="footer">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4">
           <p className="text-sm text-gray-500">
-            &copy; 2026 Martin Lepage, PhD. AI Governance Practice & Research
+            {t.footer.copyright}
           </p>
-          {/* Hidden admin link - appears as a subtle dot */}
           <Link 
             to="/admin" 
             className="w-2 h-2 rounded-full bg-gray-300 hover:bg-[#6366f1] transition-colors opacity-50 hover:opacity-100"
