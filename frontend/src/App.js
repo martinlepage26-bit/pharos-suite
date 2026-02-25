@@ -18,6 +18,7 @@ import SealedCard from "./pages/SealedCard";
 import Portfolio from "./pages/Portfolio";
 import Library from "./pages/Library";
 import Admin from "./pages/Admin";
+import Cases from "./pages/Cases";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/tool" element={<Tool />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/research" element={<Research />} />
+            <Route path="/cases" element={<Cases />} />
             <Route path="/about" element={<About />} />
             <Route path="/connect" element={<Connect />} />
             <Route path="/sealed-card" element={<SealedCard />} />
