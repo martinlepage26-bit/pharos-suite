@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Lock, FileText, Plus, Download, Upload, Trash2, Save } from 'lucide-react';
 
-const ADMIN_PASSPHRASE = 'AIG-ctrl-2026!'; // Production passphrase
+const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
 
 const Admin = () => {
   const [authenticated, setAuthenticated] = useState(false);
