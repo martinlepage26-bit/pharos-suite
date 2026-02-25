@@ -1,5 +1,6 @@
 import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LanguageProvider } from "./context/LanguageContext";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -23,30 +24,32 @@ import Cases from "./pages/Cases";
 
 function App() {
   return (
-    <div className="App min-h-screen bg-[#f8f9fc]">
-      <BrowserRouter>
-        <ScrollToTop />
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/menu" element={<ServiceMenu />} />
-            <Route path="/tool" element={<Tool />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/research" element={<Research />} />
-            <Route path="/cases" element={<Cases />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/connect" element={<Connect />} />
-            <Route path="/sealed-card" element={<SealedCard />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
-        </main>
-        <Footer />
-      </BrowserRouter>
-    </div>
+    <LanguageProvider>
+      <div className="App min-h-screen bg-[#f8f9fc]">
+        <BrowserRouter>
+          <ScrollToTop />
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/menu" element={<ServiceMenu />} />
+              <Route path="/tool" element={<Tool />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/research" element={<Research />} />
+              <Route path="/cases" element={<Cases />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/connect" element={<Connect />} />
+              <Route path="/sealed-card" element={<SealedCard />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/admin" element={<Admin />} />
+            </Routes>
+          </main>
+          <Footer />
+        </BrowserRouter>
+      </div>
+    </LanguageProvider>
   );
 }
 
