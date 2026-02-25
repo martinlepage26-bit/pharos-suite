@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { translations } from '../translations';
 
 const LanguageContext = createContext();
 
@@ -12,7 +13,6 @@ export const useLanguage = () => {
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(() => {
-    // Check localStorage or browser preference
     const saved = localStorage.getItem('lang');
     if (saved) return saved;
     const browserLang = navigator.language.slice(0, 2);
@@ -28,8 +28,10 @@ export const LanguageProvider = ({ children }) => {
     setLanguage(prev => prev === 'en' ? 'fr' : 'en');
   };
 
+  const t = translations[language];
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
