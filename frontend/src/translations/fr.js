@@ -12,35 +12,39 @@ export const fr = {
 
   home: {
     title: 'Gouvernance IA',
-    subtitle: 'Strat\u00e9gie & Supervision',
-    description: "Des systèmes de gouvernance alignés sur les exigences canadiennes:directives du Conseil du Trésor, Loi 25 du Québec et obligations LIAD émergentes:qui rendent les décisions IA documentées, vérifiables et défendables.",
+    subtitle: 'Stratégies & Supervision',
+    requirementsIntro: 'Systèmes de gouvernance alignés sur les exigences canadiennes:',
+    requirement1: 'Directives du Conseil du Trésor',
+    requirement2: 'Loi\u00A025 du Québec',
+    requirement3: 'Obligations LIAD émergentes',
+    productLabel: 'Produit',
+    productDesc: 'Des décisions IA documentées, vérifiables et défendables.',
     keywords: 'CONFORMITÉ CANADIENNE · LOI 25 QUÉBEC · PISTE PROBANTE',
     viewServices: 'Voir les services',
-    bookDebrief: 'R\u00e9server un entretien',
+    bookDebrief: 'Réserver un entretien',
     capabilities: {
       riskClassification: 'Classification des risques',
       riskClassificationDesc: "Hiérarchiser les cas d'utilisation alignés sur le cadre d'Évaluation de l'incidence algorithmique",
       evidenceArchitecture: 'Architecture probante',
       evidenceArchitectureDesc: "Documentation qui satisfait les exigences d'audit fédérales et provinciales",
-      controlDesign: 'Conception de contr\u00f4les',
-      controlDesignDesc: "Des contrôles opérationnels qui répondent aux attentes réglementaires canadiennes"
+      controlDesign: 'Conception de contrôles',
+      controlDesignDesc: 'Des contrôles opérationnels qui répondent aux attentes réglementaires canadiennes'
     },
     sections: {
-      assessment: '\u00c9valuation',
-      readinessSnapshot: 'Instantan\u00e9 de pr\u00e9paration',
-      assessMaturity: '\u00c9valuer la maturit\u00e9 de gouvernance \u2192',
+      assessment: 'Évaluation',
+      readinessSnapshot: 'Instantané de préparation',
+      assessMaturity: 'Évaluer la maturité de gouvernance \u2192',
       portfolio: 'Portfolio',
-      caseStudies: '\u00c9tudes de cas',
-      seeExamples: "Voir des exemples d\u2019engagements \u2192",
+      caseStudies: 'Études de cas',
+      seeExamples: "Voir des exemples d'engagements \u2192",
       research: 'Recherche',
       briefings: 'Notes de gouvernance',
-      incidentsToControls: 'Des incidents aux contr\u00f4les \u2192',
+      incidentsToControls: 'Des incidents aux contrôles \u2192',
       resources: 'Ressources',
-      library: 'Biblioth\u00e8que de gouvernance',
+      library: 'Bibliothèque de gouvernance',
       frameworksStandards: 'Cadres & normes \u2192'
     }
   },
-
   starterKit: {
     title: "Trousse de d\u00e9marrage en gouvernance IA",
     description: "Mod\u00e8les gratuits pour commencer la classification des risques et la mise en place de contr\u00f4les d\u00e8s aujourd\u2019hui.",
