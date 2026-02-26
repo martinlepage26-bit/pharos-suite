@@ -409,37 +409,41 @@ export const en = {
     questions: [
       {
         question: "What is AI Governance Practice?",
-        answer: "AI governance practice is the operational system that makes AI use legible, controllable, and defensible in your organization. It's not a policy document that sits in a drawer. It's a set of working structures: how you classify risk, who approves what, what controls apply at each tier, and how you maintain evidence that decisions were made responsibly. The goal is a system people can actually follow while they work\u2014not a compliance burden that gets ignored until something goes wrong."
+        answer: "AI governance practice is the operational system that makes AI use legible, controllable, and defensible in your organization. In Canada, this means aligning with the Treasury Board\u2019s Directive on Automated Decision-Making, the Algorithmic Impact Assessment, and emerging obligations under the Artificial Intelligence and Data Act (AIDA). It\u2019s not a policy document that sits in a drawer\u2014it\u2019s a set of working structures: how you classify risk, who approves what, what controls apply at each tier, and how you maintain evidence that decisions were made responsibly."
       },
       {
-        question: "What's the difference between AI governance and AI ethics?",
-        answer: "AI ethics is about values and principles\u2014what you believe AI should and shouldn't do. AI governance is about operationalization\u2014how you translate those principles into decision rights, controls, and evidence. Ethics tells you that fairness matters. Governance tells you who reviews the fairness metrics, what thresholds trigger escalation, and where the documentation lives. Both matter, but governance is what makes ethics enforceable."
+        question: "What\u2019s the difference between AI governance and AI ethics?",
+        answer: "AI ethics is about values and principles\u2014what you believe AI should and shouldn\u2019t do. Canada\u2019s Montr\u00e9al Declaration for Responsible AI is a leading example. AI governance is about operationalization\u2014how you translate those principles into decision rights, controls, and evidence. Ethics tells you that fairness matters. Governance tells you who reviews the fairness metrics, what thresholds trigger escalation, and where the documentation lives. Both matter, but governance is what makes ethics enforceable and auditable."
       },
       {
         question: "What do auditors and procurement teams actually want?",
-        answer: "They want to feel confident saying yes. They're looking for evidence that someone was responsible on purpose: documented risk classification, clear decision authority, defined controls, testing records, and monitoring plans. They want to see that you knew what could go wrong and built structures to catch it. The key insight is that auditors don't evaluate intentions\u2014they evaluate artifacts. If you can't produce the evidence, the governance didn't happen.",
-        cta: 'requestAuditChecklist'
+        answer: "They want to feel confident saying yes. In Canada, federal procurement increasingly expects documented AI governance: risk classification aligned with the Algorithmic Impact Assessment, clear decision authority, defined controls, testing records, and monitoring plans. Provincial frameworks like Qu\u00e9bec\u2019s Law 25 add obligations around automated decision-making. Auditors don\u2019t evaluate intentions\u2014they evaluate artifacts. If you can\u2019t produce the evidence, the governance didn\u2019t happen.",
+        cta: "requestAuditChecklist"
+      },
+      {
+        question: "How does Canadian AI governance differ from the US and EU?",
+        answer: "Canada\u2019s approach is distinct. The EU AI Act takes a prescriptive, risk-based regulatory approach with enforcement penalties. The US relies more on voluntary frameworks like NIST AI RMF and sector-specific guidance (e.g., the DOL\u2019s AI Literacy Framework). Canada sits between the two: the Directive on Automated Decision-Making is mandatory for federal institutions, while AIDA (under Bill C-27) will introduce broader obligations. Canada also has unique instruments like the Algorithmic Impact Assessment tool and strong provincial frameworks, particularly in Qu\u00e9bec. Organizations operating across jurisdictions need governance systems that satisfy Canadian requirements while remaining defensible under US and EU scrutiny."
       },
       {
         question: "How do you handle third-party/vendor AI?",
-        answer: "Vendor AI requires the same governance discipline as internal AI, but with additional controls around visibility, contractual requirements, and reassessment triggers. We build vendor review frameworks that include: due diligence questionnaires, evaluation criteria mapped to your risk tiers, contractual language for auditability and change notification, and integration-level monitoring. The goal is leverage\u2014you can say yes to vendors without surrendering your ability to govern what they do inside your organization."
+        answer: "Vendor AI requires the same governance discipline as internal AI, with additional controls around visibility, contractual requirements, and reassessment triggers. Under Canadian frameworks, vendor AI used in federal procurement must still meet the Directive on Automated Decision-Making requirements. We build vendor review frameworks that include: due diligence questionnaires, evaluation criteria mapped to your risk tiers, contractual language for auditability and change notification, and integration-level monitoring. The goal is leverage\u2014you can say yes to vendors without surrendering your ability to govern what they do inside your organization."
       },
       {
         question: "Will governance slow our teams down?",
-        answer: "Bad governance slows teams down. Good governance accelerates them by removing uncertainty. When teams know the rules\u2014what's allowed, what requires approval, what documentation is expected\u2014they stop negotiating the same questions repeatedly. Governance done right is a guardrail, not a speed bump. It reduces rework, prevents surprise escalations, and builds the audit trail as you go rather than scrambling to reconstruct it later."
+        answer: "Bad governance slows teams down. Good governance accelerates them by removing uncertainty. When teams know the rules\u2014what\u2019s allowed, what requires approval, what documentation is expected\u2014they stop negotiating the same questions repeatedly. Governance done right is a guardrail, not a speed bump. It reduces rework, prevents surprise escalations, and builds the audit trail as you go rather than scrambling to reconstruct it later."
       },
       {
-        question: "What's a typical engagement look like?",
-        answer: "Most engagements start with a diagnostic: what AI systems exist, what governance structures are in place, and what gaps create risk. Then we build incrementally: risk classification first, then decision rights and approval flows, then controls mapped to tiers, then evidence architecture. The output is a governance operating model your teams can execute. For ongoing support, the Oversight Retainer keeps governance current as your AI portfolio evolves.",
-        cta: 'engagementButtons'
+        question: "What\u2019s a typical engagement look like?",
+        answer: "Most engagements start with a diagnostic: what AI systems exist, what governance structures are in place, and what gaps create risk under Canadian requirements. Then we build incrementally: risk classification aligned with the Algorithmic Impact Assessment, then decision rights and approval flows, then controls mapped to tiers, then evidence architecture. The output is a governance operating model your teams can execute. For ongoing support, the Oversight Retainer keeps governance current as your AI portfolio and the regulatory landscape evolve.",
+        cta: "engagementButtons"
       },
       {
         question: "How do I know if my organization needs AI governance?",
-        answer: "If you're deploying AI systems that affect customers, employees, or business decisions, you need governance. The question isn't whether\u2014it's how much. Start with: Do you have an inventory of AI use cases? Can you classify them by risk? Do you know who can approve what? Can you produce evidence of your controls? If the answer to any of these is 'no' or 'not sure,' governance work is overdue."
+        answer: "If you\u2019re deploying AI systems that affect customers, employees, or business decisions in Canada, you need governance. Federal institutions are already obligated under the Directive on Automated Decision-Making. Private sector organizations will face obligations under AIDA. Start with: Do you have an inventory of AI use cases? Can you classify them by risk? Do you know who can approve what? Can you produce evidence of your controls? If the answer to any of these is \u2018no\u2019 or \u2018not sure,\u2019 governance work is overdue."
       },
       {
-        question: "What's the relationship between AI governance and model risk management?",
-        answer: "Model risk management (MRM) is a specific discipline, often required in financial services, focused on the technical validation and monitoring of models. AI governance is broader\u2014it includes MRM but also covers decision rights, procurement, vendor management, documentation standards, and organizational accountability. Think of MRM as one control domain within the larger governance architecture."
+        question: "What\u2019s the Pan-Canadian AI Strategy and how does it affect governance?",
+        answer: "The Pan-Canadian AI Strategy, launched in 2017 and renewed in 2021, is Canada\u2019s national framework for advancing AI research and commercialization, administered by CIFAR through three national AI institutes (Vector, Mila, Amii). While the Strategy focuses on research and innovation, it\u2019s created the conditions for AI adoption that now require governance infrastructure. As organizations move from experimentation to production AI, the Strategy\u2019s emphasis on responsible development converges with the operational governance that my practice delivers: risk classification, controls, evidence, and accountability."
       }
     ]
   },
