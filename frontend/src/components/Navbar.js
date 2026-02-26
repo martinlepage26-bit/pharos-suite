@@ -17,13 +17,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full py-4 px-6 md:px-12 flex justify-between items-center bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/5" data-testid="navbar">
-      {/* Logo - ML Monogram with Compass */}
+    <nav className="w-full py-3 px-6 md:px-12 flex justify-between items-center bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/5" data-testid="navbar">
+      {/* Logo - ML Monogram with Compass - 200% bigger */}
       <Link to="/" className="flex items-center" data-testid="logo-link">
         <img 
-          src="/images/ml-monogram.png" 
+          src="/images/ml-monogram-nobg.png" 
           alt="ML" 
-          className="h-10 w-auto"
+          className="h-14 w-auto"
         />
       </Link>
 
