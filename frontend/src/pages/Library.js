@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, Scale, CircleDot, ExternalLink, Wrench, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
+import { BookOpen, Scale, CircleDot, ExternalLink, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Library = () => {
