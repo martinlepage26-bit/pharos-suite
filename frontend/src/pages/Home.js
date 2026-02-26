@@ -59,8 +59,8 @@ const Home = () => {
           {/* Right: Full Logo with white background */}
           <div className="flex justify-center md:justify-end">
             <img 
-              src="/images/logo-home-matched.png" 
-              alt="AI Governance - Practice & Research by Martin Lepage PhD" 
+              src="/images/logo-home-new.png" 
+              alt="AI Governance: Practice & Research by Martin Lepage PhD" 
               className="w-80 md:w-[26rem] h-auto"
             />
           </div>

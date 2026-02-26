@@ -23,7 +23,7 @@ const Footer = () => {
         {/* Monogram on far right - only on non-home pages */}
         {!isHomePage && (
           <img 
-            src="/images/ml-mono-final.png" 
+            src="/images/ml-mono-clean.png" 
             alt="ML" 
             className="h-8 w-auto opacity-40"
           />
