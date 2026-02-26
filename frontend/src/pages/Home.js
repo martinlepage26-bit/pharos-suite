@@ -41,8 +41,8 @@ const Home = () => {
             <div className="space-y-5">
               {capabilities.map((cap, i) => (
                 <div key={i} className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-lg bg-[#4B2ABF]/10 flex items-center justify-center flex-shrink-0">
-                    <cap.icon className="w-4 h-4 text-[#4B2ABF]" />
+                  <div className="w-9 h-9 rounded-lg bg-[#180E66]/10 flex items-center justify-center flex-shrink-0">
+                    <cap.icon className="w-4 h-4 text-[#180E66]" />
                   </div>
                   <div>
                     <p className="font-medium text-[#0B0F1A]">{cap.title}</p>
@@ -68,23 +68,23 @@ const Home = () => {
         <div className="mt-20 pt-12 border-t border-[#0B0F1A]/5">
           <div className="grid md:grid-cols-4 gap-10">
             <Link to="/tool" className="group">
-              <p className="text-xs tracking-widest text-[#4B2ABF] uppercase mb-2">{t.home.sections.assessment}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#4B2ABF] transition-colors mb-1">{t.home.sections.readinessSnapshot}</h3>
+              <p className="text-xs tracking-widest text-[#180E66] uppercase mb-2">{t.home.sections.assessment}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#180E66] transition-colors mb-1">{t.home.sections.readinessSnapshot}</h3>
               <p className="text-[#0B0F1A]/60 text-sm">{t.home.sections.assessMaturity}</p>
             </Link>
             <Link to="/cases" className="group">
-              <p className="text-xs tracking-widest text-[#4B2ABF] uppercase mb-2">{t.home.sections.portfolio}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#4B2ABF] transition-colors mb-1">{t.home.sections.caseStudies}</h3>
+              <p className="text-xs tracking-widest text-[#180E66] uppercase mb-2">{t.home.sections.portfolio}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#180E66] transition-colors mb-1">{t.home.sections.caseStudies}</h3>
               <p className="text-[#0B0F1A]/60 text-sm">{t.home.sections.seeExamples}</p>
             </Link>
             <Link to="/research" className="group">
-              <p className="text-xs tracking-widest text-[#4B2ABF] uppercase mb-2">{t.home.sections.research}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#4B2ABF] transition-colors mb-1">{t.home.sections.briefings}</h3>
+              <p className="text-xs tracking-widest text-[#180E66] uppercase mb-2">{t.home.sections.research}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#180E66] transition-colors mb-1">{t.home.sections.briefings}</h3>
               <p className="text-[#0B0F1A]/60 text-sm">{t.home.sections.incidentsToControls}</p>
             </Link>
             <Link to="/library" className="group">
-              <p className="text-xs tracking-widest text-[#4B2ABF] uppercase mb-2">{t.home.sections.resources}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#4B2ABF] transition-colors mb-1">{t.home.sections.library}</h3>
+              <p className="text-xs tracking-widest text-[#180E66] uppercase mb-2">{t.home.sections.resources}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] group-hover:text-[#180E66] transition-colors mb-1">{t.home.sections.library}</h3>
               <p className="text-[#0B0F1A]/60 text-sm">{t.home.sections.frameworksStandards}</p>
             </Link>
           </div>

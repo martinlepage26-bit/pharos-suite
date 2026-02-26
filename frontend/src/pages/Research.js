@@ -25,7 +25,7 @@ const Research = () => {
           <div className="flex items-center justify-center gap-4 text-sm mb-6">
             {[t.research.signal, t.research.pressure, t.research.control, t.research.artifact, t.research.evidence].map((label, i, arr) => (
               <span key={i}>
-                <span className="text-[#4B2ABF] font-medium">{label}</span>
+                <span className="text-[#180E66] font-medium">{label}</span>
                 {i < arr.length - 1 && <span className="text-gray-400 ml-4">&rarr;</span>}
               </span>
             ))}
@@ -34,7 +34,7 @@ const Research = () => {
           <p className="text-gray-600 mb-8">{t.research.howP2}</p>
         </div>
 
-        <div className="mb-12 p-6 bg-gradient-to-r from-[#1A1033] to-[#4B2ABF] rounded-2xl">
+        <div className="mb-12 p-6 bg-gradient-to-r from-[#180E66] to-[#180E66] rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredFramework}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredFrameworkSubtitle}</p>
@@ -52,12 +52,12 @@ const Research = () => {
           </div>
           <div className="flex flex-wrap gap-2 mb-8">
             <button onClick={() => setSelectedContext('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedContext === 'all' ? 'bg-[#4B2ABF] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#4B2ABF] hover:text-[#4B2ABF]'}`}>
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedContext === 'all' ? 'bg-[#180E66] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#180E66] hover:text-[#180E66]'}`}>
               {t.research.all}
             </button>
             {contexts.map((context) => (
               <button key={context.id} onClick={() => setSelectedContext(context.id)} data-testid={`context-${context.id}`}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedContext === context.id ? 'bg-[#4B2ABF] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#4B2ABF] hover:text-[#4B2ABF]'}`}>
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedContext === context.id ? 'bg-[#180E66] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#180E66] hover:text-[#180E66]'}`}>
                 {context.title}
               </button>
             ))}
@@ -71,18 +71,18 @@ const Research = () => {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-4 h-4 text-[#4B2ABF]" />
-                    <span className="text-xs font-medium text-[#4B2ABF] uppercase tracking-wide">{paper.type}</span>
+                    <FileText className="w-4 h-4 text-[#180E66]" />
+                    <span className="text-xs font-medium text-[#180E66] uppercase tracking-wide">{paper.type}</span>
                     <span className="text-gray-300">·</span>
                     <span className="text-xs text-gray-500 flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {new Date(paper.date).toLocaleDateString(dateLocale, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
-                  <h4 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#4B2ABF] transition-colors">{paper.title}</h4>
+                  <h4 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#180E66] transition-colors">{paper.title}</h4>
                   <p className="text-gray-600 text-sm line-clamp-2">{paper.abstract}</p>
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#4B2ABF] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#180E66] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
               </div>
             </button>
           ))}
@@ -96,7 +96,7 @@ const Research = () => {
             <div className="flex items-start justify-between gap-4 p-6 border-b border-gray-100 bg-white">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-[#4B2ABF] uppercase tracking-wide">{selectedPaper.type}</span>
+                  <span className="text-xs font-medium text-[#180E66] uppercase tracking-wide">{selectedPaper.type}</span>
                   <span className="text-gray-300">·</span>
                   <span className="text-xs text-gray-500">{new Date(selectedPaper.date).toLocaleDateString(dateLocale, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>

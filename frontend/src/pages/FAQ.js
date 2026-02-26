@@ -18,7 +18,7 @@ const FAQ = () => {
               <p className="text-gray-600 leading-relaxed mb-4">{faq.answer}</p>
               
               {faq.cta === 'requestAuditChecklist' && (
-                <Link to="/connect" className="text-[#4B2ABF] font-medium hover:underline text-sm">
+                <Link to="/connect" className="text-[#180E66] font-medium hover:underline text-sm">
                   {t.faq.requestAuditChecklist} &rarr;
                 </Link>
               )}
@@ -34,7 +34,7 @@ const FAQ = () => {
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-gradient-to-r from-[#1A1033] to-[#4B2ABF] rounded-2xl text-white">
+        <div className="mt-12 p-6 bg-gradient-to-r from-[#180E66] to-[#180E66] rounded-2xl text-white">
           <h3 className="font-serif text-xl font-semibold mb-2">{t.faq.stillHaveQuestions}</h3>
           <p className="text-white/80 mb-4">{t.faq.stillHaveQuestionsDesc}</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.faq.bookDebrief}</Link>

@@ -25,9 +25,9 @@ const Navbar = () => {
             key={item.path}
             to={item.path}
             data-testid={`nav-${item.path.replace('/', '') || 'home'}`}
-            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#4B2ABF] pb-1 ${
+            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#180E66] pb-1 ${
               location.pathname === item.path
-                ? 'text-[#0B0F1A] border-b-2 border-[#1A1033]'
+                ? 'text-[#0B0F1A] border-b-2 border-[#180E66]'
                 : 'text-[#0B0F1A]/50 border-b-2 border-transparent'
             }`}
           >
@@ -37,7 +37,7 @@ const Navbar = () => {
         <button
           onClick={toggleLanguage}
           data-testid="lang-toggle"
-          className="ml-2 px-2.5 py-1 text-xs font-medium tracking-wide text-[#0B0F1A]/60 hover:text-[#4B2ABF] transition-colors"
+          className="ml-2 px-2.5 py-1 text-xs font-medium tracking-wide text-[#0B0F1A]/60 hover:text-[#180E66] transition-colors"
         >
           {language === 'en' ? 'FR' : 'EN'}
         </button>

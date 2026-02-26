@@ -14,7 +14,7 @@ const Footer = () => {
           </p>
           <Link 
             to="/admin" 
-            className="w-1.5 h-1.5 rounded-full bg-[#0B0F1A]/10 hover:bg-[#4B2ABF] transition-colors"
+            className="w-1.5 h-1.5 rounded-full bg-[#0B0F1A]/10 hover:bg-[#180E66] transition-colors"
             title=""
             data-testid="admin-link"
           />

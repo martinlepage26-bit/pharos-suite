@@ -26,7 +26,7 @@ const StarterKitCTA = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-[#1A1033] via-[#2D1A5E] to-[#4B2ABF] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
+    <div className="bg-gradient-to-br from-[#180E66] via-[#2D1A5E] to-[#180E66] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
       <div className="flex items-start gap-4 mb-6">
         <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
           <Download className="w-7 h-7" />
@@ -62,7 +62,7 @@ const StarterKitCTA = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t.starterKit.emailPlaceholder}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4B2ABF]"
+            className="w-full pl-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#180E66]"
             data-testid="starter-kit-email"
           />
         </div>
