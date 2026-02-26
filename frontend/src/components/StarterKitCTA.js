@@ -26,7 +26,9 @@ const StarterKitCTA = () => {
   ];
 
   return (
-    <div className="bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#3D2F8A_80%,rgba(255,255,255,0.2)_100%)] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
+    <div className="bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl p-8 text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden" data-testid="starter-kit-cta">
+      {/* Shine effect */}
+      <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
       <div className="flex items-start gap-4 mb-6">
         <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
           <Download className="w-7 h-7" />
