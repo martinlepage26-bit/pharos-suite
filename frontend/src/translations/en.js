@@ -13,7 +13,7 @@ export const en = {
   home: {
     title: 'AI Governance',
     subtitle: 'Strategy & Oversight',
-    description: 'Governance systems aligned with Canadian requirements—Treasury Board directives, Quebec's Law 25, and emerging AIDA obligations—that make AI decisions documented, reviewable, and defensible.',
+    description: 'Governance systems aligned with Canadian requirements—Treasury Board directives, Quebec\'s Law 25, and emerging AIDA obligations—that make AI decisions documented, reviewable, and defensible.',
     keywords: 'CANADIAN COMPLIANCE · QUEBEC LAW 25 · EVIDENCE TRAIL',
     viewServices: 'View Services',
     bookDebrief: 'Book a Debrief',
