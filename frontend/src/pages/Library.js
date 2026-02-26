@@ -165,7 +165,7 @@ const Library = () => {
               <div key={key} className="bg-white border-l-4 border-[#0D0A2E] rounded-xl shadow-[0_4px_16px_rgba(11,15,26,0.06)] p-5 card-hover-lift" data-testid={`library-section-${idx}`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0D0A2E]/15 to-[#2D2380]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#0D0A2E]" /></div>
-                  <h2 className="font-semibold text-xl text-[#0B0F1A]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}>{t.library.sections[key]}</h2>
+                  <h2 className="font-semibold text-xl text-[#1a1a1a]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}>{t.library.sections[key]}</h2>
                 </div>
                 <div className="space-y-2">
                   {sectionItems[idx].map((item, i) => (
