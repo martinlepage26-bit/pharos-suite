@@ -59,7 +59,7 @@ const Home = () => {
               </div>
             </div>
             
-            <p className="text-xs tracking-widest text-[#0B0F1A]/35 uppercase mb-8">{t.home.keywords}</p>
+            <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-8">{t.home.keywords}</p>
             
             <div className="flex flex-wrap gap-4 mb-12">
               <Link to="/services" className="btn-primary inline-flex items-center gap-2" data-testid="view-services-btn">
