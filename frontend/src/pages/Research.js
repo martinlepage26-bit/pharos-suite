@@ -34,7 +34,9 @@ const Research = () => {
           <p className="text-gray-600 mb-8">{t.research.howP2}</p>
         </div>
 
-        <div className="mb-12 p-6 bg-[linear-gradient(to_right,#2A206B_0%,#2A206B_40%,#3D2F8A_80%,rgba(255,255,255,0.2)_100%)] rounded-2xl">
+        <div className="mb-12 p-6 bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
+          {/* Shine effect */}
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredFramework}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredFrameworkSubtitle}</p>
