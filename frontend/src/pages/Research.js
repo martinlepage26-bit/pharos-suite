@@ -42,7 +42,7 @@ const Research = () => {
             <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredResearch}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredResearchSubtitle}</p>
           </div>
-          <p className="text-white/90 mb-4">{t.research.featuredFrameworkDesc}</p>
+          <p className="text-white/90 mb-4">{t.research.featuredResearchDesc}</p>
           <p className="text-white/70 text-sm italic">
             <span className="font-medium text-white">{t.research.professionalNote}</span> {t.research.professionalNoteText}
           </p>
