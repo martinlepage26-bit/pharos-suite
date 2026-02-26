@@ -22,26 +22,35 @@ const Home = () => {
             <h1 className="text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontVariant: 'small-caps'}}>
               {t.home.title}
             </h1>
-            <div className="flex items-center justify-center mt-2" style={{width: 'fit-content'}}>
-              <div className="h-[3px] flex-1 bg-gradient-to-r from-transparent via-[#0B0F1A] to-[#0B0F1A]/80" style={{minWidth: '140px'}}></div>
-              <div className="relative mx-0">
-                <div className="w-[3px] h-6 bg-[#2D2380] transform rotate-0" style={{
-                  clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                  width: '8px',
-                  height: '24px',
-                  background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)'
-                }}></div>
-              </div>
-              <div className="h-[3px] flex-1 bg-gradient-to-l from-transparent via-[#0B0F1A] to-[#0B0F1A]/80" style={{minWidth: '140px'}}></div>
+            <div className="flex items-center justify-center mt-3 mb-4" style={{width: '100%', maxWidth: '480px'}}>
+              <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#0B0F1A]/60 to-[#0B0F1A]"></div>
+              <div className="mx-1" style={{
+                width: '6px',
+                height: '20px',
+                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
+              }}></div>
+              <div className="h-[2px] flex-1 bg-gradient-to-l from-transparent via-[#0B0F1A]/60 to-[#0B0F1A]"></div>
             </div>
-            <p className="text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontStyle: 'italic', fontWeight: 600}}>
+            <p className="text-2xl md:text-3xl text-[#0B0F1A]/60" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontStyle: 'italic', fontWeight: 600}}>
               {t.home.subtitle}
             </p>
             
-            <div className="mt-8 mb-4 space-y-1">
-              <p className="text-[#0B0F1A]/80 text-sm"><span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span> Treasury Board directives</p>
-              <p className="text-[#0B0F1A]/80 text-sm"><span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span> Quebec's Law&nbsp;25</p>
-              <p className="text-[#0B0F1A]/80 text-sm"><span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span> Emerging AIDA obligations</p>
+            <div className="mt-8 mb-4">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[#0B0F1A]/80">
+                <span className="inline-flex items-center text-sm">
+                  <span className="w-2 h-2 mr-2 bg-gradient-to-br from-[#7b2cbf] to-[#2D2380] rotate-45"></span>
+                  Treasury Board directives
+                </span>
+                <span className="inline-flex items-center text-sm">
+                  <span className="w-2 h-2 mr-2 bg-gradient-to-br from-[#7b2cbf] to-[#2D2380] rotate-45"></span>
+                  Quebec's Law&nbsp;25
+                </span>
+                <span className="inline-flex items-center text-sm">
+                  <span className="w-2 h-2 mr-2 bg-gradient-to-br from-[#7b2cbf] to-[#2D2380] rotate-45"></span>
+                  Emerging AIDA obligations
+                </span>
+              </div>
               
               <div className="flex items-center gap-3 pt-3">
                 <span className="text-sm font-semibold tracking-wide text-[#0B0F1A] uppercase">Product</span>
