@@ -1,204 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── AI Governance Brand System ─── */
+/* Colors: Black + Indigo-Purple only */
+/* Typography: Source Serif 4 (authority) + IBM Plex Sans (clarity) */
+
 :root {
-  --navy: #1a2744;
-  --navy-light: #2a3a5c;
-  --purple-accent: #6366f1;
-  --purple-light: #8b5cf6;
-  --purple-muted: #a78bfa;
-  --purple-soft: #c4b5fd;
-  --muted-purple: #8b8fa3;
-  --light-bg: #f8f9fc;
-  --card-bg: #ffffff;
-  --text-dark: #1a2744;
-  --text-muted: #6b7280;
-  --accent: #3d4a6b;
+  /* Core palette - two colors only */
+  --black: #0a0a0a;
+  --indigo: #6366f1;
+  
+  /* Derived tones (same hue, different opacity) */
+  --indigo-10: rgba(99, 102, 241, 0.10);
+  --indigo-15: rgba(99, 102, 241, 0.15);
+  --black-60: rgba(10, 10, 10, 0.60);
+  --black-40: rgba(10, 10, 10, 0.40);
+  
+  /* Backgrounds */
+  --bg-white: #ffffff;
+  --bg-off-white: #fafafa;
+  
+  /* Typography */
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
 }
 
+/* ─── Base Typography ─── */
 body {
-  margin: 0;
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-family: var(--font-sans);
+  color: var(--black);
+  background: var(--bg-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--light-bg);
-  color: var(--text-dark);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-serif);
   font-weight: 600;
+  color: var(--black);
 }
 
-.font-serif {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-}
-
-.font-sans {
-  font-family: 'DM Sans', sans-serif;
-}
-
-/* Button styles with purple hints */
-.btn-primary {
-  background-color: var(--navy);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: var(--purple-accent);
-}
-
-.btn-secondary {
-  background-color: var(--muted-purple);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.btn-secondary:hover {
-  background-color: var(--purple-light);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--text-dark);
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.btn-ghost:hover {
-  color: var(--purple-accent);
-}
-
-/* Card styles */
-.card {
-  background: var(--card-bg);
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
-}
-
-.card-hover {
-  transition: all 0.2s ease;
-}
-
-.card-hover:hover {
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
-  border-color: rgba(99, 102, 241, 0.2);
-}
-
-/* Section styles */
-.section-subtitle {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* Navigation active underline with purple */
-.nav-link-active {
-  border-bottom: 2px solid var(--purple-accent);
-}
-
-/* Purple accents */
-.text-purple {
-  color: var(--purple-accent);
-}
-
-.bg-purple-soft {
-  background-color: rgba(167, 139, 250, 0.1);
-}
-
-.border-purple {
-  border-color: var(--purple-accent);
-}
-
-/* Smooth transitions */
-* {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: ease;
-  transition-duration: 150ms;
-}
-
-/* Form inputs */
-input, textarea, select {
-  font-family: 'DM Sans', sans-serif;
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--purple-accent);
-}
-
-/* Scrollbar with purple */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--light-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--purple-muted);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--purple-accent);
-}
-
-/* Link hover with purple */
-a:hover {
-  color: var(--purple-accent);
-}
-
-/* Purple gradient for special elements */
-.purple-gradient {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--purple-accent) 100%);
-}
-
-/* Research paper cards */
-.paper-card {
-  border-left: 3px solid var(--purple-accent);
-}
-
-.paper-card:hover {
-  border-left-color: var(--purple-light);
+/* ─── Selection ─── */
+::selection {
+  background: var(--indigo-15);
+  color: var(--black);
 }
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 30% 18%;
+    --foreground: 0 0% 4%;
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 18%;
+    --card-foreground: 0 0% 4%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 18%;
+    --popover-foreground: 0 0% 4%;
     --primary: 239 84% 67%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 230 10% 64%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 220 20% 97%;
-    --muted-foreground: 220 10% 40%;
-    --accent: 263 70% 50%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 4%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 239 84% 67%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 239 84% 67%;
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 }
 
