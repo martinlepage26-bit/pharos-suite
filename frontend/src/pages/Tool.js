@@ -76,7 +76,7 @@ const Tool = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-8 px-6" data-testid="tool-page">
       <div className="max-w-[980px] mx-auto mb-4">
-        <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#0B0F1A] mb-1">{t.tool.title}</h1>
+        <h1 className="page-title text-2xl md:text-3xl mb-1">{t.tool.title}</h1>
         <p className="text-gray-600 text-sm max-w-2xl">{t.tool.description}</p>
         <div className="flex gap-3 mt-3 text-xs tracking-wider uppercase">
           <span className={step >= 1 ? 'text-[#0D0A2E] font-semibold' : 'text-gray-400'}>{t.tool.steps.sector}</span>
