@@ -31,14 +31,15 @@ const Cases = () => {
 
         {/* Sector Cards Grid - 2 rows of 3, then 1 row of 1 centered */}
         <div className="mb-12">
-          <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-5">Sectors We Serve</h2>
+          <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-5">{t.cases.sectorsWeServe}</h2>
           
           {/* First row: 3 cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            {sectorCards.slice(0, 3).map((sector) => {
-              const Icon = sector.icon;
+            {sectorKeys.slice(0, 3).map((key, i) => {
+              const Icon = sectorIcons[key];
+              const sector = t.cases.sectorCards[key];
               return (
-                <div key={sector.id} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sector.id}`}>
+                <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sectorIds[i]}`}>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-4 h-4 text-[#0D0A2E]" />
@@ -48,10 +49,10 @@ const Cases = () => {
                   <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
                   <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
                   <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
-                    <span className="font-medium text-[#0B0F1A]">Outputs:</span> {sector.deliverable}
+                    <span className="font-medium text-[#0B0F1A]">{t.cases.outputs}:</span> {sector.deliverable}
                   </div>
                   <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
-                    Assess readiness <ChevronRight className="w-3 h-3" />
+                    {t.cases.assessReadiness} <ChevronRight className="w-3 h-3" />
                   </Link>
                 </div>
               );
@@ -60,10 +61,11 @@ const Cases = () => {
 
           {/* Second row: 3 cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            {sectorCards.slice(3, 6).map((sector) => {
-              const Icon = sector.icon;
+            {sectorKeys.slice(3, 6).map((key, i) => {
+              const Icon = sectorIcons[key];
+              const sector = t.cases.sectorCards[key];
               return (
-                <div key={sector.id} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sector.id}`}>
+                <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sectorIds[i + 3]}`}>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-4 h-4 text-[#0D0A2E]" />
@@ -73,10 +75,10 @@ const Cases = () => {
                   <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
                   <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
                   <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
-                    <span className="font-medium text-[#0B0F1A]">Outputs:</span> {sector.deliverable}
+                    <span className="font-medium text-[#0B0F1A]">{t.cases.outputs}:</span> {sector.deliverable}
                   </div>
                   <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
-                    Assess readiness <ChevronRight className="w-3 h-3" />
+                    {t.cases.assessReadiness} <ChevronRight className="w-3 h-3" />
                   </Link>
                 </div>
               );
@@ -86,10 +88,11 @@ const Cases = () => {
           {/* Third row: 1 card centered */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-start-2">
-              {sectorCards.slice(6, 7).map((sector) => {
-                const Icon = sector.icon;
+              {sectorKeys.slice(6, 7).map((key) => {
+                const Icon = sectorIcons[key];
+                const sector = t.cases.sectorCards[key];
                 return (
-                  <div key={sector.id} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sector.id}`}>
+                  <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sectorIds[6]}`}>
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-4 h-4 text-[#0D0A2E]" />
@@ -99,10 +102,10 @@ const Cases = () => {
                     <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
                     <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
                     <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
-                      <span className="font-medium text-[#0B0F1A]">Outputs:</span> {sector.deliverable}
+                      <span className="font-medium text-[#0B0F1A]">{t.cases.outputs}:</span> {sector.deliverable}
                     </div>
                     <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
-                      Assess readiness <ChevronRight className="w-3 h-3" />
+                      {t.cases.assessReadiness} <ChevronRight className="w-3 h-3" />
                     </Link>
                   </div>
                 );
