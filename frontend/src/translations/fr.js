@@ -350,19 +350,65 @@ export const fr = {
   },
 
   cases: {
-    title: '\u00c9tudes de cas',
-    description: "Mandats s\u00e9lectionn\u00e9s illustrant les d\u00e9fis et solutions de gouvernance \u00e0 travers les secteurs. D\u00e9tails anonymis\u00e9s pour prot\u00e9ger la confidentialit\u00e9 des clients.",
-    keywords: 'SERVICES FINANCIERS \u00B7 SANT\u00c9 \u00B7 ENTREPRISE \u00B7 SECTEUR PUBLIC',
-    challenge: 'D\u00e9fi',
+    title: 'Études de cas',
+    description: "Mandats sélectionnés illustrant les défis et solutions de gouvernance à travers les secteurs. Détails anonymisés pour protéger la confidentialité des clients.",
+    keywords: 'SERVICES FINANCIERS · SANTÉ · ENTREPRISE · SECTEUR PUBLIC',
+    sectorsWeServe: 'Secteurs que nous desservons',
+    outputs: 'Livrables',
+    assessReadiness: 'Évaluer la préparation',
+    challenge: 'Défi',
     approach: 'Approche',
-    outcomes: 'R\u00e9sultats',
+    outcomes: 'Résultats',
     deliverables: 'Livrables',
-    discussChallenge: 'Discuter d\u2019un d\u00e9fi similaire',
-    facingChallenge: 'Face \u00e0 un d\u00e9fi similaire\u00a0?',
-    facingChallengeDesc: "R\u00e9servez un entretien pour discuter de la fa\u00e7on dont ces approches pourraient s\u2019appliquer \u00e0 votre organisation.",
-    bookDebrief: 'R\u00e9server un entretien'
+    discussChallenge: "Discuter d'un défi similaire",
+    facingChallenge: 'Face à un défi similaire ?',
+    facingChallengeDesc: "Réservez un entretien pour discuter de la façon dont ces approches pourraient s'appliquer à votre organisation.",
+    bookDebrief: 'Réserver un entretien',
+    sectorCards: {
+      regulated: {
+        title: 'Systèmes réglementés',
+        subtitle: 'Charge probante élevée, approbations strictes.',
+        body: "L'IA dans les environnements réglementés exige une gouvernance qui satisfait l'examen externe. Nous construisons une classification alignée sur les exigences sectorielles et des pistes probantes que les auditeurs attendent.",
+        deliverable: 'Hiérarchisation des risques, flux d\'approbation, documentation prête pour l\'audit.'
+      },
+      enterpriseSaas: {
+        title: 'SaaS Entreprise',
+        subtitle: 'Gouvernance qui suit votre cadence de publication.',
+        body: "Les équipes SaaS ont besoin d'une gouvernance qui suit le rythme de la livraison continue. Nous concevons des contrôles légers qui préviennent la dérive sans bloquer la vélocité de déploiement.",
+        deliverable: 'Intake de gouvernance des fonctionnalités, revue IA des fournisseurs, collecte de preuves.'
+      },
+      procurement: {
+        title: 'Approvisionnement & Risque fournisseur',
+        subtitle: 'Les questionnaires deviennent des contrôles.',
+        body: "L'examen d'approvisionnement s'intensifie. Nous transformons la diligence raisonnable en gouvernance opérationnelle avec des preuves contractuelles et des déclencheurs de réévaluation.",
+        deliverable: 'Questionnaires fournisseurs, grilles d\'évaluation, modèles de contrat.'
+      },
+      publicSector: {
+        title: 'Secteur public',
+        subtitle: 'Contestabilité et équité procédurale.',
+        body: "L'IA du secteur public exige une responsabilité face aux citoyens. Nous construisons des voies d'appel, des politiques de rétention des traces et une surveillance de l'équité qui résiste à l'examen.",
+        deliverable: 'Procédures de contestabilité, tableaux de bord d\'équité, politiques de rétention.'
+      },
+      financial: {
+        title: 'Systèmes financiers',
+        subtitle: "Les modèles qui déplacent de l'argent ont besoin de contrôles d'exposition.",
+        body: "L'IA financière comporte un risque concentré. Nous concevons des contrôles pour la matérialité des modèles, la logique d'action défavorable et les tests de résistance que les régulateurs attendent.",
+        deliverable: 'Cadre de risque de modèle, contrôles d\'exposition, cartographie réglementaire.'
+      },
+      construction: {
+        title: 'Construction & Infrastructure',
+        subtitle: 'Sécurité de chantier et automatisation opérationnelle.',
+        body: "La gouvernance IA de la construction doit survivre à l'examen des incidents. Nous construisons des pistes probantes pour la technologie de sécurité, le suivi des actifs et les systèmes de maintenance prédictive.",
+        deliverable: 'Gouvernance de la sécurité, contrôles IA des équipements, documentation des incidents.'
+      },
+      governance: {
+        title: 'Modèle opérationnel de gouvernance',
+        subtitle: 'Droits de décision et portes de cycle de vie.',
+        body: "Les organisations ont besoin d'un modèle opérationnel de gouvernance qui évolue. Nous concevons les droits de décision, les flux d'approbation et l'architecture probante qui grandit avec votre portefeuille IA.",
+        deliverable: 'Matrice RACI, calendrier de gouvernance, portes de cycle de vie.'
+      }
+    }
   },
-
   research: {
     title: 'Recherche',
     description: "Cette recherche traduit les pressions de gouvernance IA en clart\u00e9 op\u00e9rationnelle\u00a0: contr\u00f4les, portes de cycle de vie, artefacts d\u2019approvisionnement et preuves pr\u00eates pour l\u2019audit. Chaque note se concentre sur les d\u00e9cisions pratiques que les institutions doivent prendre lors du d\u00e9ploiement, de l\u2019achat ou de la supervision de syst\u00e8mes IA.",
