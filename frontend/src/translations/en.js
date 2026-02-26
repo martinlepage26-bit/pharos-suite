@@ -384,16 +384,16 @@ export const en = {
 
   library: {
     title: 'AI Governance Library',
-    description: 'A curated reference hub: frameworks, policy sources, standards, and ongoing developments for AI governance practitioners. These resources inform the analytical approach used in client engagements.',
-    keywords: 'FRAMEWORKS \u00B7 REGULATIONS \u00B7 STANDARDS \u00B7 DEVELOPMENTS',
+    description: 'A curated reference hub grounded in Canada\u2019s governance landscape. Canadian frameworks and legislation form the foundation; international standards from the US and EU are provided for comparison and cross-jurisdictional awareness.',
+    keywords: 'CANADIAN FRAMEWORKS \u00B7 LEGISLATION \u00B7 INTERNATIONAL COMPARISON \u00B7 STANDARDS',
     sections: {
-      foundational: 'Foundational Frameworks',
-      regulatory: 'Regulatory & Policy Sources',
-      standards: 'Standards & Technical Bodies',
-      ongoing: 'Ongoing Developments'
+      canadian: 'Canadian Frameworks & Legislation',
+      canadianOrgs: 'Canadian Standards & Organizations',
+      international: 'International Frameworks (Comparison)',
+      standards: 'Standards & Reference Bodies'
     },
     note: 'Note:',
-    noteText: 'This library is curated for AI governance practitioners. Links are provided for reference and do not constitute endorsement. Always verify current versions and applicability to your jurisdiction.'
+    noteText: 'This library is curated for AI governance practitioners operating in or advising Canadian organizations. International references are included for cross-jurisdictional comparison. Always verify current versions and applicability to your province and sector.'
   },
 
   faq: {
