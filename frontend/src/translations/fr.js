@@ -260,20 +260,20 @@ export const fr = {
 
   about: {
     title: '\u00c0 propos',
-    description: "Une gouvernance utilisable sous contraintes r\u00e9elles\u00a0: droits de d\u00e9cision, contr\u00f4les et documentation qui tiennent sous examen.",
-    keywords: 'PRATIQUE \u00B7 APPROCHE \u00B7 PARCOURS',
-    practiceTitle: "Ce que signifie la Pratique de gouvernance IA",
-    practiceP1: "La gouvernance IA n\u2019est pas un PDF de politiques.",
-    practiceP1b: "C\u2019est un syst\u00e8me que les gens peuvent r\u00e9ellement utiliser\u00a0: une fa\u00e7on de classifier les risques, d\u2019appliquer les bons contr\u00f4les, de d\u00e9finir qui d\u00e9tient les d\u00e9cisions et de garder un registre de ce qui a \u00e9t\u00e9 d\u00e9cid\u00e9, pourquoi et par qui.",
+    description: "Une gouvernance bâtie pour le contexte canadien : directives fédérales, Loi 25 du Québec et exigences distinctes de l'écosystème IA canadien.",
+    keywords: 'MONTRÉAL · QUÉBEC · CANADA',
+    practiceTitle: "Ce que signifie la Pratique de gouvernance IA au Canada",
+    practiceP1: "La gouvernance IA au Canada n'est pas un PDF de politiques.",
+    practiceP1b: "C'est un système aligné sur les directives du Conseil du Trésor, les exigences de la Loi 25 du Québec en matière de décisions automatisées et les obligations émergentes de la LIAD—une façon de classifier les risques, d'appliquer les bons contrôles et de maintenir des preuves qui satisfont les régulateurs canadiens.",
     practiceP2: 'Mon travail',
-    practiceP2b: "consiste \u00e0 vous aider \u00e0 b\u00e2tir ce syst\u00e8me dans votre organisation\u00a0: cartographier les cas d\u2019utilisation IA, d\u00e9finir des niveaux de risque pratiques, \u00e9tablir les approbations et droits de d\u00e9cision, et livrer les mod\u00e8les et la documentation attendus par les acheteurs et les auditeurs.",
+    practiceP2b: "consiste à aider les organisations canadiennes à bâtir une gouvernance qui répond aux exigences fédérales et provinciales : inventaires de cas d'utilisation structurés pour l'Évaluation de l'incidence algorithmique, niveaux de risque qui répondent aux obligations de la Loi 25, et documentation qui satisfait le Conseil du Trésor et la Commission d'accès à l'information.",
     steps: {
-      classify: { title: 'Classifier les risques', description: "B\u00e2tir un inventaire des cas d\u2019utilisation et des fournisseurs, puis hi\u00e9rarchiser par impact, sensibilit\u00e9, autonomie et exposition." },
-      design: { title: 'Concevoir les contr\u00f4les', description: "D\u00e9finir les droits de d\u00e9cision, approbations, attentes de test, surveillance et responsabilit\u00e9 (RACI)." },
-      maintain: { title: 'Maintenir les preuves', description: "Garder la documentation \u00e0 jour \u00e0 mesure que les mod\u00e8les, prompts, donn\u00e9es et fournisseurs changent." }
+      classify: { title: 'Classifier les risques', description: "Bâtir des inventaires alignés sur l'Évaluation de l'incidence algorithmique, puis hiérarchiser par niveaux d'impact qui satisfont les exigences fédérales et québécoises." },
+      design: { title: 'Concevoir les contrôles', description: "Définir les droits de décision et approbations qui répondent aux attentes du Conseil du Trésor et aux dispositions de la Loi 25 sur les décisions automatisées." },
+      maintain: { title: 'Maintenir les preuves', description: "Garder la documentation à jour à mesure que la réglementation canadienne de l'IA évolue—de la mise en œuvre de la LIAD à l'application provinciale." }
     },
     aboutMe: '\u00c0 propos de moi',
-    bio: "Martin Lepage (PhD) est un consultant montr\u00e9alais en syst\u00e8mes IA et cartographie des risques qui aide les organisations \u00e0 rendre l\u2019utilisation de l\u2019IA lisible, gouvernable et d\u00e9fendable. Il b\u00e2tit une gouvernance minimum viable qui survit aux contraintes r\u00e9elles\u00a0: inventaires de cas d\u2019utilisation, cartes de risques, tra\u00e7abilit\u00e9 des d\u00e9cisions, crit\u00e8res d\u2019\u00e9valuation et documentation pr\u00eate pour la direction.",
+    bio: "Martin Lepage (PhD) est un consultant montréalais en gouvernance IA opérant à l'intersection des exigences réglementaires fédérales et québécoises. Basé dans le hub IA du Canada—berceau de Mila et de la Déclaration de Montréal pour un développement responsable de l'IA—il aide les organisations à bâtir des systèmes de gouvernance qui satisfont les directives du Conseil du Trésor, les obligations de la Loi 25 et les exigences émergentes de la LIAD tout en restant pratiques à opérer.",
     viewPortfolio: 'Voir le portfolio et les publications',
     featuredResearch: 'Recherche en vedette',
     sealedCard: 'The Sealed Card Protocol',
