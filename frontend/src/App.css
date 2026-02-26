@@ -136,3 +136,8 @@ p {
   margin: 0 0.15em;
   color: var(--black-40);
 }
+
+/* ─── Border width utilities ─── */
+.border-l-3 {
+  border-left-width: 3px;
+}
