@@ -46,18 +46,18 @@ const Library = () => {
             return (
               <div key={key} className="card p-4" data-testid={`library-section-${idx}`}>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-[#1A1050]/10 flex items-center justify-center"><Icon className="w-4 h-4 text-[#1A1050]" /></div>
+                  <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center"><Icon className="w-4 h-4 text-[#0D0A2E]" /></div>
                   <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
                 </div>
                 <div className="space-y-2">
                   {sectionItems[idx].map((item, i) => (
                     <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-between p-2 rounded-lg bg-[#F6F7FB] hover:bg-[#1A1050]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
+                      className="flex items-center justify-between p-2 rounded-lg bg-[#F6F7FB] hover:bg-[#0D0A2E]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-700 group-hover:text-[#1A1050] transition-colors">{item.name}</span>
+                        <span className="text-sm text-gray-700 group-hover:text-[#0D0A2E] transition-colors">{item.name}</span>
                         <span className="text-xs px-1.5 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{item.tag}</span>
                       </div>
-                      <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#1A1050] transition-colors" />
+                      <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#0D0A2E] transition-colors" />
                     </a>
                   ))}
                 </div>
@@ -66,7 +66,7 @@ const Library = () => {
           })}
         </div>
 
-        <div className="mt-8 p-4 bg-[#1A1050]/5 rounded-xl border border-[#1A1050]/20">
+        <div className="mt-8 p-4 bg-[#0D0A2E]/5 rounded-xl border border-[#0D0A2E]/20">
           <p className="text-sm text-gray-600">
             <span className="font-semibold text-[#0B0F1A]">{t.library.note}</span> {t.library.noteText}
           </p>

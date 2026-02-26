@@ -11,13 +11,13 @@ const SealedCard = () => {
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="sealed-card-page">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
-          <p className="text-xs tracking-widest text-[#1A1050] uppercase mb-3">{t.sealedCard.researchProtocol}</p>
+          <p className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-3">{t.sealedCard.researchProtocol}</p>
           <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.title}</h1>
           <p className="text-xl text-gray-600 mb-6">{t.sealedCard.subtitle}</p>
           <p className="text-xs tracking-widest text-gray-400 uppercase">{t.sealedCard.keywords}</p>
         </div>
 
-        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-[linear-gradient(135deg,#1A1050_0%,#1A1050_40%,#3A2D7F_70%,#5B4D95_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] hover:shadow-[0_12px_40px_rgba(42,32,107,0.5)] transition-all group relative overflow-hidden" data-testid="pdf-download">
+        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-[linear-gradient(135deg,#0D0A2E_0%,#0D0A2E_40%,#1A1555_70%,#2D2380_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] hover:shadow-[0_12px_40px_rgba(42,32,107,0.5)] transition-all group relative overflow-hidden" data-testid="pdf-download">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -33,7 +33,7 @@ const SealedCard = () => {
 
         <div className="card mb-8">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4 flex items-center gap-3">
-            <BookOpen className="w-6 h-6 text-[#1A1050]" />{t.sealedCard.introduction}
+            <BookOpen className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.introduction}
           </h2>
           <p className="text-gray-600 mb-4">
             {t.sealedCard.introP1} <span className="font-semibold text-[#0B0F1A]">{t.sealedCard.glitch}</span>{t.sealedCard.introP1b}
@@ -48,11 +48,11 @@ const SealedCard = () => {
 
         <div className="card mb-8">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
-            <Sparkles className="w-6 h-6 text-[#1A1050]" />{t.sealedCard.keyConcepts}
+            <Sparkles className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.keyConcepts}
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             {t.sealedCard.concepts.map((item, i) => (
-              <div key={i} className="p-4 bg-[#F6F7FB] rounded-xl border-l-3 border-[#1A1050]">
+              <div key={i} className="p-4 bg-[#F6F7FB] rounded-xl border-l-3 border-[#0D0A2E]">
                 <p className="font-semibold text-[#0B0F1A] mb-1">{item.term}</p>
                 <p className="text-gray-600 text-sm">{item.definition}</p>
               </div>
@@ -62,12 +62,12 @@ const SealedCard = () => {
 
         <div className="card mb-8">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
-            <Layers className="w-6 h-6 text-[#1A1050]" />{t.sealedCard.methodology}
+            <Layers className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.methodology}
           </h2>
           <p className="text-gray-600 mb-6">{t.sealedCard.methodologyDesc}</p>
           <div className="space-y-4">
             {['artistic', 'academic', 'ritual'].map((key, i) => {
-              const colors = ['#1A1050', '#3A1FA0', '#2D1A5E'];
+              const colors = ['#0D0A2E', '#3A1FA0', '#2D1A5E'];
               return (
                 <div key={key} className={`p-5 bg-gradient-to-r from-[${colors[i]}]/5 to-transparent rounded-xl border border-[${colors[i]}]/20`}>
                   <div className="flex items-center gap-3 mb-2">
@@ -83,7 +83,7 @@ const SealedCard = () => {
 
         <div className="card mb-8">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
-            <Eye className="w-6 h-6 text-[#1A1050]" />{t.sealedCard.governancePrinciples}
+            <Eye className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.governancePrinciples}
           </h2>
           <div className="space-y-4">
             {t.sealedCard.principles.map((p, i) => (
@@ -95,12 +95,12 @@ const SealedCard = () => {
           </div>
         </div>
 
-        <div className="card mb-8 border-l-4 border-[#1A1050]">
+        <div className="card mb-8 border-l-4 border-[#0D0A2E]">
           <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.conclusion}</h2>
           <p className="text-gray-600 mb-4">{t.sealedCard.conclusionP1}</p>
           <ul className="text-gray-600 space-y-2 ml-4">
             {t.sealedCard.conclusionItems.map((item, i) => (
-              <li key={i} className="flex items-start gap-2"><span className="text-[#1A1050] mt-1">•</span>{item}</li>
+              <li key={i} className="flex items-start gap-2"><span className="text-[#0D0A2E] mt-1">•</span>{item}</li>
             ))}
           </ul>
         </div>

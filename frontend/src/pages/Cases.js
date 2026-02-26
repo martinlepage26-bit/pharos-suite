@@ -29,21 +29,21 @@ const Cases = () => {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xs font-medium text-[#1A1050] uppercase tracking-wide">{study.sector}</span>
+                    <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{study.sector}</span>
                     <span className="text-gray-300">·</span>
                     <span className="text-xs text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3" />{study.duration}</span>
                   </div>
-                  <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#1A1050] transition-colors">{study.title}</h3>
+                  <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{study.title}</h3>
                   <p className="text-gray-500 text-sm flex items-center gap-2 mb-3"><Building2 className="w-4 h-4" />{study.client}</p>
                   <p className="text-gray-600 text-sm line-clamp-2">{study.challenge}</p>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[#1A1050] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
               </div>
             </button>
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-[linear-gradient(135deg,#1A1050_0%,#1A1050_40%,#3A2D7F_70%,#5B4D95_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
+        <div className="mt-12 p-6 bg-[linear-gradient(135deg,#0D0A2E_0%,#0D0A2E_40%,#1A1555_70%,#2D2380_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
           {/* Shine effect */}
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <h3 className="font-serif text-xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
@@ -59,7 +59,7 @@ const Cases = () => {
             <div className="flex items-start justify-between gap-4 p-6 border-b border-gray-100 bg-white">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-[#1A1050] uppercase tracking-wide">{selectedCase.sector}</span>
+                  <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{selectedCase.sector}</span>
                   <span className="text-gray-300">·</span>
                   <span className="text-xs text-gray-500">{selectedCase.duration}</span>
                 </div>
@@ -78,7 +78,7 @@ const Cases = () => {
                 <ul className="space-y-2">
                   {selectedCase.approach.map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-gray-600 text-sm">
-                      <span className="w-5 h-5 rounded-full bg-[#1A1050]/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-[#1A1050] text-xs font-bold">{i + 1}</span></span>{item}
+                      <span className="w-5 h-5 rounded-full bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-[#0D0A2E] text-xs font-bold">{i + 1}</span></span>{item}
                     </li>
                   ))}
                 </ul>
@@ -92,8 +92,8 @@ const Cases = () => {
                 </ul>
               </div>
               {selectedCase.quote && (
-                <div className="mb-6 p-4 bg-[#1A1050]/5 rounded-xl border-l-4 border-[#1A1050]">
-                  <Quote className="w-5 h-5 text-[#1A1050] mb-2" />
+                <div className="mb-6 p-4 bg-[#0D0A2E]/5 rounded-xl border-l-4 border-[#0D0A2E]">
+                  <Quote className="w-5 h-5 text-[#0D0A2E] mb-2" />
                   <p className="text-gray-700 italic">"{selectedCase.quote}"</p>
                 </div>
               )}
@@ -102,7 +102,7 @@ const Cases = () => {
                 <div className="flex flex-wrap gap-2">
                   {selectedCase.deliverables.map((item, i) => (
                     <span key={i} className="px-3 py-1.5 bg-[#F6F7FB] border border-gray-200 rounded-full text-sm text-gray-600 flex items-center gap-2">
-                      <FileText className="w-3 h-3 text-[#1A1050]" />{item}
+                      <FileText className="w-3 h-3 text-[#0D0A2E]" />{item}
                     </span>
                   ))}
                 </div>
