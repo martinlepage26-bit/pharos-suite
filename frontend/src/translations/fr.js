@@ -422,7 +422,7 @@ export const fr = {
       },
       {
         question: "En quoi la gouvernance IA canadienne diff\u00e8re-t-elle de celle des \u00c9.-U. et de l\u2019UE\u00a0?",
-        answer: "L\u2019approche du Canada est distincte. La loi europ\u00e9enne sur l\u2019IA adopte une approche r\u00e9glementaire prescriptive fond\u00e9e sur le risque avec des sanctions. Les \u00c9.-U. s\u2019appuient davantage sur des cadres volontaires comme le NIST AI RMF et des orientations sectorielles (ex.\u00a0: le cadre de litt\u00e9ratie IA du DOL). Le Canada se situe entre les deux\u00a0: la Directive sur la prise de d\u00e9cisions automatis\u00e9e est obligatoire pour les institutions f\u00e9d\u00e9rales, tandis que la LIAD (projet de loi C-27) introduira des obligations plus larges. Le Canada dispose \u00e9galement d\u2019instruments uniques comme l\u2019\u00c9valuation de l\u2019incidence algorithmique et de solides cadres provinciaux, particuli\u00e8rement au Qu\u00e9bec."
+        answer: "L\u2019approche du Canada est distincte. La loi europ\u00e9enne sur l\u2019IA adopte une approche r\u00e9glementaire prescriptive fond\u00e9e sur le risque avec des sanctions. Les \u00c9.-U. s\u2019appuient davantage sur des cadres volontaires comme le NIST AI RMF et des orientations sectorielles (ex.\u00a0: le cadre de litt\u00e9ratie IA du DOL). Le Canada se situe entre les deux\u00a0: la Directive sur la prise de d\u00e9cisions automatis\u00e9e est obligatoire pour les institutions f\u00e9d\u00e9rales, tandis que la LIAD (projet de loi C-27) introduira des obligations plus larges. Le Canada dispose \u00e9galement d\u2019instruments uniques comme l\u2019\u00c9valuation de l\u2019incidence algorithmique et de solides cadres provinciaux, particuli\u00e8rement au Qu\u00e9bec."
       },
       {
         question: "Comment g\u00e9rez-vous l\u2019IA tierce/fournisseur\u00a0?",
@@ -438,12 +438,12 @@ export const fr = {
         cta: "engagementButtons"
       },
       {
-        question: "Comment savoir si mon organisation a besoin de gouvernance IA\u00a0?",
+        question: "Comment savoir si mon organisation a besoin de gouvernance IA\u00a0?",
         answer: "Si vous d\u00e9ployez des syst\u00e8mes IA qui affectent les clients, les employ\u00e9s ou les d\u00e9cisions d\u2019affaires au Canada, vous avez besoin de gouvernance. Les institutions f\u00e9d\u00e9rales sont d\u00e9j\u00e0 oblig\u00e9es en vertu de la Directive. Les organisations du secteur priv\u00e9 feront face \u00e0 des obligations en vertu de la LIAD. Commencez par\u00a0: Avez-vous un inventaire des cas d\u2019utilisation IA\u00a0? Pouvez-vous les classifier par risque\u00a0? Savez-vous qui peut approuver quoi\u00a0? Si la r\u00e9ponse est \u00abNon\u00bb, le travail de gouvernance est en retard."
       },
       {
         question: "Qu\u2019est-ce que la Strat\u00e9gie pancanadienne en IA et comment affecte-t-elle la gouvernance\u00a0?",
-        answer: "La Strat\u00e9gie pancanadienne en IA, lanc\u00e9e en 2017 et renouvel\u00e9e en 2021, est le cadre national du Canada pour l\u2019avancement de la recherche et de la commercialisation de l\u2019IA, administr\u00e9 par le CIFAR \u00e0 travers trois instituts nationaux (Vector, Mila, Amii). Bien que la Strat\u00e9gie se concentre sur la recherche et l\u2019innovation, elle a cr\u00e9\u00e9 les conditions d\u2019adoption de l\u2019IA qui n\u00e9cessitent maintenant une infrastructure de gouvernance. Ma pratique fournit cette infrastructure\u00a0: classification des risques, contr\u00f4les, preuves et responsabilit\u00e9."
+        answer: "La Strat\u00e9gie pancanadienne en IA, lanc\u00e9e en 2017 et renouvel\u00e9e en 2021, est le cadre national du Canada pour l\u2019avancement de la recherche et de la commercialisation de l\u2019IA, administr\u00e9 par le CIFAR \u00e0 travers trois instituts nationaux (Vector, Mila, Amii). Bien que la Strat\u00e9gie se concentre sur la recherche et l\u2019innovation, elle a cr\u00e9\u00e9 les conditions d\u2019adoption de l\u2019IA qui n\u00e9cessitent maintenant une infrastructure de gouvernance. Ma pratique fournit cette infrastructure\u00a0: classification des risques, contr\u00f4les, preuves et responsabilit\u00e9."
       }
     ]
   },

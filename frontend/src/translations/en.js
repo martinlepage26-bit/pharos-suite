@@ -13,15 +13,15 @@ export const en = {
   home: {
     title: 'AI Governance',
     subtitle: 'Strategy & Oversight',
-    description: 'Governance systems aligned with Canadian requirements:Treasury Board directives, Quebec\'s Law 25, and emerging AIDA obligations:that make AI decisions documented, reviewable, and defensible.',
+    description: 'Governance systems aligned with Canadian requirements:Treasury Board directives, Quebec\'s Law 25, and emerging AIDA obligations:that make AI decisions documented, reviewable, and defensible.',
     keywords: 'CANADIAN COMPLIANCE · QUEBEC LAW 25 · EVIDENCE TRAIL',
     viewServices: 'View Services',
     bookDebrief: 'Book a Debrief',
     capabilities: {
       riskClassification: 'Risk Classification',
-      riskClassificationDesc: 'Tier AI use cases aligned with the Algorithmic Impact Assessment framework',
+      riskClassificationDesc: 'Tier AI use cases aligned with the Algorithmic Impact Assessment framework',
       evidenceArchitecture: 'Evidence Architecture',
-      evidenceArchitectureDesc: 'Documentation that satisfies federal and provincial audit requirements',
+      evidenceArchitectureDesc: 'Documentation that satisfies federal and provincial audit requirements',
       controlDesign: 'Control Design',
       controlDesignDesc: 'Operational controls that meet Canadian regulatory expectations'
     },
@@ -43,7 +43,7 @@ export const en = {
 
   starterKit: {
     title: 'AI Governance Starter Kit',
-    description: 'Free templates to begin classifying risk and building controls today.',
+    description: 'Free templates to begin classifying risk and building controls today.',
     included: "What's included:",
     riskTemplate: 'Risk Tiering Template (Excel)',
     checklist: 'AI Governance Checklist (PDF)',
@@ -53,22 +53,22 @@ export const en = {
     sent: 'Sent!',
     noSpam: 'Opens your email client. No spam, just governance resources.',
     emailSubject: 'Governance Starter Kit Request',
-    emailBody: 'Please send me the AI Governance Starter Kit.'
+    emailBody: 'Please send me the AI Governance Starter Kit.'
   },
 
   services: {
     title: 'Services',
-    description: 'AI governance systems designed for the Canadian regulatory landscape:from federal Directive compliance to Quebec\'s Law 25 automated decision-making requirements.',
+    description: 'AI governance systems designed for the Canadian regulatory landscape:from federal Directive compliance to Quebec\'s Law 25 automated decision-making requirements.',
     keywords: 'CANADIAN FRAMEWORKS · QUEBEC COMPLIANCE · FEDERAL DIRECTIVES',
     whatIDeliver: 'What I deliver',
-    deliverP1: 'I help Canadian organizations operationalize AI governance:',
+    deliverP1: 'I help Canadian organizations operationalize AI governance:',
     riskClassification: 'risk classification',
-    deliverP1b: 'aligned with the Algorithmic Impact Assessment,',
+    deliverP1b: 'aligned with the Algorithmic Impact Assessment,',
     controls: 'controls',
-    deliverP1c: 'that satisfy both federal and Quebec provincial requirements, and',
+    deliverP1c: 'that satisfy both federal and Quebec provincial requirements, and',
     documentation: 'documentation',
-    deliverP1d: 'that supports review by the Treasury Board, Commission d\'accès à l\'information, procurement, and internal audit.',
-    deliverP2: 'Engagements are designed for organizations operating in Canada\'s distinct regulatory environment. You leave with a governance model that addresses federal directives, provincial obligations under Law 25, and emerging AIDA requirements.',
+    deliverP1d: 'that supports review by the Treasury Board, Commission d\'accès à l\'information, procurement, and internal audit.',
+    deliverP2: 'Engagements are designed for organizations operating in Canada\'s distinct regulatory environment. You leave with a governance model that addresses federal directives, provincial obligations under Law 25, and emerging AIDA requirements.',
     viewServiceMenu: 'View the Service Menu',
     bookConsultation: 'Book a debrief',
     coreOffers: 'Core offers',
@@ -76,48 +76,48 @@ export const en = {
     idealFor: 'Ideal for',
     seeDetails: 'See package details',
     pricingTitle: 'What pricing accounts for',
-    pricingDescription: 'Pricing reflects what it takes to deliver a governance system that fits your organization and stands up to review.',
+    pricingDescription: 'Pricing reflects what it takes to deliver a governance system that fits your organization and stands up to review.',
     assessReadiness: 'Assess your readiness',
     book30Min: 'Book a 30 minute debrief',
     offers: {
       foundation: {
         title: 'Governance Foundation',
-        description: 'Establish governance aligned with Canadian requirements: AI use case inventory structured for the Algorithmic Impact Assessment, risk tiers that satisfy Law 25 obligations, and decision rights mapped to federal and provincial expectations.',
+        description: 'Establish governance aligned with Canadian requirements: AI use case inventory structured for the Algorithmic Impact Assessment, risk tiers that satisfy Law 25 obligations, and decision rights mapped to federal and provincial expectations.',
         outputs: 'AIA-aligned use case map, tiering logic, RACI matrix, Quebec compliance templates, governance calendar.',
-        ideal: 'Canadian organizations deploying AI without formal governance structures or needing to align existing practices with federal/provincial requirements.'
+        ideal: 'Canadian organizations deploying AI without formal governance structures or needing to align existing practices with federal/provincial requirements.'
       },
       controls: {
         title: 'Controls and Evidence Pack',
-        description: 'Build readiness for Treasury Board review, Quebec\'s Commission d\'accès requirements, and procurement scrutiny with controls mapped to Canadian regulatory expectations.',
-        outputs: 'Control register aligned to AIA levels, evaluation criteria, vendor questionnaires for Canadian procurement, decision log templates, evidence packet structure.',
-        ideal: 'Organizations preparing for federal audit, provincial regulatory review, or responding to AIDA obligations.'
+        description: 'Build readiness for Treasury Board review, Quebec\'s Commission d\'accès requirements, and procurement scrutiny with controls mapped to Canadian regulatory expectations.',
+        outputs: 'Control register aligned to AIA levels, evaluation criteria, vendor questionnaires for Canadian procurement, decision log templates, evidence packet structure.',
+        ideal: 'Organizations preparing for federal audit, provincial regulatory review, or responding to AIDA obligations.'
       },
       oversight: {
         title: 'Oversight Retainer',
-        description: 'Ongoing advisory support to maintain compliance as Canadian AI regulation evolves:from AIDA implementation to Law 25 enforcement updates.',
-        outputs: 'Monthly oversight, decision log stewardship, regulatory update briefings, control roadmap updates, audit and procurement support.',
-        ideal: 'Organizations with active AI delivery in Canada who need stable oversight as the regulatory landscape matures.'
+        description: 'Ongoing advisory support to maintain compliance as Canadian AI regulation evolves:from AIDA implementation to Law 25 enforcement updates.',
+        outputs: 'Monthly oversight, decision log stewardship, regulatory update briefings, control roadmap updates, audit and procurement support.',
+        ideal: 'Organizations with active AI delivery in Canada who need stable oversight as the regulatory landscape matures.'
       }
     },
     pricing: {
       scope: {
         title: 'Scope and surface area',
-        description: 'Number of AI use cases, vendors, and data pathways in scope. Stakeholder groups involved in governance decisions.'
+        description: 'Number of AI use cases, vendors, and data pathways in scope. Stakeholder groups involved in governance decisions.'
       },
       sector: {
         title: 'Sector and evidence burden',
-        description: 'Industry norms, regulatory requirements, and audit expectations. How documentation needs to be structured for your reviewers.'
+        description: 'Industry norms, regulatory requirements, and audit expectations. How documentation needs to be structured for your reviewers.'
       },
       timeline: {
         title: 'Timeline and complexity',
-        description: 'Speed of delivery, complexity of integrations, and the level of decision authority assigned to AI systems.'
+        description: 'Speed of delivery, complexity of integrations, and the level of decision authority assigned to AI systems.'
       }
     }
   },
 
   serviceMenu: {
     title: 'Service Menu',
-    description: 'Packages designed for review readiness: clear scope, concrete outputs, and documentation that remains maintainable.',
+    description: 'Packages designed for review readiness: clear scope, concrete outputs, and documentation that remains maintainable.',
     keywords: 'PACKAGES \u00B7 DELIVERABLES \u00B7 ADD ONS',
     bestFor: 'Best for',
     deliverables: 'Deliverables',
@@ -127,77 +127,77 @@ export const en = {
     book30Min: 'Book a 30 minute debrief',
     assessReadiness: 'Assess readiness',
     engagementDrivers: 'Engagement drivers',
-    engagementDriversDesc: 'Engagement design adapts to your environment. These drivers shape scope and effort.',
+    engagementDriversDesc: 'Engagement design adapts to your environment. These drivers shape scope and effort.',
     packages: {
       p1: {
         title: 'Package 1: Governance Foundation',
-        bestFor: 'organizations establishing governance for the first time or consolidating governance across teams.',
+        bestFor: 'organizations establishing governance for the first time or consolidating governance across teams.',
         deliverables: [
-          'AI use case and vendor inventory starter',
+          'AI use case and vendor inventory starter',
           'Risk tiering criteria with examples',
           'Decision rights and approval flow',
-          'Governance cadence: meeting model, owners, and upkeep tasks'
+          'Governance cadence: meeting model, owners, and upkeep tasks'
         ],
         produces: [
-          'A working governance model teams can use immediately',
-          'Role clarity for procurement and audit conversations',
-          'A defensible baseline for review and escalation'
+          'A working governance model teams can use immediately',
+          'Role clarity for procurement and audit conversations',
+          'A defensible baseline for review and escalation'
         ]
       },
       p2: {
-        title: 'Package 2: Controls and Evidence Pack',
-        bestFor: 'organizations preparing for procurement scrutiny, customer questionnaires, internal audit review, or regulator engagement.',
+        title: 'Package 2: Controls and Evidence Pack',
+        bestFor: 'organizations preparing for procurement scrutiny, customer questionnaires, internal audit review, or regulator engagement.',
         deliverables: [
-          'Control register mapped to your risk tiers',
-          'Evaluation expectations: testing, monitoring, and thresholds',
-          'Vendor review questions and evidence checklist',
-          'Decision log template and documentation packet outline'
+          'Control register mapped to your risk tiers',
+          'Evaluation expectations: testing, monitoring, and thresholds',
+          'Vendor review questions and evidence checklist',
+          'Decision log template and documentation packet outline'
         ],
         produces: [
           'Procurement ready documentation structure',
           'Audit ready evidence expectations',
-          'Clear control ownership and upkeep responsibilities'
+          'Clear control ownership and upkeep responsibilities'
         ]
       },
       p3: {
         title: 'Package 3: Oversight Retainer',
-        bestFor: 'organizations with active AI delivery who want stable oversight, clear decisions, and current documentation.',
+        bestFor: 'organizations with active AI delivery who want stable oversight, clear decisions, and current documentation.',
         deliverables: [
-          'Recurring governance and risk review support',
-          'Decision log stewardship and evidence upkeep cadence',
-          'Control roadmap updates aligned to delivery realities',
-          'Procurement and audit support for specific reviews'
+          'Recurring governance and risk review support',
+          'Decision log stewardship and evidence upkeep cadence',
+          'Control roadmap updates aligned to delivery realities',
+          'Procurement and audit support for specific reviews'
         ],
         produces: [
           'Stable oversight without slowing delivery',
           'Clear documentation as systems change',
-          'Executive ready summaries and next steps'
+          'Executive ready summaries and next steps'
         ]
       }
     },
     drivers: {
       useCase: {
         title: 'Use case portfolio',
-        description: 'How many systems, vendors, and data pathways are in scope, and how quickly they change.'
+        description: 'How many systems, vendors, and data pathways are in scope, and how quickly they change.'
       },
       review: {
         title: 'Review expectations',
-        description: 'Procurement questionnaires, audit protocols, and customer requirements that shape evidence structure.'
+        description: 'Procurement questionnaires, audit protocols, and customer requirements that shape evidence structure.'
       },
       decision: {
         title: 'Decision authority',
-        description: 'The level of autonomy, sensitivity, and impact assigned to AI supported decisions.'
+        description: 'The level of autonomy, sensitivity, and impact assigned to AI supported decisions.'
       }
     }
   },
 
   tool: {
     title: 'AI Governance Readiness Snapshot',
-    description: 'Choose your sector of operation to assess your readiness to audits, regulators, and risk assessment.',
+    description: 'Choose your sector of operation to assess your readiness to audits, regulators, and risk assessment.',
     steps: { sector: 'SECTOR', readiness: 'READINESS', results: 'RESULTS' },
     step1: {
       title: 'Choose your sector',
-      description: 'This tailors language and the expected evidence burden.'
+      description: 'This tailors language and the expected evidence burden.'
     },
     step2: {
       title: 'Question',
@@ -205,21 +205,21 @@ export const en = {
     },
     sectors: {
       regulated: { title: 'Regulated systems', description: 'Higher evidence burden, tighter approvals, audit-grade remediation.' },
-      enterpriseSaas: { title: 'Enterprise SaaS', description: 'Governance that ships: release cadence, drift, and vendorized AI features.' },
+      enterpriseSaas: { title: 'Enterprise SaaS', description: 'Governance that ships: release cadence, drift, and vendorized AI features.' },
       procurement: { title: 'Procurement & vendor risk', description: 'Questionnaires become controls: diligence artifacts, contract-backed proof.' },
       publicSector: { title: 'Public sector & due process', description: 'Contestability, appeal pathways, reconstruction under scrutiny.' },
       financial: { title: 'Financial & capital systems', description: 'Models move money: exposure controls, stress testing, adverse action logic.' },
       governance: { title: 'Governance operating model', description: 'Decision rights, lifecycle gates, evidence trails that scale.' }
     },
     questions: {
-      inventory: 'Do you have a documented inventory of AI use cases and vendors?',
-      riskTiering: 'Is there a risk classification system for AI use cases?',
-      decisionRights: 'Are decision rights and approvals clearly defined?',
-      controls: 'Do you have controls mapped to risk tiers?',
-      evidence: 'Is evidence being collected for audit readiness?',
-      vendorReview: 'Do you have a vendor AI review process?',
-      cadence: 'Is there a recurring governance review cadence?',
-      documentation: 'Is governance documentation current and accessible?'
+      inventory: 'Do you have a documented inventory of AI use cases and vendors?',
+      riskTiering: 'Is there a risk classification system for AI use cases?',
+      decisionRights: 'Are decision rights and approvals clearly defined?',
+      controls: 'Do you have controls mapped to risk tiers?',
+      evidence: 'Is evidence being collected for audit readiness?',
+      vendorReview: 'Do you have a vendor AI review process?',
+      cadence: 'Is there a recurring governance review cadence?',
+      documentation: 'Is governance documentation current and accessible?'
     },
     answers: {
       no: 'No', partial: 'Partial', yes: 'Yes',
@@ -245,49 +245,49 @@ export const en = {
       risks: { low: 'Low Risk', moderate: 'Moderate Risk', elevated: 'Elevated Risk', high: 'High Risk' },
       levels: { strong: 'Strong', developing: 'Developing', early: 'Early', beginning: 'Beginning' },
       recommendations: {
-        high: 'Your governance foundation is solid. Consider the Oversight Retainer to maintain momentum and optimize evidence collection.',
-        moderate: 'Good progress. The Controls and Evidence Pack can fill critical gaps and prepare you for audit.',
-        elevated: 'Start with the Governance Foundation package to establish basics and define risk tiering.',
-        low: 'Begin with basic inventory. The Governance Foundation package provides a complete starting point.'
+        high: 'Your governance foundation is solid. Consider the Oversight Retainer to maintain momentum and optimize evidence collection.',
+        moderate: 'Good progress. The Controls and Evidence Pack can fill critical gaps and prepare you for audit.',
+        elevated: 'Start with the Governance Foundation package to establish basics and define risk tiering.',
+        low: 'Begin with basic inventory. The Governance Foundation package provides a complete starting point.'
       },
       nextSteps: {
-        low: ['Start with the Governance Foundation package', 'Create a use case inventory', 'Define risk tiering criteria'],
-        moderate: ['Consider the Controls and Evidence Pack', 'Document decision rights and approvals', 'Establish recurring governance cadence'],
-        high: ['Explore the Oversight Retainer', 'Optimize evidence collection', 'Prepare for advanced audit scenarios']
+        low: ['Start with the Governance Foundation package', 'Create a use case inventory', 'Define risk tiering criteria'],
+        moderate: ['Consider the Controls and Evidence Pack', 'Document decision rights and approvals', 'Establish recurring governance cadence'],
+        high: ['Explore the Oversight Retainer', 'Optimize evidence collection', 'Prepare for advanced audit scenarios']
       }
     }
   },
 
   about: {
     title: 'About Me',
-    description: 'Governance built for the Canadian context: federal directives, Quebec\'s Law 25, and the distinct requirements of operating in Canada\'s AI ecosystem.',
+    description: 'Governance built for the Canadian context: federal directives, Quebec\'s Law 25, and the distinct requirements of operating in Canada\'s AI ecosystem.',
     keywords: 'MONTREAL · QUEBEC · CANADA',
-    practiceTitle: 'What AI Governance Practice means in Canada',
-    practiceP1: "AI governance in Canada isn't a policy PDF.",
-    practiceP1b: 'It\'s a system aligned with Treasury Board directives, Quebec\'s automated decision-making requirements under Law 25, and the emerging obligations of AIDA:a way to classify risk, apply the right controls, and maintain evidence that satisfies Canadian regulators.',
+    practiceTitle: 'What AI Governance Practice means in Canada',
+    practiceP1: "AI governance in Canada isn't a policy PDF.",
+    practiceP1b: 'It\'s a system aligned with Treasury Board directives, Quebec\'s automated decision-making requirements under Law 25, and the emerging obligations of AIDA:a way to classify risk, apply the right controls, and maintain evidence that satisfies Canadian regulators.',
     practiceP2: 'My work',
-    practiceP2b: 'is to help Canadian organizations build governance that meets federal and provincial requirements: use case inventories structured for the Algorithmic Impact Assessment, risk tiers that address Law 25 obligations, and documentation that satisfies both the Treasury Board and the Commission d\'accès à l\'information.',
+    practiceP2b: 'is to help Canadian organizations build governance that meets federal and provincial requirements: use case inventories structured for the Algorithmic Impact Assessment, risk tiers that address Law 25 obligations, and documentation that satisfies both the Treasury Board and the Commission d\'accès à l\'information.',
     steps: {
-      classify: { title: 'Classify risk', description: 'Build inventories aligned with the Algorithmic Impact Assessment, then tier by impact levels that satisfy both federal and Quebec requirements.' },
-      design: { title: 'Design controls', description: 'Define decision rights and approvals that meet Treasury Board expectations and Law 25 automated decision-making provisions.' },
-      maintain: { title: 'Maintain evidence', description: 'Keep documentation current as Canadian AI regulation evolves:from AIDA implementation to provincial enforcement.' }
+      classify: { title: 'Classify risk', description: 'Build inventories aligned with the Algorithmic Impact Assessment, then tier by impact levels that satisfy both federal and Quebec requirements.' },
+      design: { title: 'Design controls', description: 'Define decision rights and approvals that meet Treasury Board expectations and Law 25 automated decision-making provisions.' },
+      maintain: { title: 'Maintain evidence', description: 'Keep documentation current as Canadian AI regulation evolves:from AIDA implementation to provincial enforcement.' }
     },
     aboutMe: 'About me',
-    bio: 'Martin Lepage (PhD) is a Montreal-based AI governance consultant operating at the intersection of federal and Quebec regulatory requirements. Based in Canada\'s AI hub:home to Mila and the Montreal Declaration for Responsible AI:he helps organizations build governance systems that satisfy Treasury Board directives, Law 25 obligations, and emerging AIDA requirements while remaining practical to operate.',
+    bio: 'Martin Lepage (PhD) is a Montreal-based AI governance consultant operating at the intersection of federal and Quebec regulatory requirements. Based in Canada\'s AI hub:home to Mila and the Montreal Declaration for Responsible AI:he helps organizations build governance systems that satisfy Treasury Board directives, Law 25 obligations, and emerging AIDA requirements while remaining practical to operate.',
     viewPortfolio: 'View Portfolio & Publications',
     featuredResearch: 'Featured Research',
     sealedCard: 'The Sealed Card Protocol',
-    sealedCardDesc: 'A framework for analyzing how legitimacy is established in the context of generative AI\u2014examining mediation, authenticity, and accountability at the seam where evaluation shifts from artifact to pathway.',
+    sealedCardDesc: 'A framework for analyzing how legitimacy is established in the context of generative AI\u2014examining mediation, authenticity, and accountability at the seam where evaluation shifts from artifact to pathway.',
     readProtocol: 'Read the Protocol'
   },
 
   connect: {
     title: 'Connect',
-    description: 'AI governance advisory, audit and procurement readiness assessment, or a focused debrief on your governance posture.',
+    description: 'AI governance advisory, audit and procurement readiness assessment, or a focused debrief on your governance posture.',
     keywords: 'ADVISORY \u00B7 ASSESSMENT \u00B7 DEBRIEF',
     tabs: { message: 'Send Message', booking: 'Book Debrief' },
     messageTitle: 'Send a message',
-    messageSubtitle: 'General inquiries about AI governance services',
+    messageSubtitle: 'General inquiries about AI governance services',
     form: {
       name: 'Name',
       email: 'Email',
@@ -295,7 +295,7 @@ export const en = {
       lookingFor: 'What are you looking for?',
       selectTopic: 'Select a topic...',
       context: 'Context',
-      contextPlaceholder: 'AI use cases in scope, governance maturity, audit timelines, specific concerns...',
+      contextPlaceholder: 'AI use cases in scope, governance maturity, audit timelines, specific concerns...',
       submit: 'Open email draft',
       opening: 'Opening email...'
     },
@@ -310,16 +310,16 @@ export const en = {
     },
     booking: {
       title: 'Book a 30-Minute Debrief',
-      subtitle: 'Focused discussion on your AI governance posture',
+      subtitle: 'Focused discussion on your AI governance posture',
       preferredDate: 'Preferred Date',
       preferredTime: 'Preferred Time',
       selectTime: 'Select time...',
       topic: 'Discussion Topic',
       selectTopic: 'Select topic...',
       currentState: 'Current Governance State',
-      currentStatePlaceholder: 'Brief description: Do you have an AI inventory? Risk tiers? Existing controls? Upcoming audits?',
+      currentStatePlaceholder: 'Brief description: Do you have an AI inventory? Risk tiers? Existing controls? Upcoming audits?',
       requestSlot: 'Request this time slot',
-      confirmation: "I'll confirm availability within 24 hours. Times shown in Eastern timezone."
+      confirmation: "I'll confirm availability within 24 hours. Times shown in Eastern timezone."
     },
     topics: {
       foundation: 'Governance Foundation Setup',
@@ -333,50 +333,50 @@ export const en = {
     resources: {
       title: 'Governance Resources',
       auditChecklist: 'AI Governance Audit Checklist',
-      auditChecklistDesc: 'Evidence requirements and stakeholder questions for audit readiness.',
+      auditChecklistDesc: 'Evidence requirements and stakeholder questions for audit readiness.',
       riskFramework: 'Risk Tiering Framework Template',
-      riskFrameworkDesc: 'Classification criteria for AI use cases by impact and sensitivity.',
-      vendorQuestions: 'Vendor AI Review Questions',
-      vendorQuestionsDesc: 'Due diligence questionnaire for third-party AI procurement.',
+      riskFrameworkDesc: 'Classification criteria for AI use cases by impact and sensitivity.',
+      vendorQuestions: 'Vendor AI Review Questions',
+      vendorQuestionsDesc: 'Due diligence questionnaire for third-party AI procurement.',
       request: 'Request \u2192',
       directContact: 'Direct contact',
       notSure: 'Not sure where to start?',
-      takeSnapshot: 'Take the Readiness Snapshot \u2192'
+      takeSnapshot: 'Take the Readiness Snapshot \u2192'
     }
   },
 
   cases: {
     title: 'Case Studies',
-    description: 'Selected engagements illustrating governance challenges and solutions across sectors. Details anonymized to protect client confidentiality.',
+    description: 'Selected engagements illustrating governance challenges and solutions across sectors. Details anonymized to protect client confidentiality.',
     keywords: 'FINANCIAL SERVICES \u00B7 HEALTHCARE \u00B7 ENTERPRISE \u00B7 PUBLIC SECTOR',
     challenge: 'Challenge',
     approach: 'Approach',
     outcomes: 'Outcomes',
     deliverables: 'Deliverables',
-    discussChallenge: 'Discuss a Similar Challenge',
-    facingChallenge: 'Facing a similar challenge?',
-    facingChallengeDesc: 'Book a debrief to discuss how these approaches might apply to your organization.',
+    discussChallenge: 'Discuss a Similar Challenge',
+    facingChallenge: 'Facing a similar challenge?',
+    facingChallengeDesc: 'Book a debrief to discuss how these approaches might apply to your organization.',
     bookDebrief: 'Book a Debrief'
   },
 
   research: {
     title: 'Research',
-    description: 'This research translates AI governance pressure into operational clarity: controls, lifecycle gates, procurement artifacts, and audit-ready evidence. Each briefing focuses on the practical decisions institutions must make when deploying, buying, or overseeing AI systems.',
+    description: 'This research translates AI governance pressure into operational clarity: controls, lifecycle gates, procurement artifacts, and audit-ready evidence. Each briefing focuses on the practical decisions institutions must make when deploying, buying, or overseeing AI systems.',
     howItWorks: 'How this research works',
     signal: 'Signal',
     pressure: 'Pressure',
     control: 'Control',
     artifact: 'Artifact',
     evidence: 'Evidence',
-    howP1: 'Governance pressure rarely appears as theory. It appears as audit requests, procurement questionnaires, regulatory expectations, and board oversight.',
-    howP2: 'Each briefing identifies the operational pressure, clarifies the control required, and specifies the documentation necessary to make that control inspectable. The result is governance you can show, not just describe.',
+    howP1: 'Governance pressure rarely appears as theory. It appears as audit requests, procurement questionnaires, regulatory expectations, and board oversight.',
+    howP2: 'Each briefing identifies the operational pressure, clarifies the control required, and specifies the documentation necessary to make that control inspectable. The result is governance you can show, not just describe.',
     featuredFramework: 'Featured framework',
-    featuredFrameworkSubtitle: 'From policy to deployable controls: the AI Governance Engine',
-    featuredFrameworkDesc: 'A structured operating model that translates governance commitments into measurable controls, lifecycle gates, decision rights, and verification evidence. This framework informs the analytical approach used throughout this research.',
+    featuredFrameworkSubtitle: 'From policy to deployable controls: the AI Governance Engine',
+    featuredFrameworkDesc: 'A structured operating model that translates governance commitments into measurable controls, lifecycle gates, decision rights, and verification evidence. This framework informs the analytical approach used throughout this research.',
     professionalNote: 'Professional note:',
-    professionalNoteText: 'The Engine itself is a proprietary consulting instrument and is not publicly deployed. Research publications reference its conceptual structure without exposing internal scoring models, implementation logic, or client-specific configurations.',
+    professionalNoteText: 'The Engine itself is a proprietary consulting instrument and is not publicly deployed. Research publications reference its conceptual structure without exposing internal scoring models, implementation logic, or client-specific configurations.',
     operationalContexts: 'Operational contexts',
-    filterByContext: 'Filter briefings by context',
+    filterByContext: 'Filter briefings by context',
     all: 'All',
     briefings: 'Briefings',
     context: 'Context'
@@ -384,7 +384,7 @@ export const en = {
 
   library: {
     title: 'AI Governance Library',
-    description: 'A curated reference hub grounded in Canada\u2019s governance landscape. Canadian frameworks and legislation form the foundation; international standards from the US and EU are provided for comparison and cross-jurisdictional awareness.',
+    description: 'A curated reference hub grounded in Canada\u2019s governance landscape. Canadian frameworks and legislation form the foundation; international standards from the US and EU are provided for comparison and cross-jurisdictional awareness.',
     keywords: 'CANADIAN FRAMEWORKS \u00B7 LEGISLATION \u00B7 INTERNATIONAL COMPARISON \u00B7 STANDARDS',
     sections: {
       canadian: 'Canadian Frameworks & Legislation',
@@ -393,57 +393,57 @@ export const en = {
       standards: 'Standards & Reference Bodies'
     },
     note: 'Note:',
-    noteText: 'This library is curated for AI governance practitioners operating in or advising Canadian organizations. International references are included for cross-jurisdictional comparison. Always verify current versions and applicability to your province and sector.'
+    noteText: 'This library is curated for AI governance practitioners operating in or advising Canadian organizations. International references are included for cross-jurisdictional comparison. Always verify current versions and applicability to your province and sector.'
   },
 
   faq: {
     title: 'FAQ',
-    description: 'Practical answers on AI risk classification, governance operations, audit readiness, vendor oversight, and evidence architecture.',
+    description: 'Practical answers on AI risk classification, governance operations, audit readiness, vendor oversight, and evidence architecture.',
     keywords: 'GOVERNANCE \u00B7 CONTROLS \u00B7 EVIDENCE \u00B7 OPERATIONS',
     stillHaveQuestions: 'Still have questions?',
-    stillHaveQuestionsDesc: 'Book a 30-minute debrief to discuss your specific governance challenges.',
+    stillHaveQuestionsDesc: 'Book a 30-minute debrief to discuss your specific governance challenges.',
     bookDebrief: 'Book a Debrief',
     assessReadiness: 'Assess readiness',
     viewServices: 'View services',
-    requestAuditChecklist: 'Request the Audit Checklist',
+    requestAuditChecklist: 'Request the Audit Checklist',
     questions: [
       {
-        question: "What is AI Governance Practice?",
-        answer: "AI governance practice is the operational system that makes AI use legible, controllable, and defensible in your organization. In Canada, this means aligning with the Treasury Board\u2019s Directive on Automated Decision-Making, the Algorithmic Impact Assessment, and emerging obligations under the Artificial Intelligence and Data Act (AIDA). It\u2019s not a policy document that sits in a drawer\u2014it\u2019s a set of working structures: how you classify risk, who approves what, what controls apply at each tier, and how you maintain evidence that decisions were made responsibly."
+        question: "What is AI Governance Practice?",
+        answer: "AI governance practice is the operational system that makes AI use legible, controllable, and defensible in your organization. In Canada, this means aligning with the Treasury Board\u2019s Directive on Automated Decision-Making, the Algorithmic Impact Assessment, and emerging obligations under the Artificial Intelligence and Data Act (AIDA). It\u2019s not a policy document that sits in a drawer\u2014it\u2019s a set of working structures: how you classify risk, who approves what, what controls apply at each tier, and how you maintain evidence that decisions were made responsibly."
       },
       {
-        question: "What\u2019s the difference between AI governance and AI ethics?",
-        answer: "AI ethics is about values and principles\u2014what you believe AI should and shouldn\u2019t do. Canada\u2019s Montr\u00e9al Declaration for Responsible AI is a leading example. AI governance is about operationalization\u2014how you translate those principles into decision rights, controls, and evidence. Ethics tells you that fairness matters. Governance tells you who reviews the fairness metrics, what thresholds trigger escalation, and where the documentation lives. Both matter, but governance is what makes ethics enforceable and auditable."
+        question: "What\u2019s the difference between AI governance and AI ethics?",
+        answer: "AI ethics is about values and principles\u2014what you believe AI should and shouldn\u2019t do. Canada\u2019s Montr\u00e9al Declaration for Responsible AI is a leading example. AI governance is about operationalization\u2014how you translate those principles into decision rights, controls, and evidence. Ethics tells you that fairness matters. Governance tells you who reviews the fairness metrics, what thresholds trigger escalation, and where the documentation lives. Both matter, but governance is what makes ethics enforceable and auditable."
       },
       {
-        question: "What do auditors and procurement teams actually want?",
-        answer: "They want to feel confident saying yes. In Canada, federal procurement increasingly expects documented AI governance: risk classification aligned with the Algorithmic Impact Assessment, clear decision authority, defined controls, testing records, and monitoring plans. Provincial frameworks like Qu\u00e9bec\u2019s Law 25 add obligations around automated decision-making. Auditors don\u2019t evaluate intentions\u2014they evaluate artifacts. If you can\u2019t produce the evidence, the governance didn\u2019t happen.",
+        question: "What do auditors and procurement teams actually want?",
+        answer: "They want to feel confident saying yes. In Canada, federal procurement increasingly expects documented AI governance: risk classification aligned with the Algorithmic Impact Assessment, clear decision authority, defined controls, testing records, and monitoring plans. Provincial frameworks like Qu\u00e9bec\u2019s Law 25 add obligations around automated decision-making. Auditors don\u2019t evaluate intentions\u2014they evaluate artifacts. If you can\u2019t produce the evidence, the governance didn\u2019t happen.",
         cta: "requestAuditChecklist"
       },
       {
-        question: "How does Canadian AI governance differ from the US and EU?",
-        answer: "Canada\u2019s approach is distinct. The EU AI Act takes a prescriptive, risk-based regulatory approach with enforcement penalties. The US relies more on voluntary frameworks like NIST AI RMF and sector-specific guidance (e.g., the DOL\u2019s AI Literacy Framework). Canada sits between the two: the Directive on Automated Decision-Making is mandatory for federal institutions, while AIDA (under Bill C-27) will introduce broader obligations. Canada also has unique instruments like the Algorithmic Impact Assessment tool and strong provincial frameworks, particularly in Qu\u00e9bec. Organizations operating across jurisdictions need governance systems that satisfy Canadian requirements while remaining defensible under US and EU scrutiny."
+        question: "How does Canadian AI governance differ from the US and EU?",
+        answer: "Canada\u2019s approach is distinct. The EU AI Act takes a prescriptive, risk-based regulatory approach with enforcement penalties. The US relies more on voluntary frameworks like NIST AI RMF and sector-specific guidance (e.g., the DOL\u2019s AI Literacy Framework). Canada sits between the two: the Directive on Automated Decision-Making is mandatory for federal institutions, while AIDA (under Bill C-27) will introduce broader obligations. Canada also has unique instruments like the Algorithmic Impact Assessment tool and strong provincial frameworks, particularly in Qu\u00e9bec. Organizations operating across jurisdictions need governance systems that satisfy Canadian requirements while remaining defensible under US and EU scrutiny."
       },
       {
-        question: "How do you handle third-party/vendor AI?",
-        answer: "Vendor AI requires the same governance discipline as internal AI, with additional controls around visibility, contractual requirements, and reassessment triggers. Under Canadian frameworks, vendor AI used in federal procurement must still meet the Directive on Automated Decision-Making requirements. We build vendor review frameworks that include: due diligence questionnaires, evaluation criteria mapped to your risk tiers, contractual language for auditability and change notification, and integration-level monitoring. The goal is leverage\u2014you can say yes to vendors without surrendering your ability to govern what they do inside your organization."
+        question: "How do you handle third-party/vendor AI?",
+        answer: "Vendor AI requires the same governance discipline as internal AI, with additional controls around visibility, contractual requirements, and reassessment triggers. Under Canadian frameworks, vendor AI used in federal procurement must still meet the Directive on Automated Decision-Making requirements. We build vendor review frameworks that include: due diligence questionnaires, evaluation criteria mapped to your risk tiers, contractual language for auditability and change notification, and integration-level monitoring. The goal is leverage\u2014you can say yes to vendors without surrendering your ability to govern what they do inside your organization."
       },
       {
         question: "Will governance slow our teams down?",
-        answer: "Bad governance slows teams down. Good governance accelerates them by removing uncertainty. When teams know the rules\u2014what\u2019s allowed, what requires approval, what documentation is expected\u2014they stop negotiating the same questions repeatedly. Governance done right is a guardrail, not a speed bump. It reduces rework, prevents surprise escalations, and builds the audit trail as you go rather than scrambling to reconstruct it later."
+        answer: "Bad governance slows teams down. Good governance accelerates them by removing uncertainty. When teams know the rules\u2014what\u2019s allowed, what requires approval, what documentation is expected\u2014they stop negotiating the same questions repeatedly. Governance done right is a guardrail, not a speed bump. It reduces rework, prevents surprise escalations, and builds the audit trail as you go rather than scrambling to reconstruct it later."
       },
       {
-        question: "What\u2019s a typical engagement look like?",
-        answer: "Most engagements start with a diagnostic: what AI systems exist, what governance structures are in place, and what gaps create risk under Canadian requirements. Then we build incrementally: risk classification aligned with the Algorithmic Impact Assessment, then decision rights and approval flows, then controls mapped to tiers, then evidence architecture. The output is a governance operating model your teams can execute. For ongoing support, the Oversight Retainer keeps governance current as your AI portfolio and the regulatory landscape evolve.",
+        question: "What\u2019s a typical engagement look like?",
+        answer: "Most engagements start with a diagnostic: what AI systems exist, what governance structures are in place, and what gaps create risk under Canadian requirements. Then we build incrementally: risk classification aligned with the Algorithmic Impact Assessment, then decision rights and approval flows, then controls mapped to tiers, then evidence architecture. The output is a governance operating model your teams can execute. For ongoing support, the Oversight Retainer keeps governance current as your AI portfolio and the regulatory landscape evolve.",
         cta: "engagementButtons"
       },
       {
-        question: "How do I know if my organization needs AI governance?",
-        answer: "If you\u2019re deploying AI systems that affect customers, employees, or business decisions in Canada, you need governance. Federal institutions are already obligated under the Directive on Automated Decision-Making. Private sector organizations will face obligations under AIDA. Start with: Do you have an inventory of AI use cases? Can you classify them by risk? Do you know who can approve what? Can you produce evidence of your controls? If the answer to any of these is \u2018no\u2019 or \u2018not sure,\u2019 governance work is overdue."
+        question: "How do I know if my organization needs AI governance?",
+        answer: "If you\u2019re deploying AI systems that affect customers, employees, or business decisions in Canada, you need governance. Federal institutions are already obligated under the Directive on Automated Decision-Making. Private sector organizations will face obligations under AIDA. Start with: Do you have an inventory of AI use cases? Can you classify them by risk? Do you know who can approve what? Can you produce evidence of your controls? If the answer to any of these is \u2018no\u2019 or \u2018not sure,\u2019 governance work is overdue."
       },
       {
-        question: "What\u2019s the Pan-Canadian AI Strategy and how does it affect governance?",
-        answer: "The Pan-Canadian AI Strategy, launched in 2017 and renewed in 2021, is Canada\u2019s national framework for advancing AI research and commercialization, administered by CIFAR through three national AI institutes (Vector, Mila, Amii). While the Strategy focuses on research and innovation, it\u2019s created the conditions for AI adoption that now require governance infrastructure. As organizations move from experimentation to production AI, the Strategy\u2019s emphasis on responsible development converges with the operational governance that my practice delivers: risk classification, controls, evidence, and accountability."
+        question: "What\u2019s the Pan-Canadian AI Strategy and how does it affect governance?",
+        answer: "The Pan-Canadian AI Strategy, launched in 2017 and renewed in 2021, is Canada\u2019s national framework for advancing AI research and commercialization, administered by CIFAR through three national AI institutes (Vector, Mila, Amii). While the Strategy focuses on research and innovation, it\u2019s created the conditions for AI adoption that now require governance infrastructure. As organizations move from experimentation to production AI, the Strategy\u2019s emphasis on responsible development converges with the operational governance that my practice delivers: risk classification, controls, evidence, and accountability."
       }
     ]
   },
@@ -451,56 +451,56 @@ export const en = {
   sealedCard: {
     researchProtocol: 'RESEARCH PROTOCOL',
     title: 'The Sealed Card Protocol',
-    subtitle: 'Mediated Legitimacy, Charging, and Governance at the Seam',
+    subtitle: 'Mediated Legitimacy, Charging, and Governance at the Seam',
     keywords: 'AI GOVERNANCE \u00B7 LEGITIMACY \u00B7 ACCOUNTABILITY \u00B7 TRACEABILITY',
     fullDocument: 'Full Protocol Document (PDF)',
-    fullDocumentDesc: 'Read the complete research methodology and findings',
+    fullDocumentDesc: 'Read the complete research methodology and findings',
     introduction: 'Introduction',
-    introP1: 'The Sealed Card Protocol is a framework for analyzing how legitimacy is established and maintained, particularly in the context of generative AI and other forms of mediation. It posits that the',
+    introP1: 'The Sealed Card Protocol is a framework for analyzing how legitimacy is established and maintained, particularly in the context of generative AI and other forms of mediation. It posits that the',
     glitch: '"glitch"',
-    introP1b: '\u2014the moment a reader or viewer senses mediation\u2014is a crucial threshold event that can either lead to legitimacy or suspicion.',
-    introP2: 'The core problem identified is not technical capability but rather institutional and cultural struggles around',
+    introP1b: '\u2014the moment a reader or viewer senses mediation\u2014is a crucial threshold event that can either lead to legitimacy or suspicion.',
+    introP2: 'The core problem identified is not technical capability but rather institutional and cultural struggles around',
     accountability: 'accountability',
-    introP2b: 'and the conversion of recognition into credit. When mediation becomes detectable, evaluation shifts from the artifact itself to its production pathway.',
-    introP3: 'The protocol rejects a "purity model of authenticity," defining authenticity instead as a',
-    introP3quote: '"socially stabilized reading of mediation as coherent and accountable."',
-    introP3b: 'Legitimacy is the institutional version of this stabilization.',
+    introP2b: 'and the conversion of recognition into credit. When mediation becomes detectable, evaluation shifts from the artifact itself to its production pathway.',
+    introP3: 'The protocol rejects a "purity model of authenticity," defining authenticity instead as a',
+    introP3quote: '"socially stabilized reading of mediation as coherent and accountable."',
+    introP3b: 'Legitimacy is the institutional version of this stabilization.',
     keyConcepts: 'Key Concepts',
     concepts: [
-      { term: 'Glitch', definition: 'A perceptual threshold, not an error, marking the moment a reader senses mediation and reorients evaluation.' },
-      { term: 'Seam', definition: 'The interface where evaluative attention flips from artifact to pathway.' },
-      { term: 'Charging', definition: 'The social allocation of credibility that allows meaning to adhere under circulation, observed through "anchors."' },
-      { term: 'Anchors', definition: 'Cues that permit inference about duration, intention, and responsibility (material traces, revision chains, community endorsement).' },
-      { term: 'Legibility', definition: 'The degree to which an artifact fits the reading habits of a particular regime; a normative fit.' },
-      { term: 'Pathway Policing', definition: 'Institutions focusing on the authorization and procedure of creation rather than solely on the artifact itself.' }
+      { term: 'Glitch', definition: 'A perceptual threshold, not an error, marking the moment a reader senses mediation and reorients evaluation.' },
+      { term: 'Seam', definition: 'The interface where evaluative attention flips from artifact to pathway.' },
+      { term: 'Charging', definition: 'The social allocation of credibility that allows meaning to adhere under circulation, observed through "anchors."' },
+      { term: 'Anchors', definition: 'Cues that permit inference about duration, intention, and responsibility (material traces, revision chains, community endorsement).' },
+      { term: 'Legibility', definition: 'The degree to which an artifact fits the reading habits of a particular regime; a normative fit.' },
+      { term: 'Pathway Policing', definition: 'Institutions focusing on the authorization and procedure of creation rather than solely on the artifact itself.' }
     ],
     methodology: 'Methodology: Three Arms',
-    methodologyDesc: 'The protocol uses a triangulated, practice-based design to make legitimacy conversion observable across different domains:',
+    methodologyDesc: 'The protocol uses a triangulated, practice-based design to make legitimacy conversion observable across different domains:',
     arms: {
-      artistic: { title: 'Artistic Arm', description: 'Visual analysis and comparative reading of aesthetic cues, particularly in photographic sequences. Examines how "charging" is performed through anchors rather than direct claims. Uses controlled variations to observe how legibility engineering and platform optimization influence pathway inference.' },
-      academic: { title: 'Academic Arm', description: 'Procedural autoethnography constrained by traceability. Examines the production process of academic work itself as a "chain-of-production object." Understands how visibility of mediation affects trust and how traceability can be used for accountability.' },
-      ritual: { title: 'Ritual Arm', description: 'Evidentiary critique comparing proof regimes and understanding how credibility is translated across domains. Uses artifacts to highlight how mismatched proof demands can lead to suspicion. Explores symbolic charge, healing, and ritual practices.' }
+      artistic: { title: 'Artistic Arm', description: 'Visual analysis and comparative reading of aesthetic cues, particularly in photographic sequences. Examines how "charging" is performed through anchors rather than direct claims. Uses controlled variations to observe how legibility engineering and platform optimization influence pathway inference.' },
+      academic: { title: 'Academic Arm', description: 'Procedural autoethnography constrained by traceability. Examines the production process of academic work itself as a "chain-of-production object." Understands how visibility of mediation affects trust and how traceability can be used for accountability.' },
+      ritual: { title: 'Ritual Arm', description: 'Evidentiary critique comparing proof regimes and understanding how credibility is translated across domains. Uses artifacts to highlight how mismatched proof demands can lead to suspicion. Explores symbolic charge, healing, and ritual practices.' }
     },
     governancePrinciples: 'AI Governance Principles Derived',
     principles: [
-      { title: '1. Legitimacy is pathway authorization under consequence pressure', description: 'Generative AI intensifies this by making mediation more inferable and seams easier to detect. Governance must anticipate the glitch.' },
-      { title: '2. Traceability as accountability instrument', description: 'In AI governance, traceability creates the reconstruction layer that regulators, auditors, and stakeholders demand. Evidence integrity anticipates scrutiny.' },
-      { title: '3. Beyond purity policing to control design', description: 'Focus on responsible practices, clear standards for documentation, and incentive structures that reward accountable procedure rather than punish visible mediation.' },
-      { title: '4. Proof regime alignment', description: 'Proof regime mismatch is a significant driver of suspicion. AI systems must be governed with evidence expectations that match the deployment context.' }
+      { title: '1. Legitimacy is pathway authorization under consequence pressure', description: 'Generative AI intensifies this by making mediation more inferable and seams easier to detect. Governance must anticipate the glitch.' },
+      { title: '2. Traceability as accountability instrument', description: 'In AI governance, traceability creates the reconstruction layer that regulators, auditors, and stakeholders demand. Evidence integrity anticipates scrutiny.' },
+      { title: '3. Beyond purity policing to control design', description: 'Focus on responsible practices, clear standards for documentation, and incentive structures that reward accountable procedure rather than punish visible mediation.' },
+      { title: '4. Proof regime alignment', description: 'Proof regime mismatch is a significant driver of suspicion. AI systems must be governed with evidence expectations that match the deployment context.' }
     ],
     conclusion: 'Conclusion',
-    conclusionP1: 'Legitimacy is an outcome of pathway authorization under consequence pressure. The Sealed Card Protocol argues for a shift from "purity tests" and moralized pathway policing to developing accountability regimes that:',
+    conclusionP1: 'Legitimacy is an outcome of pathway authorization under consequence pressure. The Sealed Card Protocol argues for a shift from "purity tests" and moralized pathway policing to developing accountability regimes that:',
     conclusionItems: [
       'Evaluate procedure, not just artifacts',
       'Distribute responsibility proportionally',
-      'Separate epistemic risk management from nostalgia for solitary origin'
+      'Separate epistemic risk management from nostalgia for solitary origin'
     ],
     backToResearch: 'Back to Research',
     aboutAuthor: 'About the Author'
   },
 
   footer: {
-    copyright: '\u00A9 2026 Martin Lepage, PhD. AI Governance Practice & Research'
+    copyright: '\u00A9 2026 Martin Lepage, PhD. AI Governance Practice & Research'
   },
 
   admin: {
@@ -535,7 +535,7 @@ export const en = {
 
   bookingCalendar: {
     title: 'Book a 30-Minute Debrief',
-    subtitle: 'Select a date and time for your governance discussion',
+    subtitle: 'Select a date and time for your governance discussion',
     selectDate: 'Select a date',
     selectTime: 'Select a time',
     yourDetails: 'Your details',
@@ -545,11 +545,11 @@ export const en = {
     topic: 'Discussion Topic',
     selectTopic: 'Select topic...',
     currentState: 'Current Governance State',
-    currentStatePlaceholder: 'Brief description: Do you have an AI inventory? Risk tiers? Existing controls? Upcoming audits?',
+    currentStatePlaceholder: 'Brief description: Do you have an AI inventory? Risk tiers? Existing controls? Upcoming audits?',
     submit: 'Request this time slot',
     submitting: 'Submitting...',
     confirmation: 'Booking request submitted! Confirmation within 24 hours.',
-    noSlotsAvailable: 'No available slots for this date',
+    noSlotsAvailable: 'No available slots for this date',
     eastern: 'Eastern',
     booked: 'Booked'
   },
