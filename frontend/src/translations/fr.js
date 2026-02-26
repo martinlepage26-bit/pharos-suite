@@ -209,6 +209,10 @@ export const fr = {
       procurement: { title: 'Approvisionnement & risque fournisseur', description: "Les questionnaires deviennent des contr\u00f4les\u00a0: artefacts de diligence, preuves contractuelles." },
       publicSector: { title: 'Secteur public & \u00e9quit\u00e9 proc\u00e9durale', description: "Contestabilit\u00e9, voies d\u2019appel, reconstruction sous examen." },
       financial: { title: 'Syst\u00e8mes financiers & de capital', description: "Les mod\u00e8les d\u00e9placent de l\u2019argent\u00a0: contr\u00f4les d\u2019exposition, tests de r\u00e9sistance, logique d\u2019action d\u00e9favorable." },
+            construction: {
+        title: 'Construction & Infrastructure',
+        description: 'Sécurité de chantier, suivi des actifs, intelligence des équipements et automatisation opérationnelle.'
+      },
       governance: { title: 'Mod\u00e8le op\u00e9rationnel de gouvernance', description: "Droits de d\u00e9cision, portes de cycle de vie, pistes probantes qui \u00e9voluent." }
     },
     questions: {

@@ -209,6 +209,10 @@ export const en = {
       procurement: { title: 'Procurement & vendor risk', description: 'Questionnaires become controls: diligence artifacts, contract-backed proof.' },
       publicSector: { title: 'Public sector & due process', description: 'Contestability, appeal pathways, reconstruction under scrutiny.' },
       financial: { title: 'Financial & capital systems', description: 'Models move money: exposure controls, stress testing, adverse action logic.' },
+            construction: {
+        title: 'Construction & Infrastructure',
+        description: 'Jobsite safety, asset tracking, equipment intelligence, and operational automation.'
+      },
       governance: { title: 'Governance operating model', description: 'Decision rights, lifecycle gates, evidence trails that scale.' }
     },
     questions: {
