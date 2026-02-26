@@ -91,7 +91,7 @@ const Tool = () => {
         <div className="w-[min(460px,94vw)] relative">
           <div className="relative bg-white/95 border border-gray-200/60 rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.12)] p-5 overflow-visible">
             <div className="absolute inset-0 rounded-3xl border border-gray-200/50 bg-white/70 -z-10 translate-x-2.5 translate-y-3 shadow-[0_16px_44px_rgba(15,23,42,0.10)]" />
-            <div className="absolute inset-0 rounded-3xl border border-gray-200/40 bg-white/55 -z-20 translate-x-5 translate-y-6 shadow-[0_16px_44px_rgba(15,23,42,0.08)]" />
+            <div className="absolute inset-0 rounded-3xl border border-gray-200/40 bg-white/55 -z-20 translate-x-5 translate-y-6 shadow-[0_16px_44px_rgba(11,15,26,0.06)]" />
 
             {step === 1 && (
               <div data-testid="step-1-sector">
@@ -103,7 +103,7 @@ const Tool = () => {
                 <div className="space-y-2.5">
                   {sectorKeys.map((key, i) => (
                     <button key={key} onClick={() => handleSectorSelect(sectorIds[i])} data-testid={`sector-${sectorIds[i]}`}
-                      className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_10px_20px_rgba(15,23,42,0.06)] hover:translate-y-[-1px] hover:shadow-[0_14px_26px_rgba(15,23,42,0.08)] ${
+                      className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_10px_20px_rgba(15,23,42,0.06)] hover:translate-y-[-1px] hover:shadow-[0_14px_26px_rgba(11,15,26,0.06)] ${
                         selectedSector === sectorIds[i] ? 'border-[#4B2ABF]/55 shadow-[0_16px_30px_rgba(99,102,241,0.15)] bg-[#4B2ABF]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
                       }`}
                     >
@@ -127,7 +127,7 @@ const Tool = () => {
                 <div className="grid grid-cols-3 gap-2.5">
                   {currentQ.options.map((option) => (
                     <button key={option.value} onClick={() => handleAnswer(currentQ.id, option.value, option.score)}
-                      className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_12px_22px_rgba(15,23,42,0.08)] ${
+                      className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_12px_22px_rgba(11,15,26,0.06)] ${
                         answers[currentQ.id]?.value === option.value ? 'border-[#4B2ABF]/55 shadow-[0_14px_26px_rgba(99,102,241,0.15)] bg-[#4B2ABF] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
                       }`}
                     >{option.label}</button>
@@ -184,7 +184,7 @@ const Tool = () => {
                   <>
                     <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
                       <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_14px_26px_rgba(99,102,241,0.15)]"
-                        style={{ background: `conic-gradient(#4B2ABF ${percentage * 3.6}deg, rgba(15,23,42,0.08) ${percentage * 3.6}deg 360deg)` }}>
+                        style={{ background: `conic-gradient(#4B2ABF ${percentage * 3.6}deg, rgba(11,15,26,0.06) ${percentage * 3.6}deg 360deg)` }}>
                         <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0B0F1A]/90">{percentage}%</div>
                       </div>
                       <div>
