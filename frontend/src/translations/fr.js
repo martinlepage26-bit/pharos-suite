@@ -355,7 +355,7 @@ export const fr = {
   },
 
   cases: {
-    title: 'Études de cas',
+    title: 'Portfolio',
     description: "Une sélection de mandats de gouvernance dans des industries réglementées. Les détails des clients ont été anonymisés.",
     keywords: 'SERVICES FINANCIERS · SANTÉ · ENTREPRISE · SECTEUR PUBLIC · CONSTRUCTION · APPROVISIONNEMENT · GOUVERNANCE',
     sectorsWeServe: 'Secteurs que nous desservons',
