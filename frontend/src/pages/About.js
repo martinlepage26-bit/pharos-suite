@@ -27,7 +27,7 @@ const About = () => {
 
           <div className="grid md:grid-cols-3 gap-6">
             {stepKeys.map((key, i) => (
-              <div key={key} className="bg-[#F6F7FB] rounded-lg p-5 border-t-3 border-[#0D0A2E]" data-testid={`practice-step-${i + 1}`}>
+              <div key={key} className="bg-[#F6F7FB] rounded-lg p-5 border-t-3 border-[#0D0A2E] card-hover-lift" data-testid={`practice-step-${i + 1}`}>
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-8 h-8 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-semibold text-sm">{i + 1}</span>
                   <h3 className="font-serif font-semibold text-[#0B0F1A] underline decoration-[#0D0A2E]">{t.about.steps[key].title}</h3>
