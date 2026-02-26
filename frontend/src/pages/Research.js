@@ -34,14 +34,14 @@ const Research = () => {
           <p className="text-gray-600 mb-8">{t.research.howP2}</p>
         </div>
 
-        <div className="mb-12 p-6 bg-gradient-to-r from-[#1A1033] to-[#4B2ABF] rounded-2xl text-white">
+        <div className="mb-12 p-6 bg-gradient-to-r from-[#1A1033] to-[#4B2ABF] rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <h2 className="font-serif text-2xl font-semibold">{t.research.featuredFramework}</h2>
+            <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredFramework}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredFrameworkSubtitle}</p>
           </div>
           <p className="text-white/90 mb-4">{t.research.featuredFrameworkDesc}</p>
           <p className="text-white/70 text-sm italic">
-            <span className="font-medium">{t.research.professionalNote}</span> {t.research.professionalNoteText}
+            <span className="font-medium text-white">{t.research.professionalNote}</span> {t.research.professionalNoteText}
           </p>
         </div>
 
