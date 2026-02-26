@@ -3,33 +3,39 @@ import { ArrowRight, Shield, FileText, Scale } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import StarterKitCTA from '../components/StarterKitCTA';
 
-// SVG Logo Icon - Diamond with eye
-const LogoIcon = ({ className = "w-64 h-64" }) => (
+// Compass Rose with NE emphasis - black + indigo only
+const CompassLogo = ({ className = "w-48 h-48" }) => (
   <svg viewBox="0 0 200 200" className={className}>
-    <defs>
-      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#6366f1" />
-        <stop offset="100%" stopColor="#8b5cf6" />
-      </linearGradient>
-    </defs>
-    <g transform="translate(100, 100)">
-      {/* Outer diamond frame */}
-      <g transform="rotate(45)">
-        <rect x="-70" y="-70" width="140" height="140" fill="none" stroke="#1a2744" strokeWidth="4"/>
-        <rect x="-55" y="-55" width="110" height="110" fill="none" stroke="#1a2744" strokeWidth="2"/>
-      </g>
-      {/* Compass points */}
-      <polygon points="0,-90 8,-70 0,-75 -8,-70" fill="#1a2744"/>
-      <polygon points="90,0 70,8 75,0 70,-8" fill="#1a2744"/>
-      <polygon points="0,90 -8,70 0,75 8,70" fill="#1a2744"/>
-      <polygon points="-90,0 -70,-8 -75,0 -70,8" fill="#1a2744"/>
-      {/* Inner star/compass rose */}
-      <polygon points="0,-45 12,-12 45,0 12,12 0,45 -12,12 -45,0 -12,-12" fill="none" stroke="#1a2744" strokeWidth="2"/>
-      {/* Eye in center */}
-      <ellipse cx="0" cy="0" rx="22" ry="14" fill="none" stroke="url(#logoGradient)" strokeWidth="3"/>
-      <circle cx="0" cy="0" r="8" fill="url(#logoGradient)"/>
-      <circle cx="0" cy="0" r="3" fill="white"/>
+    {/* Main compass circle */}
+    <circle cx="100" cy="100" r="70" fill="none" stroke="#0a0a0a" strokeWidth="1.5"/>
+    <circle cx="100" cy="100" r="55" fill="none" stroke="#0a0a0a" strokeWidth="1"/>
+    
+    {/* Compass rose - 8 points */}
+    <g stroke="#0a0a0a" strokeWidth="1.5" fill="none">
+      {/* Cardinal points */}
+      <line x1="100" y1="25" x2="100" y2="45"/>
+      <line x1="175" y1="100" x2="155" y2="100"/>
+      <line x1="100" y1="175" x2="100" y2="155"/>
+      <line x1="25" y1="100" x2="45" y2="100"/>
+      {/* Ordinal points */}
+      <line x1="147" y1="53" x2="135" y2="65"/>
+      <line x1="147" y1="147" x2="135" y2="135"/>
+      <line x1="53" y1="147" x2="65" y2="135"/>
+      <line x1="53" y1="53" x2="65" y2="65"/>
     </g>
+    
+    {/* Inner star */}
+    <polygon points="100,60 108,85 130,85 112,100 120,125 100,110 80,125 88,100 70,85 92,85" 
+             fill="none" stroke="#0a0a0a" strokeWidth="1.5"/>
+    
+    {/* NE Arrow - emphasized in indigo */}
+    <g fill="#6366f1" stroke="#6366f1">
+      <line x1="100" y1="100" x2="145" y2="55" strokeWidth="2.5"/>
+      <polygon points="145,55 130,58 142,70"/>
+    </g>
+    
+    {/* Center dot */}
+    <circle cx="100" cy="100" r="4" fill="#0a0a0a"/>
   </svg>
 );
 
@@ -43,21 +49,30 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc]" data-testid="home-page">
-      <div className="max-w-5xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <div className="min-h-screen bg-white" data-testid="home-page">
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          {/* Left: Wordmark Stack */}
           <div>
-            {/* Logo Wordmark */}
-            <div className="mb-8">
-              <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
-                <span className="text-gradient-purple">{t.home.title}</span>
+            {/* Logo Wordmark Stack */}
+            <div className="mb-10">
+              {/* AI Governance - largest, serif */}
+              <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0a0a0a] leading-tight tracking-tight">
+                AI Governance
               </h1>
-              <p className="font-serif text-2xl md:text-3xl text-[#1a2744] mt-1">{t.home.subtitle}</p>
-              <p className="text-sm text-gray-500 mt-2 tracking-wide">Martin Lepage, PhD</p>
+              {/* Practice & Research - smaller */}
+              <p className="font-serif text-2xl md:text-3xl text-[#0a0a0a]/70 mt-1 tracking-tight">
+                Practice & Research
+              </p>
+              {/* Martin Lepage, PhD - smallest, author line style */}
+              <p className="mt-4 text-sm text-[#0a0a0a]/50 tracking-wide">
+                Martin Lepage, <span className="text-xs">PhD</span>
+              </p>
             </div>
             
-            <p className="text-gray-600 text-lg mb-6">{t.home.description}</p>
-            <p className="text-xs tracking-widest text-gray-400 uppercase mb-8">{t.home.keywords}</p>
+            <p className="text-[#0a0a0a]/70 text-lg leading-relaxed mb-4">{t.home.description}</p>
+            <p className="text-xs tracking-widest text-[#0a0a0a]/40 uppercase mb-8">{t.home.keywords}</p>
+            
             <div className="flex flex-wrap gap-4 mb-12">
               <Link to="/services" className="btn-primary inline-flex items-center gap-2" data-testid="view-services-btn">
                 {t.home.viewServices} <ArrowRight className="w-4 h-4" />
@@ -66,48 +81,51 @@ const Home = () => {
                 {t.home.bookDebrief}
               </Link>
             </div>
-            <div className="space-y-4">
+
+            <div className="space-y-5">
               {capabilities.map((cap, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#6366f1]/10 flex items-center justify-center flex-shrink-0">
+                <div key={i} className="flex items-start gap-4">
+                  <div className="w-9 h-9 rounded-lg bg-[#6366f1]/10 flex items-center justify-center flex-shrink-0">
                     <cap.icon className="w-4 h-4 text-[#6366f1]" />
                   </div>
                   <div>
-                    <p className="font-medium text-[#1a2744]">{cap.title}</p>
-                    <p className="text-sm text-gray-500">{cap.description}</p>
+                    <p className="font-medium text-[#0a0a0a]">{cap.title}</p>
+                    <p className="text-sm text-[#0a0a0a]/60">{cap.description}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Right: Compass Logo */}
           <div className="flex justify-center md:justify-end">
-            <LogoIcon className="w-64 md:w-80" />
+            <CompassLogo className="w-64 md:w-80" />
           </div>
         </div>
 
-        <div className="mt-16"><StarterKitCTA /></div>
+        <div className="mt-20"><StarterKitCTA /></div>
 
-        <div className="mt-16 pt-12 border-t border-gray-200">
-          <div className="grid md:grid-cols-4 gap-8">
+        <div className="mt-20 pt-12 border-t border-black/5">
+          <div className="grid md:grid-cols-4 gap-10">
             <Link to="/tool" className="group">
               <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">{t.home.sections.assessment}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#1a2744] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.readinessSnapshot}</h3>
-              <p className="text-gray-600 text-sm">{t.home.sections.assessMaturity}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0a0a0a] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.readinessSnapshot}</h3>
+              <p className="text-[#0a0a0a]/60 text-sm">{t.home.sections.assessMaturity}</p>
             </Link>
             <Link to="/cases" className="group">
               <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">{t.home.sections.portfolio}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#1a2744] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.caseStudies}</h3>
-              <p className="text-gray-600 text-sm">{t.home.sections.seeExamples}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0a0a0a] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.caseStudies}</h3>
+              <p className="text-[#0a0a0a]/60 text-sm">{t.home.sections.seeExamples}</p>
             </Link>
             <Link to="/research" className="group">
               <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">{t.home.sections.research}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#1a2744] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.briefings}</h3>
-              <p className="text-gray-600 text-sm">{t.home.sections.incidentsToControls}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0a0a0a] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.briefings}</h3>
+              <p className="text-[#0a0a0a]/60 text-sm">{t.home.sections.incidentsToControls}</p>
             </Link>
             <Link to="/library" className="group">
               <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">{t.home.sections.resources}</p>
-              <h3 className="font-serif text-lg font-semibold text-[#1a2744] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.library}</h3>
-              <p className="text-gray-600 text-sm">{t.home.sections.frameworksStandards}</p>
+              <h3 className="font-serif text-lg font-semibold text-[#0a0a0a] group-hover:text-[#6366f1] transition-colors mb-1">{t.home.sections.library}</h3>
+              <p className="text-[#0a0a0a]/60 text-sm">{t.home.sections.frameworksStandards}</p>
             </Link>
           </div>
         </div>
