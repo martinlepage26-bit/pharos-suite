@@ -22,10 +22,17 @@ const Home = () => {
             <h1 className="text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontVariant: 'small-caps'}}>
               {t.home.title}
             </h1>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="w-16 h-0.5 bg-[#0B0F1A]"></span>
-              <span className="w-1.5 h-1.5 bg-[#7b2cbf] rotate-45"></span>
-              <span className="flex-1 h-px bg-[#0B0F1A]/30 max-w-32"></span>
+            <div className="flex items-center justify-center mt-2" style={{width: 'fit-content'}}>
+              <div className="h-[3px] flex-1 bg-gradient-to-r from-transparent via-[#0B0F1A] to-[#0B0F1A]/80" style={{minWidth: '140px'}}></div>
+              <div className="relative mx-0">
+                <div className="w-[3px] h-6 bg-[#2D2380] transform rotate-0" style={{
+                  clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                  width: '8px',
+                  height: '24px',
+                  background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)'
+                }}></div>
+              </div>
+              <div className="h-[3px] flex-1 bg-gradient-to-l from-transparent via-[#0B0F1A] to-[#0B0F1A]/80" style={{minWidth: '140px'}}></div>
             </div>
             <p className="text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontStyle: 'italic', fontWeight: 600}}>
               {t.home.subtitle}
