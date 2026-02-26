@@ -1,22 +1,24 @@
 /* ─── AI Governance Brand System ─── */
-/* Premium Modern Classical */
-/* Black + Indigo only. No third tone. */
+/* Institutional authority, academic rigor, operational defensibility */
+/* Black + Purple only on white/off-white */
 
 /* ─── Card system ─── */
 .card {
-  background: var(--bg-white);
-  border: 1px solid rgba(10, 10, 10, 0.08);
+  background: var(--white);
+  border: 1px solid var(--black-10);
   border-radius: 0.5rem;
   padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .card-hover {
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .card-hover:hover {
-  border-color: var(--indigo);
+  border-color: var(--primary-purple);
+  box-shadow: var(--shadow-md);
 }
 
 /* ─── Buttons ─── */
@@ -35,10 +37,11 @@
   border: none;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-  background: var(--indigo);
+  background: var(--primary-purple);
 }
 
 .btn-ghost {
@@ -48,7 +51,7 @@
   padding: 0.75rem 1.5rem;
   background: transparent;
   color: var(--black);
-  border: 1px solid rgba(10, 10, 10, 0.2);
+  border: 1px solid var(--black-20);
   border-radius: 0.375rem;
   font-family: var(--font-sans);
   font-weight: 500;
@@ -59,8 +62,8 @@
 }
 
 .btn-ghost:hover {
-  border-color: var(--indigo);
-  color: var(--indigo);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 /* ─── Paper cards (research/portfolio) ─── */
@@ -70,7 +73,7 @@
 }
 
 .paper-card:hover {
-  border-left-color: var(--indigo);
+  border-left-color: var(--primary-purple);
 }
 
 /* ─── Logo Typography ─── */
@@ -79,17 +82,24 @@
   color: var(--black);
 }
 
+.logo-small-caps {
+  font-family: var(--font-serif);
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  color: var(--black);
+}
+
 .logo-accent {
-  color: var(--indigo);
+  color: var(--primary-purple);
 }
 
 /* ─── Accent elements ─── */
-.accent-indigo {
-  color: var(--indigo);
+.accent-purple {
+  color: var(--primary-purple);
 }
 
 .bg-accent-subtle {
-  background: var(--indigo-10);
+  background: var(--purple-10);
 }
 
 /* ─── Text utilities ─── */
@@ -98,5 +108,11 @@
 }
 
 .text-subtle {
+  color: var(--black-40);
+}
+
+/* ─── Em dash styling ─── */
+.em-dash {
+  margin: 0 0.15em;
   color: var(--black-40);
 }
