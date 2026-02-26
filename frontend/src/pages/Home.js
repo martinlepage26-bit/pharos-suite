@@ -20,25 +20,25 @@ const Home = () => {
           {/* Left: Hero Text - all left aligned */}
           <div>
             <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
-              <span className="border-b-2 border-[#0B0F1A] pb-1">AI Governance</span>
+              <span className="border-b-2 border-[#0B0F1A] pb-1">{t.home.title}</span>
             </h1>
             <p className="font-serif text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4">
-              Strategies & Oversight
+              {t.home.subtitle}
             </p>
             
             <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mt-8 mb-3">
-              Governance systems aligned with Canadian requirements:
+              {t.home.requirementsIntro}
             </p>
             
             <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-3">
-              <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>Treasury Board directives <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>Quebec's Law&nbsp;25<span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span><br/>
-              <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>Emerging AIDA obligations<span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>
+              <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>{t.home.requirement1} <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>{t.home.requirement2}<span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span><br/>
+              <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>{t.home.requirement3}<span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>
             </p>
             
             <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-4">
-              <span className="font-bold">Product</span>
+              <span className="font-bold">{t.home.productLabel}</span>
               <span className="text-[#7b2cbf] font-bold mx-2">➜</span>
-              AI decisions that are documented, reviewable, and defensible.
+              {t.home.productDesc}
             </p>
             
             <p className="text-xs tracking-widest text-[#0B0F1A]/35 uppercase mb-8">{t.home.keywords}</p>
