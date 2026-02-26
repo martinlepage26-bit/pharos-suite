@@ -12,16 +12,21 @@ export const en = {
 
   home: {
     title: 'AI Governance',
-    subtitle: 'Strategy & Oversight',
-    description: 'Governance systems aligned with Canadian requirements:Treasury Board directives, Quebec\'s Law 25, and emerging AIDA obligations:that make AI decisions documented, reviewable, and defensible.',
+    subtitle: 'Strategies & Oversight',
+    requirementsIntro: 'Governance systems aligned with Canadian requirements:',
+    requirement1: 'Treasury Board directives',
+    requirement2: "Quebec's Law\u00A025",
+    requirement3: 'Emerging AIDA obligations',
+    productLabel: 'Product',
+    productDesc: 'AI decisions that are documented, reviewable, and defensible.',
     keywords: 'CANADIAN COMPLIANCE · QUEBEC LAW 25 · EVIDENCE TRAIL',
     viewServices: 'View Services',
     bookDebrief: 'Book a Debrief',
     capabilities: {
       riskClassification: 'Risk Classification',
-      riskClassificationDesc: 'Tier AI use cases aligned with the Algorithmic Impact Assessment framework',
+      riskClassificationDesc: 'Tier AI use cases aligned with the Algorithmic Impact Assessment framework',
       evidenceArchitecture: 'Evidence Architecture',
-      evidenceArchitectureDesc: 'Documentation that satisfies federal and provincial audit requirements',
+      evidenceArchitectureDesc: 'Documentation that satisfies federal and provincial audit requirements',
       controlDesign: 'Control Design',
       controlDesignDesc: 'Operational controls that meet Canadian regulatory expectations'
     },
@@ -40,7 +45,6 @@ export const en = {
       frameworksStandards: 'Frameworks & standards \u2192'
     }
   },
-
   starterKit: {
     title: 'AI Governance Starter Kit',
     description: 'Free templates to begin classifying risk and building controls today.',
