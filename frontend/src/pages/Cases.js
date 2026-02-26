@@ -25,7 +25,7 @@ const Cases = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="cases-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.cases.title}</h1>
+        <h1 className="page-title mb-4">{t.cases.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.cases.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-10">{t.cases.keywords}</p>
 
