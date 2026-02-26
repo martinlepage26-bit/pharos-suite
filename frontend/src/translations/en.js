@@ -427,7 +427,7 @@ export const en = {
     evidence: 'Evidence',
     howP1: 'Governance pressure rarely appears as theory. It appears as audit requests, procurement questionnaires, regulatory expectations, and board oversight.',
     howP2: 'Each briefing identifies the operational pressure, clarifies the control required, and specifies the documentation necessary to make that control inspectable. The result is governance you can show, not just describe.',
-    featuredResearch: 'Featured framework',
+    featuredResearch: 'Featured Research',
     featuredResearchSubtitle: 'From policy to deployable controls: the AI Governance Engine',
     featuredResearchDesc: 'A structured operating model that translates governance commitments into measurable controls, lifecycle gates, decision rights, and verification evidence. This framework informs the analytical approach used throughout this research.',
     professionalNote: 'Professional note:',
