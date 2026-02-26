@@ -7,7 +7,7 @@ const PageMonogram = () => {
   if (isHomePage) return null;
 
   return (
-    <div className="fixed top-12 right-6 z-50 pointer-events-none" style={{ position: 'fixed' }}>
+    <div className="absolute top-16 right-6 z-40 pointer-events-none">
       <img 
         src="/images/mono3-matched.png" 
         alt="" 
