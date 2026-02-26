@@ -18,14 +18,14 @@ const Home = () => {
         <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Left: Text Content */}
           <div>
-            {/* Hero Title - AI Governance on one line */}
+            {/* Hero Title - AI Governance underlined */}
             <div className="mb-10">
-              <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
-                AI Governance
+              <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight">
+                <span className="border-b-2 border-[#0B0F1A] pb-1">AI Governance</span>
               </h1>
-              {/* Strategy & Oversight */}
-              <p className="font-serif text-2xl md:text-3xl text-[#0B0F1A]/60 mt-3">
-                Strategy & Oversight
+              {/* Strategies & Oversight (plural) */}
+              <p className="font-serif text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4">
+                Strategies & Oversight
               </p>
             </div>
             
@@ -56,12 +56,12 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Right: Full Logo - no background */}
+          {/* Right: Full Logo with white background */}
           <div className="flex justify-center md:justify-end">
             <img 
-              src="/images/logo-final.png" 
+              src="/images/logo-home.png" 
               alt="AI Governance - Practice & Research by Martin Lepage PhD" 
-              className="w-80 md:w-[28rem] h-auto"
+              className="w-80 md:w-[26rem] h-auto rounded-lg"
             />
           </div>
         </div>
