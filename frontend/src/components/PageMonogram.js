@@ -9,7 +9,7 @@ const PageMonogram = () => {
   return (
     <div className="fixed top-12 right-6 z-40 pointer-events-none">
       <img 
-        src="/images/mono3-matched.png" 
+        src="/images/mono3-transparent.png" 
         alt="" 
         className="w-14 h-auto opacity-70"
       />
