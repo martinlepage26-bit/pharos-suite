@@ -53,7 +53,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="card border-l-4 border-[#0D0A2E]">
+        <div className="card border-l-4 border-[#0D0A2E] card-hover-lift">
           <p className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-2">{t.about.featuredResearch}</p>
           <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2">{t.about.sealedCard}</h3>
           <p className="text-gray-600 text-sm mb-4">{t.about.sealedCardDesc}</p>
