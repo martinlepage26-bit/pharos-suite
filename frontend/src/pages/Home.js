@@ -19,20 +19,25 @@ const Home = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Hero Text - all left aligned */}
           <div>
-            <h1 className="text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontVariant: 'small-caps'}}>
+            <h1 className="text-5xl md:text-6xl font-semibold text-[#1a1a1a] leading-none tracking-tight whitespace-nowrap" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontVariant: 'small-caps', letterSpacing: '-0.01em', lineHeight: '1.1'}}>
               {t.home.title}
             </h1>
-            <div className="flex items-center mt-2 mb-1" style={{width: '100%', maxWidth: '420px'}}>
-              <div className="h-[2px] flex-1 bg-gradient-to-r from-[#0B0F1A] via-[#0B0F1A]/80 to-[#0B0F1A]"></div>
-              <div className="mx-1" style={{
-                width: '6px',
-                height: '18px',
+            <div className="flex items-center mt-2 mb-1" style={{width: '100%', maxWidth: '380px'}}>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
+              </svg>
+              <div className="mx-0" style={{
+                width: '8px',
+                height: '16px',
                 background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
+                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                flexShrink: 0
               }}></div>
-              <div className="h-[2px] flex-1 bg-gradient-to-l from-[#0B0F1A] via-[#0B0F1A]/80 to-[#0B0F1A]"></div>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
+              </svg>
             </div>
-            <p className="text-2xl md:text-3xl text-[#0B0F1A]/60" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontStyle: 'italic', fontWeight: 600}}>
+            <p className="text-2xl md:text-3xl text-[#1a1a1a]/60" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontStyle: 'italic', fontWeight: 600, letterSpacing: '-0.01em', lineHeight: '1.2'}}>
               {t.home.subtitle}
             </p>
             
