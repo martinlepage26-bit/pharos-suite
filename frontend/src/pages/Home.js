@@ -31,9 +31,9 @@ const Home = () => {
             </p>
             
             <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-3">
-              <span className="text-[#7b2cbf] font-bold mr-1.5">◆</span> Treasury Board directives
-              <span className="text-[#7b2cbf] font-bold mx-1.5 ml-4">◆</span> Quebec's Law 25
-              <span className="text-[#7b2cbf] font-bold mx-1.5 ml-4">◆</span> Emerging AIDA obligations
+              <span style={{color: '#7b2cbf', fontWeight: 700, marginRight: '0.35rem'}}>◆</span>Treasury Board directives
+              <span style={{color: '#7b2cbf', fontWeight: 700, margin: '0 0.35rem 0 1rem'}}>◆</span>Quebec's Law 25
+              <span style={{color: '#7b2cbf', fontWeight: 700, margin: '0 0.35rem 0 1rem'}}>◆</span>Emerging AIDA obligations
             </p>
             
             <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-4">
