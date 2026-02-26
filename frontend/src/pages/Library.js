@@ -36,7 +36,7 @@ const Library = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="library-page">
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.library.title}</h1>
+        <h1 className="font-serif text-6xl md:text-6xl font-semibold text-[#0B0F1A] mb-4">{t.library.title}</h1>
         <p className="text-gray-600 mb-8 max-w-2xl">{t.library.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.library.keywords}</p>
 
@@ -47,7 +47,7 @@ const Library = () => {
               <div key={key} className="card" data-testid={`library-section-${idx}`}>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-[#2A206B]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#2A206B]" /></div>
-                  <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
+                  <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
                 </div>
                 <div className="space-y-3">
                   {sectionItems[idx].map((item, i) => (

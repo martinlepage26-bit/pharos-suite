@@ -12,12 +12,12 @@ const About = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="about-page">
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.about.title}</h1>
+        <h1 className="font-serif text-6xl md:text-6xl font-semibold text-[#0B0F1A] mb-4">{t.about.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.about.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.about.keywords}</p>
 
         <div className="card mb-8">
-          <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-4">{t.about.practiceTitle}</h2>
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-4">{t.about.practiceTitle}</h2>
           <p className="text-gray-600 mb-4">
             <span className="font-semibold text-[#0B0F1A]">{t.about.practiceP1}</span> {t.about.practiceP1b}
           </p>
@@ -39,7 +39,7 @@ const About = () => {
         </div>
 
         <div className="card mb-8">
-          <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-6">{t.about.aboutMe}</h2>
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6">{t.about.aboutMe}</h2>
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex-shrink-0">
               <img src={HEADSHOT_URL} alt="Martin Lepage" className="w-48 h-48 object-cover rounded-2xl shadow-lg" data-testid="headshot" />
@@ -55,7 +55,7 @@ const About = () => {
 
         <div className="card border-l-4 border-[#2A206B]">
           <p className="text-xs tracking-widest text-[#2A206B] uppercase mb-2">{t.about.featuredResearch}</p>
-          <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-2">{t.about.sealedCard}</h3>
+          <h3 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-2">{t.about.sealedCard}</h3>
           <p className="text-gray-600 text-sm mb-4">{t.about.sealedCardDesc}</p>
           <Link to="/sealed-card" className="inline-flex items-center gap-2 text-[#2A206B] font-medium text-sm hover:gap-3 transition-all">
             {t.about.readProtocol} <ArrowRight className="w-4 h-4" />

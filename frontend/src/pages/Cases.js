@@ -13,7 +13,7 @@ const Cases = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="cases-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.cases.title}</h1>
+        <h1 className="font-serif text-6xl md:text-6xl font-semibold text-[#0B0F1A] mb-4">{t.cases.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.cases.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.cases.keywords}</p>
 
@@ -33,7 +33,7 @@ const Cases = () => {
                     <span className="text-gray-300">·</span>
                     <span className="text-xs text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3" />{study.duration}</span>
                   </div>
-                  <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#2A206B] transition-colors">{study.title}</h3>
+                  <h3 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#2A206B] transition-colors">{study.title}</h3>
                   <p className="text-gray-500 text-sm flex items-center gap-2 mb-3"><Building2 className="w-4 h-4" />{study.client}</p>
                   <p className="text-gray-600 text-sm line-clamp-2">{study.challenge}</p>
                 </div>
@@ -46,7 +46,7 @@ const Cases = () => {
         <div className="mt-12 p-6 bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
           {/* Shine effect */}
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
-          <h3 className="font-serif text-4xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
+          <h3 className="font-serif text-6xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
           <p className="text-white/80 mb-4">{t.cases.facingChallengeDesc}</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.cases.bookDebrief}</Link>
         </div>
@@ -63,7 +63,7 @@ const Cases = () => {
                   <span className="text-gray-300">·</span>
                   <span className="text-xs text-gray-500">{selectedCase.duration}</span>
                 </div>
-                <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A]">{selectedCase.title}</h2>
+                <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A]">{selectedCase.title}</h2>
                 <p className="text-gray-500 text-sm mt-1">{selectedCase.client}</p>
               </div>
               <button onClick={() => setSelectedCase(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><X className="w-5 h-5 text-gray-500" /></button>

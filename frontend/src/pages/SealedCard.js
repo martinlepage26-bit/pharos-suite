@@ -12,8 +12,8 @@ const SealedCard = () => {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <p className="text-xs tracking-widest text-[#2A206B] uppercase mb-3">{t.sealedCard.researchProtocol}</p>
-          <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.title}</h1>
-          <p className="text-lg text-gray-600 mb-6">{t.sealedCard.subtitle}</p>
+          <h1 className="font-serif text-6xl md:text-6xl font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.title}</h1>
+          <p className="text-6xl text-gray-600 mb-6">{t.sealedCard.subtitle}</p>
           <p className="text-xs tracking-widest text-gray-400 uppercase">{t.sealedCard.keywords}</p>
         </div>
 
@@ -23,7 +23,7 @@ const SealedCard = () => {
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center"><FileText className="w-6 h-6" /></div>
               <div>
-                <p className="font-semibold text-lg">{t.sealedCard.fullDocument}</p>
+                <p className="font-semibold text-6xl">{t.sealedCard.fullDocument}</p>
                 <p className="text-white/70 text-sm">{t.sealedCard.fullDocumentDesc}</p>
               </div>
             </div>
@@ -32,7 +32,7 @@ const SealedCard = () => {
         </a>
 
         <div className="card mb-8">
-          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4 flex items-center gap-3">
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-4 flex items-center gap-3">
             <BookOpen className="w-6 h-6 text-[#2A206B]" />{t.sealedCard.introduction}
           </h2>
           <p className="text-gray-600 mb-4">
@@ -47,7 +47,7 @@ const SealedCard = () => {
         </div>
 
         <div className="card mb-8">
-          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
             <Sparkles className="w-6 h-6 text-[#2A206B]" />{t.sealedCard.keyConcepts}
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
@@ -61,7 +61,7 @@ const SealedCard = () => {
         </div>
 
         <div className="card mb-8">
-          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
             <Layers className="w-6 h-6 text-[#2A206B]" />{t.sealedCard.methodology}
           </h2>
           <p className="text-gray-600 mb-6">{t.sealedCard.methodologyDesc}</p>
@@ -72,7 +72,7 @@ const SealedCard = () => {
                 <div key={key} className={`p-5 bg-gradient-to-r from-[${colors[i]}]/5 to-transparent rounded-xl border border-[${colors[i]}]/20`}>
                   <div className="flex items-center gap-3 mb-2">
                     <span className={`w-8 h-8 rounded-full bg-[${colors[i]}] text-white flex items-center justify-center font-bold`}>{i + 1}</span>
-                    <h3 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.sealedCard.arms[key].title}</h3>
+                    <h3 className="font-serif text-6xl font-semibold text-[#0B0F1A]">{t.sealedCard.arms[key].title}</h3>
                   </div>
                   <p className="text-gray-600 text-sm ml-11">{t.sealedCard.arms[key].description}</p>
                 </div>
@@ -82,7 +82,7 @@ const SealedCard = () => {
         </div>
 
         <div className="card mb-8">
-          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
             <Eye className="w-6 h-6 text-[#2A206B]" />{t.sealedCard.governancePrinciples}
           </h2>
           <div className="space-y-4">
@@ -96,7 +96,7 @@ const SealedCard = () => {
         </div>
 
         <div className="card mb-8 border-l-4 border-[#2A206B]">
-          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.conclusion}</h2>
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.conclusion}</h2>
           <p className="text-gray-600 mb-4">{t.sealedCard.conclusionP1}</p>
           <ul className="text-gray-600 space-y-2 ml-4">
             {t.sealedCard.conclusionItems.map((item, i) => (

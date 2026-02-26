@@ -39,13 +39,13 @@ const Portfolio = () => {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <Link to="/about" className="text-[#2A206B] text-sm font-medium hover:underline mb-4 inline-block">&larr; Back to About</Link>
-          <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">Portfolio</h1>
+          <h1 className="font-serif text-6xl md:text-6xl font-semibold text-[#0B0F1A] mb-4">Portfolio</h1>
           <p className="text-gray-600 max-w-2xl">Publications, frameworks, and engagement areas in AI governance. This work focuses on making governance operational: controls people can execute, evidence auditors can verify, and documentation that survives scrutiny.</p>
           <p className="text-xs tracking-widest text-gray-400 uppercase mt-4">PUBLICATIONS · FRAMEWORKS · ENGAGEMENTS</p>
         </div>
 
         <section className="mb-12">
-          <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
             <BookOpen className="w-6 h-6 text-[#2A206B]" /> Publications & Frameworks
           </h2>
           {loading ? (
@@ -63,7 +63,7 @@ const Portfolio = () => {
                           <span className="text-xs text-gray-500">{pub.year}</span>
                           {pub.venue && <><span className="text-gray-300">·</span><span className="text-xs text-gray-500">{pub.venue}</span></>}
                         </div>
-                        <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#2A206B] transition-colors">{pub.title}</h3>
+                        <h3 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#2A206B] transition-colors">{pub.title}</h3>
                         <p className="text-gray-600 text-sm">{pub.description}</p>
                       </div>
                       <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#2A206B] flex-shrink-0" />
@@ -78,7 +78,7 @@ const Portfolio = () => {
                           <span className="text-gray-300">·</span>
                           <span className="text-xs text-gray-500">{pub.year}</span>
                         </div>
-                        <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#2A206B] transition-colors">{pub.title}</h3>
+                        <h3 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#2A206B] transition-colors">{pub.title}</h3>
                         {pub.venue && <p className="text-gray-500 text-sm mb-1">{pub.venue}</p>}
                         <p className="text-gray-600 text-sm">{pub.description}</p>
                       </div>
@@ -93,7 +93,7 @@ const Portfolio = () => {
 
         {workingPapers.length > 0 && (
           <section className="mb-12">
-            <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
+            <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
               <FileText className="w-6 h-6 text-[#2A206B]" /> Working Papers
             </h2>
             <div className="space-y-4">
@@ -111,7 +111,7 @@ const Portfolio = () => {
         )}
 
         <section className="mb-12">
-          <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
             <Presentation className="w-6 h-6 text-[#2A206B]" /> Engagement Areas
           </h2>
           <div className="space-y-4">
@@ -140,7 +140,7 @@ const Portfolio = () => {
         </section>
 
         <section className="mb-12">
-          <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-6">Areas of Expertise</h2>
+          <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-6">Areas of Expertise</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {expertise.map((area, i) => (
               <div key={i} className="card">
@@ -157,7 +157,7 @@ const Portfolio = () => {
 
         <div className="card bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
-          <h3 className="font-serif text-4xl font-semibold mb-2">Discuss your governance needs</h3>
+          <h3 className="font-serif text-6xl font-semibold mb-2">Discuss your governance needs</h3>
           <p className="text-white/80 mb-4">Whether you're establishing governance foundations, preparing for audit, or managing vendor AI risk.</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">Book a Debrief</Link>
         </div>
