@@ -6,7 +6,6 @@ import { LanguageProvider } from "./context/LanguageContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import PageMonogram from "./components/PageMonogram";
 
 // Pages
 import Home from "./pages/Home";
@@ -30,7 +29,6 @@ function App() {
         <BrowserRouter>
           <ScrollToTop />
           <Navbar />
-          <PageMonogram />
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
