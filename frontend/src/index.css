@@ -41,14 +41,27 @@
 
 /* ─── Base Typography ─── */
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   color: var(--black);
   background: var(--off-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--black);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--black);
+}
+
+h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 600;
   color: var(--black);
