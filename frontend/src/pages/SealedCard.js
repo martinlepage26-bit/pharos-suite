@@ -17,7 +17,8 @@ const SealedCard = () => {
           <p className="text-xs tracking-widest text-gray-400 uppercase">{t.sealedCard.keywords}</p>
         </div>
 
-        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-gradient-to-r from-[#2A206B] via-[#2A206B] to-white/20 rounded-2xl text-white hover:shadow-xl transition-all group" data-testid="pdf-download">
+        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] hover:shadow-[0_12px_40px_rgba(42,32,107,0.5)] transition-all group relative overflow-hidden" data-testid="pdf-download">
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center"><FileText className="w-6 h-6" /></div>
