@@ -13,17 +13,17 @@ export const en = {
   home: {
     title: 'AI Governance',
     subtitle: 'Strategy & Oversight',
-    description: 'Governance systems that make AI decisions documented, reviewable, and defensible under audit and procurement scrutiny.',
-    keywords: 'DEFENSIBLE DECISIONS · OPERATIONAL CONTROLS · EVIDENCE TRAIL',
+    description: 'Governance systems aligned with Canadian requirements—Treasury Board directives, Quebec's Law 25, and emerging AIDA obligations—that make AI decisions documented, reviewable, and defensible.',
+    keywords: 'CANADIAN COMPLIANCE · QUEBEC LAW 25 · EVIDENCE TRAIL',
     viewServices: 'View Services',
     bookDebrief: 'Book a Debrief',
     capabilities: {
       riskClassification: 'Risk Classification',
-      riskClassificationDesc: 'Tier AI use cases by impact, sensitivity, and exposure',
+      riskClassificationDesc: 'Tier AI use cases aligned with the Algorithmic Impact Assessment framework',
       evidenceArchitecture: 'Evidence Architecture',
-      evidenceArchitectureDesc: 'Documentation that survives audit scrutiny',
+      evidenceArchitectureDesc: 'Documentation that satisfies federal and provincial audit requirements',
       controlDesign: 'Control Design',
-      controlDesignDesc: 'Operational controls teams can actually execute'
+      controlDesignDesc: 'Operational controls that meet Canadian regulatory expectations'
     },
     sections: {
       assessment: 'Assessment',
@@ -82,21 +82,21 @@ export const en = {
     offers: {
       foundation: {
         title: 'Governance Foundation',
-        description: 'Establish the minimum viable governance system: AI use case inventory, risk tiers, decision rights, approval flows, and operating cadence.',
-        outputs: 'Use case map, tiering logic, RACI matrix, baseline templates, governance calendar.',
-        ideal: 'Organizations deploying AI without formal governance structures.'
+        description: 'Establish governance aligned with Canadian requirements: AI use case inventory structured for the Algorithmic Impact Assessment, risk tiers that satisfy Law 25 obligations, and decision rights mapped to federal and provincial expectations.',
+        outputs: 'AIA-aligned use case map, tiering logic, RACI matrix, Quebec compliance templates, governance calendar.',
+        ideal: 'Canadian organizations deploying AI without formal governance structures or needing to align existing practices with federal/provincial requirements.'
       },
       controls: {
         title: 'Controls and Evidence Pack',
-        description: 'Build audit and procurement readiness with a control register mapped to risk tiers, evidence expectations, and documentation standards.',
-        outputs: 'Control register, evaluation criteria, vendor questionnaires, decision log templates, evidence packet structure.',
-        ideal: 'Organizations preparing for internal audit, regulatory review, or customer due diligence.'
+        description: 'Build readiness for Treasury Board review, Quebec's Commission d'accès requirements, and procurement scrutiny with controls mapped to Canadian regulatory expectations.',
+        outputs: 'Control register aligned to AIA levels, evaluation criteria, vendor questionnaires for Canadian procurement, decision log templates, evidence packet structure.',
+        ideal: 'Organizations preparing for federal audit, provincial regulatory review, or responding to AIDA obligations.'
       },
       oversight: {
         title: 'Oversight Retainer',
-        description: 'Ongoing advisory support to keep governance current as models, vendors, data flows, and use cases evolve.',
-        outputs: 'Monthly oversight, decision log stewardship, control roadmap updates, audit and procurement support.',
-        ideal: 'Organizations with active AI delivery who need stable oversight without slowing delivery.'
+        description: 'Ongoing advisory support to maintain compliance as Canadian AI regulation evolves—from AIDA implementation to Law 25 enforcement updates.',
+        outputs: 'Monthly oversight, decision log stewardship, regulatory update briefings, control roadmap updates, audit and procurement support.',
+        ideal: 'Organizations with active AI delivery in Canada who need stable oversight as the regulatory landscape matures.'
       }
     },
     pricing: {
