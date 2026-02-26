@@ -39,7 +39,7 @@ const Cases = () => {
               const Icon = sectorIcons[key];
               const sector = t.cases.sectorCards[key];
               return (
-                <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sectorIds[i]}`}>
+                <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors card-hover-lift" data-testid={`sector-card-${sectorIds[i]}`}>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-4 h-4 text-[#0D0A2E]" />
