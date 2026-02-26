@@ -57,15 +57,15 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="bg-[#F6F7FB]/70 border border-gray-200/50 rounded-xl p-6 space-y-6">
+            <div className="bg-[#F6F7FB]/70 border border-gray-200/50 rounded-xl p-6 space-y-10">
               {capabilities.map((cap, i) => (
                 <div key={i} className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
                     <cap.icon className="w-4 h-4 text-[#0D0A2E]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#0B0F1A]">{cap.title}</p>
-                    <p className="text-sm text-[#0B0F1A]/60 leading-relaxed">{cap.description}</p>
+                    <p className="font-semibold text-[#0B0F1A] leading-tight">{cap.title}</p>
+                    <p className="text-sm text-[#0B0F1A]/60 leading-relaxed mt-1">{cap.description}</p>
                   </div>
                 </div>
               ))}
