@@ -3,6 +3,7 @@ export const fr = {
     home: 'ACCUEIL',
     services: 'SERVICES',
     cases: 'CAS',
+    portfolio: 'PORTFOLIO',
     tool: 'OUTIL',
     research: 'RECHERCHE',
     library: 'BIBLIOTH\u00C8QUE',
@@ -355,8 +356,8 @@ export const fr = {
 
   cases: {
     title: 'Études de cas',
-    description: "Mandats sélectionnés illustrant les défis et solutions de gouvernance à travers les secteurs. Détails anonymisés pour protéger la confidentialité des clients.",
-    keywords: 'SERVICES FINANCIERS · SANTÉ · ENTREPRISE · SECTEUR PUBLIC',
+    description: "Une sélection de mandats de gouvernance dans des industries réglementées. Les détails des clients ont été anonymisés.",
+    keywords: 'SERVICES FINANCIERS · SANTÉ · ENTREPRISE · SECTEUR PUBLIC · CONSTRUCTION · APPROVISIONNEMENT · GOUVERNANCE',
     sectorsWeServe: 'Secteurs que nous desservons',
     outputs: 'Livrables',
     assessReadiness: 'Évaluer la préparation',
