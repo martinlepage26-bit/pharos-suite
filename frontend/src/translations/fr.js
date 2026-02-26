@@ -13,17 +13,17 @@ export const fr = {
   home: {
     title: 'Gouvernance IA',
     subtitle: 'Strat\u00e9gie & Supervision',
-    description: "Des syst\u00e8mes de gouvernance qui rendent les d\u00e9cisions en IA document\u00e9es, v\u00e9rifiables et d\u00e9fendables lors d\u2019audits et d\u2019examens d\u2019approvisionnement.",
-    keywords: 'D\u00c9CISIONS D\u00c9FENDABLES \u00B7 CONTR\u00d4LES OP\u00c9RATIONNELS \u00B7 PISTE PROBANTE',
+    description: "Des systèmes de gouvernance alignés sur les exigences canadiennes—directives du Conseil du Trésor, Loi 25 du Québec et obligations LIAD émergentes—qui rendent les décisions IA documentées, vérifiables et défendables.",
+    keywords: 'CONFORMITÉ CANADIENNE · LOI 25 QUÉBEC · PISTE PROBANTE',
     viewServices: 'Voir les services',
     bookDebrief: 'R\u00e9server un entretien',
     capabilities: {
       riskClassification: 'Classification des risques',
-      riskClassificationDesc: "Hi\u00e9rarchiser les cas d\u2019utilisation de l\u2019IA par impact, sensibilit\u00e9 et exposition",
+      riskClassificationDesc: "Hiérarchiser les cas d'utilisation alignés sur le cadre d'Évaluation de l'incidence algorithmique",
       evidenceArchitecture: 'Architecture probante',
-      evidenceArchitectureDesc: "Documentation qui r\u00e9siste \u00e0 l\u2019examen d\u2019audit",
+      evidenceArchitectureDesc: "Documentation qui satisfait les exigences d'audit fédérales et provinciales",
       controlDesign: 'Conception de contr\u00f4les',
-      controlDesignDesc: "Des contr\u00f4les op\u00e9rationnels que les \u00e9quipes peuvent r\u00e9ellement ex\u00e9cuter"
+      controlDesignDesc: "Des contrôles opérationnels qui répondent aux attentes réglementaires canadiennes"
     },
     sections: {
       assessment: '\u00c9valuation',
