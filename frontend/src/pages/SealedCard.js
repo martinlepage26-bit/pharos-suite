@@ -17,7 +17,7 @@ const SealedCard = () => {
           <p className="text-xs tracking-widest text-gray-400 uppercase">{t.sealedCard.keywords}</p>
         </div>
 
-        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-gradient-to-r from-[#0B0F1A] to-[#4B2ABF] rounded-2xl text-white hover:shadow-xl transition-all group" data-testid="pdf-download">
+        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-gradient-to-r from-[#1A1033] to-[#4B2ABF] rounded-2xl text-white hover:shadow-xl transition-all group" data-testid="pdf-download">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center"><FileText className="w-6 h-6" /></div>
@@ -66,7 +66,7 @@ const SealedCard = () => {
           <p className="text-gray-600 mb-6">{t.sealedCard.methodologyDesc}</p>
           <div className="space-y-4">
             {['artistic', 'academic', 'ritual'].map((key, i) => {
-              const colors = ['#4B2ABF', '#5E3BBF', '#7C5CD6'];
+              const colors = ['#4B2ABF', '#3A1FA0', '#2D1A5E'];
               return (
                 <div key={key} className={`p-5 bg-gradient-to-r from-[${colors[i]}]/5 to-transparent rounded-xl border border-[${colors[i]}]/20`}>
                   <div className="flex items-center gap-3 mb-2">

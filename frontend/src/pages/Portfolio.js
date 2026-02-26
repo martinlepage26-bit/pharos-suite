@@ -155,7 +155,7 @@ const Portfolio = () => {
           </div>
         </section>
 
-        <div className="card bg-gradient-to-r from-[#0B0F1A] to-[#4B2ABF] text-white">
+        <div className="card bg-gradient-to-r from-[#1A1033] to-[#4B2ABF] text-white">
           <h3 className="font-serif text-xl font-semibold mb-2">Discuss your governance needs</h3>
           <p className="text-white/80 mb-4">Whether you're establishing governance foundations, preparing for audit, or managing vendor AI risk.</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">Book a Debrief</Link>

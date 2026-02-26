@@ -26,7 +26,7 @@ const StarterKitCTA = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-[#0B0F1A] via-[#1A1033] to-[#4B2ABF] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
+    <div className="bg-gradient-to-br from-[#1A1033] via-[#2D1A5E] to-[#4B2ABF] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
       <div className="flex items-start gap-4 mb-6">
         <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
           <Download className="w-7 h-7" />
