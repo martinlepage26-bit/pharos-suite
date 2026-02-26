@@ -27,7 +27,7 @@ const Cases = () => {
       <div className="max-w-5xl mx-auto">
         <h1 className="page-title mb-4">{t.cases.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.cases.description}</p>
-        <p className="text-xs tracking-widest text-gray-400 uppercase mb-10">{t.cases.keywords}</p>
+        <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-10">{t.cases.keywords}</p>
 
         {/* Sector Cards Grid - 2 rows of 3, then 1 row of 1 centered */}
         <div className="mb-12">
