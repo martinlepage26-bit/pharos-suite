@@ -11,7 +11,7 @@ const ServiceMenu = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="service-menu-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.serviceMenu.title}</h1>
+        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.serviceMenu.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.serviceMenu.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.serviceMenu.keywords}</p>
 
@@ -19,7 +19,7 @@ const ServiceMenu = () => {
           const pkg = t.serviceMenu.packages[key];
           return (
             <div key={key} className="card mb-8" data-testid={`package-${index + 1}`} id={`package-${index + 1}`}>
-              <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2">{pkg.title}</h2>
+              <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2">{pkg.title}</h2>
               <p className="text-gray-500 text-sm mb-6">
                 <span className="font-medium">{t.serviceMenu.bestFor}</span> {pkg.bestFor}
               </p>
@@ -58,7 +58,7 @@ const ServiceMenu = () => {
           );
         })}
 
-        <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">{t.serviceMenu.engagementDrivers}</h2>
+        <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{t.serviceMenu.engagementDrivers}</h2>
         <p className="text-gray-600 mb-6">{t.serviceMenu.engagementDriversDesc}</p>
         <div className="grid md:grid-cols-3 gap-6">
           {driverKeys.map((key, index) => (

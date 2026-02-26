@@ -13,12 +13,12 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="services-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.services.title}</h1>
+        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.services.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.services.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.services.keywords}</p>
 
         <div className="card mb-12">
-          <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">{t.services.whatIDeliver}</h2>
+          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{t.services.whatIDeliver}</h2>
           <p className="text-gray-600 mb-4">
             {t.services.deliverP1} <span className="text-[#0B0F1A] font-medium">{t.services.riskClassification}</span> {t.services.deliverP1b} <span className="text-[#0B0F1A] font-medium">{t.services.controls}</span> {t.services.deliverP1c} <span className="text-[#0B0F1A] font-medium">{t.services.documentation}</span> {t.services.deliverP1d}
           </p>
@@ -31,7 +31,7 @@ const Services = () => {
           </div>
         </div>
 
-        <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6">{t.services.coreOffers}</h2>
+        <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-6">{t.services.coreOffers}</h2>
         <div className="space-y-6 mb-12">
           {offerKeys.map((key, index) => {
             const Icon = icons[index];
@@ -43,7 +43,7 @@ const Services = () => {
                     <Icon className="w-6 h-6 text-[#2A206B]" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2">{offer.title}</h3>
+                    <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2">{offer.title}</h3>
                     <p className="text-gray-600 mb-3">{offer.description}</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div className="bg-[#F6F7FB] rounded-lg p-3">
@@ -65,7 +65,7 @@ const Services = () => {
           })}
         </div>
 
-        <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">{t.services.pricingTitle}</h2>
+        <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{t.services.pricingTitle}</h2>
         <p className="text-gray-600 mb-6">{t.services.pricingDescription}</p>
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {pricingKeys.map((key, index) => (

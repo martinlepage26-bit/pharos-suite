@@ -34,7 +34,7 @@ const StarterKitCTA = () => {
           <Download className="w-7 h-7" />
         </div>
         <div>
-          <h3 className="font-serif text-2xl font-semibold mb-2 text-white">
+          <h3 className="font-serif text-lg font-semibold mb-2 text-white">
             {t.starterKit.title}
           </h3>
           <p className="text-white/80">

@@ -19,10 +19,10 @@ const Home = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Hero Text - all left aligned */}
           <div>
-            <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
+            <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
               <span className="border-b-2 border-[#0B0F1A] pb-1">AI Governance</span>
             </h1>
-            <p className="font-serif text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4">
+            <p className="font-serif text-lg md:text-lg text-[#0B0F1A]/60 mt-4">
               Strategies & Oversight
             </p>
             

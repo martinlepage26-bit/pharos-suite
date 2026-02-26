@@ -105,7 +105,7 @@ const Admin = () => {
     return (
       <div className="min-h-screen bg-[#F6F7FB] flex items-center justify-center px-6" data-testid="admin-login">
         <form onSubmit={handleLogin} className="card max-w-sm w-full text-center">
-          <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">Admin</h2>
+          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">Admin</h2>
           <input type="password" value={passphrase} onChange={(e) => setPassphrase(e.target.value)} placeholder="Passphrase" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none mb-4" data-testid="admin-passphrase" />
           <button type="submit" className="btn-primary w-full" data-testid="admin-login-btn">Enter</button>
         </form>
@@ -116,7 +116,7 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="admin-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-3xl font-semibold text-[#0B0F1A] mb-6">Admin</h1>
+        <h1 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-6">Admin</h1>
 
         <div className="flex gap-2 mb-8">
           <button onClick={() => setActiveTab('publications')} data-testid="admin-tab-publications"
@@ -135,7 +135,7 @@ const Admin = () => {
         {activeTab === 'publications' && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.admin.publications}</h2>
+              <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.admin.publications}</h2>
               <button onClick={() => { setShowForm(true); setEditingPub(null); setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' }); }} className="btn-primary flex items-center gap-2 text-sm" data-testid="add-publication-btn">
                 <Plus className="w-4 h-4" /> {t.admin.addPublication}
               </button>
@@ -234,7 +234,7 @@ const Admin = () => {
 
         {activeTab === 'bookings' && (
           <div>
-            <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-6">{t.admin.bookingsList}</h2>
+            <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-6">{t.admin.bookingsList}</h2>
             {bookings.length === 0 ? (
               <p className="text-gray-500 text-sm">{t.admin.noBookings}</p>
             ) : (

@@ -76,7 +76,7 @@ const Tool = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6" data-testid="tool-page">
       <div className="max-w-[980px] mx-auto mb-6">
-        <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#0B0F1A] mb-2">{t.tool.title}</h1>
+        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-2">{t.tool.title}</h1>
         <p className="text-gray-600 max-w-2xl">{t.tool.description}</p>
         <div className="flex gap-4 mt-4 text-xs tracking-wider uppercase">
           <span className={step >= 1 ? 'text-[#2A206B] font-semibold' : 'text-gray-400'}>{t.tool.steps.sector}</span>
@@ -97,7 +97,7 @@ const Tool = () => {
               <div data-testid="step-1-sector">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-7 h-7 rounded-full bg-[#2A206B] text-white flex items-center justify-center font-bold text-sm">1</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
+                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">{t.tool.step1.description}</p>
                 <div className="space-y-2.5">
@@ -119,7 +119,7 @@ const Tool = () => {
               <div data-testid="step-2-readiness">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-7 h-7 rounded-full bg-[#2A206B] text-white flex items-center justify-center font-bold text-sm">2</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">
+                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {READINESS_QUESTIONS.length}
                   </h2>
                 </div>
@@ -167,7 +167,7 @@ const Tool = () => {
             <div className="flex items-start justify-between gap-3 p-4 border-b border-gray-100">
               <div>
                 <p className="text-xs tracking-widest uppercase text-[#2A206B]">{t.tool.steps.results}</p>
-                <h3 className="font-serif text-xl font-semibold text-[#0B0F1A]/95 mt-1">{t.tool.results.title}</h3>
+                <h3 className="font-serif text-lg font-semibold text-[#0B0F1A]/95 mt-1">{t.tool.results.title}</h3>
               </div>
               <button onClick={() => setDrawerOpen(false)} className="p-1 hover:bg-gray-100 rounded-full" data-testid="close-drawer-btn">
                 <X className="w-5 h-5 text-gray-500" />
@@ -185,11 +185,11 @@ const Tool = () => {
                     <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
                       <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_3px_10px_rgba(75,42,191,0.10)]"
                         style={{ background: `conic-gradient(#2A206B ${percentage * 3.6}deg, rgba(11,15,26,0.06) ${percentage * 3.6}deg 360deg)` }}>
-                        <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0B0F1A]/90">{percentage}%</div>
+                        <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-lg text-[#0B0F1A]/90">{percentage}%</div>
                       </div>
                       <div>
                         <p className="text-xs tracking-wider uppercase text-gray-500 font-bold mb-1">{sectorTitle}</p>
-                        <p className="font-serif font-bold text-xl text-[#2A206B] mb-1">{risk}</p>
+                        <p className="font-serif font-bold text-lg text-[#2A206B] mb-1">{risk}</p>
                         <p className="text-[#0B0F1A]/75 text-sm leading-snug">{recommendation}</p>
                       </div>
                     </div>

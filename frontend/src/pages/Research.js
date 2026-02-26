@@ -17,11 +17,11 @@ const Research = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="research-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.research.title}</h1>
+        <h1 className="font-serif text-lg md:text-lg font-semibold text-[#0B0F1A] mb-4">{t.research.title}</h1>
         <p className="text-gray-600 mb-8 max-w-2xl">{t.research.description}</p>
 
         <div className="mb-12">
-          <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">{t.research.howItWorks}</h2>
+          <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{t.research.howItWorks}</h2>
           <div className="flex items-center justify-center gap-4 text-sm mb-6">
             {[t.research.signal, t.research.pressure, t.research.control, t.research.artifact, t.research.evidence].map((label, i, arr) => (
               <span key={i}>
@@ -38,7 +38,7 @@ const Research = () => {
           {/* Shine effect */}
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredFramework}</h2>
+            <h2 className="font-serif text-lg font-semibold text-white">{t.research.featuredFramework}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredFrameworkSubtitle}</p>
           </div>
           <p className="text-white/90 mb-4">{t.research.featuredFrameworkDesc}</p>
@@ -49,7 +49,7 @@ const Research = () => {
 
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-            <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{t.research.operationalContexts}</h2>
+            <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.research.operationalContexts}</h2>
             <p className="text-gray-500 text-sm">{t.research.filterByContext}</p>
           </div>
           <div className="flex flex-wrap gap-2 mb-8">
@@ -102,7 +102,7 @@ const Research = () => {
                   <span className="text-gray-300">·</span>
                   <span className="text-xs text-gray-500">{new Date(selectedPaper.date).toLocaleDateString(dateLocale, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>
-                <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{selectedPaper.title}</h2>
+                <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{selectedPaper.title}</h2>
               </div>
               <button onClick={() => setSelectedPaper(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><X className="w-5 h-5 text-gray-500" /></button>
             </div>
