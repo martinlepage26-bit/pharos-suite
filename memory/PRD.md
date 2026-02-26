@@ -50,6 +50,7 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - **Feb 2026**: French language support (100% pass)
 - **Feb 2026**: Admin publications + Calendar booking (100% pass)
 - **Feb 2026**: Email notifications via Resend
+- **Feb 2026**: Canada-centric content reframing (100% pass) - Updated Home, Services, About, Library, and FAQ pages with Quebec/Canada focus (Law 25, Treasury Board, AIDA, Algorithmic Impact Assessment, Commission d'accès à l'information)
 
 ## Database Schema
 ### publications
