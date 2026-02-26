@@ -15,16 +15,10 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
       <div className="max-w-6xl mx-auto px-6 py-16">
-        {/* Hero Section - Logo centered, slightly left */}
-        <div className="flex flex-col items-center mb-16">
-          <img 
-            src="/images/logo-home-new.png" 
-            alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-            className="w-80 md:w-[24rem] h-auto mb-12"
-          />
-          
-          {/* Hero Title - AI Governance on one line */}
-          <div className="text-center max-w-3xl -ml-8">
+        {/* Hero Section - Side by side, closer together */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-16">
+          {/* Left: Hero Text */}
+          <div className="text-center md:text-left">
             <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
               <span className="border-b-2 border-[#0B0F1A] pb-1">AI Governance</span>
             </h1>
@@ -32,6 +26,13 @@ const Home = () => {
               Strategies & Oversight
             </p>
           </div>
+
+          {/* Right: Logo - slightly larger */}
+          <img 
+            src="/images/logo-home-new.png" 
+            alt="AI Governance: Practice & Research by Martin Lepage PhD" 
+            className="w-72 md:w-[22rem] h-auto"
+          />
         </div>
 
         {/* Content Section */}
