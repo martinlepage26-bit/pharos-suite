@@ -183,23 +183,23 @@ const Library = () => {
             );
           })}
 
-          {/* Online Tools Section - Under Construction */}
-          <div className="bg-white border-l-4 border-[#7b2cbf] rounded-xl shadow-[0_4px_16px_rgba(11,15,26,0.06)] p-5 opacity-60" data-testid="library-section-tools">
+          {/* Online Tools Section */}
+          <div className="bg-white border-l-4 border-[#7b2cbf] rounded-xl shadow-[0_4px_16px_rgba(11,15,26,0.06)] p-5 card-hover-lift" data-testid="library-section-tools">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7b2cbf]/15 to-[#2D2380]/10 flex items-center justify-center"><Wrench className="w-5 h-5 text-[#7b2cbf]" /></div>
-              <h2 className="font-semibold text-xl text-[#0B0F1A]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}>Online Tools</h2>
-              <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">
-                <AlertCircle className="w-3 h-3" /> Under construction
-              </span>
+              <h2 className="font-semibold text-xl text-[#1a1a1a]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}>Online Tools</h2>
             </div>
             <div className="space-y-2">
               {onlineTools.map((tool, i) => (
-                <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-[#F6F7FB]/50 cursor-not-allowed">
+                <a key={i} href={tool.url} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-[#F6F7FB] to-[#F6F7FB]/50 hover:from-[#7b2cbf]/8 hover:to-[#2D2380]/5 border border-transparent hover:border-[#7b2cbf]/10 transition-all group" data-testid={`library-tool-${i}`}>
                   <div className="flex items-center gap-3 flex-1">
-                    <span className="font-medium text-gray-500">{tool.name}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-500 font-medium">{tool.tag}</span>
+                    <span className="font-medium text-gray-800 group-hover:text-[#7b2cbf] transition-colors">{tool.name}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#7b2cbf]/10 text-[#7b2cbf]/70 font-medium">{tool.tag}</span>
+                    <span className="text-sm text-gray-500 ml-2 hidden md:inline">{tool.description}</span>
                   </div>
-                </div>
+                  <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#7b2cbf] transition-colors" />
+                </a>
               ))}
             </div>
           </div>
