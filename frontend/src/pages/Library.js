@@ -46,18 +46,18 @@ const Library = () => {
             return (
               <div key={key} className="card" data-testid={`library-section-${idx}`}>
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#2A206B]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#2A206B]" /></div>
+                  <div className="w-10 h-10 rounded-xl bg-[#1A1050]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#1A1050]" /></div>
                   <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
                 </div>
                 <div className="space-y-3">
                   {sectionItems[idx].map((item, i) => (
                     <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7FB] hover:bg-[#2A206B]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
+                      className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7FB] hover:bg-[#1A1050]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
                       <div className="flex items-center gap-3">
-                        <span className="text-gray-700 group-hover:text-[#2A206B] transition-colors">{item.name}</span>
+                        <span className="text-gray-700 group-hover:text-[#1A1050] transition-colors">{item.name}</span>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{item.tag}</span>
                       </div>
-                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#2A206B] transition-colors" />
+                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#1A1050] transition-colors" />
                     </a>
                   ))}
                 </div>
@@ -66,7 +66,7 @@ const Library = () => {
           })}
         </div>
 
-        <div className="mt-8 p-4 bg-[#2A206B]/5 rounded-xl border border-[#2A206B]/20">
+        <div className="mt-8 p-4 bg-[#1A1050]/5 rounded-xl border border-[#1A1050]/20">
           <p className="text-sm text-gray-600">
             <span className="font-semibold text-[#0B0F1A]">{t.library.note}</span> {t.library.noteText}
           </p>

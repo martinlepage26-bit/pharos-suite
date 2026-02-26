@@ -26,7 +26,7 @@ const StarterKitCTA = () => {
   ];
 
   return (
-    <div className="bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl p-8 text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden" data-testid="starter-kit-cta">
+    <div className="bg-[linear-gradient(135deg,#1A1050_0%,#1A1050_40%,#3A2D7F_70%,#5B4D95_100%)] rounded-2xl p-8 text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden" data-testid="starter-kit-cta">
       {/* Shine effect */}
       <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
       <div className="flex items-start gap-4 mb-6">
@@ -64,7 +64,7 @@ const StarterKitCTA = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t.starterKit.emailPlaceholder}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2A206B]"
+            className="w-full pl-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1A1050]"
             data-testid="starter-kit-email"
           />
         </div>

@@ -12,7 +12,7 @@ const Footer = () => {
         </p>
         <Link 
           to="/admin" 
-          className="ml-4 w-1.5 h-1.5 rounded-full bg-[#0B0F1A]/10 hover:bg-[#2A206B] transition-colors"
+          className="ml-4 w-1.5 h-1.5 rounded-full bg-[#0B0F1A]/10 hover:bg-[#1A1050] transition-colors"
           title=""
           data-testid="admin-link"
         />

@@ -39,23 +39,23 @@ const Services = () => {
             return (
               <div key={key} className="card card-hover" data-testid={`core-offer-${index}`}>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#2A206B]/10 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-6 h-6 text-[#2A206B]" />
+                  <div className="w-12 h-12 rounded-xl bg-[#1A1050]/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-[#1A1050]" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2">{offer.title}</h3>
                     <p className="text-gray-600 mb-3">{offer.description}</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div className="bg-[#F6F7FB] rounded-lg p-3">
-                        <p className="text-xs text-[#2A206B] uppercase tracking-wide font-medium mb-1">{t.services.outputs}</p>
+                        <p className="text-xs text-[#1A1050] uppercase tracking-wide font-medium mb-1">{t.services.outputs}</p>
                         <p className="text-gray-600 text-sm">{offer.outputs}</p>
                       </div>
                       <div className="bg-[#F6F7FB] rounded-lg p-3">
-                        <p className="text-xs text-[#2A206B] uppercase tracking-wide font-medium mb-1">{t.services.idealFor}</p>
+                        <p className="text-xs text-[#1A1050] uppercase tracking-wide font-medium mb-1">{t.services.idealFor}</p>
                         <p className="text-gray-600 text-sm">{offer.ideal}</p>
                       </div>
                     </div>
-                    <Link to="/services/menu" className="text-[#2A206B] text-sm font-medium hover:underline inline-flex items-center gap-1">
+                    <Link to="/services/menu" className="text-[#1A1050] text-sm font-medium hover:underline inline-flex items-center gap-1">
                       {t.services.seeDetails} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>

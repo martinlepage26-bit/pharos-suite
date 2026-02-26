@@ -27,10 +27,10 @@ const About = () => {
 
           <div className="grid md:grid-cols-3 gap-6">
             {stepKeys.map((key, i) => (
-              <div key={key} className="bg-[#F6F7FB] rounded-lg p-5 border-t-3 border-[#2A206B]" data-testid={`practice-step-${i + 1}`}>
+              <div key={key} className="bg-[#F6F7FB] rounded-lg p-5 border-t-3 border-[#1A1050]" data-testid={`practice-step-${i + 1}`}>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="w-8 h-8 rounded-full bg-[#2A206B] text-white flex items-center justify-center font-semibold text-sm">{i + 1}</span>
-                  <h3 className="font-serif font-semibold text-[#0B0F1A] underline decoration-[#2A206B]">{t.about.steps[key].title}</h3>
+                  <span className="w-8 h-8 rounded-full bg-[#1A1050] text-white flex items-center justify-center font-semibold text-sm">{i + 1}</span>
+                  <h3 className="font-serif font-semibold text-[#0B0F1A] underline decoration-[#1A1050]">{t.about.steps[key].title}</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed">{t.about.steps[key].description}</p>
               </div>
@@ -46,18 +46,18 @@ const About = () => {
             </div>
             <div className="flex-1">
               <p className="text-gray-600 leading-relaxed mb-4">{t.about.bio}</p>
-              <Link to="/portfolio" className="inline-flex items-center gap-2 text-[#2A206B] font-medium hover:gap-3 transition-all group" data-testid="portfolio-link">
+              <Link to="/portfolio" className="inline-flex items-center gap-2 text-[#1A1050] font-medium hover:gap-3 transition-all group" data-testid="portfolio-link">
                 {t.about.viewPortfolio} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="card border-l-4 border-[#2A206B]">
-          <p className="text-xs tracking-widest text-[#2A206B] uppercase mb-2">{t.about.featuredResearch}</p>
+        <div className="card border-l-4 border-[#1A1050]">
+          <p className="text-xs tracking-widest text-[#1A1050] uppercase mb-2">{t.about.featuredResearch}</p>
           <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2">{t.about.sealedCard}</h3>
           <p className="text-gray-600 text-sm mb-4">{t.about.sealedCardDesc}</p>
-          <Link to="/sealed-card" className="inline-flex items-center gap-2 text-[#2A206B] font-medium text-sm hover:gap-3 transition-all">
+          <Link to="/sealed-card" className="inline-flex items-center gap-2 text-[#1A1050] font-medium text-sm hover:gap-3 transition-all">
             {t.about.readProtocol} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

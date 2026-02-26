@@ -106,7 +106,7 @@ const Admin = () => {
       <div className="min-h-screen bg-[#F6F7FB] flex items-center justify-center px-6" data-testid="admin-login">
         <form onSubmit={handleLogin} className="card max-w-sm w-full text-center">
           <h2 className="font-serif text-6xl font-semibold text-[#0B0F1A] mb-4">Admin</h2>
-          <input type="password" value={passphrase} onChange={(e) => setPassphrase(e.target.value)} placeholder="Passphrase" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none mb-4" data-testid="admin-passphrase" />
+          <input type="password" value={passphrase} onChange={(e) => setPassphrase(e.target.value)} placeholder="Passphrase" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none mb-4" data-testid="admin-passphrase" />
           <button type="submit" className="btn-primary w-full" data-testid="admin-login-btn">Enter</button>
         </form>
       </div>
@@ -120,11 +120,11 @@ const Admin = () => {
 
         <div className="flex gap-2 mb-8">
           <button onClick={() => setActiveTab('publications')} data-testid="admin-tab-publications"
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'publications' ? 'bg-[#2A206B] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#2A206B]'}`}>
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'publications' ? 'bg-[#1A1050] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#1A1050]'}`}>
             <BookOpen className="w-4 h-4" /> {t.admin.publications}
           </button>
           <button onClick={() => setActiveTab('bookings')} data-testid="admin-tab-bookings"
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'bookings' ? 'bg-[#2A206B] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#2A206B]'}`}>
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'bookings' ? 'bg-[#1A1050] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#1A1050]'}`}>
             <CalendarDays className="w-4 h-4" /> {t.admin.bookings}
             {bookings.filter(b => b.status === 'pending').length > 0 && (
               <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">{bookings.filter(b => b.status === 'pending').length}</span>
@@ -142,7 +142,7 @@ const Admin = () => {
             </div>
 
             {showForm && (
-              <div className="card mb-6 border-l-4 border-[#2A206B]" data-testid="publication-form">
+              <div className="card mb-6 border-l-4 border-[#1A1050]" data-testid="publication-form">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="font-semibold text-[#0B0F1A]">{editingPub ? t.admin.editPublication : t.admin.addPublication}</h3>
                   <button onClick={() => { setShowForm(false); setEditingPub(null); }} className="p-1 hover:bg-gray-100 rounded"><X className="w-4 h-4 text-gray-500" /></button>
@@ -151,25 +151,25 @@ const Admin = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.title} *</label>
-                      <input type="text" value={pubForm.title} onChange={e => setPubForm(p => ({ ...p, title: e.target.value }))} required className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm" data-testid="pub-title" />
+                      <input type="text" value={pubForm.title} onChange={e => setPubForm(p => ({ ...p, title: e.target.value }))} required className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm" data-testid="pub-title" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.type}</label>
-                      <input type="text" value={pubForm.type} onChange={e => setPubForm(p => ({ ...p, type: e.target.value }))} placeholder="Protocol, Briefing, Working Paper..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm" />
+                      <input type="text" value={pubForm.type} onChange={e => setPubForm(p => ({ ...p, type: e.target.value }))} placeholder="Protocol, Briefing, Working Paper..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm" />
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.venue}</label>
-                      <input type="text" value={pubForm.venue} onChange={e => setPubForm(p => ({ ...p, venue: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm" />
+                      <input type="text" value={pubForm.venue} onChange={e => setPubForm(p => ({ ...p, venue: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.year}</label>
-                      <input type="text" value={pubForm.year} onChange={e => setPubForm(p => ({ ...p, year: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm" />
+                      <input type="text" value={pubForm.year} onChange={e => setPubForm(p => ({ ...p, year: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.status}</label>
-                      <select value={pubForm.status} onChange={e => setPubForm(p => ({ ...p, status: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm">
+                      <select value={pubForm.status} onChange={e => setPubForm(p => ({ ...p, status: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm">
                         <option value="published">{t.admin.published}</option>
                         <option value="in_development">{t.admin.inDevelopment}</option>
                         <option value="draft">{t.admin.draft}</option>
@@ -178,12 +178,12 @@ const Admin = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.description}</label>
-                    <textarea value={pubForm.description} onChange={e => setPubForm(p => ({ ...p, description: e.target.value }))} rows={2} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm resize-none" />
+                    <textarea value={pubForm.description} onChange={e => setPubForm(p => ({ ...p, description: e.target.value }))} rows={2} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm resize-none" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.link}</label>
-                      <input type="text" value={pubForm.link} onChange={e => setPubForm(p => ({ ...p, link: e.target.value }))} placeholder="/sealed-card or https://..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none text-sm" />
+                      <input type="text" value={pubForm.link} onChange={e => setPubForm(p => ({ ...p, link: e.target.value }))} placeholder="/sealed-card or https://..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none text-sm" />
                     </div>
                     <div className="flex items-end pb-1">
                       <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
@@ -208,7 +208,7 @@ const Admin = () => {
                   <div key={pub.id} className="card flex items-start justify-between gap-4" data-testid={`admin-pub-${pub.id}`}>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        {pub.type && <span className="text-xs font-medium text-[#2A206B] uppercase tracking-wide">{pub.type}</span>}
+                        {pub.type && <span className="text-xs font-medium text-[#1A1050] uppercase tracking-wide">{pub.type}</span>}
                         <span className={`text-xs px-2 py-0.5 rounded-full ${pub.status === 'published' ? 'bg-green-100 text-green-700' : pub.status === 'in_development' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
                           {pub.status === 'published' ? t.admin.published : pub.status === 'in_development' ? t.admin.inDevelopment : t.admin.draft}
                         </span>
@@ -218,8 +218,8 @@ const Admin = () => {
                       {pub.description && <p className="text-gray-500 text-xs mt-1 line-clamp-1">{pub.description}</p>}
                     </div>
                     <div className="flex gap-1 flex-shrink-0">
-                      <button onClick={() => handleEditPub(pub)} className="p-2 hover:bg-[#2A206B]/10 rounded-lg transition-colors" data-testid={`edit-pub-${pub.id}`}>
-                        <Pencil className="w-4 h-4 text-gray-500 hover:text-[#2A206B]" />
+                      <button onClick={() => handleEditPub(pub)} className="p-2 hover:bg-[#1A1050]/10 rounded-lg transition-colors" data-testid={`edit-pub-${pub.id}`}>
+                        <Pencil className="w-4 h-4 text-gray-500 hover:text-[#1A1050]" />
                       </button>
                       <button onClick={() => handleDeletePub(pub.id)} className="p-2 hover:bg-red-50 rounded-lg transition-colors" data-testid={`delete-pub-${pub.id}`}>
                         <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />

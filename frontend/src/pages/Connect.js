@@ -111,10 +111,10 @@ const Connect = () => {
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-8">{t.connect.keywords}</p>
 
         <div className="flex gap-2 mb-8">
-          <button onClick={() => { setActiveTab('message'); setBookingSubmitted(false); }} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'message' ? 'bg-[#2A206B] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#2A206B]'}`} data-testid="tab-message">
+          <button onClick={() => { setActiveTab('message'); setBookingSubmitted(false); }} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'message' ? 'bg-[#1A1050] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#1A1050]'}`} data-testid="tab-message">
             <Mail className="w-4 h-4 inline mr-2" />{t.connect.tabs.message}
           </button>
-          <button onClick={() => setActiveTab('booking')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'booking' ? 'bg-[#2A206B] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#2A206B]'}`} data-testid="tab-booking">
+          <button onClick={() => setActiveTab('booking')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'booking' ? 'bg-[#1A1050] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#1A1050]'}`} data-testid="tab-booking">
             <CalendarIcon className="w-4 h-4 inline mr-2" />{t.connect.tabs.booking}
           </button>
         </div>
@@ -124,7 +124,7 @@ const Connect = () => {
             {activeTab === 'message' ? (
               <div className="card">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#2A206B]/10 flex items-center justify-center"><Mail className="w-5 h-5 text-[#2A206B]" /></div>
+                  <div className="w-10 h-10 rounded-xl bg-[#1A1050]/10 flex items-center justify-center"><Mail className="w-5 h-5 text-[#1A1050]" /></div>
                   <div>
                     <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.connect.messageTitle}</h2>
                     <p className="text-sm text-gray-500">{t.connect.messageSubtitle}</p>
@@ -134,27 +134,27 @@ const Connect = () => {
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.name} *</label>
-                      <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="input-name" />
+                      <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="input-name" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.email} *</label>
-                      <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="input-email" />
+                      <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="input-email" />
                     </div>
                   </div>
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.organization}</label>
-                    <input type="text" name="organization" value={formData.organization} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" />
+                    <input type="text" name="organization" value={formData.organization} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" />
                   </div>
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.lookingFor}</label>
-                    <select name="lookingFor" value={formData.lookingFor} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="input-looking-for">
+                    <select name="lookingFor" value={formData.lookingFor} onChange={handleChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="input-looking-for">
                       <option value="">{t.connect.form.selectTopic}</option>
                       {formTopicKeys.map(key => <option key={key} value={t.connect.formTopics[key]}>{t.connect.formTopics[key]}</option>)}
                     </select>
                   </div>
                   <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.context}</label>
-                    <textarea name="context" value={formData.context} onChange={handleChange} placeholder={t.connect.form.contextPlaceholder} rows={4} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none resize-none" data-testid="input-context" />
+                    <textarea name="context" value={formData.context} onChange={handleChange} placeholder={t.connect.form.contextPlaceholder} rows={4} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none resize-none" data-testid="input-context" />
                   </div>
                   <button type="submit" className="btn-primary flex items-center gap-2" data-testid="submit-btn">
                     {submitted ? <CheckCircle className="w-4 h-4" /> : <Send className="w-4 h-4" />}
@@ -165,7 +165,7 @@ const Connect = () => {
             ) : (
               <div className="card" data-testid="booking-calendar-card">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#2A206B]/10 flex items-center justify-center"><CalendarIcon className="w-5 h-5 text-[#2A206B]" /></div>
+                  <div className="w-10 h-10 rounded-xl bg-[#1A1050]/10 flex items-center justify-center"><CalendarIcon className="w-5 h-5 text-[#1A1050]" /></div>
                   <div>
                     <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.bookingCalendar.title}</h2>
                     <p className="text-sm text-gray-500">{t.bookingCalendar.subtitle}</p>
@@ -178,7 +178,7 @@ const Connect = () => {
                       <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
                     <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2">{t.bookingCalendar.confirmation}</h3>
-                    <button onClick={() => setBookingSubmitted(false)} className="mt-4 text-[#2A206B] font-medium hover:underline text-sm">
+                    <button onClick={() => setBookingSubmitted(false)} className="mt-4 text-[#1A1050] font-medium hover:underline text-sm">
                       {language === 'fr' ? 'Nouvelle r\u00e9servation' : 'Book another'}
                     </button>
                   </div>
@@ -225,8 +225,8 @@ const Connect = () => {
                                     isBooked
                                       ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed line-through'
                                       : selectedTime === time
-                                        ? 'bg-[#2A206B] text-white border-[#2A206B]'
-                                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#2A206B] hover:text-[#2A206B]'
+                                        ? 'bg-[#1A1050] text-white border-[#1A1050]'
+                                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#1A1050] hover:text-[#1A1050]'
                                   }`}
                                 >
                                   {time}
@@ -251,27 +251,27 @@ const Connect = () => {
                       <div className="grid grid-cols-2 gap-4 mb-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.name} *</label>
-                          <input type="text" name="name" value={bookingForm.name} onChange={handleBookingFormChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="booking-name" />
+                          <input type="text" name="name" value={bookingForm.name} onChange={handleBookingFormChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="booking-name" />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.email} *</label>
-                          <input type="email" name="email" value={bookingForm.email} onChange={handleBookingFormChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="booking-email" />
+                          <input type="email" name="email" value={bookingForm.email} onChange={handleBookingFormChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="booking-email" />
                         </div>
                       </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.organization}</label>
-                        <input type="text" name="organization" value={bookingForm.organization} onChange={handleBookingFormChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="booking-org" />
+                        <input type="text" name="organization" value={bookingForm.organization} onChange={handleBookingFormChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="booking-org" />
                       </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.topic}</label>
-                        <select name="topic" value={bookingForm.topic} onChange={handleBookingFormChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none" data-testid="booking-topic">
+                        <select name="topic" value={bookingForm.topic} onChange={handleBookingFormChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none" data-testid="booking-topic">
                           <option value="">{t.bookingCalendar.selectTopic}</option>
                           {topicKeys.map(key => <option key={key} value={t.connect.topics[key]}>{t.connect.topics[key]}</option>)}
                         </select>
                       </div>
                       <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.currentState}</label>
-                        <textarea name="currentState" value={bookingForm.currentState} onChange={handleBookingFormChange} placeholder={t.bookingCalendar.currentStatePlaceholder} rows={3} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#2A206B] focus:outline-none resize-none" data-testid="booking-state" />
+                        <textarea name="currentState" value={bookingForm.currentState} onChange={handleBookingFormChange} placeholder={t.bookingCalendar.currentStatePlaceholder} rows={3} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#1A1050] focus:outline-none resize-none" data-testid="booking-state" />
                       </div>
                       <button
                         type="submit"
@@ -295,22 +295,22 @@ const Connect = () => {
             {resources.map((resource, index) => (
               <div key={index} className="card card-hover" data-testid={`resource-${index}`}>
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#2A206B]/10 flex items-center justify-center flex-shrink-0"><resource.icon className="w-4 h-4 text-[#2A206B]" /></div>
+                  <div className="w-8 h-8 rounded-lg bg-[#1A1050]/10 flex items-center justify-center flex-shrink-0"><resource.icon className="w-4 h-4 text-[#1A1050]" /></div>
                   <div>
                     <h4 className="font-medium text-[#0B0F1A] text-sm mb-1">{resource.title}</h4>
                     <p className="text-gray-500 text-xs mb-2">{resource.description}</p>
-                    <button onClick={() => handleResourceRequest(resource.title)} className="text-[#2A206B] font-medium text-xs hover:underline">{t.connect.resources.request}</button>
+                    <button onClick={() => handleResourceRequest(resource.title)} className="text-[#1A1050] font-medium text-xs hover:underline">{t.connect.resources.request}</button>
                   </div>
                 </div>
               </div>
             ))}
-            <div className="p-4 bg-[#2A206B]/5 rounded-xl border border-[#2A206B]/20 mt-6">
+            <div className="p-4 bg-[#1A1050]/5 rounded-xl border border-[#1A1050]/20 mt-6">
               <p className="text-sm text-gray-600">
                 <span className="font-semibold text-[#0B0F1A]">{t.connect.resources.directContact}</span><br />
-                <a href="mailto:martin@martinlepage.com" className="text-[#2A206B] hover:underline">martin@martinlepage.com</a>
+                <a href="mailto:martin@martinlepage.com" className="text-[#1A1050] hover:underline">martin@martinlepage.com</a>
               </p>
             </div>
-            <Link to="/tool" className="block p-4 bg-[#2A206B] text-white rounded-xl hover:bg-[#2A206B] transition-colors">
+            <Link to="/tool" className="block p-4 bg-[#1A1050] text-white rounded-xl hover:bg-[#1A1050] transition-colors">
               <p className="font-semibold mb-1">{t.connect.resources.notSure}</p>
               <p className="text-sm text-white/80">{t.connect.resources.takeSnapshot}</p>
             </Link>

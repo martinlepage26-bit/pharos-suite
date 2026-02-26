@@ -18,7 +18,7 @@ const FAQ = () => {
               <p className="text-gray-600 leading-relaxed mb-4">{faq.answer}</p>
               
               {faq.cta === 'requestAuditChecklist' && (
-                <Link to="/connect" className="text-[#2A206B] font-medium hover:underline text-sm">
+                <Link to="/connect" className="text-[#1A1050] font-medium hover:underline text-sm">
                   {t.faq.requestAuditChecklist} &rarr;
                 </Link>
               )}
@@ -34,7 +34,7 @@ const FAQ = () => {
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
+        <div className="mt-12 p-6 bg-[linear-gradient(135deg,#1A1050_0%,#1A1050_40%,#3A2D7F_70%,#5B4D95_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <h3 className="font-serif text-xl font-semibold mb-2">{t.faq.stillHaveQuestions}</h3>
           <p className="text-white/80 mb-4">{t.faq.stillHaveQuestionsDesc}</p>
