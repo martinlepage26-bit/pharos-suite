@@ -89,9 +89,9 @@ const Tool = () => {
 
       <div className="flex justify-center py-4">
         <div className="w-[min(460px,94vw)] relative">
-          <div className="relative bg-white/95 border border-gray-200/60 rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.12)] p-5 overflow-visible">
-            <div className="absolute inset-0 rounded-3xl border border-gray-200/50 bg-white/70 -z-10 translate-x-2.5 translate-y-3 shadow-[0_16px_44px_rgba(15,23,42,0.10)]" />
-            <div className="absolute inset-0 rounded-3xl border border-gray-200/40 bg-white/55 -z-20 translate-x-5 translate-y-6 shadow-[0_16px_44px_rgba(11,15,26,0.06)]" />
+          <div className="relative bg-white/95 border border-gray-200/60 rounded-3xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] p-5 overflow-visible">
+            <div className="absolute inset-0 rounded-3xl border border-gray-200/50 bg-white/70 -z-10 translate-x-2.5 translate-y-3 shadow-[0_3px_12px_rgba(11,15,26,0.04)]" />
+            <div className="absolute inset-0 rounded-3xl border border-gray-200/40 bg-white/55 -z-20 translate-x-5 translate-y-6 shadow-[0_2px_8px_rgba(11,15,26,0.03)]" />
 
             {step === 1 && (
               <div data-testid="step-1-sector">
@@ -103,8 +103,8 @@ const Tool = () => {
                 <div className="space-y-2.5">
                   {sectorKeys.map((key, i) => (
                     <button key={key} onClick={() => handleSectorSelect(sectorIds[i])} data-testid={`sector-${sectorIds[i]}`}
-                      className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_10px_20px_rgba(15,23,42,0.06)] hover:translate-y-[-1px] hover:shadow-[0_14px_26px_rgba(11,15,26,0.06)] ${
-                        selectedSector === sectorIds[i] ? 'border-[#4B2ABF]/55 shadow-[0_16px_30px_rgba(99,102,241,0.15)] bg-[#4B2ABF]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
+                      className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_2px_8px_rgba(11,15,26,0.04)] hover:translate-y-[-1px] hover:shadow-[0_3px_10px_rgba(11,15,26,0.06)] ${
+                        selectedSector === sectorIds[i] ? 'border-[#4B2ABF]/55 shadow-[0_3px_12px_rgba(75,42,191,0.12)] bg-[#4B2ABF]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
                       }`}
                     >
                       <h3 className="font-bold text-[#0B0F1A]/90 mb-1 text-sm">{t.tool.sectors[key].title}</h3>
@@ -127,8 +127,8 @@ const Tool = () => {
                 <div className="grid grid-cols-3 gap-2.5">
                   {currentQ.options.map((option) => (
                     <button key={option.value} onClick={() => handleAnswer(currentQ.id, option.value, option.score)}
-                      className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_12px_22px_rgba(11,15,26,0.06)] ${
-                        answers[currentQ.id]?.value === option.value ? 'border-[#4B2ABF]/55 shadow-[0_14px_26px_rgba(99,102,241,0.15)] bg-[#4B2ABF] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
+                      className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_3px_10px_rgba(11,15,26,0.05)] ${
+                        answers[currentQ.id]?.value === option.value ? 'border-[#4B2ABF]/55 shadow-[0_3px_10px_rgba(75,42,191,0.10)] bg-[#4B2ABF] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
                       }`}
                     >{option.label}</button>
                   ))}
@@ -163,7 +163,7 @@ const Tool = () => {
       {drawerOpen && (
         <>
           <div className="fixed inset-0 bg-[#0B0F1A]/35 z-[4000]" onClick={() => setDrawerOpen(false)} data-testid="drawer-backdrop" />
-          <div className="fixed top-0 right-0 h-screen w-[min(440px,92vw)] bg-white/95 border-l border-gray-200/60 shadow-[-18px_0_60px_rgba(15,23,42,0.18)] z-[4500] flex flex-col" data-testid="results-drawer">
+          <div className="fixed top-0 right-0 h-screen w-[min(440px,92vw)] bg-white/95 border-l border-gray-200/60 shadow-[0_4px_24px_rgba(11,15,26,0.10)] z-[4500] flex flex-col" data-testid="results-drawer">
             <div className="flex items-start justify-between gap-3 p-4 border-b border-gray-100">
               <div>
                 <p className="text-xs tracking-widest uppercase text-[#4B2ABF]">{t.tool.steps.results}</p>
@@ -183,7 +183,7 @@ const Tool = () => {
                 return (
                   <>
                     <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
-                      <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_14px_26px_rgba(99,102,241,0.15)]"
+                      <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_3px_10px_rgba(75,42,191,0.10)]"
                         style={{ background: `conic-gradient(#4B2ABF ${percentage * 3.6}deg, rgba(11,15,26,0.06) ${percentage * 3.6}deg 360deg)` }}>
                         <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0B0F1A]/90">{percentage}%</div>
                       </div>
