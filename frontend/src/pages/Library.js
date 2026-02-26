@@ -40,24 +40,24 @@ const Library = () => {
         <p className="text-gray-600 mb-8 max-w-2xl">{t.library.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.library.keywords}</p>
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {sectionKeys.map((key, idx) => {
             const Icon = sectionIcons[idx];
             return (
-              <div key={key} className="card" data-testid={`library-section-${idx}`}>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#1A1050]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#1A1050]" /></div>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
+              <div key={key} className="card p-4" data-testid={`library-section-${idx}`}>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-[#1A1050]/10 flex items-center justify-center"><Icon className="w-4 h-4 text-[#1A1050]" /></div>
+                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {sectionItems[idx].map((item, i) => (
                     <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7FB] hover:bg-[#1A1050]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
-                      <div className="flex items-center gap-3">
-                        <span className="text-gray-700 group-hover:text-[#1A1050] transition-colors">{item.name}</span>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{item.tag}</span>
+                      className="flex items-center justify-between p-2 rounded-lg bg-[#F6F7FB] hover:bg-[#1A1050]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-700 group-hover:text-[#1A1050] transition-colors">{item.name}</span>
+                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{item.tag}</span>
                       </div>
-                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#1A1050] transition-colors" />
+                      <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#1A1050] transition-colors" />
                     </a>
                   ))}
                 </div>
