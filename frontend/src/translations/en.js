@@ -355,7 +355,7 @@ export const en = {
   },
 
   cases: {
-    title: 'Case Studies',
+    title: 'Portfolio',
     description: 'Selected engagements illustrating governance challenges and solutions across sectors. Details anonymized to protect client confidentiality.',
     keywords: 'FINANCIAL SERVICES · HEALTHCARE · ENTERPRISE · PUBLIC SECTOR · CONSTRUCTION · PROCUREMENT · GOVERNANCE',
     sectorsWeServe: 'Sectors We Serve',
