@@ -19,27 +19,24 @@ const Home = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Hero Text - all left aligned */}
           <div>
-            <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
-              <span className="border-b-2 border-[#0B0F1A] pb-1">{t.home.title}</span>
+            <h1 className="text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontVariant: 'small-caps'}}>
+              {t.home.title}
             </h1>
-            <p className="font-serif text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4">
+            <div className="flex items-center gap-2 mt-1">
+              <span className="w-16 h-0.5 bg-[#0B0F1A]"></span>
+              <span className="w-1.5 h-1.5 bg-[#7b2cbf] rotate-45"></span>
+              <span className="flex-1 h-px bg-[#0B0F1A]/30 max-w-32"></span>
+            </div>
+            <p className="text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontStyle: 'italic', fontWeight: 600}}>
               {t.home.subtitle}
             </p>
             
-            <div className="mt-8 mb-4 space-y-2">
-              <div className="flex flex-wrap items-center gap-x-1 text-[#0B0F1A]/80">
-                <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[#7b2cbf]/10 to-transparent rounded-full text-sm">
-                  <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mr-2"></span>Treasury Board directives
-                </span>
-                <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[#7b2cbf]/10 to-transparent rounded-full text-sm">
-                  <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mr-2"></span>Quebec's Law&nbsp;25
-                </span>
-                <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[#7b2cbf]/10 to-transparent rounded-full text-sm">
-                  <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mr-2"></span>Emerging AIDA obligations
-                </span>
-              </div>
+            <div className="mt-8 mb-4 space-y-1">
+              <p className="text-[#0B0F1A]/80 text-sm"><span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span> Treasury Board directives</p>
+              <p className="text-[#0B0F1A]/80 text-sm"><span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span> Quebec's Law&nbsp;25</p>
+              <p className="text-[#0B0F1A]/80 text-sm"><span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span> Emerging AIDA obligations</p>
               
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex items-center gap-3 pt-3">
                 <span className="text-sm font-semibold tracking-wide text-[#0B0F1A] uppercase">Product</span>
                 <span className="w-8 h-px bg-gradient-to-r from-[#7b2cbf] to-[#7b2cbf]/30"></span>
                 <span className="text-[#0B0F1A]/70 text-sm">AI decisions that are documented, reviewable, and defensible.</span>
@@ -57,15 +54,17 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="bg-[#F6F7FB]/70 border border-gray-200/50 rounded-xl p-6 space-y-10">
+            <div className="bg-[#F6F7FB]/70 border border-gray-200/50 rounded-xl p-6">
               {capabilities.map((cap, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
-                    <cap.icon className="w-4 h-4 text-[#0D0A2E]" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-[#0B0F1A] leading-tight">{cap.title}</p>
-                    <p className="text-sm text-[#0B0F1A]/60 leading-relaxed mt-1">{cap.description}</p>
+                <div key={i} className={i < capabilities.length - 1 ? "mb-8" : ""}>
+                  <div className="flex items-start gap-4">
+                    <div className="w-9 h-9 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
+                      <cap.icon className="w-4 h-4 text-[#0D0A2E]" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[#0B0F1A] leading-tight">{cap.title}</p>
+                      <p className="text-sm text-[#0B0F1A]/60 leading-relaxed mt-1">{cap.description}</p>
+                    </div>
                   </div>
                 </div>
               ))}
