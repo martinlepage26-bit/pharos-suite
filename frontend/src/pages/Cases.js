@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { caseStudies } from '../data/caseStudies';
-import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X } from 'lucide-react';
+import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X, HardHat, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Cases = () => {
@@ -10,6 +10,16 @@ const Cases = () => {
 
   const sectors = [...new Set(caseStudies.map(c => c.sector))];
 
+  // Construction sector card data
+  const constructionSector = {
+    title: 'Construction & Infrastructure',
+    subtitle: 'Safety systems, equipment intelligence, and operational decisions that must survive scrutiny.',
+    body: `Construction environments turn governance into consequence fast. Asset tracking, jobsite safety tech, and maintenance automation sit inside a chain where one weak link produces downtime, cost overruns, and injury exposure. We help owners, GCs, and specialized contractors treat these systems as auditable operations, not just apps.
+
+We focus on what actually breaks under pressure: access control across sites and subcontractors, data quality in the field, offline sync conflicts, and automation rules that quietly reroute accountability. If you are adding predictive maintenance, anomaly detection, or computer vision safety, we build the governance layer that keeps decisions defensible when incidents, disputes, or insurers demand a clear story.`,
+    deliverable: 'An implementation-first governance package: risk classification, control design, evidence trails, and practical oversight workflows that fit jobsite realities.'
+  };
+
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="cases-page">
       <div className="max-w-5xl mx-auto">
@@ -17,12 +27,52 @@ const Cases = () => {
         <p className="text-gray-600 mb-2 max-w-2xl">{t.cases.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.cases.keywords}</p>
 
+        {/* Sector Tags */}
         <div className="flex flex-wrap gap-2 mb-8">
           {sectors.map((sector, i) => (
             <span key={i} className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600">{sector}</span>
           ))}
+          <span className="px-3 py-1.5 bg-[#0D0A2E] text-white rounded-full text-sm font-medium">Construction & Infrastructure</span>
         </div>
 
+        {/* Construction Sector Card */}
+        <div className="mb-8 card p-6 border-l-4 border-[#0D0A2E]" data-testid="construction-sector-card">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 rounded-xl bg-[#0D0A2E]/10 flex items-center justify-center">
+              <HardHat className="w-6 h-6 text-[#0D0A2E]" />
+            </div>
+            <div>
+              <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{constructionSector.title}</h2>
+              <p className="text-sm text-[#0D0A2E]">{constructionSector.subtitle}</p>
+            </div>
+          </div>
+          
+          <div className="space-y-4 text-gray-600 mb-6">
+            {constructionSector.body.split('\n\n').map((para, i) => (
+              <p key={i} className="leading-relaxed">{para}</p>
+            ))}
+          </div>
+          
+          <div className="p-4 bg-[#F6F7FB] rounded-lg mb-6">
+            <p className="text-sm font-medium text-[#0B0F1A] mb-1">What you get:</p>
+            <p className="text-sm text-gray-600">{constructionSector.deliverable}</p>
+          </div>
+          
+          <div className="flex flex-wrap gap-3">
+            <Link to="/tool" className="btn-primary inline-flex items-center gap-2">
+              Assess readiness <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link to="/services" className="btn-ghost inline-flex items-center gap-2">
+              View services
+            </Link>
+            <Link to="/connect" className="text-sm text-[#0D0A2E] hover:underline inline-flex items-center gap-1">
+              Book a debrief <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Case Studies */}
+        <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-4">Case Studies</h2>
         <div className="space-y-6">
           {caseStudies.map((study) => (
             <button key={study.id} onClick={() => setSelectedCase(study)} className="w-full text-left card card-hover group" data-testid={`case-${study.id}`}>
@@ -44,7 +94,6 @@ const Cases = () => {
         </div>
 
         <div className="mt-12 p-6 bg-[linear-gradient(135deg,#0D0A2E_0%,#0D0A2E_40%,#1A1555_70%,#2D2380_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
-          {/* Shine effect */}
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <h3 className="font-serif text-xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
           <p className="text-white/80 mb-4">{t.cases.facingChallengeDesc}</p>
