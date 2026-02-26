@@ -42,29 +42,57 @@
 /* ─── Base Typography ─── */
 body {
   font-family: var(--font-serif);
-  color: var(--black);
+  font-size: 17px;
+  font-weight: 420;
+  line-height: 1.65;
+  color: #1a1a1a;
   background: var(--off-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga" 1, "kern" 1;
+  max-width: 100%;
 }
 
+/* Heading styles: weight 600-700, negative tracking, compact line height */
 h1 {
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--black);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: #1a1a1a;
 }
 
 h2 {
   font-family: var(--font-heading);
   font-weight: 600;
-  font-style: italic;
-  color: var(--black);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #1a1a1a;
 }
 
 h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 600;
-  color: var(--black);
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  color: #1a1a1a;
+}
+
+/* Body text container for optimal line length */
+.prose-container {
+  max-width: 65ch; /* 60-75 character line length */
+}
+
+/* Tabular numbers for tables and data */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small caps for acronyms (AI, GDPR, ISO) */
+.acronym {
+  font-variant: small-caps;
+  font-feature-settings: "smcp" 1;
+  letter-spacing: 0.02em;
 }
 
 /* ─── Selection ─── */
