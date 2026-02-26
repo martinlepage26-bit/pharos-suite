@@ -21,9 +21,9 @@ const Navbar = () => {
       {/* Logo - ML Monogram with Compass - 200% bigger */}
       <Link to="/" className="flex items-center" data-testid="logo-link">
         <img 
-          src="/images/ml-monogram-nobg.png" 
+          src="/images/ml-mono-final.png" 
           alt="ML" 
-          className="h-14 w-auto"
+          className="h-12 w-auto"
         />
       </Link>
 
