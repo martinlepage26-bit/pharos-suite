@@ -3,6 +3,7 @@ export const en = {
     home: 'HOME',
     services: 'SERVICES',
     cases: 'CASES',
+    portfolio: 'PORTFOLIO',
     tool: 'TOOL',
     research: 'RESEARCH',
     library: 'LIBRARY',
@@ -356,7 +357,7 @@ export const en = {
   cases: {
     title: 'Case Studies',
     description: 'Selected engagements illustrating governance challenges and solutions across sectors. Details anonymized to protect client confidentiality.',
-    keywords: 'FINANCIAL SERVICES \u00B7 HEALTHCARE \u00B7 ENTERPRISE \u00B7 PUBLIC SECTOR',
+    keywords: 'FINANCIAL SERVICES · HEALTHCARE · ENTERPRISE · PUBLIC SECTOR · CONSTRUCTION · PROCUREMENT · GOVERNANCE',
     sectorsWeServe: 'Sectors We Serve',
     outputs: 'Outputs',
     assessReadiness: 'Assess readiness',
