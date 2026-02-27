@@ -110,14 +110,14 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Three Feature Boxes - Separate cards */}
-        <div className="space-y-4 mb-10">
+        {/* Three Feature Boxes - Separate cards in horizontal row */}
+        <div className="grid md:grid-cols-3 gap-4 mb-10">
           {capabilities.map((cap, i) => (
             <div 
               key={i} 
-              className="flex items-start gap-4 p-4 bg-[#F6F7FB] rounded-lg border-l-2 border-[#0D0A2E]/20 hover:border-[#0D0A2E] hover:bg-white hover:shadow-sm transition-all duration-300"
+              className="flex items-start gap-3 p-4 bg-[#F6F7FB] rounded-lg border border-transparent hover:border-[#0D0A2E]/10 hover:bg-white hover:shadow-sm transition-all duration-300"
             >
-              <div className="w-9 h-9 rounded-md bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
+              <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
                 <cap.icon className="w-4 h-4 text-[#0D0A2E]" />
               </div>
               <div>
