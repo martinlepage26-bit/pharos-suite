@@ -108,6 +108,85 @@ class BookingCreate(BaseModel):
 class BookingStatusUpdate(BaseModel):
     status: str
 
+# ─── FAQ Models ───
+
+class FAQItem(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    section: str  # 'definitions', 'evidence', 'engagements'
+    question: str
+    answer: str
+    order: int = 0
+    active: bool = True
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class FAQItemCreate(BaseModel):
+    section: str
+    question: str
+    answer: str
+    order: int = 0
+    active: bool = True
+
+class FAQItemUpdate(BaseModel):
+    section: Optional[str] = None
+    question: Optional[str] = None
+    answer: Optional[str] = None
+    order: Optional[int] = None
+    active: Optional[bool] = None
+
+# ─── Service Models ───
+
+class ServicePackage(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    package_number: int  # 1, 2, 3
+    title_en: str
+    title_fr: str
+    subtitle_en: str = ""
+    subtitle_fr: str = ""
+    description_en: str = ""
+    description_fr: str = ""
+    best_for_en: str = ""
+    best_for_fr: str = ""
+    deliverables_en: List[str] = []
+    deliverables_fr: List[str] = []
+    produces_en: List[str] = []
+    produces_fr: List[str] = []
+    active: bool = True
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class ServicePackageCreate(BaseModel):
+    package_number: int
+    title_en: str
+    title_fr: str
+    subtitle_en: str = ""
+    subtitle_fr: str = ""
+    description_en: str = ""
+    description_fr: str = ""
+    best_for_en: str = ""
+    best_for_fr: str = ""
+    deliverables_en: List[str] = []
+    deliverables_fr: List[str] = []
+    produces_en: List[str] = []
+    produces_fr: List[str] = []
+    active: bool = True
+
+class ServicePackageUpdate(BaseModel):
+    package_number: Optional[int] = None
+    title_en: Optional[str] = None
+    title_fr: Optional[str] = None
+    subtitle_en: Optional[str] = None
+    subtitle_fr: Optional[str] = None
+    description_en: Optional[str] = None
+    description_fr: Optional[str] = None
+    best_for_en: Optional[str] = None
+    best_for_fr: Optional[str] = None
+    deliverables_en: Optional[List[str]] = None
+    deliverables_fr: Optional[List[str]] = None
+    produces_en: Optional[List[str]] = None
+    produces_fr: Optional[List[str]] = None
+    active: Optional[bool] = None
+
 # ─── Health ───
 
 @api_router.get("/health")
