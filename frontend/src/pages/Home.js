@@ -22,7 +22,7 @@ const Home = () => {
           {/* Left: Editorial Text */}
           <div className="flex-1 max-w-lg">
             <h1 
-              className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-1" 
+              className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight" 
               style={{
                 fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
                 fontVariant: 'small-caps', 
@@ -32,36 +32,46 @@ const Home = () => {
               {t.home.title}
             </h1>
             
-            {/* Decorative line with diamond */}
-            <div className="flex items-center mb-1" style={{maxWidth: '220px'}}>
-              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
-              </svg>
-              <div className="mx-0.5" style={{
-                width: '6px',
-                height: '10px',
-                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                flexShrink: 0
-              }}></div>
-              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
-              </svg>
+            {/* Decorative L-shape with line and diamond */}
+            <div className="flex items-start mt-1 mb-0">
+              {/* Vertical bar */}
+              <div className="w-3 bg-[#0B0F1A] self-stretch mr-0" style={{minHeight: '60px'}}></div>
+              
+              <div className="flex flex-col flex-1">
+                {/* Horizontal line with diamond */}
+                <div className="flex items-center" style={{height: '20px'}}>
+                  <svg viewBox="0 0 200 8" className="flex-1 h-2" preserveAspectRatio="none">
+                    <polygon points="0,4 200,0 200,8" fill="#0B0F1A" />
+                  </svg>
+                  <div className="mx-0" style={{
+                    width: '10px',
+                    height: '18px',
+                    background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                    clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                    flexShrink: 0,
+                    marginTop: '2px'
+                  }}></div>
+                  <svg viewBox="0 0 200 8" className="flex-1 h-2" preserveAspectRatio="none">
+                    <polygon points="0,0 200,4 0,8" fill="#0B0F1A" />
+                  </svg>
+                </div>
+                
+                {/* Subtitle */}
+                <p 
+                  className="text-lg text-[#1a1a1a]/50 mt-1 pl-1" 
+                  style={{
+                    fontFamily: "'Source Serif 4', Georgia, serif", 
+                    fontStyle: 'italic', 
+                    fontWeight: 400
+                  }}
+                >
+                  {t.home.subtitle}
+                </p>
+              </div>
             </div>
             
-            <p 
-              className="text-lg text-[#1a1a1a]/50 mb-4" 
-              style={{
-                fontFamily: "'Source Serif 4', Georgia, serif", 
-                fontStyle: 'italic', 
-                fontWeight: 400
-              }}
-            >
-              {t.home.subtitle}
-            </p>
-            
             {/* Bullet points */}
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-5">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mt-4 mb-5">
               <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
                 <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
