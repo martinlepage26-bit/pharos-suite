@@ -66,6 +66,11 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
 ## Recent Updates (Feb 27, 2026)
+- **Home Page Redesign**: Implemented new layout based on user-provided reference image:
+  - Thin single-line header with "Martin Lepage, PhD AI Governance Consultant" + navigation tabs
+  - Hero section with AI Governance title, decorative line, subtitle, bullet points, PRODUCT line
+  - Logo positioned on right side
+  - Three feature boxes (Risk Classification, Evidence Architecture, Control Design) aligned and centered on gray background
 - **Deployment Fix**: Added `dnspython==2.8.0` to requirements.txt to enable MongoDB Atlas `mongodb+srv://` URI resolution in production
 - Deployment agent scan: PASS - Application is deployment-ready
 
