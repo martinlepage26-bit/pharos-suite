@@ -32,7 +32,7 @@ const Footer = () => {
             href="mailto:martinlepage.ai@gmail.com" 
             className="text-[#1a1a1a]/60 hover:text-[#7b2cbf] transition-colors"
           >
-            Email
+            {language === 'fr' ? 'Courriel' : 'Email'}
           </a>
           <span className="text-[#1a1a1a]/30">|</span>
           <a 
@@ -48,7 +48,7 @@ const Footer = () => {
             to="/about" 
             className="text-[#1a1a1a]/60 hover:text-[#7b2cbf] transition-colors"
           >
-            About
+            {language === 'fr' ? 'À propos' : 'About'}
           </Link>
           
           {/* Hidden admin link */}
