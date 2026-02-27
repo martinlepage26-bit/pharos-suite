@@ -59,21 +59,21 @@ const Home = () => {
               />
             </div>
             
-            {/* Bottom: Strategies ◆ Oversight ◆ Research - increased weight */}
+            {/* Bottom: Strategies ◆ Oversight ◆ Research - more readable */}
             <div 
-              className="flex items-center gap-3 text-[#2a2a2a]/60 text-xs tracking-wider mb-2" 
+              className="flex items-center gap-3 text-[#2a2a2a]/70 text-sm tracking-wide mb-2" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
-              <span className="text-[#7b2cbf]/60 text-[8px]">◆</span>
+              <span className="text-[#7b2cbf]/60 text-[10px]">◆</span>
               <span>{language === 'fr' ? 'Supervision' : 'Oversight'}</span>
-              <span className="text-[#7b2cbf]/60 text-[8px]">◆</span>
+              <span className="text-[#7b2cbf]/60 text-[10px]">◆</span>
               <span>{language === 'fr' ? 'Recherche' : 'Research'}</span>
             </div>
             
             {/* Bottom decorative line - elegant */}
-            <div className="flex items-center mb-2" style={{width: '180px'}}>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#2a2a2a]/20"></div>
+            <div className="flex items-center mb-3" style={{width: '180px'}}>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#2a2a2a]/30"></div>
               <div 
                 className="mx-1.5"
                 style={{
@@ -82,23 +82,23 @@ const Home = () => {
                   background: 'linear-gradient(135deg, #2D2380 0%, #7b2cbf 100%)',
                   transform: 'rotate(45deg)',
                   flexShrink: 0,
-                  opacity: 0.5
+                  opacity: 0.6
                 }}
               ></div>
-              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#2a2a2a]/20"></div>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#2a2a2a]/30"></div>
             </div>
             
-            {/* Martin Lepage PhD - increased weight */}
+            {/* Martin Lepage PhD - more readable */}
             <p 
-              className="text-[#2a2a2a]/45 text-xs tracking-wide mb-4" 
+              className="text-[#2a2a2a]/60 text-sm tracking-wide mb-4" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               Martin Lepage PhD
             </p>
             
-            {/* Compliant with regulations */}
+            {/* Compliant with regulations - more readable */}
             <div 
-              className="flex flex-wrap items-center justify-center gap-x-2 text-[#2a2a2a]/45 text-xs tracking-wide" 
+              className="flex flex-wrap items-center justify-center gap-x-2 text-[#2a2a2a]/55 text-xs tracking-wide" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               <span>{language === 'fr' ? 'Conforme aux' : 'Compliant with'}</span>
