@@ -14,91 +14,95 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-6xl mx-auto px-6 py-10">
         
-        {/* Hero Section - Centered Editorial Layout */}
-        <div className="text-center mb-16">
-          <h1 
-            className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-3" 
-            style={{
-              fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
-              fontVariant: 'small-caps', 
-              letterSpacing: '-0.01em'
-            }}
-          >
-            {t.home.title}
-          </h1>
+        {/* Hero Section - Two columns, editorial left + logo right */}
+        <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
           
-          {/* Decorative line with diamond - centered */}
-          <div className="flex items-center justify-center mb-2" style={{maxWidth: '280px', margin: '0 auto'}}>
-            <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-              <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
-            </svg>
-            <div className="mx-1" style={{
-              width: '8px',
-              height: '14px',
-              background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-              clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-              flexShrink: 0
-            }}></div>
-            <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-              <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
-            </svg>
-          </div>
-          
-          <p 
-            className="text-xl md:text-2xl text-[#1a1a1a]/50 mb-6" 
-            style={{
-              fontFamily: "'Source Serif 4', Georgia, serif", 
-              fontStyle: 'italic', 
-              fontWeight: 400
-            }}
-          >
-            {t.home.subtitle}
-          </p>
-          
-          {/* Bullet points - single line */}
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#0B0F1A]/60 mb-8">
-            <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-              <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
-              {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
-            </span>
-            <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-              <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
-              {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
-            </span>
-            <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-              <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
-              {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
-            </span>
-          </div>
-          
-          {/* Buttons - centered */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            <Link 
-              to="/services" 
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
-              data-testid="view-services-btn"
-              style={{fontFamily: "'Lato', sans-serif"}}
+          {/* Left: Editorial Text */}
+          <div className="text-center md:text-left">
+            <h1 
+              className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-2" 
+              style={{
+                fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
+                fontVariant: 'small-caps', 
+                letterSpacing: '-0.01em'
+              }}
             >
-              {t.home.viewServices} <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link 
-              to="/connect" 
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
-              data-testid="book-consultation-btn"
-              style={{fontFamily: "'Lato', sans-serif"}}
+              {t.home.title}
+            </h1>
+            
+            {/* Decorative line with diamond */}
+            <div className="flex items-center justify-center md:justify-start mb-1" style={{maxWidth: '260px'}}>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
+              </svg>
+              <div className="mx-1" style={{
+                width: '7px',
+                height: '12px',
+                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                flexShrink: 0
+              }}></div>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
+              </svg>
+            </div>
+            
+            <p 
+              className="text-lg md:text-xl text-[#1a1a1a]/50 mb-5" 
+              style={{
+                fontFamily: "'Source Serif 4', Georgia, serif", 
+                fontStyle: 'italic', 
+                fontWeight: 400
+              }}
             >
-              {t.home.bookDebrief}
-            </Link>
+              {t.home.subtitle}
+            </p>
+            
+            {/* Bullet points */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1 text-[#0B0F1A]/60 mb-6">
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
+                {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
+              </span>
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
+                {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
+              </span>
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
+                {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
+              </span>
+            </div>
+            
+            {/* Buttons */}
+            <div className="flex flex-wrap justify-center md:justify-start gap-3">
+              <Link 
+                to="/services" 
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
+                data-testid="view-services-btn"
+                style={{fontFamily: "'Lato', sans-serif"}}
+              >
+                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link 
+                to="/connect" 
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
+                data-testid="book-consultation-btn"
+                style={{fontFamily: "'Lato', sans-serif"}}
+              >
+                {t.home.bookDebrief}
+              </Link>
+            </div>
           </div>
 
-          {/* Logo - centered below */}
-          <div className="flex justify-center">
+          {/* Right: Logo */}
+          <div className="flex justify-center md:justify-end">
             <img 
               src="/images/logo-home-new.png" 
               alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-              className="w-56 md:w-64 h-auto opacity-90"
+              className="w-52 md:w-60 lg:w-64 h-auto"
             />
           </div>
         </div>
