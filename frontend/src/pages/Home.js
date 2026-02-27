@@ -61,7 +61,7 @@ const Home = () => {
             
             {/* Bottom: Strategies ◆ Oversight ◆ Research - more readable */}
             <div 
-              className="flex items-center gap-3 text-[#2a2a2a]/70 text-sm tracking-wide mb-2" 
+              className="flex items-center gap-3 text-[#2a2a2a]/70 text-sm tracking-wide mb-1" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
@@ -72,7 +72,7 @@ const Home = () => {
             </div>
             
             {/* Bottom decorative line - elegant */}
-            <div className="flex items-center mb-3" style={{width: '180px'}}>
+            <div className="flex items-center mb-2" style={{width: '180px'}}>
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#2a2a2a]/30"></div>
               <div 
                 className="mx-1.5"
