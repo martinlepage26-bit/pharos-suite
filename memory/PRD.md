@@ -81,6 +81,7 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - **Home Page Redesign**: Implemented new layout based on user-provided reference image
 - **Deployment Fix**: Added `dnspython==2.8.0` for MongoDB Atlas support
 - Deployment agent scan: PASS - Application is deployment-ready
+- **Hero Tagline Refinement** (Feb 27): Finalized elegant, stacked tagline design without diamonds; matching rectangular button styles with uppercase tracking
 
 ## Backlog
 - P2: Migrate static JSON content (Cases, Research) to database - DEFERRED
