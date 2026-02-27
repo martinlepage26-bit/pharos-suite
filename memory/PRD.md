@@ -65,6 +65,10 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - **Resend testing mode**: Currently only sends to verified account email (martinlepage26@me.com). To send to all clients, verify a domain at resend.com/domains and update SENDER_EMAIL in backend/.env.
 - Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
+## Recent Updates (Feb 27, 2026)
+- **Deployment Fix**: Added `dnspython==2.8.0` to requirements.txt to enable MongoDB Atlas `mongodb+srv://` URI resolution in production
+- Deployment agent scan: PASS - Application is deployment-ready
+
 ## Backlog
 - P1: Enhance Admin page to manage other content sections (Services, FAQ) to reduce reliance on static JSON files
 - P1: Adapt website content to weave construction sector references into Home and Services pages
