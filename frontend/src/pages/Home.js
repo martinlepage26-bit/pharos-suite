@@ -31,7 +31,7 @@ const Home = () => {
                 letterSpacing: '0.15em'
               }}
             >
-              ai governance
+              {language === 'fr' ? 'gouvernance ia' : 'ai governance'}
             </h1>
             
             {/* Top decorative line - more elegant */}
