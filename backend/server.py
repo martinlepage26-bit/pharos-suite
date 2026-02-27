@@ -566,6 +566,93 @@ async def seed_publications():
         await database.publications.insert_many(all_pubs)
         logger.info(f"Seeded {len(all_pubs)} publications")
 
+# Seed FAQ Items
+SEED_FAQ_ITEMS = [
+    # Definitions section
+    {"section": "definitions", "question": "What is AI governance?", "answer": "AI governance refers to the frameworks, policies, and practices that guide the responsible development, deployment, and oversight of artificial intelligence systems. It ensures AI decisions are documented, reviewable, and defensible.", "order": 0},
+    {"section": "definitions", "question": "What is a risk tier?", "answer": "A risk tier categorizes AI use cases by their potential impact. Higher tiers require more scrutiny, documentation, and approval. Canada's Algorithmic Impact Assessment uses four levels based on rights impact and reversibility.", "order": 1},
+    {"section": "definitions", "question": "What is an evidence trail?", "answer": "An evidence trail is the documented history of decisions, tests, and reviews that support an AI system's deployment. It demonstrates due diligence to auditors, regulators, and stakeholders.", "order": 2},
+    {"section": "definitions", "question": "What is the difference between AI ethics and AI governance?", "answer": "AI ethics focuses on principles and values (fairness, transparency, accountability). AI governance operationalizes these principles through policies, controls, and documentation that can be audited and enforced.", "order": 3},
+    {"section": "definitions", "question": "What is algorithmic accountability?", "answer": "Algorithmic accountability means organizations can explain how their AI systems work, why decisions were made, and who is responsible. It requires documentation, testing, and clear decision rights.", "order": 4},
+    # Evidence section
+    {"section": "evidence", "question": "What documentation do I need for AI governance?", "answer": "Start with a use case inventory, risk classifications, and decision logs. See the Library page for frameworks and templates.", "order": 0},
+    {"section": "evidence", "question": "How do I prepare for an AI audit?", "answer": "Build an evidence trail: document decisions, test results, and approvals. The Controls and Evidence Pack helps organizations prepare for audit scrutiny.", "order": 1},
+    {"section": "evidence", "question": "What is procurement asking about AI?", "answer": "Procurement teams increasingly ask about AI risk management, bias testing, data governance, and incident response. Having documented controls demonstrates governance maturity.", "order": 2},
+    {"section": "evidence", "question": "How often should I review AI systems?", "answer": "High-risk systems need quarterly reviews minimum. Lower-risk systems can be annual. Changes in data, model performance, or business context should trigger ad-hoc reviews.", "order": 3},
+    {"section": "evidence", "question": "What evidence do regulators expect?", "answer": "Regulators expect documentation of: risk assessment, testing and validation, human oversight mechanisms, incident response procedures, and ongoing monitoring results.", "order": 4},
+    # Engagements section
+    {"section": "engagements", "question": "What does a governance engagement include?", "answer": "Engagements typically include discovery, framework development, control design, and documentation. See the Service Offers page for package details.", "order": 0},
+    {"section": "engagements", "question": "How long does it take to establish AI governance?", "answer": "Initial governance foundation takes 4-8 weeks. Full controls and evidence packs take 8-12 weeks. Timelines depend on organizational complexity and existing maturity.", "order": 1},
+    {"section": "engagements", "question": "Do I need AI governance if I only use vendor AI?", "answer": "Yes. Vendor AI still requires governance: due diligence, contract requirements, monitoring, and incident response. You're accountable for AI decisions even when using third-party systems.", "order": 2},
+    {"section": "engagements", "question": "Can governance work with agile delivery?", "answer": "Yes. Good governance integrates with delivery cadences. Our approach emphasizes lightweight controls that prevent drift without blocking deployment velocity.", "order": 3},
+    {"section": "engagements", "question": "How do I get started?", "answer": "Take the Readiness Snapshot for a preliminary assessment, then book a debrief to discuss next steps.", "order": 4},
+]
+
+async def seed_faq_items():
+    database = await get_database()
+    count = await database.faq_items.count_documents({})
+    if count == 0:
+        for item in SEED_FAQ_ITEMS:
+            item["id"] = str(uuid.uuid4())
+            item["active"] = True
+            item["created_at"] = datetime.now(timezone.utc).isoformat()
+        await database.faq_items.insert_many(SEED_FAQ_ITEMS)
+        logger.info(f"Seeded {len(SEED_FAQ_ITEMS)} FAQ items")
+
+# Seed Service Packages
+SEED_SERVICE_PACKAGES = [
+    {
+        "package_number": 1,
+        "title_en": "Governance Foundation",
+        "title_fr": "Fondation de gouvernance",
+        "subtitle_en": "Establish governance for the first time",
+        "subtitle_fr": "Établir la gouvernance pour la première fois",
+        "best_for_en": "organizations establishing governance for the first time or consolidating governance across teams.",
+        "best_for_fr": "organisations établissant la gouvernance pour la première fois ou consolidant la gouvernance entre équipes.",
+        "deliverables_en": ["AI use case and vendor inventory starter", "Risk tiering criteria with examples", "Decision rights and approval flow", "Governance cadence: meeting model, owners, and upkeep tasks"],
+        "deliverables_fr": ["Démarrage d'inventaire des cas d'utilisation IA et fournisseurs", "Critères de hiérarchisation des risques avec exemples", "Droits de décision et flux d'approbation", "Cadence de gouvernance: modèle de réunion, responsables et tâches de maintien"],
+        "produces_en": ["A working governance model teams can use immediately", "Role clarity for procurement and audit conversations", "A defensible baseline for review and escalation"],
+        "produces_fr": ["Un modèle de gouvernance fonctionnel utilisable immédiatement", "Clarté des rôles pour les conversations d'approvisionnement et d'audit", "Une base défendable pour l'examen et l'escalade"]
+    },
+    {
+        "package_number": 2,
+        "title_en": "Controls and Evidence Pack",
+        "title_fr": "Contrôles et dossier de preuves",
+        "subtitle_en": "Prepare for audit and procurement scrutiny",
+        "subtitle_fr": "Préparer l'examen d'audit et d'approvisionnement",
+        "best_for_en": "organizations preparing for procurement scrutiny, customer questionnaires, internal audit review, or regulator engagement.",
+        "best_for_fr": "organisations se préparant à l'examen d'approvisionnement, aux questionnaires clients, à l'audit interne ou à l'engagement réglementaire.",
+        "deliverables_en": ["Control register mapped to your risk tiers", "Evaluation expectations: testing, monitoring, and thresholds", "Vendor review questions and evidence checklist", "Decision log template and documentation packet outline"],
+        "deliverables_fr": ["Registre de contrôles adapté à vos niveaux de risque", "Attentes d'évaluation: tests, surveillance et seuils", "Questions de revue fournisseur et liste de vérification des preuves", "Modèle de journal de décisions et structure du dossier de documentation"],
+        "produces_en": ["Procurement ready documentation structure", "Audit ready evidence expectations", "Clear control ownership and upkeep responsibilities"],
+        "produces_fr": ["Structure documentaire prête pour l'approvisionnement", "Attentes en matière de preuves prêtes pour l'audit", "Propriété claire des contrôles et responsabilités de maintien"]
+    },
+    {
+        "package_number": 3,
+        "title_en": "Oversight Retainer",
+        "title_fr": "Mandat de supervision continue",
+        "subtitle_en": "Stable oversight for active AI delivery",
+        "subtitle_fr": "Supervision stable pour une livraison IA active",
+        "best_for_en": "organizations with active AI delivery who want stable oversight, clear decisions, and current documentation.",
+        "best_for_fr": "organisations avec une livraison IA active souhaitant une supervision stable, des décisions claires et une documentation à jour.",
+        "deliverables_en": ["Recurring governance and risk review support", "Decision log stewardship and evidence upkeep cadence", "Control roadmap updates aligned to delivery realities", "Procurement and audit support for specific reviews"],
+        "deliverables_fr": ["Soutien récurrent en gouvernance et revue des risques", "Gestion du journal de décisions et cadence de maintien des preuves", "Mises à jour de la feuille de route des contrôles alignées sur les réalités de livraison", "Soutien à l'approvisionnement et à l'audit pour des examens spécifiques"],
+        "produces_en": ["Stable oversight without slowing delivery", "Clear documentation as systems change", "Executive ready summaries and next steps"],
+        "produces_fr": ["Supervision stable sans ralentir la livraison", "Documentation claire à mesure que les systèmes changent", "Sommaires exécutifs et prochaines étapes"]
+    }
+]
+
+async def seed_service_packages():
+    database = await get_database()
+    count = await database.service_packages.count_documents({})
+    if count == 0:
+        for pkg in SEED_SERVICE_PACKAGES:
+            pkg["id"] = str(uuid.uuid4())
+            pkg["active"] = True
+            pkg["created_at"] = datetime.now(timezone.utc).isoformat()
+        await database.service_packages.insert_many(SEED_SERVICE_PACKAGES)
+        logger.info(f"Seeded {len(SEED_SERVICE_PACKAGES)} service packages")
+
 # ─── App Setup ───
 
 app.include_router(api_router)
