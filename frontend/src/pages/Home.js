@@ -107,7 +107,6 @@ const Home = () => {
             />
           </div>
         </div>
-        </div>
 
         {/* Three Feature Boxes - Tighter */}
         <div className="bg-[#F6F7FB] py-6 px-6 -mx-6 rounded-lg">
