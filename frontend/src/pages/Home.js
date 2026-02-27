@@ -14,13 +14,13 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-4xl mx-auto px-6 py-8">
         
-        {/* Hero Section - Very tight two columns */}
-        <div className="flex items-center justify-center gap-8 mb-10">
+        {/* Hero Section - Two columns */}
+        <div className="flex flex-col md:flex-row md:items-start md:gap-12 mb-10">
           
-          {/* Left: Text */}
-          <div>
+          {/* Left: Text content */}
+          <div className="flex-1">
             <h1 
               className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight" 
               style={{
@@ -32,25 +32,26 @@ const Home = () => {
               {t.home.title}
             </h1>
             
-            {/* Simple horizontal line with diamond */}
-            <div className="flex items-center my-2" style={{maxWidth: '320px'}}>
-              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
+            {/* Decorative line with diamond pointing down */}
+            <div className="flex items-start my-3" style={{maxWidth: '360px'}}>
+              <svg viewBox="0 0 150 8" className="flex-1" style={{height: '8px'}} preserveAspectRatio="none">
+                <polygon points="0,4 150,0 150,8" fill="#0B0F1A" />
               </svg>
               <div style={{
-                width: '8px',
-                height: '16px',
+                width: '10px',
+                height: '20px',
                 background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                flexShrink: 0
+                clipPath: 'polygon(50% 100%, 100% 30%, 50% 0%, 0% 30%)',
+                flexShrink: 0,
+                marginTop: '-4px'
               }}></div>
-              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
+              <svg viewBox="0 0 150 8" className="flex-1" style={{height: '8px'}} preserveAspectRatio="none">
+                <polygon points="0,0 150,4 0,8" fill="#0B0F1A" />
               </svg>
             </div>
             
             <p 
-              className="text-lg text-[#1a1a1a]/50 mb-4" 
+              className="text-xl text-[#1a1a1a]/40 mb-5" 
               style={{
                 fontFamily: "'Source Serif 4', Georgia, serif", 
                 fontStyle: 'italic', 
@@ -61,26 +62,26 @@ const Home = () => {
             </p>
             
             {/* Bullet points */}
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-4">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#0B0F1A]/70 mb-5">
               <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                <span className="w-2 h-2 mr-2 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
               </span>
               <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                <span className="w-2 h-2 mr-2 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
               </span>
               <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                <span className="w-2 h-2 mr-2 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
               </span>
             </div>
             
             {/* Buttons */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               <Link 
                 to="/services" 
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
                 data-testid="view-services-btn"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
@@ -88,7 +89,7 @@ const Home = () => {
               </Link>
               <Link 
                 to="/connect" 
-                className="inline-flex items-center gap-2 px-4 py-2 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
                 data-testid="book-consultation-btn"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
@@ -98,11 +99,14 @@ const Home = () => {
           </div>
 
           {/* Right: Logo */}
-          <img 
-            src="/images/logo-home-new.png" 
-            alt="AI Governance" 
-            className="w-36 md:w-44 h-auto"
-          />
+          <div className="flex-shrink-0 mt-6 md:mt-0">
+            <img 
+              src="/images/logo-home-new.png" 
+              alt="AI Governance" 
+              className="w-44 md:w-52 h-auto"
+            />
+          </div>
+        </div>
         </div>
 
         {/* Three Feature Boxes - Tighter */}
