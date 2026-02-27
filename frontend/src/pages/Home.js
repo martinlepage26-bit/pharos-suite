@@ -80,7 +80,7 @@ const Home = () => {
             </div>
             
             {/* Buttons - smaller */}
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap gap-2">
               <Link 
                 to="/services" 
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1a1a] text-white text-xs font-medium rounded-sm hover:bg-[#333] transition-colors" 
@@ -98,18 +98,6 @@ const Home = () => {
                 {t.home.bookDebrief}
               </Link>
             </div>
-            
-            {/* Tagline */}
-            <div 
-              className="flex items-center gap-3 text-[#0B0F1A]/50 text-xs"
-              style={{fontFamily: "'Lato', sans-serif"}}
-            >
-              <span>{language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}</span>
-              <span className="text-[#0B0F1A]/20">|</span>
-              <span>{language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}</span>
-              <span className="text-[#0B0F1A]/20">|</span>
-              <span>{language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}</span>
-            </div>
           </div>
 
           {/* Right: Logo - bigger */}
@@ -121,9 +109,38 @@ const Home = () => {
             />
           </div>
         </div>
-
-        {/* Three Feature Boxes - Separate cards in horizontal row */}
-        <div className="grid md:grid-cols-3 gap-4 mb-16">
+        
+        {/* Tagline - styled with lavender backdrop */}
+        <div className="flex justify-center mb-16">
+          <div 
+            className="inline-flex items-center gap-4 px-8 py-4 rounded-full"
+            style={{
+              background: 'linear-gradient(135deg, rgba(123,44,191,0.06) 0%, rgba(45,35,128,0.08) 100%)',
+              boxShadow: 'inset 0 0 20px rgba(123,44,191,0.05)'
+            }}
+          >
+            <span 
+              className="text-[#0B0F1A]/60 text-base font-semibold"
+              style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+            >
+              {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
+            </span>
+            <span className="text-[#7b2cbf]/30 text-lg">|</span>
+            <span 
+              className="text-[#0B0F1A]/60 text-base font-semibold"
+              style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+            >
+              {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
+            </span>
+            <span className="text-[#7b2cbf]/30 text-lg">|</span>
+            <span 
+              className="text-[#0B0F1A]/60 text-base font-semibold"
+              style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+            >
+              {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
+            </span>
+          </div>
+        </div>
           {capabilities.map((cap, i) => (
             <div 
               key={i} 
