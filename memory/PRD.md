@@ -83,8 +83,6 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - Deployment agent scan: PASS - Application is deployment-ready
 
 ## Backlog
-- P1: Enhance Admin page to manage other content sections (Services, FAQ) to reduce reliance on static JSON files
-- P1: Adapt website content to weave construction sector references into Home and Services pages
-- P2: Verify domain in Resend to send emails to any recipient
-- P2: Update admin passphrase for production
-- P2: Migrate static JSON content (Cases, Research) to database
+- P2: Migrate static JSON content (Cases, Research) to database - DEFERRED
+- P2: Connect FAQ page to database API (currently using seeded data)
+- P2: Connect Service Menu page to database API (currently using seeded data)
