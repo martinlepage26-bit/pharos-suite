@@ -675,6 +675,8 @@ logger = logging.getLogger(__name__)
 async def startup_db_client():
     await get_database()
     await seed_publications()
+    await seed_faq_items()
+    await seed_service_packages()
     logger.info("Database connection initialized")
 
 @app.on_event("shutdown")
