@@ -35,7 +35,7 @@ const Home = () => {
             </h1>
             
             {/* Top decorative line - more elegant */}
-            <div className="flex items-center my-3" style={{width: '240px'}}>
+            <div className="flex items-center my-2" style={{width: '240px'}}>
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#2a2a2a]/40 to-[#2a2a2a]"></div>
               <div 
                 className="mx-2"
@@ -51,11 +51,11 @@ const Home = () => {
             </div>
             
             {/* Logo Eye image */}
-            <div className="my-5">
+            <div className="my-3">
               <img 
                 src="/images/logo-eye.png" 
                 alt="AI Governance Logo" 
-                className="w-32 md:w-40 h-auto"
+                className="w-28 md:w-36 h-auto"
               />
             </div>
             
