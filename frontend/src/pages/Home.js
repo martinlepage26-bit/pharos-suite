@@ -14,10 +14,10 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-4xl mx-auto px-6 py-16">
         
         {/* Hero Section - Two columns */}
-        <div className="flex flex-col md:flex-row md:items-start md:gap-12 mb-10">
+        <div className="flex flex-col md:flex-row md:items-start md:gap-12 mb-16">
           
           {/* Left: Text content */}
           <div className="flex-1">
