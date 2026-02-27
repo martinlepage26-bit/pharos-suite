@@ -17,7 +17,7 @@ const Home = () => {
       <div className="max-w-5xl mx-auto px-6 py-16">
         
         {/* Hero Section - Two columns */}
-        <div className="flex flex-col md:flex-row md:items-center md:gap-16 mb-16">
+        <div className="flex flex-col md:flex-row md:items-center md:gap-12 mb-16">
           
           {/* Left: Logo with AI GOVERNANCE treatment */}
           <div className="flex-1 flex flex-col items-center">
@@ -51,17 +51,17 @@ const Home = () => {
               </svg>
             </div>
             
-            {/* Logo image (just the eye/geometric part) */}
-            <div className="my-4">
+            {/* Logo Eye image */}
+            <div className="my-6">
               <img 
-                src="/images/logo-home-new.png" 
+                src="/images/logo-eye.png" 
                 alt="AI Governance Logo" 
-                className="w-40 md:w-48 h-auto"
+                className="w-36 md:w-44 h-auto"
               />
             </div>
             
             {/* Bottom: Strategies ◆ Oversight ◆ Research */}
-            <div className="flex items-center gap-2 text-[#1a1a1a]/50 text-sm mb-1" style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}>
+            <div className="flex items-center gap-2 text-[#1a1a1a]/50 text-sm mb-2" style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}>
               <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
               <span className="text-[#2D2380]">◆</span>
               <span>{language === 'fr' ? 'Supervision' : 'Oversight'}</span>
@@ -87,7 +87,7 @@ const Home = () => {
             </div>
             
             {/* Martin Lepage PhD */}
-            <p className="text-[#1a1a1a]/40 text-xs tracking-wide" style={{fontFamily: "'Lato', sans-serif"}}>
+            <p className="text-[#1a1a1a]/40 text-xs tracking-wider uppercase" style={{fontFamily: "'Lato', sans-serif"}}>
               Martin Lepage PhD
             </p>
           </div>
@@ -95,23 +95,23 @@ const Home = () => {
           {/* Right: Tagline + Bullets + Buttons - centered, stacked */}
           <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
             {/* Main tagline - bigger, stacked */}
-            <div className="mb-6">
+            <div className="mb-8">
               <p 
-                className="text-xl md:text-2xl font-semibold text-[#0B0F1A]/70 mb-2"
+                className="text-2xl md:text-3xl font-semibold text-[#0B0F1A]/70 mb-3"
                 style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
               </p>
-              <p className="text-[#2D2380] text-lg mb-2">◆</p>
+              <p className="text-[#2D2380] text-xl mb-3">◆</p>
               <p 
-                className="text-xl md:text-2xl font-semibold text-[#0B0F1A]/70 mb-2"
+                className="text-2xl md:text-3xl font-semibold text-[#0B0F1A]/70 mb-3"
                 style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
               </p>
-              <p className="text-[#2D2380] text-lg mb-2">◆</p>
+              <p className="text-[#2D2380] text-xl mb-3">◆</p>
               <p 
-                className="text-xl md:text-2xl font-semibold text-[#0B0F1A]/70"
+                className="text-2xl md:text-3xl font-semibold text-[#0B0F1A]/70"
                 style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
@@ -119,26 +119,26 @@ const Home = () => {
             </div>
             
             {/* Bullet points - aligned */}
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-6">
-              <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="text-[#2D2380] mr-1.5">◆</span>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#0B0F1A]/60 mb-8">
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="text-[#2D2380] mr-2">◆</span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
               </span>
-              <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="text-[#2D2380] mr-1.5">◆</span>
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="text-[#2D2380] mr-2">◆</span>
                 {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
               </span>
-              <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="text-[#2D2380] mr-1.5">◆</span>
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="text-[#2D2380] mr-2">◆</span>
                 {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
               </span>
             </div>
             
             {/* Stylish Buttons */}
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link 
                 to="/services" 
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#0D0A2E] to-[#2D2380] text-white text-sm font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" 
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#0D0A2E] to-[#2D2380] text-white text-sm font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" 
                 data-testid="view-services-btn"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
@@ -146,7 +146,7 @@ const Home = () => {
               </Link>
               <Link 
                 to="/connect" 
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-[#0D0A2E]/20 text-[#0D0A2E] text-sm font-medium rounded-full shadow-md hover:border-[#2D2380] hover:shadow-lg hover:scale-105 transition-all duration-300" 
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-[#0D0A2E]/20 text-[#0D0A2E] text-sm font-medium rounded-full shadow-md hover:border-[#2D2380] hover:shadow-lg hover:scale-105 transition-all duration-300" 
                 data-testid="book-consultation-btn"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
