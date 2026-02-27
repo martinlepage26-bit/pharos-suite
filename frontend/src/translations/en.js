@@ -557,7 +557,7 @@ export const en = {
   },
 
   footer: {
-    copyright: '\u00A9 2026 Martin Lepage, PhD. AI Governance Practice & Research'
+    copyright: '© 2026 Martin Lepage, PhD.'
   },
 
   admin: {
