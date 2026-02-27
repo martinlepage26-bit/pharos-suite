@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import StarterKitCTA from '../components/StarterKitCTA';
 
 const Home = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const capabilities = [
     { icon: Shield, title: t.home.capabilities.riskClassification, description: t.home.capabilities.riskClassificationDesc },
@@ -14,148 +14,116 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Hero Section - Two columns */}
-        <div className="grid md:grid-cols-2 gap-8 items-start mb-8">
-          {/* Left: Hero Text */}
-          <div>
-            <h1 
-              className="text-5xl md:text-6xl font-semibold text-[#1a1a1a] leading-none tracking-tight" 
-              style={{
-                fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
-                fontVariant: 'small-caps', 
-                letterSpacing: '-0.01em', 
-                lineHeight: '1.05'
-              }}
-            >
-              {t.home.title}
-            </h1>
-            
-            {/* Decorative line with diamond */}
-            <div className="flex items-center mt-2 mb-1" style={{width: '100%', maxWidth: '320px'}}>
-              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
-              </svg>
-              <div className="mx-0" style={{
-                width: '8px',
-                height: '16px',
-                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                flexShrink: 0
-              }}></div>
-              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
-              </svg>
-            </div>
-            
-            <p 
-              className="text-2xl md:text-3xl text-[#1a1a1a]/50" 
-              style={{
-                fontFamily: "'Source Serif 4', 'IBM Plex Sans', serif", 
-                fontStyle: 'italic', 
-                fontWeight: 400, 
-                letterSpacing: '-0.01em', 
-                lineHeight: '1.2'
-              }}
-            >
-              {t.home.subtitle}
-            </p>
-            
-            {/* Bullet points */}
-            <div className="mt-6 mb-4">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[#0B0F1A]/70">
-                <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                  <span className="w-2 h-2 mr-2 bg-gradient-to-br from-[#7b2cbf] to-[#2D2380] rotate-45"></span>
-                  Treasury Board directives
-                </span>
-                <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                  <span className="w-2 h-2 mr-2 bg-gradient-to-br from-[#7b2cbf] to-[#2D2380] rotate-45"></span>
-                  Quebec's Law&nbsp;25
-                </span>
-                <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                  <span className="w-2 h-2 mr-2 bg-gradient-to-br from-[#7b2cbf] to-[#2D2380] rotate-45"></span>
-                  Emerging AIDA obligations
-                </span>
-              </div>
-              
-              {/* PRODUCT line */}
-              <div className="flex items-center gap-3 pt-4">
-                <span 
-                  className="text-sm font-semibold tracking-wide text-[#0B0F1A] uppercase"
-                  style={{fontFamily: "'Lato', sans-serif"}}
-                >
-                  Product
-                </span>
-                <span className="w-8 h-px bg-gradient-to-r from-[#7b2cbf] to-[#7b2cbf]/30"></span>
-                <span 
-                  className="text-[#0B0F1A]/60 text-sm"
-                  style={{fontFamily: "'Lato', sans-serif"}}
-                >
-                  AI decisions that are documented, reviewable, and defensible.
-                </span>
-              </div>
-            </div>
-            
-            {/* Keywords */}
-            <p 
-              className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-6"
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        
+        {/* Hero Section - Centered Editorial Layout */}
+        <div className="text-center mb-16">
+          <h1 
+            className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-3" 
+            style={{
+              fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
+              fontVariant: 'small-caps', 
+              letterSpacing: '-0.01em'
+            }}
+          >
+            {t.home.title}
+          </h1>
+          
+          {/* Decorative line with diamond - centered */}
+          <div className="flex items-center justify-center mb-2" style={{maxWidth: '280px', margin: '0 auto'}}>
+            <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+              <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
+            </svg>
+            <div className="mx-1" style={{
+              width: '8px',
+              height: '14px',
+              background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+              clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+              flexShrink: 0
+            }}></div>
+            <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+              <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
+            </svg>
+          </div>
+          
+          <p 
+            className="text-xl md:text-2xl text-[#1a1a1a]/50 mb-6" 
+            style={{
+              fontFamily: "'Source Serif 4', Georgia, serif", 
+              fontStyle: 'italic', 
+              fontWeight: 400
+            }}
+          >
+            {t.home.subtitle}
+          </p>
+          
+          {/* Bullet points - single line */}
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#0B0F1A]/60 mb-8">
+            <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+              <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
+              {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
+            </span>
+            <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+              <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
+              {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
+            </span>
+            <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+              <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
+              {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
+            </span>
+          </div>
+          
+          {/* Buttons - centered */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            <Link 
+              to="/services" 
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
+              data-testid="view-services-btn"
               style={{fontFamily: "'Lato', sans-serif"}}
             >
-              {t.home.keywords}
-            </p>
-            
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-4">
-              <Link 
-                to="/services" 
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
-                data-testid="view-services-btn"
-                style={{fontFamily: "'Lato', sans-serif"}}
-              >
-                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link 
-                to="/connect" 
-                className="inline-flex items-center gap-2 px-6 py-3 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 hover:bg-[#f5f5f5] transition-colors" 
-                data-testid="book-consultation-btn"
-                style={{fontFamily: "'Lato', sans-serif"}}
-              >
-                {t.home.bookDebrief}
-              </Link>
-            </div>
+              {t.home.viewServices} <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link 
+              to="/connect" 
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
+              data-testid="book-consultation-btn"
+              style={{fontFamily: "'Lato', sans-serif"}}
+            >
+              {t.home.bookDebrief}
+            </Link>
           </div>
 
-          {/* Right: Logo - centered */}
-          <div className="flex items-center justify-center">
+          {/* Logo - centered below */}
+          <div className="flex justify-center">
             <img 
               src="/images/logo-home-new.png" 
               alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-              className="w-72 md:w-80 lg:w-[22rem] h-auto"
+              className="w-56 md:w-64 h-auto opacity-90"
             />
           </div>
         </div>
 
-        {/* Three Feature Boxes - Centered and aligned with hover animations */}
-        <div className="bg-[#F6F7FB] py-8 px-6 -mx-6 mt-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-6">
+        {/* Three Feature Boxes - Tighter */}
+        <div className="bg-[#F6F7FB] py-6 px-6 -mx-6 rounded-lg">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-4">
               {capabilities.map((cap, i) => (
                 <div 
                   key={i} 
-                  className="flex items-start gap-4 p-4 rounded-lg cursor-default transition-all duration-300 ease-out hover:bg-white hover:shadow-md hover:-translate-y-1"
+                  className="flex items-start gap-3 p-3 rounded-lg transition-all duration-300 ease-out hover:bg-white hover:shadow-sm"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center flex-shrink-0 shadow-sm transition-all duration-300 group-hover:shadow-md">
-                    <cap.icon className="w-5 h-5 text-[#0D0A2E] transition-colors duration-300" />
+                  <div className="w-8 h-8 rounded-md bg-white/80 flex items-center justify-center flex-shrink-0 shadow-sm">
+                    <cap.icon className="w-4 h-4 text-[#0D0A2E]" />
                   </div>
                   <div>
                     <p 
-                      className="font-semibold text-[#0B0F1A] leading-tight text-base transition-colors duration-300"
+                      className="font-semibold text-[#0B0F1A] leading-tight text-sm"
                       style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
                     >
                       {cap.title}
                     </p>
                     <p 
-                      className="text-sm text-[#0B0F1A]/60 leading-relaxed mt-1"
+                      className="text-xs text-[#0B0F1A]/60 leading-relaxed mt-0.5"
                       style={{fontFamily: "'Lato', sans-serif"}}
                     >
                       {cap.description}
@@ -168,20 +136,20 @@ const Home = () => {
         </div>
 
         {/* Starter Kit CTA */}
-        <div className="mt-16"><StarterKitCTA /></div>
+        <div className="mt-12"><StarterKitCTA /></div>
 
         {/* Bottom Navigation Cards */}
-        <div className="mt-16 pt-12 border-t border-[#0B0F1A]/5">
-          <div className="grid md:grid-cols-4 gap-10">
+        <div className="mt-12 pt-10 border-t border-[#0B0F1A]/5">
+          <div className="grid md:grid-cols-4 gap-8">
             <Link to="/tool" className="group">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-2"
+                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
                 {t.home.sections.assessment}
               </p>
               <h3 
-                className="text-lg font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-1"
+                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
                 style={{fontFamily: "'Source Serif 4', serif"}}
               >
                 {t.home.sections.readinessSnapshot}
@@ -195,13 +163,13 @@ const Home = () => {
             </Link>
             <Link to="/cases" className="group">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-2"
+                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
                 {t.home.sections.portfolio}
               </p>
               <h3 
-                className="text-lg font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-1"
+                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
                 style={{fontFamily: "'Source Serif 4', serif"}}
               >
                 {t.home.sections.caseStudies}
@@ -215,13 +183,13 @@ const Home = () => {
             </Link>
             <Link to="/research" className="group">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-2"
+                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
                 {t.home.sections.research}
               </p>
               <h3 
-                className="text-lg font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-1"
+                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
                 style={{fontFamily: "'Source Serif 4', serif"}}
               >
                 {t.home.sections.briefings}
@@ -235,13 +203,13 @@ const Home = () => {
             </Link>
             <Link to="/library" className="group">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-2"
+                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
                 {t.home.sections.resources}
               </p>
               <h3 
-                className="text-lg font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-1"
+                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
                 style={{fontFamily: "'Source Serif 4', serif"}}
               >
                 {t.home.sections.library}
