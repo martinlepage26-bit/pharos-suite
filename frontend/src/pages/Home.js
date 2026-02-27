@@ -141,6 +141,9 @@ const Home = () => {
             </span>
           </div>
         </div>
+
+        {/* Three Feature Boxes - Separate cards in horizontal row */}
+        <div className="grid md:grid-cols-3 gap-4 mb-16">
           {capabilities.map((cap, i) => (
             <div 
               key={i} 
