@@ -188,85 +188,85 @@ const Home = () => {
         {/* Starter Kit CTA */}
         <div className="mt-12"><StarterKitCTA /></div>
 
-        {/* Bottom Navigation Cards */}
-        <div className="mt-12 pt-10 border-t border-[#0B0F1A]/5">
-          <div className="grid md:grid-cols-4 gap-8">
-            <Link to="/tool" className="group">
+        {/* Bottom Navigation Cards - with hover raise */}
+        <div className="mt-12 pt-10 border-t border-[#2a2a2a]/5">
+          <div className="grid md:grid-cols-4 gap-6">
+            <Link to="/tool" className="group p-4 rounded-lg hover:bg-[#F6F7FB] hover:shadow-md hover:-translate-y-1 transition-all duration-300">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-xs tracking-widest text-[#2a2a2a]/50 uppercase mb-1"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.assessment}
               </p>
               <h3 
-                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
-                style={{fontFamily: "'Source Serif 4', serif"}}
+                className="text-base font-semibold text-[#2a2a2a] group-hover:text-[#2a2a2a] transition-colors mb-0.5"
+                style={{fontFamily: "'IBM Plex Sans', serif"}}
               >
                 {t.home.sections.readinessSnapshot}
               </h3>
               <p 
-                className="text-[#0B0F1A]/60 text-sm"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-[#2a2a2a]/60 text-sm"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.assessMaturity}
               </p>
             </Link>
-            <Link to="/cases" className="group">
+            <Link to="/cases" className="group p-4 rounded-lg hover:bg-[#F6F7FB] hover:shadow-md hover:-translate-y-1 transition-all duration-300">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-xs tracking-widest text-[#2a2a2a]/50 uppercase mb-1"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.portfolio}
               </p>
               <h3 
-                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
-                style={{fontFamily: "'Source Serif 4', serif"}}
+                className="text-base font-semibold text-[#2a2a2a] group-hover:text-[#2a2a2a] transition-colors mb-0.5"
+                style={{fontFamily: "'IBM Plex Sans', serif"}}
               >
                 {t.home.sections.caseStudies}
               </h3>
               <p 
-                className="text-[#0B0F1A]/60 text-sm"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-[#2a2a2a]/60 text-sm"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.seeExamples}
               </p>
             </Link>
-            <Link to="/research" className="group">
+            <Link to="/research" className="group p-4 rounded-lg hover:bg-[#F6F7FB] hover:shadow-md hover:-translate-y-1 transition-all duration-300">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-xs tracking-widest text-[#2a2a2a]/50 uppercase mb-1"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.research}
               </p>
               <h3 
-                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
-                style={{fontFamily: "'Source Serif 4', serif"}}
+                className="text-base font-semibold text-[#2a2a2a] group-hover:text-[#2a2a2a] transition-colors mb-0.5"
+                style={{fontFamily: "'IBM Plex Sans', serif"}}
               >
                 {t.home.sections.briefings}
               </h3>
               <p 
-                className="text-[#0B0F1A]/60 text-sm"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-[#2a2a2a]/60 text-sm"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.incidentsToControls}
               </p>
             </Link>
-            <Link to="/library" className="group">
+            <Link to="/library" className="group p-4 rounded-lg hover:bg-[#F6F7FB] hover:shadow-md hover:-translate-y-1 transition-all duration-300">
               <p 
-                className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-1"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-xs tracking-widest text-[#2a2a2a]/50 uppercase mb-1"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.resources}
               </p>
               <h3 
-                className="text-base font-semibold text-[#0B0F1A] group-hover:text-[#0D0A2E] transition-colors mb-0.5"
-                style={{fontFamily: "'Source Serif 4', serif"}}
+                className="text-base font-semibold text-[#2a2a2a] group-hover:text-[#2a2a2a] transition-colors mb-0.5"
+                style={{fontFamily: "'IBM Plex Sans', serif"}}
               >
                 {t.home.sections.library}
               </h3>
               <p 
-                className="text-[#0B0F1A]/60 text-sm"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                className="text-[#2a2a2a]/60 text-sm"
+                style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
               >
                 {t.home.sections.frameworksStandards}
               </p>
