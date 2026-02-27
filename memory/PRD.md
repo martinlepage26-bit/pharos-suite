@@ -66,12 +66,16 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
 ## Recent Updates (Feb 27, 2026)
-- **Home Page Redesign**: Implemented new layout based on user-provided reference image:
-  - Thin single-line header with "Martin Lepage, PhD AI Governance Consultant" + navigation tabs
-  - Hero section with AI Governance title, decorative line, subtitle, bullet points, PRODUCT line
-  - Logo positioned on right side
-  - Three feature boxes (Risk Classification, Evidence Architecture, Control Design) aligned and centered on gray background
-- **Deployment Fix**: Added `dnspython==2.8.0` to requirements.txt to enable MongoDB Atlas `mongodb+srv://` URI resolution in production
+- **Admin Content Management**: Enhanced Admin page with 4 tabs:
+  - Publications (existing)
+  - Bookings (existing)
+  - **FAQ Management** (NEW): CRUD for FAQ items across 3 sections (Definitions, Evidence, Engagements) with ordering
+  - **Services Management** (NEW): CRUD for service packages with bilingual EN/FR support
+- **Email Sender Updated**: Changed Resend sender email to `consult@govern-ai.ca` (verified domain)
+- **Backend APIs Added**: New endpoints for `/api/faq` and `/api/services` with full CRUD operations
+- **Database Seeding**: Added auto-seeding for FAQ items (15) and service packages (3)
+- **Home Page Redesign**: Implemented new layout based on user-provided reference image
+- **Deployment Fix**: Added `dnspython==2.8.0` for MongoDB Atlas support
 - Deployment agent scan: PASS - Application is deployment-ready
 
 ## Backlog
