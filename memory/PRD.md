@@ -44,6 +44,10 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - `GET/POST /api/bookings`, `DELETE /api/bookings/{id}`
 - `PUT /api/bookings/{id}/status` — triggers confirmation/cancellation emails
 - `GET /api/bookings/booked-slots` — public endpoint for calendar
+- `GET/POST /api/faq`, `PUT/DELETE /api/faq/{id}` — FAQ management
+- `GET /api/faq/{section}` — get FAQ by section (definitions, evidence, engagements)
+- `GET/POST /api/services`, `PUT/DELETE /api/services/{id}` — Service packages
+- `GET /api/services/active` — get active service packages only
 - `GET /api/health` — health check
 
 ### Completed Tasks
