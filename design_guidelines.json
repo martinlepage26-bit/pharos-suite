@@ -1,0 +1,137 @@
+{
+  "persona": {
+    "identity": "E1",
+    "archetype": "The Watchtower",
+    "vibe": "Deep, Authoritative, Kinetic, Precision-Engineered",
+    "mission": "To visualize the invisible risks of AI with surgical precision and artistic depth."
+  },
+  "project_context": {
+    "name": "Agatha AI Governance Engine",
+    "type": "Enterprise Governance Dashboard",
+    "audience": "Risk Managers, Compliance Officers, AI Ethics Boards",
+    "emotional_goal": "Absolute clarity in chaos. Trust through precision."
+  },
+  "design_system": {
+    "theme": "dark",
+    "colors": {
+      "palette_name": "Obsidian Protocol",
+      "background": {
+        "default": "222 47% 4%", 
+        "paper": "222 47% 6%",
+        "subtle": "222 47% 8%"
+      },
+      "foreground": {
+        "default": "210 40% 98%",
+        "muted": "215 20% 65%"
+      },
+      "primary": {
+        "default": "260 100% 65%",
+        "foreground": "210 40% 98%",
+        "glow": "0 0 20px rgba(130, 80, 255, 0.5)"
+      },
+      "secondary": {
+        "default": "217 33% 17%",
+        "foreground": "210 40% 98%"
+      },
+      "accent": {
+        "mint": "150 100% 45%",
+        "scarlet_rose": "340 90% 60%",
+        "golden_amber": "40 100% 50%",
+        "electric_blue": "190 100% 50%"
+      },
+      "border": {
+        "default": "217 33% 15%",
+        "active": "260 100% 65%"
+      }
+    },
+    "typography": {
+      "headings": {
+        "family": "\"Chivo\", \"Space Grotesk\", sans-serif",
+        "usage": "Use for H1-H4. Tracking tight (-0.02em). Weight 700 or 900.",
+        "install_url": "https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=Space+Grotesk:wght@500;700&display=swap"
+      },
+      "body": {
+        "family": "\"Manrope\", \"DM Sans\", sans-serif",
+        "usage": "Use for all body text, data tables, and labels. Tracking normal.",
+        "install_url": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      }
+    },
+    "layout": {
+      "grid_mode": "Mode B (High Density)",
+      "container": "max-w-[1600px] mx-auto p-6 md:p-8",
+      "spacing_scale": "Generous (2x standard)",
+      "bento_rules": [
+        "Every pixel must be utilized.",
+        "Use col-span-2 or col-span-3 for primary data visualization.",
+        "Use col-span-1 for summary metrics.",
+        "No jagged bottoms - use h-full."
+      ]
+    },
+    "surfaces": {
+      "glassmorphism": {
+        "usage": "Sticky headers, modal overlays, toasts",
+        "classes": "bg-background/70 backdrop-blur-xl border-b border-white/10"
+      },
+      "tracing_beam": {
+        "usage": "Active assessment cards, high-priority alerts",
+        "concept": "A glowing gradient border that traces the edge of the container."
+      },
+      "grid_borders": {
+        "usage": "Data tables, dashboard lists",
+        "classes": "border-r border-b border-border/40 last:border-0"
+      }
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-white hover:bg-primary/90 shadow-[0_0_15px_rgba(130,80,255,0.3)] transition-all duration-300",
+      "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-white/5",
+      "outline": "border border-primary text-primary hover:bg-primary/10"
+    },
+    "cards": {
+      "default": "bg-card border border-border/40 shadow-none rounded-xl overflow-hidden",
+      "hover_effect": "hover:border-primary/50 transition-colors duration-300"
+    },
+    "inputs": {
+      "default": "bg-secondary/50 border-border/40 focus:border-primary focus:ring-1 focus:ring-primary/50 rounded-lg"
+    },
+    "charts": {
+      "library": "recharts",
+      "theme": {
+        "grid": "stroke-border/20 stroke-dasharray-4",
+        "tooltip": "bg-popover border-border/50 shadow-xl rounded-lg text-popover-foreground",
+        "colors": ["#8B5CF6", "#10B981", "#F43F5E", "#0EA5E9", "#F59E0B"]
+      }
+    }
+  },
+  "assets": {
+    "images": {
+      "hero_bg": "https://images.unsplash.com/photo-1652175083753-1fbb5f793dc9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxjeWJlciUyMHNlY3VyaXR5JTIwc2hpZWxkJTIwYWJzdHJhY3QlMjB0ZWNobm9sb2d5JTIwbG9nbyUyMG1pbmltYWwlMjBkYXJrfGVufDB8fHx8MTc3MTk5NDIwMHww&ixlib=rb-4.1.0&q=85",
+      "login_bg": "https://images.unsplash.com/photo-1637946175491-53bca31c90ba?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxjeWJlciUyMHNlY3VyaXR5JTIwc2hpZWxkJTIwYWJzdHJhY3QlMjB0ZWNobm9sb2d5JTIwbG9nbyUyMG1pbmltYWwlMjBkYXJrfGVufDB8fHx8MTc3MTk5NDIwMHww&ixlib=rb-4.1.0&q=85",
+      "user_avatar": "https://images.unsplash.com/photo-1758534063829-a72058381e21?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtaW5pbWFsaXN0JTIwcG9ydHJhaXQlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NzE5OTQyMDV8MA&ixlib=rb-4.1.0&q=85",
+      "logo_placeholder": "https://images.unsplash.com/photo-1637568220439-d9dec8482920?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHw0fHxjeWJlciUyMHNlY3VyaXR5JTIwc2hpZWxkJTIwYWJzdHJhY3QlMjB0ZWNobm9sb2d5JTIwbG9nbyUyMG1pbmltYWwlMjBkYXJrfGVufDB8fHx8MTc3MTk5NDIwMHww&ixlib=rb-4.1.0&q=85"
+    },
+    "icons": {
+      "library": "lucide-react",
+      "style": "Stroke width 1.5px (Thin/Technical look)"
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. INSTALL FONTS: Add the Google Fonts links to /app/frontend/public/index.html first.",
+    "2. UPDATE TAILWIND: Modify /app/frontend/src/index.css with the provided HSL color values in the :root and .dark layers.",
+    "3. CONFIGURE FONTS: Update /app/frontend/tailwind.config.js to include 'Chivo' and 'Manrope'.",
+    "4. COMPONENT OVERRIDES: When using Shadcn components, always strip the default rounded-md if it conflicts with the 'rounded-xl' card style.",
+    "5. CHARTS: Use Recharts ResponsiveContainer for all charts to ensure they fit the grid.",
+    "6. USE SONNER: Ensure 'Toaster' from 'sonner' is added to the root layout."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts. Use grids.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur) for floating elements.",
+    "You MUST NOT apply universal transition (transition: all).",
+    "Every interaction needs micro-animations - hover states, transitions.",
+    "Use 2-3x more spacing than feels comfortable inside cards.",
+    "Subtle grain textures or noise overlays are encouraged for the background."
+  ]
+}
