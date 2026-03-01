@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { researchPapers, contexts } from '../data/researchPapers';
 import { X, FileText, Calendar, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { formatAdminTextForDisplay } from '../lib/textFormat';
 
 const Research = () => {
   const [selectedContext, setSelectedContext] = useState('all');
@@ -83,7 +84,7 @@ const Research = () => {
                     </span>
                   </div>
                   <h4 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{paper.title}</h4>
-                  <p className="text-gray-600 text-sm line-clamp-2">{paper.abstract}</p>
+                  <p className="text-gray-600 text-sm line-clamp-2 whitespace-pre-line">{formatAdminTextForDisplay(paper.abstract)}</p>
                 </div>
                 <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
               </div>
@@ -109,10 +110,13 @@ const Research = () => {
             </div>
             <div className="flex-1 overflow-auto p-6">
               <div className="prose prose-gray max-w-none">
-                <p className="text-lg text-gray-700 font-medium mb-6 pb-6 border-b border-gray-100">{selectedPaper.abstract}</p>
-                {selectedPaper.content.split('\n\n').map((paragraph, i) => (
-                  <p key={i} className="text-gray-600 leading-relaxed mb-4">{paragraph}</p>
-                ))}
+                <p className="text-lg text-gray-700 font-medium mb-6 pb-6 border-b border-gray-100 whitespace-pre-line">{formatAdminTextForDisplay(selectedPaper.abstract)}</p>
+                {formatAdminTextForDisplay(selectedPaper.content)
+                  .split(/\n{2,}/)
+                  .filter(Boolean)
+                  .map((paragraph, i) => (
+                    <p key={i} className="text-gray-600 leading-relaxed mb-4 whitespace-pre-line">{paragraph}</p>
+                  ))}
               </div>
             </div>
             <div className="p-4 border-t border-gray-100 bg-gray-50">

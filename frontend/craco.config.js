@@ -48,6 +48,7 @@ const webpackConfig = {
     },
     configure: (webpackConfig) => {
 
+
       // Add ignored patterns to reduce watched directories
         webpackConfig.watchOptions = {
           ...webpackConfig.watchOptions,

@@ -1,11 +1,24 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, FileText, RefreshCw, ArrowRight, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-const ServiceMenu = () => {
-  const { t } = useLanguage();
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-  const packages = [
+const ServiceMenu = () => {
+  const { language } = useLanguage();
+  const [remotePackages, setRemotePackages] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/services/active`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setRemotePackages(data);
+      })
+      .catch(() => {});
+  }, []);
+
+  const fallbackPackages = [
     {
       id: 'foundation',
       icon: Shield,
@@ -59,6 +72,18 @@ const ServiceMenu = () => {
     }
   ];
 
+  const packages = remotePackages.length > 0
+    ? remotePackages.map((pkg) => ({
+      id: pkg.id,
+      icon: [Shield, FileText, RefreshCw][Math.max(0, (pkg.package_number || 1) - 1)] || Shield,
+      title: language === 'fr' ? (pkg.title_fr || pkg.title_en) : (pkg.title_en || pkg.title_fr),
+      bestFor: language === 'fr' ? (pkg.best_for_fr || pkg.best_for_en) : (pkg.best_for_en || pkg.best_for_fr),
+      deliverables: language === 'fr' ? (pkg.deliverables_fr || pkg.deliverables_en || []) : (pkg.deliverables_en || pkg.deliverables_fr || []),
+      produces: language === 'fr' ? (pkg.produces_fr || pkg.produces_en || []) : (pkg.produces_en || pkg.produces_fr || []),
+      packageNumber: pkg.package_number,
+    }))
+    : fallbackPackages;
+
   const drivers = [
     {
       title: 'Use case portfolio',
@@ -96,12 +121,12 @@ const ServiceMenu = () => {
                       <Icon className="w-6 h-6 text-[#0D0A2E]" />
                     </div>
                     <div>
-                      <p className="text-xs text-[#7b2cbf] font-semibold uppercase tracking-wide mb-1">Package {index + 1}</p>
+                      <p className="text-xs text-[#7b2cbf] font-semibold uppercase tracking-wide mb-1">Package {pkg.packageNumber || index + 1}</p>
                       <h2 className="text-xl font-semibold text-[#0B0F1A]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}>{pkg.title}</h2>
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 mb-6 whitespace-pre-line">
                     <span className="font-semibold text-[#0B0F1A]">Best for</span> {pkg.bestFor}
                   </p>
 
