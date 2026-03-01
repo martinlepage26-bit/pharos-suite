@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, FileText, Presentation, BookOpen, Award, Shield, Scale, Cpu } from 'lucide-react';
+import { formatAdminTextForDisplay } from '../lib/textFormat';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -64,7 +65,7 @@ const Portfolio = () => {
                           {pub.venue && <><span className="text-gray-300">·</span><span className="text-xs text-gray-500">{pub.venue}</span></>}
                         </div>
                         <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{pub.title}</h3>
-                        <p className="text-gray-600 text-sm whitespace-pre-line">{pub.description}</p>
+                        <p className="text-gray-600 text-sm whitespace-pre-line">{formatAdminTextForDisplay(pub.description)}</p>
                       </div>
                       <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] flex-shrink-0" />
                     </div>
@@ -80,7 +81,7 @@ const Portfolio = () => {
                         </div>
                         <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{pub.title}</h3>
                         {pub.venue && <p className="text-gray-500 text-sm mb-1">{pub.venue}</p>}
-                        <p className="text-gray-600 text-sm whitespace-pre-line">{pub.description}</p>
+                        <p className="text-gray-600 text-sm whitespace-pre-line">{formatAdminTextForDisplay(pub.description)}</p>
                       </div>
                       <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] flex-shrink-0" />
                     </div>
@@ -103,7 +104,7 @@ const Portfolio = () => {
                     <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">In development</span>
                   </div>
                   <h3 className="font-semibold text-[#0B0F1A] mb-2">{paper.title}</h3>
-                  <p className="text-gray-600 text-sm whitespace-pre-line">{paper.description}</p>
+                  <p className="text-gray-600 text-sm whitespace-pre-line">{formatAdminTextForDisplay(paper.description)}</p>
                 </div>
               ))}
             </div>

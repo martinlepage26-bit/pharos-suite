@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown } from 'lucide-react';
+import { formatAdminTextForDisplay } from '../lib/textFormat';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
@@ -363,7 +364,7 @@ const Admin = () => {
                         {pub.year && <span className="text-xs text-gray-400">{pub.year}</span>}
                       </div>
                       <h3 className="font-medium text-[#0B0F1A] text-sm truncate">{pub.title}</h3>
-                      {pub.description && <p className="text-gray-500 text-xs mt-1 line-clamp-1 whitespace-pre-line">{pub.description}</p>}
+                      {pub.description && <p className="text-gray-500 text-xs mt-1 line-clamp-1 whitespace-pre-line">{formatAdminTextForDisplay(pub.description)}</p>}
                     </div>
                     <div className="flex gap-1 flex-shrink-0">
                       <button onClick={() => handleEditPub(pub)} className="p-2 hover:bg-[#0D0A2E]/10 rounded-lg transition-colors" data-testid={`edit-pub-${pub.id}`}>
@@ -500,7 +501,7 @@ const Admin = () => {
                               {!item.active && <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">Inactive</span>}
                             </div>
                             <h4 className="font-medium text-[#0B0F1A] text-sm">{item.question}</h4>
-                            <p className="text-gray-500 text-xs mt-1 line-clamp-2 whitespace-pre-line">{item.answer}</p>
+                            <p className="text-gray-500 text-xs mt-1 line-clamp-2 whitespace-pre-line">{formatAdminTextForDisplay(item.answer)}</p>
                           </div>
                           <div className="flex gap-1 flex-shrink-0">
                             <button onClick={() => handleFaqOrderChange(item, 'up')} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
