@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { caseStudies } from '../data/caseStudies';
-import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X, HardHat, ArrowRight, Shield, Server, ShoppingCart, Landmark, DollarSign, Settings } from 'lucide-react';
+import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X, HardHat, Shield, Server, ShoppingCart, Landmark, DollarSign, Settings } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Cases = () => {
@@ -211,3 +211,4 @@ const Cases = () => {
 };
 
 export default Cases;
+

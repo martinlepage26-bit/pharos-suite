@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FileText, BookOpen, Sparkles, Eye, Layers, Lock, AlertCircle } from 'lucide-react';
+import { FileText, BookOpen, Sparkles, Eye, Layers, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const SealedCard = () => {
@@ -151,3 +151,4 @@ const SealedCard = () => {
 };
 
 export default SealedCard;
+

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, FileText, Presentation, BookOpen, Award, Shield, Scale, Cpu } from 'lucide-react';
+import { ExternalLink, FileText, Presentation, BookOpen, Shield, Scale, Cpu } from 'lucide-react';
 import { formatAdminTextForDisplay } from '../lib/textFormat';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -182,3 +182,4 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
