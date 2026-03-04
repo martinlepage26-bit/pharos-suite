@@ -2,6 +2,7 @@ from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import ReturnDocument
 import os
 import logging
 import asyncio
@@ -15,19 +16,25 @@ import resend
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 resend.api_key = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()]
 
 mongo_url = os.environ.get('MONGO_URL')
-if not mongo_url:
-    raise ValueError("MONGO_URL environment variable is required")
 
 client: Optional[AsyncIOMotorClient] = None
 db = None
 
 async def get_database():
     global client, db
+    if not mongo_url:
+        raise RuntimeError("MONGO_URL environment variable is required")
     if client is None:
         client = AsyncIOMotorClient(mongo_url)
         db = client[os.environ.get('DB_NAME', 'ai_governance')]
@@ -245,7 +252,10 @@ async def update_publication(pub_id: str, input: PublicationUpdate):
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields to update")
     result = await database.publications.find_one_and_update(
-        {"id": pub_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+        {"id": pub_id},
+        {"$set": update_data},
+        return_document=ReturnDocument.AFTER,
+        projection={"_id": 0},
     )
     if not result:
         raise HTTPException(status_code=404, detail="Publication not found")
@@ -349,7 +359,10 @@ async def update_booking_status(booking_id: str, input: BookingStatusUpdate):
     if input.status not in ["pending", "confirmed", "cancelled"]:
         raise HTTPException(status_code=400, detail="Invalid status")
     result = await database.bookings.find_one_and_update(
-        {"id": booking_id}, {"$set": {"status": input.status}}, return_document=True, projection={"_id": 0}
+        {"id": booking_id},
+        {"$set": {"status": input.status}},
+        return_document=ReturnDocument.AFTER,
+        projection={"_id": 0},
     )
     if not result:
         raise HTTPException(status_code=404, detail="Booking not found")
@@ -499,7 +512,10 @@ async def update_faq_item(item_id: str, input: FAQItemUpdate):
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields to update")
     result = await database.faq_items.find_one_and_update(
-        {"id": item_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+        {"id": item_id},
+        {"$set": update_data},
+        return_document=ReturnDocument.AFTER,
+        projection={"_id": 0},
     )
     if not result:
         raise HTTPException(status_code=404, detail="FAQ item not found")
@@ -542,7 +558,10 @@ async def update_service_package(package_id: str, input: ServicePackageUpdate):
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields to update")
     result = await database.service_packages.find_one_and_update(
-        {"id": package_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+        {"id": package_id},
+        {"$set": update_data},
+        return_document=ReturnDocument.AFTER,
+        projection={"_id": 0},
     )
     if not result:
         raise HTTPException(status_code=404, detail="Service package not found")
@@ -665,14 +684,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
 @app.on_event("startup")
 async def startup_db_client():
+    if not mongo_url:
+        logger.warning("MONGO_URL not set; database-dependent endpoints will be unavailable until configured")
+        return
+
     await get_database()
     await seed_publications()
     await seed_faq_items()
