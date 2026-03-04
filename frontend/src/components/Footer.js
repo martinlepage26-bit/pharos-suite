@@ -2,62 +2,39 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
 
   return (
-    <footer className="py-6 px-6 md:px-12 bg-white border-t border-[#1a1a1a]/5 relative overflow-hidden" data-testid="footer">
-      {/* Geometric accent - bottom left */}
-      <div className="absolute bottom-0 left-0 w-24 h-24 pointer-events-none">
-        <svg viewBox="0 0 100 100" className="w-full h-full opacity-10">
-          <polygon points="0,100 0,60 40,100" fill="#2D2380" />
-          <polygon points="0,100 0,80 20,100" fill="#7b2cbf" />
-        </svg>
-      </div>
-
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
-        {/* Left: Copyright */}
-        <p 
-          className="text-sm text-[#1a1a1a]/50"
-          style={{fontFamily: "'Lato', sans-serif", fontWeight: 400}}
-        >
-          {t.footer.copyright}
-        </p>
-
-        {/* Center/Right: Contact info with pipes */}
-        <div 
-          className="flex items-center gap-3 text-sm"
-          style={{fontFamily: "'Lato', sans-serif", fontWeight: 400}}
-        >
-          <a 
-            href="mailto:martinlepage.ai@gmail.com" 
-            className="text-[#1a1a1a]/60 hover:text-[#7b2cbf] transition-colors"
+    <footer className="mt-12 border-t border-[#0B0F1A]/10 bg-white" data-testid="footer">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-10">
+        <div className="rounded-2xl bg-gradient-to-r from-[#0D0A2E] via-[#1A1457] to-[#302186] p-6 md:p-8 text-white mb-8">
+          <p
+            className="text-2xl md:text-3xl leading-tight mb-2"
+            style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}
           >
-            {language === 'fr' ? 'Courriel' : 'Email'}
-          </a>
-          <span className="text-[#1a1a1a]/30">|</span>
-          <a 
-            href="https://www.linkedin.com/in/martinlepage/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-[#1a1a1a]/60 hover:text-[#7b2cbf] transition-colors"
+            {language === 'fr' ? 'Besoin d’un cadre gouvernable?' : 'Need a governable AI posture?'}
+          </p>
+          <p className="text-white/80 text-sm mb-4" style={{ fontFamily: "'Lato', sans-serif" }}>
+            {language === 'fr'
+              ? 'Réservez un débrief de 20 minutes pour prioriser vos contrôles.'
+              : 'Book a 20-minute debrief to prioritize controls and evidence.'}
+          </p>
+          <Link
+            to="/connect"
+            className="inline-flex items-center rounded-full bg-white text-[#0D0A2E] px-5 py-2 text-sm font-medium"
+            style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}
           >
-            LinkedIn
-          </a>
-          <span className="text-[#1a1a1a]/30">|</span>
-          <Link 
-            to="/about" 
-            className="text-[#1a1a1a]/60 hover:text-[#7b2cbf] transition-colors"
-          >
-            {language === 'fr' ? 'À propos' : 'About'}
+            {language === 'fr' ? 'Réserver' : 'Book a debrief'}
           </Link>
-          
-          {/* Hidden admin link */}
-          <Link 
-            to="/admin" 
-            className="ml-4 w-1.5 h-1.5 rounded-full bg-[#1a1a1a]/10 hover:bg-[#7b2cbf] transition-colors"
-            title=""
-            data-testid="admin-link"
-          />
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-[#0B0F1A]/70">
+          <p style={{ fontFamily: "'Lato', sans-serif" }}>© 2026 Martin Lepage PhD · Govern AI</p>
+          <div className="flex items-center gap-4" style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
+            <a href="mailto:consult@govern-ai.ca" className="hover:text-[#0D0A2E]">consult@govern-ai.ca</a>
+            <a href="https://www.linkedin.com/in/martinlepage/" target="_blank" rel="noreferrer" className="hover:text-[#0D0A2E]">LinkedIn</a>
+            <Link to="/about" className="hover:text-[#0D0A2E]">{language === 'fr' ? 'À propos' : 'About'}</Link>
+          </div>
         </div>
       </div>
     </footer>

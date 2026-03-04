@@ -159,8 +159,8 @@ const About = () => {
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
                 {language === 'fr' 
-                  ? "Je ne suis pas seulement un 'philosophe de l'IA' : je suis quelqu'un qui peut auditer, structurer, documenter, rendre lisible. Je comprends la documentation, la preuve, la conformité. Je comprends la légitimité, la responsabilité, la perception publique. Je comprends la politique du regard : qui peut inspecter, qui peut décider, qui peut rendre des comptes."
-                  : "I'm not just an 'AI philosopher': I'm someone who can audit, structure, document, make legible. I understand documentation, evidence, compliance. I understand legitimacy, accountability, public perception. I understand the politics of visibility: who can inspect, who can decide, who is answerable."}
+                  ? "Je ne suis pas seulement un 'philosophe de l'IA' : je suis quelqu'un qui peut auditer, structurer, documenter, rendre lisible. Je comprends la documentation, la preuve, la conformité. Je comprends la légitimité, la responsabilité, la perception publique. Je comprends la Politque de la Visibilité : qui peut inspecter, qui peut décider, qui peut rendre des comptes."
+                  : "I'm not just an 'AI philosopher': I'm someone who can audit, structure, document, make legible. I understand documentation, evidence, compliance. I understand legitimacy, accountability, public perception. I understand the Politics of Visibility: who can inspect, who can decide, who is answerable."}
               </p>
             </div>
           </div>
