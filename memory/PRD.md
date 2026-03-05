@@ -20,14 +20,22 @@
 ## Implemented Features (MVP - March 2026)
 
 ### Landing Page
-- [x] **Homepage** - Hero, value proposition, services preview, updated agentic governance section
+- [x] **Homepage** - Hero with lavender translucent circle behind logo, royal blue accents
 - [x] **About** - Full bio with professional copy, connect sidebar, frameworks links
-- [x] **Services** - 8 services grid + AurorAI/CompassAI detail sections with "Try CompassAI" CTA
+- [x] **Services** - 8 services grid + AurorAI/CompassAI detail sections
 - [x] **Portfolio** - 5 real case studies (LLM Governance, Clinical Trials, Procurement, Underwriting, Incident Response)
 - [x] **Publications** - Research papers/articles with LinkedIn links
 - [x] **Assessment Tool** - 8-question AI governance assessment with GPT-powered analysis
 - [x] **Contact** - Email form (Resend) + Calendly booking widget
-- [x] **Governance Maturity Indicator** - Live stats widget showing controls, policies, risk tiers, schemas
+
+### Authentication System (NEW)
+- [x] **Google OAuth** - Via Emergent Auth, professional single-sign-on
+- [x] **Admin Role** - martinlepage.ai@gmail.com has full access
+- [x] **Client Role** - Requires approval to access CompassAI
+- [x] **Request Access Page** - Public form for clients to request access
+- [x] **Admin Dashboard** - Approve/reject access requests, manage users
+- [x] **Protected Routes** - AurorAI/CompassAI behind authentication
+- [x] **Session Management** - 7-day sessions with secure cookies
 
 ### CompassAI Governance Engine
 - [x] **Dashboard** - Stats overview (use cases, tiers, approvals, controls, policies)
