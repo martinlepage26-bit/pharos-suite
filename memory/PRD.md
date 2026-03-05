@@ -4,11 +4,13 @@
 **Client:** Martin Lepage, PhD  
 **Domain:** AI Governance Consulting  
 **Created:** March 2026
+**Last Updated:** March 2026
 
 ## Brand Identity
 - **Mission:** AI governance as decision machinery, not observability theater
 - **Visual Style:** Light/airy base with dark purple (#581C87), navy (#0F172A), black accents
 - **Typography:** Chivo (headings), Inter (body), JetBrains Mono (data)
+- **Logos:** ML monogram (nav), Needle/Compass (hero, with transparent bg)
 
 ## Core User Personas
 1. **CTOs/Tech Leaders** - Need defensible AI systems before shipping
@@ -17,7 +19,7 @@
 
 ## Implemented Features (MVP - March 2026)
 
-### Pages
+### Landing Page
 - [x] **Homepage** - Hero, value proposition, services preview, agentic governance section
 - [x] **Services** - AurorAI (shipping governance) & CompassAI (agentic governance) 
 - [x] **Portfolio** - Mock case studies (Financial Services, Healthcare, E-commerce)
@@ -25,42 +27,49 @@
 - [x] **Assessment Tool** - 8-question AI governance assessment with GPT-powered analysis
 - [x] **Contact** - Email form (Resend) + Calendly booking widget
 
+### CompassAI Governance Engine (NEW)
+- [x] **Dashboard** - Stats overview (use cases, tiers, approvals, controls, policies)
+- [x] **Use Case Registry** - CRUD with status tracking (draft → approved)
+- [x] **Risk Engine** - T0-T3 tier calculation based on data sensitivity, automation level, regulated domain
+- [x] **Control Catalog** - 12 pre-defined controls (RBAC, Audit Trail, HITL, PII Masking, etc.)
+- [x] **Policy Engine** - 3 declarative policies for PII/regulated/automated systems
+- [x] **Deliverable Generator** - System Cards, Risk Assessments auto-generated
+- [x] **Audit Export** - JSON bundle with evidence index, decisions, signatures
+
 ### Integrations
 - [x] **Resend** - Contact form emails to martinlepage.ai@gmail.com
 - [x] **Calendly** - Embedded booking (martinlepage-ai)
 - [x] **OpenAI (GPT-5.2)** - AI analysis for assessment results via Emergent LLM key
-- [x] **MongoDB** - Contact submissions, assessments stored
-
-### Design
-- [x] Glassmorphism navigation
-- [x] Grid pattern backgrounds
-- [x] Framer Motion animations
-- [x] Sharp/industrial button styles
-- [x] User's logos integrated (needle compass, ML monogram)
+- [x] **MongoDB** - Contact submissions, assessments, CompassAI data stored
 
 ## Technical Stack
 - **Frontend:** React 19, Tailwind CSS, Framer Motion, react-calendly
 - **Backend:** FastAPI, MongoDB, emergentintegrations
 - **APIs:** Resend, Calendly embed, OpenAI via Emergent
 
-## P1 Backlog (Future Iterations)
+## P1 Backlog (Next)
+- [ ] **AurorAI Integration** - Pull in AurorAI execution engine
 - [ ] Admin dashboard for managing publications/case studies
-- [ ] Blog post creation with LinkedIn auto-scheduling
-- [ ] More detailed assessment with PDF report generation
-- [ ] Testimonials section
-- [ ] More case studies
+- [ ] Evidence ingestion API for AurorAI → CompassAI flow
+- [ ] Approval workflow with digital signatures
+- [ ] Monitoring engine for drift/violations
 
 ## P2 Backlog
 - [ ] Dark mode toggle
 - [ ] Multi-language support (EN/FR)
-- [ ] Newsletter signup
-- [ ] Analytics integration
+- [ ] Jira/ServiceNow integration for gap tickets
+- [ ] Executive dashboards
 
-## Environment Variables
+## CompassAI API Reference
 ```
-RESEND_API_KEY=re_M76tATnr_...
-SENDER_EMAIL=Consult@govern-ai.ca
-EMERGENT_LLM_KEY=sk-emergent-...
+POST /api/compass/usecases - Create use case
+GET  /api/compass/usecases - List use cases
+GET  /api/compass/usecases/{id} - Get use case
+POST /api/compass/risk/assess?usecase_id={id} - Run risk assessment
+POST /api/compass/deliverables/generate/{id} - Generate deliverables
+GET  /api/compass/audit/export/{id} - Export audit bundle
+GET  /api/compass/controls - List controls
+GET  /api/compass/policies - List policies
 ```
 
 ## URLs
