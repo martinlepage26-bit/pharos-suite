@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { X, ArrowRight, ClipboardList, Radar, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import lighthouseMark from '../assets/logos/governance-lighthouse-simplified.svg';
 
 const Tool = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [step, setStep] = useState(1);
   const [selectedSector, setSelectedSector] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -26,33 +27,109 @@ const Tool = () => {
     [{ value: 'none', label: t.tool.answers.no, score: 0 }, { value: 'partial', label: t.tool.answers.outdated, score: 1 }, { value: 'complete', label: t.tool.answers.current, score: 2 }]
   ];
 
-  const READINESS_QUESTIONS = questionKeys.map((key, i) => ({
+  const readinessQuestions = questionKeys.map((key, i) => ({
     id: key,
     question: t.tool.questions[key],
     options: questionOptions[i]
   }));
 
+  const copy = language === 'fr'
+    ? {
+        eyebrow: 'Outil',
+        title: 'Un instantane rapide pour voir ou la gouvernance tient, et ou elle reste encore fragile.',
+        body: 'Choisissez l environnement le plus proche de votre travail, repondez a huit questions, et obtenez une lecture rapide des zones ou les controles, la preuve et les droits de decision sont encore trop minces.',
+        noteLabel: 'Ce que fait l outil',
+        noteTitle: 'Reperer la couche manquante avant que la revue ne la force.',
+        noteBody: 'Cet outil ne remplace pas un audit ni une certification. Il sert a calibrer si l inventaire, la priorisation, les controles, la preuve et la cadence sont deja en place.',
+        noteCards: [
+          {
+            icon: ClipboardList,
+            title: 'Inventaire',
+            description: 'Voir si les usages et dependances sont clairement nommes.'
+          },
+          {
+            icon: Radar,
+            title: 'Controle',
+            description: 'Voir si la logique de revue et d escalation est definie.'
+          },
+          {
+            icon: ShieldCheck,
+            title: 'Preuve',
+            description: 'Voir si la documentation existe deja dans une forme lisible.'
+          }
+        ],
+        runLabel: 'Evaluation',
+        runTitle: 'Faire l instantane de preparation',
+        runBody: 'Le resultat n est pas un verdict final. C est un signal sur l endroit ou le travail doit commencer.',
+        sectorPrompt: 'Choisissez l environnement le plus proche de votre travail',
+        questionPrompt: 'Repondez selon l etat actuel, pas selon le modele ideal',
+        reset: 'Recommencer',
+        discuss: 'Discuter du resultat',
+        services: 'Voir les services'
+      }
+    : {
+        eyebrow: 'Tool',
+        title: 'A quick snapshot of governance strength and thin spots',
+        body: 'Choose the closest environment, answer eight questions, and get a fast signal on where governance still needs structure.',
+        noteLabel: 'What the tool does',
+        noteTitle: 'Locate the missing layer before review forces it.',
+        noteBody: 'This is not a certification or an audit. It is a short calibration to see whether inventory, tiering, controls, evidence, and cadence are already in place.',
+        noteCards: [
+          {
+            icon: ClipboardList,
+            title: 'Inventory',
+            description: 'Check whether systems, uses, and dependencies are clearly named.'
+          },
+          {
+            icon: Radar,
+            title: 'Control',
+            description: 'Check whether review logic and escalation paths are defined.'
+          },
+          {
+            icon: ShieldCheck,
+            title: 'Evidence',
+            description: 'Check whether documentation already exists in a legible form.'
+          }
+        ],
+        runLabel: 'Assessment',
+        runTitle: 'Run the readiness snapshot',
+        runBody: 'The result is not a final judgment. It is a signal about where the work likely needs to begin.',
+        sectorPrompt: 'Choose the environment closest to your work',
+        questionPrompt: 'Answer for the current state, not the ideal one',
+        reset: 'Start over',
+        discuss: 'Discuss the result',
+        services: 'View services'
+      };
+
   const handleSectorSelect = (sectorId) => setSelectedSector(sectorId);
-  const handleAnswer = (questionId, value, score) => setAnswers(prev => ({ ...prev, [questionId]: { value, score } }));
+  const handleAnswer = (questionId, value, score) => setAnswers((prev) => ({ ...prev, [questionId]: { value, score } }));
 
   const handleNext = () => {
-    if (step === 1 && selectedSector) { setStep(2); setCurrentQuestion(0); }
-    else if (step === 2) {
-      if (currentQuestion < READINESS_QUESTIONS.length - 1) setCurrentQuestion(prev => prev + 1);
+    if (step === 1 && selectedSector) {
+      setStep(2);
+      setCurrentQuestion(0);
+    } else if (step === 2) {
+      if (currentQuestion < readinessQuestions.length - 1) setCurrentQuestion((prev) => prev + 1);
       else setDrawerOpen(true);
     }
   };
 
   const handleBack = () => {
-    if (step === 2 && currentQuestion > 0) setCurrentQuestion(prev => prev - 1);
+    if (step === 2 && currentQuestion > 0) setCurrentQuestion((prev) => prev - 1);
     else if (step === 2 && currentQuestion === 0) setStep(1);
   };
 
-  const handleReset = () => { setStep(1); setSelectedSector(null); setAnswers({}); setCurrentQuestion(0); setDrawerOpen(false); };
+  const handleReset = () => {
+    setStep(1);
+    setSelectedSector(null);
+    setAnswers({});
+    setCurrentQuestion(0);
+    setDrawerOpen(false);
+  };
 
   const calculateScore = () => {
-    const totalPossible = READINESS_QUESTIONS.length * 2;
-    const actualScore = Object.values(answers).reduce((sum, a) => sum + a.score, 0);
+    const totalPossible = readinessQuestions.length * 2;
+    const actualScore = Object.values(answers).reduce((sum, answer) => sum + answer.score, 0);
     return { score: actualScore, total: totalPossible, percentage: Math.round((actualScore / totalPossible) * 100) };
   };
 
@@ -69,169 +146,323 @@ const Tool = () => {
     return t.tool.results.nextSteps.low;
   };
 
-  const currentQ = READINESS_QUESTIONS[currentQuestion];
-  const canProceed = step === 1 ? selectedSector : answers[currentQ?.id];
-  const isLastQuestion = currentQuestion === READINESS_QUESTIONS.length - 1;
+  const currentQuestionData = readinessQuestions[currentQuestion];
+  const canProceed = step === 1 ? selectedSector : answers[currentQuestionData?.id];
+  const isLastQuestion = currentQuestion === readinessQuestions.length - 1;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F6F7FB] via-[#F6F7FB] to-[#0D0A2E]/5 py-12 px-6" data-testid="tool-page">
-      <div className="max-w-[1100px] mx-auto mb-6">
-        <h1 className="page-title mb-0">{t.tool.title}</h1>
-        <p className="text-lg text-[#0B0F1A]/50 mb-2" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}>{t.tool.subtitle}</p>
-        <p className="text-gray-600 max-w-2xl">{t.tool.description}</p>
-        <div className="flex gap-3 mt-4 text-xs tracking-wider uppercase text-[#7b2cbf]">
-          <span className={step >= 1 ? 'font-semibold' : 'opacity-50'}>{t.tool.steps.sector}</span>
-          <span className="opacity-50">·</span>
-          <span className={step >= 2 ? 'font-semibold' : 'opacity-50'}>{t.tool.steps.readiness}</span>
-          <span className="opacity-50">·</span>
-          <span className={drawerOpen ? 'font-semibold' : 'opacity-50'}>{t.tool.steps.results}</span>
-        </div>
-      </div>
+    <div className="min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="tool-page">
+      <div className="mx-auto max-w-[1240px]">
+        <section className="brand-panel-dark brand-top-rule relative mb-8 overflow-hidden rounded-[34px] px-6 py-8 text-white md:px-8 md:py-10">
+          <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />
+          <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
+          <div className="relative grid gap-8 lg:grid-cols-[1fr_0.96fr] lg:items-start">
+            <div>
+              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                {copy.eyebrow}
+              </p>
+              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                {copy.title}
+              </h1>
+              <p className="mt-4 max-w-[56ch] text-[14px] leading-[1.7] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif" }}>
+                {copy.body}
+              </p>
+            </div>
 
-      <div className="flex justify-center py-2">
-        <div className="w-[min(680px,96vw)] relative">
-          <div className="relative bg-gradient-to-br from-white/95 via-white/90 to-[#0D0A2E]/3 border border-gray-200/60 rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] p-5 overflow-visible">
-            <div className="absolute inset-0 rounded-2xl border border-[#1a1555]/5 bg-[#2D2380]/3 -z-10 translate-x-2 translate-y-2.5 shadow-[0_3px_12px_rgba(11,15,26,0.04)]" />
-
-            {step === 1 && (
-              <div data-testid="step-1-sector">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-bold text-sm">1</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
+            <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-[18px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
+                  <img src={lighthouseMark} alt="Govern AI lighthouse mark" className="h-10 w-10" />
                 </div>
-                <p className="text-gray-600 text-sm mb-4">{t.tool.step1.description}</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {sectorKeys.map((key, i) => (
-                    <button key={key} onClick={() => handleSectorSelect(sectorIds[i])} data-testid={`sector-${sectorIds[i]}`}
-                      className={`w-full text-left px-4 py-2.5 rounded-xl border transition-all duration-150 shadow-[0_1px_4px_rgba(11,15,26,0.04)] hover:translate-y-[-1px] hover:shadow-[0_2px_6px_rgba(11,15,26,0.06)] ${
-                        selectedSector === sectorIds[i] ? 'border-[#0D0A2E]/55 shadow-[0_2px_8px_rgba(75,42,191,0.12)] bg-gradient-to-r from-[#0D0A2E]/8 to-[#2D2380]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#0D0A2E]/25'
-                      }`}
-                    >
-                      <h3 className="font-semibold text-[#0B0F1A] text-sm">{t.tool.sectors[key].title}</h3>
-                      <p className="text-[#0B0F1A]/60 text-xs whitespace-nowrap overflow-hidden text-ellipsis">{t.tool.sectors[key].description}</p>
-                    </button>
-                  ))}
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                    {copy.noteLabel}
+                  </p>
+                  <p className="mt-1 text-sm" style={{ fontFamily: "'Lato', sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
+                    {copy.noteTitle}
+                  </p>
                 </div>
               </div>
-            )}
+              <p className="mt-4 text-sm leading-[1.76] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+                {copy.noteBody}
+              </p>
+            </div>
+          </div>
+        </section>
 
-            {step === 2 && (
-              <div data-testid="step-2-readiness">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-bold text-sm">2</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">
-                    {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {READINESS_QUESTIONS.length}
-                  </h2>
+        <section className="mb-8">
+          <div className="mb-5 max-w-[860px]">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              {copy.runLabel}
+            </p>
+            <h2 className="mt-2 max-w-[15ch] text-[27px] leading-[1.06] text-[#10162A] md:max-w-none md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+              {copy.runTitle}
+            </h2>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+              {copy.runBody}
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {copy.noteCards.map((card) => (
+              <article key={card.title} className="rounded-[24px] border border-[#D6CCBB] bg-[#FBF7EF]/92 p-5 shadow-[0_12px_24px_rgba(8,20,40,0.05)]">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl border border-[#B89B5E]/16 bg-[#F2E8D8]">
+                  <card.icon className="h-5 w-5 text-[#13254C]" />
                 </div>
-                <p className="text-[#0B0F1A]/90 font-medium mb-4" data-testid={`question-${currentQ.id}`}>{currentQ.question}</p>
-                <div className="grid grid-cols-3 gap-3">
-                  {currentQ.options.map((option, idx) => {
-                    const isSelected = answers[currentQ.id]?.value === option.value;
-                    const bgColors = [
-                      'bg-[#0D0A2E]/10 border-[#0D0A2E]/30', // No - navy
-                      'bg-[#2D2380]/10 border-[#2D2380]/30', // Partial - indigo
-                      'bg-[#7b2cbf]/10 border-[#7b2cbf]/30'  // Yes - purple
-                    ];
-                    const selectedColors = [
-                      'bg-[#0D0A2E]/25 border-[#0D0A2E] text-[#0D0A2E]',
-                      'bg-[#2D2380]/25 border-[#2D2380] text-[#2D2380]',
-                      'bg-[#7b2cbf]/25 border-[#7b2cbf] text-[#7b2cbf]'
-                    ];
-                    return (
-                      <button key={option.value} onClick={() => handleAnswer(currentQ.id, option.value, option.score)}
-                        className={`rounded-xl border-2 py-3 px-3 font-semibold text-sm transition-all duration-150 hover:translate-y-[-1px] ${
-                          isSelected ? selectedColors[idx] : `${bgColors[idx]} text-[#0B0F1A]/70 hover:opacity-80`
+                <h3 className="text-[23px] leading-[1.08] text-[#10162A] md:text-[24px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                  {card.title}
+                </h3>
+                <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+                  {card.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="brand-panel rounded-[32px] px-6 py-7 md:px-8 md:py-8">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                {step === 1 ? copy.sectorPrompt : copy.questionPrompt}
+              </p>
+              <div className="mt-3 flex gap-3 text-[11px] uppercase tracking-[0.18em]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                <span className={step >= 1 ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.sector}</span>
+                <span className="text-[#6F5626]">/</span>
+                <span className={step >= 2 ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.readiness}</span>
+                <span className="text-[#6F5626]">/</span>
+                <span className={drawerOpen ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.results}</span>
+              </div>
+            </div>
+            <button
+              onClick={handleReset}
+              className="rounded-full border border-[#D6CCBB] bg-white px-4 py-2 text-sm text-[#13254C] transition-colors hover:border-[#B89B5E]/34"
+              style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+              data-testid="reset-btn"
+            >
+              {copy.reset}
+            </button>
+          </div>
+
+          {step === 1 && (
+            <div data-testid="step-1-sector">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {sectorKeys.map((key, i) => (
+                  <button
+                    key={key}
+                    onClick={() => handleSectorSelect(sectorIds[i])}
+                    data-testid={`sector-${sectorIds[i]}`}
+                    className={`rounded-[22px] border p-4 text-left transition-colors ${
+                      selectedSector === sectorIds[i]
+                        ? 'border-[#13254C] bg-[#F2E8D8] shadow-[0_12px_24px_rgba(8,20,40,0.08)]'
+                        : 'border-[#D6CCBB] bg-[#FFFDF8] hover:border-[#B89B5E]/34'
+                    }`}
+                  >
+                    <h3 className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                      {t.tool.sectors[key].title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-[1.65] text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                      {t.tool.sectors[key].description}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div data-testid="step-2-readiness">
+              <div className="rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <h3 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                    {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {readinessQuestions.length}
+                  </h3>
+                  <div className="flex gap-1.5">
+                    {readinessQuestions.map((question, index) => (
+                      <div
+                        key={question.id}
+                        className={`h-2 w-2 rounded-full ${
+                          index === currentQuestion ? 'bg-[#13254C]' : answers[question.id] ? 'bg-[#B89B5E]' : 'bg-[#D6CCBB]'
                         }`}
-                      >{option.label}</button>
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <p className="text-[18px] leading-[1.6] text-[#10162A]" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 600 }} data-testid={`question-${currentQuestionData.id}`}>
+                  {currentQuestionData.question}
+                </p>
+
+                <div className="mt-5 grid gap-3 md:grid-cols-3">
+                  {currentQuestionData.options.map((option) => {
+                    const isSelected = answers[currentQuestionData.id]?.value === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        onClick={() => handleAnswer(currentQuestionData.id, option.value, option.score)}
+                        className={`rounded-[18px] border px-4 py-4 text-sm transition-colors ${
+                          isSelected
+                            ? 'border-[#13254C] bg-[#F2E8D8] text-[#13254C]'
+                            : 'border-[#D6CCBB] bg-[#FBF7EF] text-[#20314F] hover:border-[#B89B5E]/34'
+                        }`}
+                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                      >
+                        {option.label}
+                      </button>
                     );
                   })}
                 </div>
-                <div className="flex justify-center gap-1.5 mt-4">
-                  {READINESS_QUESTIONS.map((_, i) => (
-                    <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === currentQuestion ? 'bg-[#0D0A2E]' : answers[READINESS_QUESTIONS[i].id] ? 'bg-[#0D0A2E]/40' : 'bg-gray-300'}`} />
-                  ))}
-                </div>
               </div>
+            </div>
+          )}
+
+          <div className="mt-6 flex items-center gap-3 border-t border-[#E6DDCD] pt-5">
+            {(step > 1 || (step === 2 && currentQuestion > 0)) && (
+              <button
+                onClick={handleBack}
+                className="text-sm text-[#20314F] transition-colors hover:text-[#13254C]"
+                style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                data-testid="back-btn"
+              >
+                {t.tool.buttons.back}
+              </button>
             )}
 
-            <div className="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
-              {(step > 1 || (step === 2 && currentQuestion > 0)) && (
-                <button onClick={handleBack} className="text-gray-600 hover:text-[#0D0A2E] font-medium text-sm" data-testid="back-btn">{t.tool.buttons.back}</button>
-              )}
-              <button onClick={handleReset} className="text-gray-500 hover:text-gray-700 text-sm" data-testid="reset-btn">{t.tool.buttons.reset}</button>
-              <button onClick={handleNext} disabled={!canProceed} data-testid="next-btn"
-                className={`ml-auto px-5 py-2 rounded-full font-semibold text-sm transition-all ${canProceed ? 'bg-[#0D0A2E] text-white hover:bg-[#3A1FA0]' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
-              >
-                {isLastQuestion && step === 2 ? t.tool.buttons.seeResults : t.tool.buttons.next}
-              </button>
-            </div>
+            <button
+              onClick={handleNext}
+              disabled={!canProceed}
+              data-testid="next-btn"
+              className={`ml-auto inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm transition-colors ${
+                canProceed
+                  ? 'bg-[#13254C] text-[#F6F0E4] hover:bg-[#0F1D37]'
+                  : 'bg-[#E8E1D3] text-[#8E8A80] cursor-not-allowed'
+              }`}
+              style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+            >
+              {isLastQuestion && step === 2 ? t.tool.buttons.seeResults : t.tool.buttons.next}
+              {canProceed && <ArrowRight className="h-4 w-4" />}
+            </button>
           </div>
-        </div>
+        </section>
       </div>
 
       {drawerOpen && (
         <>
-          <div className="fixed inset-0 bg-[#0B0F1A]/35 z-[4000]" onClick={() => setDrawerOpen(false)} data-testid="drawer-backdrop" />
-          <div className="fixed top-0 right-0 h-screen w-[min(440px,92vw)] bg-white/95 border-l border-gray-200/60 shadow-[0_4px_24px_rgba(11,15,26,0.10)] z-[4500] flex flex-col" data-testid="results-drawer">
-            <div className="flex items-start justify-between gap-3 p-4 border-b border-gray-100">
-              <div>
-                <p className="text-xs tracking-widest uppercase text-[#0D0A2E]">{t.tool.steps.results}</p>
-                <h3 className="font-serif text-xl font-semibold text-[#0B0F1A]/95 mt-1">{t.tool.results.title}</h3>
+          <div className="fixed inset-0 z-[4000] bg-[#081428]/40 backdrop-blur-sm" onClick={() => setDrawerOpen(false)} data-testid="drawer-backdrop" />
+          <div className="fixed right-0 top-0 z-[4500] flex h-screen w-full flex-col overflow-hidden border-l border-[#D6CCBB] bg-[#FFFDF8] shadow-2xl md:w-[520px]" data-testid="results-drawer">
+            <div className="border-b border-[#E7DECE] bg-[#0F1D37] p-6 text-white">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                    {t.tool.steps.results}
+                  </p>
+                  <h3 className="mt-2 text-[30px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                    {t.tool.results.title}
+                  </h3>
+                </div>
+                <button onClick={() => setDrawerOpen(false)} className="rounded-full border border-white/14 bg-white/8 p-2 transition-colors hover:bg-white/12" data-testid="close-drawer-btn">
+                  <X className="h-5 w-5 text-white/84" />
+                </button>
               </div>
-              <button onClick={() => setDrawerOpen(false)} className="p-1 hover:bg-gray-100 rounded-full" data-testid="close-drawer-btn">
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
             </div>
-            <div className="p-4 overflow-auto flex-1">
+
+            <div className="flex-1 overflow-auto p-6">
               {(() => {
                 const { score, total, percentage } = calculateScore();
                 const { risk, recommendation } = getReadinessLevel(percentage);
                 const sectorIdx = sectorIds.indexOf(selectedSector);
                 const sectorTitle = sectorIdx >= 0 ? t.tool.sectors[sectorKeys[sectorIdx]].title : '';
                 const nextSteps = getNextSteps(percentage);
+                const tone = percentage >= 70 ? '#7BAE7F' : percentage >= 40 ? '#C7A75B' : '#C77767';
+
                 return (
                   <>
-                    <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
-                      <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_3px_10px_rgba(75,42,191,0.10)]"
-                        style={{ background: `conic-gradient(${percentage >= 70 ? '#7CB97C' : percentage >= 40 ? '#E6C860' : '#E07A7A'} ${percentage * 3.6}deg, rgba(11,15,26,0.06) ${percentage * 3.6}deg 360deg)` }}>
-                        <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0B0F1A]/90">{percentage}%</div>
-                      </div>
-                      <div>
-                        <p className="text-xs tracking-wider uppercase text-gray-500 font-bold mb-1">{sectorTitle}</p>
-                        <p className={`font-serif font-bold text-xl mb-1 ${percentage >= 70 ? 'text-[#7CB97C]' : percentage >= 40 ? 'text-[#C9A227]' : 'text-[#C94A4A]'}`}>{risk}</p>
-                        <p className="text-[#0B0F1A]/75 text-sm leading-snug">{recommendation}</p>
+                    <div className="rounded-[26px] border border-[#D6CCBB] bg-[#FBF7EF] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                      <div className="grid grid-cols-[112px_1fr] gap-4 items-center">
+                        <div
+                          className="grid h-[112px] w-[112px] place-items-center rounded-full"
+                          style={{ background: `conic-gradient(${tone} ${percentage * 3.6}deg, rgba(8,20,40,0.08) ${percentage * 3.6}deg 360deg)` }}
+                        >
+                          <div className="grid h-[82px] w-[82px] place-items-center rounded-full border border-[#D6CCBB] bg-white text-[24px] text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 700 }}>
+                            {percentage}%
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                            {sectorTitle}
+                          </p>
+                          <p className="mt-2 text-[28px]" style={{ color: tone, fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                            {risk}
+                          </p>
+                          <p className="mt-2 text-sm leading-[1.75] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+                            {recommendation}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <div className="mt-3 p-3 border border-gray-200/60 rounded-2xl bg-white/90">
-                      <h4 className="font-bold text-[#0B0F1A]/90 mb-2">{t.tool.results.scoreBreakdown}</h4>
-                      <div className="space-y-2">
-                        {READINESS_QUESTIONS.map((q) => {
-                          const answer = answers[q.id];
+
+                    <div className="mt-4 rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                        {t.tool.results.scoreBreakdown}
+                      </h4>
+                      <div className="mt-4 space-y-3">
+                        {readinessQuestions.map((question) => {
+                          const answer = answers[question.id];
                           return (
-                            <div key={q.id} className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600 truncate mr-2" title={q.question}>{q.question.slice(0, 35)}...</span>
-                              <span className={`font-bold px-2 py-0.5 rounded-full text-xs ${answer?.score === 2 ? 'bg-green-100 text-green-700' : answer?.score === 1 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>
+                            <div key={question.id} className="flex items-center justify-between gap-3 text-sm">
+                              <span className="min-w-0 flex-1 text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }} title={question.question}>
+                                {question.question}
+                              </span>
+                              <span
+                                className="rounded-full px-2.5 py-1 text-xs"
+                                style={{
+                                  fontFamily: "'IBM Plex Sans', sans-serif",
+                                  fontWeight: 700,
+                                  backgroundColor: answer?.score === 2 ? '#E7F2E8' : answer?.score === 1 ? '#F4ECD8' : '#F3E0DA',
+                                  color: answer?.score === 2 ? '#335D3B' : answer?.score === 1 ? '#7D6230' : '#8A413A'
+                                }}
+                              >
                                 {answer?.score || 0}/2
                               </span>
                             </div>
                           );
                         })}
                       </div>
-                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 font-bold">
+                      <div className="mt-4 flex items-center justify-between border-t border-[#E6DDCD] pt-4 text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
                         <span>{t.tool.results.total}</span>
-                        <span className="text-[#0D0A2E]">{score}/{total}</span>
+                        <span>{score}/{total}</span>
                       </div>
                     </div>
-                    <div className="mt-3 p-3 border border-gray-200/60 rounded-2xl bg-white/90">
-                      <h4 className="font-bold text-[#0B0F1A]/90 mb-2">{t.tool.results.recommendedSteps}</h4>
-                      <ul className="text-[#0B0F1A]/75 text-sm space-y-1.5 pl-4 list-disc">
-                        {nextSteps.map((s, i) => <li key={i}>{s}</li>)}
+
+                    <div className="mt-4 rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                        {t.tool.results.recommendedSteps}
+                      </h4>
+                      <ul className="mt-4 space-y-3">
+                        {nextSteps.map((stepItem, index) => (
+                          <li key={index} className="flex items-start gap-2 text-sm leading-[1.72] text-[#20314F]/74" style={{ fontFamily: "'Lato', sans-serif" }}>
+                            <ArrowRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#13254C]" />
+                            <span>{stepItem}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      <Link to="/connect" className="btn-primary text-sm" data-testid="book-debrief-btn">{t.tool.results.bookDebrief}</Link>
-                      <Link to="/services" className="btn-ghost text-sm">{t.tool.results.viewServices}</Link>
-                      <button onClick={handleReset} className="text-gray-500 hover:text-[#0D0A2E] text-sm ml-auto">{t.tool.results.retake}</button>
+
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <Link to="/connect" className="brand-button-primary" data-testid="book-debrief-btn">
+                        {copy.discuss}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                      <Link to="/services" className="brand-button-secondary">
+                        {copy.services}
+                      </Link>
+                      <button
+                        onClick={handleReset}
+                        className="ml-auto text-sm text-[#20314F] transition-colors hover:text-[#13254C]"
+                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                      >
+                        {t.tool.results.retake}
+                      </button>
                     </div>
                   </>
                 );

@@ -5,15 +5,21 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import asyncio
+import shutil
+import json
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 import uuid
 from datetime import datetime, timezone
+from urllib import request as urllib_request
+from urllib.error import HTTPError, URLError
 import resend
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+FRONTEND_DIR = ROOT_DIR.parent / "frontend"
+COMPASSAI_ENV_FILE = ROOT_DIR.parent.parent / "CompassAI" / "backend" / ".env"
 
 resend.api_key = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
@@ -32,6 +38,64 @@ async def get_database():
         client = AsyncIOMotorClient(mongo_url)
         db = client[os.environ.get('DB_NAME', 'ai_governance')]
     return db
+
+
+def load_env_value(path: Path, key: str) -> str:
+    if not path.exists():
+        return ""
+
+    with open(path, "r", encoding="utf-8") as handle:
+        for raw_line in handle:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            current_key, value = line.split("=", 1)
+            if current_key == key:
+                return value.strip().strip('"').strip("'")
+
+    return ""
+
+
+async def probe_http(url: str, timeout: int = 4) -> Dict[str, Any]:
+    def _probe() -> Dict[str, Any]:
+        try:
+            with urllib_request.urlopen(url, timeout=timeout) as response:
+                raw_body = response.read().decode("utf-8")
+                body: Any
+                try:
+                    body = json.loads(raw_body) if raw_body else None
+                except json.JSONDecodeError:
+                    body = raw_body[:200]
+                return {
+                    "healthy": 200 <= response.getcode() < 400,
+                    "status_code": response.getcode(),
+                    "body": body,
+                    "detail": "ok",
+                }
+        except HTTPError as exc:
+            raw_body = exc.read().decode("utf-8")
+            return {
+                "healthy": False,
+                "status_code": exc.code,
+                "body": raw_body[:200],
+                "detail": f"http_error:{exc.code}",
+            }
+        except URLError as exc:
+            return {
+                "healthy": False,
+                "status_code": None,
+                "body": None,
+                "detail": str(exc.reason),
+            }
+        except Exception as exc:  # pragma: no cover - defensive status reporting
+            return {
+                "healthy": False,
+                "status_code": None,
+                "body": None,
+                "detail": str(exc),
+            }
+
+    return await asyncio.to_thread(_probe)
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -221,6 +285,77 @@ async def get_status_checks():
         if isinstance(check['timestamp'], str):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     return status_checks
+
+
+@api_router.get("/admin/platform-status")
+async def get_platform_status():
+    compassai_emergent_key = load_env_value(COMPASSAI_ENV_FILE, "EMERGENT_LLM_KEY")
+    compassai_resend_key = load_env_value(COMPASSAI_ENV_FILE, "RESEND_API_KEY")
+
+    govern_ai_probe, compassai_probe, aurorai_probe = await asyncio.gather(
+        probe_http("http://127.0.0.1:9202/health"),
+        probe_http("http://127.0.0.1:9205/api/"),
+        probe_http("http://127.0.0.1:9206/api/categories"),
+    )
+
+    frontend_cf_config = FRONTEND_DIR / "wrangler.jsonc"
+    frontend_cf_redirects = FRONTEND_DIR / "public" / "_redirects"
+
+    services = [
+        {
+            "name": "Govern AI backend",
+            "key": "govern-ai",
+            "url": "http://127.0.0.1:9202/health",
+            **govern_ai_probe,
+        },
+        {
+            "name": "CompassAI backend",
+            "key": "compassai",
+            "url": "http://127.0.0.1:9205/api/",
+            **compassai_probe,
+        },
+        {
+            "name": "AurorAI backend",
+            "key": "aurorai",
+            "url": "http://127.0.0.1:9206/api/categories",
+            **aurorai_probe,
+        },
+    ]
+
+    llm = {
+        "emergent_configured": bool(compassai_emergent_key),
+        "emergent_source": str(COMPASSAI_ENV_FILE),
+        "resend_configured": bool(compassai_resend_key),
+        "openai_configured": bool(os.environ.get("OPENAI_API_KEY")),
+        "openai_base_url_configured": bool(os.environ.get("OPENAI_BASE_URL")),
+        "emergent_library_present": (ROOT_DIR.parent / "emergentintegrations").exists(),
+        "notes": [
+            "CompassAI and AurorAI pick up EMERGENT_LLM_KEY through the local stack launcher.",
+            "OpenAI-compatible credentials can be supplied with OPENAI_API_KEY and optionally OPENAI_BASE_URL.",
+            "AurorAI falls back to heuristic extraction when no compatible LLM call succeeds.",
+        ],
+    }
+
+    cloudflare = {
+        "wrangler_installed": bool(shutil.which("wrangler") or (FRONTEND_DIR / "node_modules" / ".bin" / "wrangler").exists()),
+        "api_token_configured": bool(os.environ.get("CLOUDFLARE_API_TOKEN")),
+        "account_id_configured": bool(os.environ.get("CLOUDFLARE_ACCOUNT_ID")),
+        "zone_id_configured": bool(os.environ.get("CLOUDFLARE_ZONE_ID")),
+        "frontend_config_present": frontend_cf_config.exists(),
+        "frontend_spa_redirects_present": frontend_cf_redirects.exists(),
+        "backend_portable_now": False,
+        "notes": [
+            "The React frontend can be prepared for Cloudflare Pages.",
+            "The current Python backends are not a drop-in Cloudflare move because they rely on uvicorn, Mongo sockets, and local file upload behavior.",
+        ],
+    }
+
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "services": services,
+        "llm": llm,
+        "cloudflare": cloudflare,
+    }
 
 # ─── Publications ───
 

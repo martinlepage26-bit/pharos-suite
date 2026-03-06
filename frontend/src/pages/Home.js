@@ -1,178 +1,271 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, FileText, Scale, ScanText } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
-import StarterKitCTA from '../components/StarterKitCTA';
+import { ArrowRight, BriefcaseBusiness, Building2, FileCheck2, FolderSearch, Radar, Scale, ShieldCheck, Waypoints } from 'lucide-react';
+import LighthouseGlyph from '../components/LighthouseGlyph';
 
-const Home = () => {
-  const { t, language } = useLanguage();
+const pressurePoints = [
+  {
+    icon: BriefcaseBusiness,
+    title: 'Procurement',
+    description: 'When a buyer asks for questionnaires, controls, and a credible answer on governance.'
+  },
+  {
+    icon: Radar,
+    title: 'Audit',
+    description: 'When a review asks who decides, what packet exists, and what can be reconstructed.'
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Vendor review',
+    description: 'When models, partners, and dependencies need structured review instead of improvisation.'
+  },
+  {
+    icon: Building2,
+    title: 'Executive oversight',
+    description: 'When leadership wants a simple, review-ready escalation logic that can be maintained.'
+  }
+];
 
-  const methodology = [
-    {
-      icon: Shield,
-      title: language === 'fr' ? 'Auditer' : 'Auditing',
-      description:
-        language === 'fr'
-          ? "Cartographier les systèmes, évaluer les risques, identifier les écarts de conformité."
-          : 'Map existing systems, assess risks according to AIA, identify compliance gaps.'
-    },
-    {
-      icon: FileText,
-      title: language === 'fr' ? 'Structurer & documenter' : 'Structuring & Documenting',
-      description:
-        language === 'fr'
-          ? 'Construire les cadres de conformité, établir les droits de décision, créer des preuves.'
-          : 'Build compliance frameworks, establish decision rights, create evidence.'
-    },
-    {
-      icon: Scale,
-      title: language === 'fr' ? 'Politque de la Visibilité' : 'Politics of Visibility',
-      description:
-        language === 'fr'
-          ? 'Qui a le pouvoir d’inspecter? Qui décide? Qui rend des comptes?'
-          : 'Who has the power to inspect? Who can decide? Who is answerable?'
-    }
-  ];
+const methods = [
+  {
+    step: '01',
+    title: 'Read the situation',
+    description: 'Map the system, dependencies, actors, and the source of scrutiny.'
+  },
+  {
+    step: '02',
+    title: 'Name the risk',
+    description: 'Make thresholds, stakes, and review expectations explicit.'
+  },
+  {
+    step: '03',
+    title: 'Structure the response',
+    description: 'Assign decisions, controls, and the documentation logic.'
+  },
+  {
+    step: '04',
+    title: 'Maintain legibility',
+    description: 'Set a light cadence so the governance posture stays operable.'
+  }
+];
 
-  const capabilityCards = [
-    { icon: Shield, title: t.home.capabilities.riskClassification, description: t.home.capabilities.riskClassificationDesc },
-    { icon: FileText, title: t.home.capabilities.evidenceArchitecture, description: t.home.capabilities.evidenceArchitectureDesc },
-    { icon: Scale, title: t.home.capabilities.controlDesign, description: t.home.capabilities.controlDesignDesc }
-  ];
+const artifacts = [
+  {
+    icon: FileCheck2,
+    title: 'Decision matrix',
+    description: 'Shows who approves, who escalates, and what must be recorded.'
+  },
+  {
+    icon: Radar,
+    title: 'Tiering logic',
+    description: 'Defines which cases require deeper review, and why.'
+  },
+  {
+    icon: FolderSearch,
+    title: 'Review packet',
+    description: 'Assembles the materials an auditor, customer, or committee can follow.'
+  },
+  {
+    icon: Waypoints,
+    title: 'Operating model',
+    description: 'Sets the cadence for reviews, updates, and evidence upkeep.'
+  }
+];
 
-  return (
-    <div className="min-h-screen bg-[#F6F7FB]" data-testid="home-page">
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <section className="grid md:grid-cols-2 gap-10 mb-10 items-center">
-          <div className="flex flex-col items-center text-center">
-            <h1
-              className="text-[34px] md:text-[42px] tracking-[0.3em] uppercase text-[#111827]"
-              style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
-            >
-              {language === 'fr' ? 'GOUVERNANCE IA' : 'AI GOVERNANCE'}
-            </h1>
-            <div className="h-px w-44 bg-[#111827]/30 my-3" />
-            <img src="/images/logo-eye.png" alt="AI Governance" className="w-40 md:w-48" />
-            <p className="mt-5 text-sm text-[#111827]/70" style={{ fontFamily: "'Lato', sans-serif" }}>
-              {language === 'fr' ? 'Stratégies  •  Supervision  •  Recherche' : 'Strategies  •  Oversight  •  Research'}
-            </p>
+const routes = [
+  {
+    icon: BriefcaseBusiness,
+    title: 'Calm the questionnaire',
+    description: 'For teams that need fast, defensible responses to procurement or customer review.',
+    cta: 'Get started',
+    to: '/connect'
+  },
+  {
+    icon: Building2,
+    title: 'Build the foundation',
+    description: 'For product and AI teams that need clear controls without slowing delivery.',
+    cta: 'View services',
+    to: '/services'
+  },
+  {
+    icon: Scale,
+    title: 'Support ongoing review',
+    description: 'For executives and risk bodies that need evidence ready for scrutiny.',
+    cta: 'Read the approach',
+    to: '/about'
+  }
+];
+
+const reviewNeeds = [
+  'Decision rights assigned',
+  'Risk tiers and thresholds defined',
+  'Evidence packet ready for review',
+  'Escalation cadence documented'
+];
+
+const Home = () => (
+  <div data-testid="home-page">
+    <section className="hero">
+      <LighthouseGlyph className="hero-watermark" title="" />
+
+      <div className="container">
+        <div className="hero-content">
+          <p className="eyebrow" style={{ marginBottom: '20px', opacity: 0, transform: 'translateY(30px)', animation: 'fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s forwards' }}>
+            Martin Lepage, PhD
+          </p>
+          <h1>Legible AI governance under pressure</h1>
+          <p className="body-lg">
+            When procurement, audit, or the board asks how AI is governed, Govern AI helps your team answer without improvising.
+          </p>
+          <div className="hero-cta-row">
+            <Link to="/connect" className="btn-primary">
+              Book a debrief
+              <ArrowRight />
+            </Link>
+            <Link to="/services" className="btn-secondary">View services</Link>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div className="text-center md:text-left">
-            <p
-              className="text-[44px] leading-[1.05] italic text-[#2D2380]"
-              style={{ fontFamily: "'Source Serif 4', serif" }}
-            >
-              {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
-            </p>
-            <p className="text-[44px] leading-[1.05] italic text-[#111827]" style={{ fontFamily: "'Source Serif 4', serif" }}>
-              {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
-            </p>
-            <p
-              className="text-[44px] leading-[1.05] italic text-[#2D2380]"
-              style={{ fontFamily: "'Source Serif 4', serif" }}
-            >
-              {language === 'fr' ? 'Avenirs viables' : 'Livable Futures'}
-            </p>
+    <section className="section">
+      <div className="container">
+        <div className="section-header reveal">
+          <p className="eyebrow">What review bodies need to see</p>
+          <h2>A governance posture that stays legible under pressure</h2>
+          <p className="body-sm">
+            Decision rights, risk tiers, controls, and evidence should be easy to follow when external scrutiny arrives.
+          </p>
+        </div>
 
-            <p className="mt-5 text-lg text-[#111827]/80" style={{ fontFamily: "'Lato', sans-serif" }}>
-              {language === 'fr'
-                ? 'Rendre les systèmes d’IA lisibles, responsables et légitimes.'
-                : 'Make AI systems readable, accountable, and legitimate.'}
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0D0A2E] text-white text-sm"
-                style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
-              >
-                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/connect"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#0B0F1A]/30 text-[#111827] text-sm"
-                style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
-              >
-                {t.home.bookDebrief}
-              </Link>
+        <div className="card reveal">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+            <div className="card-icon" style={{ width: '56px', height: '56px', marginBottom: 0 }}>
+              <LighthouseGlyph className="nav-logo" title="Govern AI review mark" />
+            </div>
+            <div>
+              <p className="eyebrow" style={{ marginBottom: '8px' }}>Govern AI</p>
+              <h3 style={{ marginBottom: 0 }}>Legibility before pressure</h3>
             </div>
           </div>
-        </section>
-
-        <section className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden mb-8">
-          <div className="px-5 py-4 border-b border-[#E5E7EB]">
-            <h2 className="text-3xl text-[#111827]" style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
-              {language === 'fr' ? 'Méthodologie' : 'Methodology'}
-            </h2>
-            <p className="text-[#111827]/60 mt-1" style={{ fontFamily: "'Lato', sans-serif" }}>
-              {language === 'fr'
-                ? 'Une approche structurée ancrée dans la rigueur académique et la pratique terrain.'
-                : 'A structured approach grounded in academic rigor and practical experience.'}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3">
-            {methodology.map((item, i) => (
-              <article key={item.title} className={`p-5 ${i < 2 ? 'md:border-r border-[#E5E7EB]' : ''}`}>
-                <div className="w-9 h-9 rounded-md bg-[#EEF0FF] flex items-center justify-center mb-3">
-                  <item.icon className="w-4 h-4 text-[#2D2380]" />
-                </div>
-                <h3 className="text-2xl text-[#111827] mb-2" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#111827]/70" style={{ fontFamily: "'Lato', sans-serif" }}>
-                  {item.description}
-                </p>
-              </article>
+          <div className="grid-2">
+            {reviewNeeds.map((item) => (
+              <div key={item} className="scope-note">
+                <strong>{item}</strong>
+              </div>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
 
-          <p
-            className="bg-[#F7F7FA] px-5 py-4 text-sm text-[#111827]/60 italic"
-            style={{ fontFamily: "'Source Serif 4', serif" }}
-          >
-            {language === 'fr'
-              ? '« La gouvernance de l’IA n’est pas seulement technique : c’est une question de pouvoir, de visibilité et de légitimité. »'
-              : '“AI governance is not just technical — it is about power, visibility, and legitimacy.”'}
+    <section className="section">
+      <div className="container">
+        <div className="section-header reveal">
+          <p className="eyebrow">Pressure points</p>
+          <h2>Scrutiny creates friction at four points</h2>
+          <p className="body-sm">
+            Governance work rarely starts in the abstract. It starts when a deal, review, or oversight request exposes gaps in how decisions are made and documented.
           </p>
-        </section>
+        </div>
 
-        <section className="grid md:grid-cols-3 gap-4 mb-10">
-          {capabilityCards.map((item) => (
-            <div key={item.title} className="bg-white rounded-xl border border-[#E5E7EB] p-4">
-              <div className="w-8 h-8 rounded-md bg-[#F6F7FB] flex items-center justify-center mb-2">
-                <item.icon className="w-4 h-4 text-[#2D2380]" />
+        <div className="grid-4 stagger">
+          {pressurePoints.map((item) => (
+            <div key={item.title} className="card reveal">
+              <div className="card-icon">
+                <item.icon />
               </div>
-              <p className="text-sm font-semibold text-[#111827]" style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>{item.title}</p>
-              <p className="text-xs text-[#111827]/70 mt-1" style={{ fontFamily: "'Lato', sans-serif" }}>{item.description}</p>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
             </div>
           ))}
-        </section>
-
-        <StarterKitCTA />
-
-        <section className="mt-10 grid md:grid-cols-4 gap-4">
-          <Link to="/tool" className="bg-white rounded-xl border border-[#E5E7EB] p-4 hover:border-[#2D2380]/30 transition-colors">
-            <ScanText className="w-4 h-4 text-[#2D2380] mb-2" />
-            <p className="text-xs uppercase tracking-widest text-[#111827]/50">{t.home.sections.assessment}</p>
-            <h3 className="text-lg mt-1" style={{ fontFamily: "'Source Serif 4', serif" }}>{t.home.sections.readinessSnapshot}</h3>
-          </Link>
-          <Link to="/cases" className="bg-white rounded-xl border border-[#E5E7EB] p-4 hover:border-[#2D2380]/30 transition-colors">
-            <p className="text-xs uppercase tracking-widest text-[#111827]/50">{t.home.sections.portfolio}</p>
-            <h3 className="text-lg mt-1" style={{ fontFamily: "'Source Serif 4', serif" }}>{t.home.sections.caseStudies}</h3>
-          </Link>
-          <Link to="/research" className="bg-white rounded-xl border border-[#E5E7EB] p-4 hover:border-[#2D2380]/30 transition-colors">
-            <p className="text-xs uppercase tracking-widest text-[#111827]/50">{t.home.sections.research}</p>
-            <h3 className="text-lg mt-1" style={{ fontFamily: "'Source Serif 4', serif" }}>{t.home.sections.briefings}</h3>
-          </Link>
-          <Link to="/library" className="bg-white rounded-xl border border-[#E5E7EB] p-4 hover:border-[#2D2380]/30 transition-colors">
-            <p className="text-xs uppercase tracking-widest text-[#111827]/50">{t.home.sections.resources}</p>
-            <h3 className="text-lg mt-1" style={{ fontFamily: "'Source Serif 4', serif" }}>{t.home.sections.library}</h3>
-          </Link>
-        </section>
+        </div>
       </div>
-    </div>
-  );
-};
+    </section>
+
+    <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+      <div className="container">
+        <div className="section-header reveal">
+          <p className="eyebrow">Method</p>
+          <h2>Four steps to legible governance</h2>
+        </div>
+
+        <div className="steps stagger">
+          {methods.map((item) => (
+            <div key={item.step} className="step reveal">
+              <div className="step-number">{item.step}</div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="section">
+      <div className="container">
+        <div className="section-header reveal">
+          <p className="eyebrow">Deliverables</p>
+          <h2>Artifacts that make governance credible</h2>
+          <p className="body-sm">
+            What persuades is not abstract trust language. It is a set of documents that makes governance legible, testable, and easy to review.
+          </p>
+        </div>
+
+        <div className="grid-4 stagger">
+          {artifacts.map((item) => (
+            <div key={item.title} className="card reveal">
+              <div className="card-icon">
+                <item.icon />
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+      <div className="container">
+        <div className="section-header reveal">
+          <p className="eyebrow">Start here</p>
+          <h2>Choose the route that matches the pressure</h2>
+        </div>
+
+        <div className="grid-3 stagger">
+          {routes.map((item) => (
+            <Link key={item.title} to={item.to} className="card card-dark reveal">
+              <div className="card-icon">
+                <item.icon />
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <div style={{ marginTop: '20px', fontSize: '0.875rem', fontWeight: 500, color: 'var(--color-accent)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                {item.cta}
+                <ArrowRight size={14} />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="section">
+      <div className="container">
+        <div className="cta-banner reveal">
+          <h2>Make governance legible before it gets tested</h2>
+          <p className="body-sm">The first engagement is meant to calm the pressure around questionnaires, controls, documentation, decision rights, and the next move.</p>
+          <div className="btn-row">
+            <Link to="/connect" className="btn-primary">
+              Book a debrief
+              <ArrowRight />
+            </Link>
+            <Link to="/services" className="btn-secondary">View services</Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+);
 
 export default Home;

@@ -1,214 +1,204 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { caseStudies } from '../data/caseStudies';
-import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X, HardHat, Shield, Server, ShoppingCart, Landmark, DollarSign, Settings } from 'lucide-react';
+import { Building2, CheckCircle, ChevronRight, Clock, DollarSign, FileText, HardHat, Landmark, Quote, Server, Settings, Shield, ShoppingCart, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+
+const sectorIcons = {
+  regulated: Shield,
+  enterpriseSaas: Server,
+  procurement: ShoppingCart,
+  publicSector: Landmark,
+  financial: DollarSign,
+  construction: HardHat,
+  governance: Settings
+};
+
+const sectorKeys = ['regulated', 'enterpriseSaas', 'procurement', 'publicSector', 'financial', 'construction', 'governance'];
+const sectorIds = ['regulated', 'enterprise-saas', 'procurement', 'public-sector', 'financial', 'construction', 'governance'];
 
 const Cases = () => {
   const [selectedCase, setSelectedCase] = useState(null);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  // Sector icons mapping
-  const sectorIcons = {
-    regulated: Shield,
-    enterpriseSaas: Server,
-    procurement: ShoppingCart,
-    publicSector: Landmark,
-    financial: DollarSign,
-    construction: HardHat,
-    governance: Settings
-  };
+  const heroTitle = language === 'fr'
+    ? 'Etudes de cas pour des environnements IA soumis a un examen reel.'
+    : 'Case studies for AI under real review';
 
-  const sectorKeys = ['regulated', 'enterpriseSaas', 'procurement', 'publicSector', 'financial', 'construction', 'governance'];
-  const sectorIds = ['regulated', 'enterprise-saas', 'procurement', 'public-sector', 'financial', 'construction', 'governance'];
+  const heroBody = language === 'fr'
+    ? 'Des exemples de travail de gouvernance la ou la pression est concrete: questionnaires, audit, achats, risque et supervision continue.'
+    : 'Examples of governance work where the pressure is concrete, from questionnaires and audit to procurement, risk, and ongoing oversight.';
 
   return (
-    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="cases-page">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="page-title mb-4">{t.cases.title}</h1>
-        <p className="text-gray-600 mb-2 max-w-2xl">{t.cases.description}</p>
-        <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-10">{t.cases.keywords}</p>
-
-        {/* Sector Cards Grid - 2 rows of 3, then 1 row of 1 centered */}
-        <div className="mb-12">
-          <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-5">{t.cases.sectorsWeServe}</h2>
-          
-          {/* First row: 3 cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            {sectorKeys.slice(0, 3).map((key, i) => {
-              const Icon = sectorIcons[key];
-              const sector = t.cases.sectorCards[key];
-              return (
-                <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors card-hover-lift" data-testid={`sector-card-${sectorIds[i]}`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-4 h-4 text-[#0D0A2E]" />
-                    </div>
-                    <h3 className="font-serif text-base font-semibold text-[#0B0F1A] leading-tight">{sector.title}</h3>
-                  </div>
-                  <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
-                  <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
-                    <span className="font-medium text-[#0B0F1A]">{t.cases.outputs}:</span> {sector.deliverable}
-                  </div>
-                  <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
-                    {t.cases.assessReadiness} <ChevronRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              );
-            })}
+    <div data-testid="cases-page">
+      <div className="page-hero">
+        <div className="container">
+          <div className="section-header">
+            <p className="eyebrow">{language === 'fr' ? 'Etudes de cas' : 'Case studies'}</p>
+            <h1>{heroTitle}</h1>
+            <p className="body-lg" style={{ marginTop: '16px' }}>{heroBody}</p>
           </div>
-
-          {/* Second row: 3 cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            {sectorKeys.slice(3, 6).map((key, i) => {
-              const Icon = sectorIcons[key];
-              const sector = t.cases.sectorCards[key];
-              return (
-                <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sectorIds[i + 3]}`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-4 h-4 text-[#0D0A2E]" />
-                    </div>
-                    <h3 className="font-serif text-base font-semibold text-[#0B0F1A] leading-tight">{sector.title}</h3>
-                  </div>
-                  <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
-                  <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
-                    <span className="font-medium text-[#0B0F1A]">{t.cases.outputs}:</span> {sector.deliverable}
-                  </div>
-                  <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
-                    {t.cases.assessReadiness} <ChevronRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Third row: 1 card centered */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-start-2">
-              {sectorKeys.slice(6, 7).map((key) => {
-                const Icon = sectorIcons[key];
-                const sector = t.cases.sectorCards[key];
-                return (
-                  <div key={key} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sectorIds[6]}`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-4 h-4 text-[#0D0A2E]" />
-                      </div>
-                      <h3 className="font-serif text-base font-semibold text-[#0B0F1A] leading-tight">{sector.title}</h3>
-                    </div>
-                    <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
-                    <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
-                    <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
-                      <span className="font-medium text-[#0B0F1A]">{t.cases.outputs}:</span> {sector.deliverable}
-                    </div>
-                    <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
-                      {t.cases.assessReadiness} <ChevronRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Case Studies */}
-        <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-4">Case Studies</h2>
-        <div className="space-y-6">
-          {caseStudies.map((study) => (
-            <button key={study.id} onClick={() => setSelectedCase(study)} className="w-full text-left card card-hover card-hover-lift group" data-testid={`case-${study.id}`}>
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{study.sector}</span>
-                    <span className="text-gray-300">·</span>
-                    <span className="text-xs text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3" />{study.duration}</span>
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{study.title}</h3>
-                  <p className="text-gray-500 text-sm flex items-center gap-2 mb-3"><Building2 className="w-4 h-4" />{study.client}</p>
-                  <p className="text-gray-600 text-sm line-clamp-2">{study.challenge}</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-12 p-6 bg-[linear-gradient(135deg,#0D0A2E_0%,#0D0A2E_40%,#1A1555_70%,#2D2380_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
-          <h3 className="font-serif text-xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
-          <p className="text-white/80 mb-4">{t.cases.facingChallengeDesc}</p>
-          <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.cases.bookDebrief}</Link>
         </div>
       </div>
 
-      {selectedCase && (
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{language === 'fr' ? 'Secteurs' : 'Sectors'}</p>
+            <h2>{t.cases.sectorsWeServe}</h2>
+            <p className="body-sm">{language === 'fr' ? 'Chaque contexte change la forme de la preuve, la logique de revue et la vitesse d escalation.' : 'Each operating context changes the evidence burden, the review logic, and the speed of escalation.'}</p>
+          </div>
+
+          <div className="grid-3 stagger">
+            {sectorKeys.map((key, index) => {
+              const Icon = sectorIcons[key];
+              const sector = t.cases.sectorCards[key];
+              return (
+                <div key={key} className="card reveal" data-testid={`sector-card-${sectorIds[index]}`}>
+                  <div className="card-icon">
+                    <Icon />
+                  </div>
+                  <h3>{sector.title}</h3>
+                  <p style={{ marginBottom: '12px', color: 'var(--color-text)', fontWeight: 500 }}>{sector.subtitle}</p>
+                  <p>{sector.body}</p>
+                  <div className="scope-note" style={{ marginTop: '18px' }}>
+                    <strong>{t.cases.outputs}</strong> {sector.deliverable}
+                  </div>
+                  <Link to="/tool" style={{ marginTop: '18px', display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--color-accent)', fontSize: '0.875rem', fontWeight: 500 }}>
+                    {t.cases.assessReadiness}
+                    <ChevronRight size={14} />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{language === 'fr' ? 'Dossiers' : 'Selected dossiers'}</p>
+            <h2>{language === 'fr' ? 'Mandats representatifs' : 'Representative engagements'}</h2>
+            <p className="body-sm">{language === 'fr' ? 'Chaque etude montre comment la gouvernance se traduit en decisions, artefacts et controles lisibles.' : 'Each case shows how governance turns into clearer decisions, usable artifacts, and review-ready controls.'}</p>
+          </div>
+
+          <div className="stagger" style={{ display: 'grid', gap: '24px' }}>
+            {caseStudies.map((study) => (
+              <button key={study.id} type="button" onClick={() => setSelectedCase(study)} className="card reveal" style={{ textAlign: 'left' }} data-testid={`case-${study.id}`}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                  <span className="eyebrow" style={{ marginBottom: 0 }}>{study.sector}</span>
+                  <span className="research-date" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><Clock size={14} />{study.duration}</span>
+                </div>
+                <h3 style={{ marginBottom: '10px' }}>{study.title}</h3>
+                <p style={{ marginBottom: '10px', color: 'var(--color-text)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <Building2 size={16} /> {study.client}
+                </p>
+                <p>{study.challenge}</p>
+                <div style={{ marginTop: '18px', display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--color-accent)', fontSize: '0.875rem', fontWeight: 500 }}>
+                  {language === 'fr' ? 'Ouvrir le dossier' : 'Open dossier'}
+                  <ChevronRight size={14} />
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="cta-banner reveal">
+            <h2>{t.cases.facingChallenge}</h2>
+            <p className="body-sm">{t.cases.facingChallengeDesc}</p>
+            <div className="btn-row">
+              <Link to="/connect" className="btn-primary">{t.cases.bookDebrief}</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {selectedCase ? (
         <>
-          <div className="fixed inset-0 bg-black/30 z-[4000]" onClick={() => setSelectedCase(null)} />
-          <div className="fixed top-0 right-0 h-screen w-full md:w-[640px] bg-white border-l border-gray-200 shadow-2xl z-[4500] flex flex-col overflow-hidden">
-            <div className="flex items-start justify-between gap-4 p-6 border-b border-gray-100 bg-white">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{selectedCase.sector}</span>
-                  <span className="text-gray-300">·</span>
-                  <span className="text-xs text-gray-500">{selectedCase.duration}</span>
-                </div>
-                <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{selectedCase.title}</h2>
-                <p className="text-gray-500 text-sm mt-1">{selectedCase.client}</p>
-              </div>
-              <button onClick={() => setSelectedCase(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><X className="w-5 h-5 text-gray-500" /></button>
-            </div>
-            <div className="flex-1 overflow-auto p-6">
-              <div className="mb-6">
-                <h3 className="font-semibold text-[#0B0F1A] mb-2">{t.cases.challenge}</h3>
-                <p className="text-gray-600">{selectedCase.challenge}</p>
-              </div>
-              <div className="mb-6">
-                <h3 className="font-semibold text-[#0B0F1A] mb-3">{t.cases.approach}</h3>
-                <ul className="space-y-2">
-                  {selectedCase.approach.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-gray-600 text-sm">
-                      <span className="w-5 h-5 rounded-full bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-[#0D0A2E] text-xs font-bold">{i + 1}</span></span>{item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mb-6">
-                <h3 className="font-semibold text-[#0B0F1A] mb-3">{t.cases.outcomes}</h3>
-                <ul className="space-y-2">
-                  {selectedCase.outcomes.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-gray-600 text-sm"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />{item}</li>
-                  ))}
-                </ul>
-              </div>
-              {selectedCase.quote && (
-                <div className="mb-6 p-4 bg-[#0D0A2E]/5 rounded-xl border-l-4 border-[#0D0A2E]">
-                  <Quote className="w-5 h-5 text-[#0D0A2E] mb-2" />
-                  <p className="text-gray-700 italic">"{selectedCase.quote}"</p>
-                </div>
-              )}
-              <div>
-                <h3 className="font-semibold text-[#0B0F1A] mb-3">{t.cases.deliverables}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedCase.deliverables.map((item, i) => (
-                    <span key={i} className="px-3 py-1.5 bg-[#F6F7FB] border border-gray-200 rounded-full text-sm text-gray-600 flex items-center gap-2">
-                      <FileText className="w-3 h-3 text-[#0D0A2E]" />{item}
-                    </span>
-                  ))}
+          <div className="fixed inset-0 z-[4000] bg-black/40" onClick={() => setSelectedCase(null)} />
+          <div className="fixed inset-y-0 right-0 z-[4500] w-full max-w-[720px] overflow-hidden border-l border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_24px_60px_rgba(0,0,0,0.18)]">
+            <div style={{ height: '100%', overflowY: 'auto' }}>
+              <div style={{ position: 'sticky', top: 0, zIndex: 2, borderBottom: '1px solid var(--color-border)', background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(12px)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', padding: '24px' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                      <span className="eyebrow" style={{ marginBottom: 0 }}>{selectedCase.sector}</span>
+                      <span className="research-date">{selectedCase.duration}</span>
+                    </div>
+                    <h2 style={{ marginBottom: '8px' }}>{selectedCase.title}</h2>
+                    <p className="body-sm" style={{ marginBottom: 0 }}>{selectedCase.client}</p>
+                  </div>
+                  <button type="button" onClick={() => setSelectedCase(null)} style={{ padding: '10px', borderRadius: '999px', border: '1px solid var(--color-border)', background: 'var(--color-bg-alt)' }}>
+                    <X size={18} />
+                  </button>
                 </div>
               </div>
-            </div>
-            <div className="p-4 border-t border-gray-100 bg-gray-50">
-              <Link to="/connect" className="btn-primary w-full text-center block" onClick={() => setSelectedCase(null)}>{t.cases.discussChallenge}</Link>
+
+              <div style={{ padding: '24px' }}>
+                <div className="card" style={{ marginBottom: '20px' }}>
+                  <h3 style={{ marginBottom: '12px' }}>{t.cases.challenge}</h3>
+                  <p>{selectedCase.challenge}</p>
+                </div>
+
+                <div className="card" style={{ marginBottom: '20px' }}>
+                  <h3 style={{ marginBottom: '12px' }}>{t.cases.approach}</h3>
+                  <div style={{ display: 'grid', gap: '12px' }}>
+                    {selectedCase.approach.map((item, index) => (
+                      <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                        <div className="card-icon" style={{ width: '32px', height: '32px', marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 700 }}>{index + 1}</span>
+                        </div>
+                        <p style={{ marginBottom: 0 }}>{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="card" style={{ marginBottom: '20px' }}>
+                  <h3 style={{ marginBottom: '12px' }}>{t.cases.outcomes}</h3>
+                  <div style={{ display: 'grid', gap: '10px' }}>
+                    {selectedCase.outcomes.map((item) => (
+                      <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <CheckCircle size={18} color="var(--color-accent)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                        <p style={{ marginBottom: 0 }}>{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {selectedCase.quote ? (
+                  <div className="card" style={{ marginBottom: '20px' }}>
+                    <Quote size={18} color="var(--color-accent)" style={{ marginBottom: '10px' }} />
+                    <p style={{ marginBottom: 0, fontStyle: 'italic' }}>&quot;{selectedCase.quote}&quot;</p>
+                  </div>
+                ) : null}
+
+                <div className="card">
+                  <h3 style={{ marginBottom: '12px' }}>{t.cases.deliverables}</h3>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                    {selectedCase.deliverables.map((item) => (
+                      <span key={item} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 14px', borderRadius: '999px', border: '1px solid var(--color-border)', background: 'var(--color-bg-alt)', fontSize: '0.875rem', color: 'var(--color-text)' }}>
+                        <FileText size={14} />
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ padding: '24px', borderTop: '1px solid var(--color-border)', background: 'var(--color-bg-alt)' }}>
+                <Link to="/connect" className="btn-primary" onClick={() => setSelectedCase(null)}>{t.cases.discussChallenge}</Link>
+              </div>
             </div>
           </div>
         </>
-      )}
+      ) : null}
     </div>
   );
 };
 
 export default Cases;
-

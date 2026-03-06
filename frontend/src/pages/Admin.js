@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown, Server, Bot, Cloud, RefreshCw } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
@@ -55,6 +55,9 @@ const Admin = () => {
     best_for_en: '', best_for_fr: '', deliverables_en: '', deliverables_fr: '',
     produces_en: '', produces_fr: '', active: true
   });
+  const [platformStatus, setPlatformStatus] = useState(null);
+  const [platformStatusLoading, setPlatformStatusLoading] = useState(false);
+  const [platformStatusError, setPlatformStatusError] = useState('');
 
   const loadPublications = useCallback(async () => {
     try {
@@ -88,14 +91,32 @@ const Admin = () => {
     } catch (e) { /* silent */ }
   }, []);
 
+  const loadPlatformStatus = useCallback(async () => {
+    setPlatformStatusLoading(true);
+    setPlatformStatusError('');
+    try {
+      const res = await fetch(`${API_URL}/api/admin/platform-status`);
+      if (!res.ok) {
+        throw new Error(`Status request failed with ${res.status}`);
+      }
+      const data = await res.json();
+      setPlatformStatus(data);
+    } catch (e) {
+      setPlatformStatusError(e.message || 'Could not load platform status');
+    } finally {
+      setPlatformStatusLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (authenticated) {
       loadPublications();
       loadBookings();
       loadFaqItems();
       loadServicePackages();
+      loadPlatformStatus();
     }
-  }, [authenticated, loadPublications, loadBookings, loadFaqItems, loadServicePackages]);
+  }, [authenticated, loadPublications, loadBookings, loadFaqItems, loadServicePackages, loadPlatformStatus]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -314,6 +335,10 @@ const Admin = () => {
           <button onClick={() => setActiveTab('services')} data-testid="admin-tab-services"
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'services' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
             <Briefcase className="w-4 h-4" /> Services
+          </button>
+          <button onClick={() => setActiveTab('platform')} data-testid="admin-tab-platform"
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'platform' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
+            <Server className="w-4 h-4" /> Platform
           </button>
         </div>
 
@@ -722,6 +747,159 @@ const Admin = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'platform' && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">Platform status</h2>
+                <p className="text-sm text-gray-500 mt-1">Local service health, LLM readiness, and Cloudflare readiness.</p>
+              </div>
+              <button onClick={loadPlatformStatus} className="btn-ghost text-sm inline-flex items-center gap-2" disabled={platformStatusLoading}>
+                <RefreshCw className={`w-4 h-4 ${platformStatusLoading ? 'animate-spin' : ''}`} />
+                Refresh
+              </button>
+            </div>
+
+            {platformStatusError ? (
+              <div className="card border border-red-200 bg-red-50 text-red-700 mb-6">
+                <p className="font-medium">Platform status could not be loaded.</p>
+                <p className="text-sm mt-1">{platformStatusError}</p>
+              </div>
+            ) : null}
+
+            {platformStatus ? (
+              <>
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  {platformStatus.services?.map((service) => (
+                    <div key={service.key} className="card">
+                      <div className="flex items-start justify-between gap-3 mb-4">
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.16em] text-gray-400 mb-2">Service</p>
+                          <h3 className="text-lg font-semibold text-[#0B0F1A]">{service.name}</h3>
+                        </div>
+                        <span className={`text-xs px-2 py-1 rounded-full ${service.healthy ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                          {service.healthy ? 'Healthy' : 'Issue'}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 break-all">{service.url}</p>
+                      <p className="text-xs text-gray-500 mt-3">Status code: {service.status_code ?? 'n/a'}</p>
+                      <p className="text-xs text-gray-500 mt-1">Detail: {service.detail || 'n/a'}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="card">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Bot className="w-5 h-5 text-[#7b2cbf]" />
+                      <h3 className="text-lg font-semibold text-[#0B0F1A]">LLM and email readiness</h3>
+                    </div>
+                    <div className="space-y-3 text-sm text-gray-700">
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Emergent key configured</span>
+                        <span className={platformStatus.llm?.emergent_configured ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.llm?.emergent_configured ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Resend configured</span>
+                        <span className={platformStatus.llm?.resend_configured ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.llm?.resend_configured ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>OpenAI configured</span>
+                        <span className={platformStatus.llm?.openai_configured ? 'text-green-700' : 'text-amber-700'}>
+                          {platformStatus.llm?.openai_configured ? 'Yes' : 'Optional / off'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>OpenAI base URL configured</span>
+                        <span className={platformStatus.llm?.openai_base_url_configured ? 'text-green-700' : 'text-amber-700'}>
+                          {platformStatus.llm?.openai_base_url_configured ? 'Yes' : 'Optional / off'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Emergent library present</span>
+                        <span className={platformStatus.llm?.emergent_library_present ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.llm?.emergent_library_present ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <p className="text-xs text-gray-500 break-all">Source: {platformStatus.llm?.emergent_source}</p>
+                      <ul className="mt-3 space-y-2 text-xs text-gray-500">
+                        {(platformStatus.llm?.notes || []).map((note) => (
+                          <li key={note}>• {note}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="card">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Cloud className="w-5 h-5 text-[#7b2cbf]" />
+                      <h3 className="text-lg font-semibold text-[#0B0F1A]">Cloudflare readiness</h3>
+                    </div>
+                    <div className="space-y-3 text-sm text-gray-700">
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Wrangler installed</span>
+                        <span className={platformStatus.cloudflare?.wrangler_installed ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.cloudflare?.wrangler_installed ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>API token configured</span>
+                        <span className={platformStatus.cloudflare?.api_token_configured ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.cloudflare?.api_token_configured ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Account ID configured</span>
+                        <span className={platformStatus.cloudflare?.account_id_configured ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.cloudflare?.account_id_configured ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Zone ID configured</span>
+                        <span className={platformStatus.cloudflare?.zone_id_configured ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.cloudflare?.zone_id_configured ? 'Yes' : 'No'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>Frontend config prepared</span>
+                        <span className={platformStatus.cloudflare?.frontend_config_present ? 'text-green-700' : 'text-amber-700'}>
+                          {platformStatus.cloudflare?.frontend_config_present ? 'Yes' : 'Not yet'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between gap-3">
+                        <span>SPA redirects prepared</span>
+                        <span className={platformStatus.cloudflare?.frontend_spa_redirects_present ? 'text-green-700' : 'text-amber-700'}>
+                          {platformStatus.cloudflare?.frontend_spa_redirects_present ? 'Yes' : 'Not yet'}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <p className={`text-sm font-medium ${platformStatus.cloudflare?.backend_portable_now ? 'text-green-700' : 'text-amber-700'}`}>
+                        Backend move as-is: {platformStatus.cloudflare?.backend_portable_now ? 'Ready' : 'Blocked'}
+                      </p>
+                      <ul className="mt-3 space-y-2 text-xs text-gray-500">
+                        {(platformStatus.cloudflare?.notes || []).map((note) => (
+                          <li key={note}>• {note}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="card">
+                <p className="text-sm text-gray-500">{platformStatusLoading ? 'Loading platform status...' : 'No platform status loaded yet.'}</p>
               </div>
             )}
           </div>

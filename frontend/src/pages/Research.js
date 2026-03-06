@@ -1,130 +1,172 @@
-import { useState } from 'react';
-import { researchPapers, contexts } from '../data/researchPapers';
-import { X, FileText, Calendar, ArrowRight } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
-import { formatAdminTextForDisplay } from '../lib/textFormat';
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, BookOpen, FileCheck2, Target } from 'lucide-react';
+
+const filters = [
+  { key: 'all', label: 'All' },
+  { key: 'regulated', label: 'Regulated Systems' },
+  { key: 'enterprise', label: 'Enterprise SaaS' },
+  { key: 'procurement', label: 'Procurement & Vendor Risk' },
+  { key: 'public', label: 'Public Sector' },
+  { key: 'financial', label: 'Financial Systems' }
+];
+
+const briefings = [
+  {
+    context: 'regulated',
+    date: 'Nov 14, 2024',
+    title: 'Hiring Automation as Gatekeeping Infrastructure',
+    description: 'An AI system that filters candidates is not a productivity feature. It is gatekeeping infrastructure that allocates opportunity and produces institutional liability.'
+  },
+  {
+    context: 'procurement',
+    date: 'Oct 27, 2024',
+    title: 'Training Data as Legal Act: The Clearview Problem',
+    description: 'Training data provenance is not a technical footnote. It is a legal act with institutional consequences and cross-jurisdiction enforcement risk.'
+  },
+  {
+    context: 'financial',
+    date: 'Oct 11, 2024',
+    title: 'Zillow and the $500M Lesson in Model Risk',
+    description: 'Model failure is not the scandal. The scandal is letting model failure become balance-sheet failure.'
+  },
+  {
+    context: 'public',
+    date: 'Sep 24, 2024',
+    title: 'The Dutch Scandal: Algorithmic Suspicion and State Collapse',
+    description: 'The archetype of what happens when the state operationalizes suspicion through opaque scoring.'
+  },
+  {
+    context: 'regulated',
+    date: 'Sep 7, 2024',
+    title: 'COMPAS and the Black Box Defense',
+    description: 'If a score shapes sentencing outcomes, transparency is not a bonus feature. It is a legitimacy requirement.'
+  },
+  {
+    context: 'enterprise',
+    date: 'Aug 21, 2024',
+    title: 'Samsung, ChatGPT, and the Prompt as Leak Vector',
+    description: 'Shadow AI risk is what happens when institutional policy lags institutional behavior.'
+  },
+  {
+    context: 'enterprise',
+    date: 'Aug 4, 2024',
+    title: 'Air Canada and the Chatbot That Became Policy',
+    description: 'Customer-facing AI does not dilute accountability. It concentrates it.'
+  }
+];
+
+const methodCards = [
+  {
+    icon: Target,
+    title: 'Spot the signal',
+    description: 'Identify the incident, risk, or constraint that requires a governance response.'
+  },
+  {
+    icon: FileCheck2,
+    title: 'Translate to a control',
+    description: 'Turn the problem into a review expectation, threshold, or documentation requirement.'
+  },
+  {
+    icon: BookOpen,
+    title: 'Make it legible',
+    description: 'Produce something a customer, auditor, or committee can actually follow.'
+  }
+];
 
 const Research = () => {
-  const [selectedContext, setSelectedContext] = useState('all');
-  const [selectedPaper, setSelectedPaper] = useState(null);
-  const { t, language } = useLanguage();
+  const [activeFilter, setActiveFilter] = useState('all');
 
-  const filteredPapers = selectedContext === 'all' 
-    ? researchPapers 
-    : researchPapers.filter(p => p.context === selectedContext);
-
-  const dateLocale = language === 'fr' ? 'fr-CA' : 'en-US';
+  const visibleBriefings = useMemo(() => {
+    if (activeFilter === 'all') return briefings;
+    return briefings.filter((item) => item.context === activeFilter);
+  }, [activeFilter]);
 
   return (
-    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="research-page">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="page-title mb-4">{t.research.title}</h1>
-        <p className="text-gray-600 mb-2 max-w-2xl">{t.research.description}</p>
-        <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-8">{t.research.keywords}</p>
-
-        <div className="mb-12">
-          <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">{t.research.howItWorks}</h2>
-          <div className="flex items-center justify-center gap-2 mb-6">
-            {[t.research.signal, t.research.pressure, t.research.control, t.research.artifact, t.research.evidence].map((label, i, arr) => (
-              <span key={i} className="flex items-center">
-                <span className="px-4 py-2 bg-gradient-to-r from-[#0D0A2E]/10 to-[#2D2380]/5 border border-[#0D0A2E]/20 rounded-lg text-[#0D0A2E] font-semibold text-sm">{label}</span>
-                {i < arr.length - 1 && <span className="text-[#7b2cbf] font-bold mx-2 text-lg">→</span>}
-              </span>
-            ))}
+    <div data-testid="research-page">
+      <div className="page-hero">
+        <div className="container">
+          <div className="section-header">
+            <p className="eyebrow">Research</p>
+            <h1>Briefings for scrutiny, review, and control design</h1>
+            <p className="body-lg" style={{ marginTop: '16px' }}>
+              Each briefing takes a real signal, names the governance pressure it creates, and turns it into control logic teams can apply.
+            </p>
           </div>
-          <p className="text-gray-600 mb-4">{t.research.howP1}</p>
-          <p className="text-gray-600 mb-8">{t.research.howP2}</p>
-        </div>
-
-        <div className="mb-12 p-6 bg-[linear-gradient(135deg,#0D0A2E_0%,#0D0A2E_40%,#1A1555_70%,#2D2380_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
-          {/* Shine effect */}
-          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredResearch}</h2>
-            <p className="text-white/80 text-sm">{t.research.featuredResearchSubtitle}</p>
-          </div>
-          <p className="text-white/90 mb-4">{t.research.featuredResearchDesc}</p>
-          <p className="text-white/70 text-sm italic">
-            <span className="font-medium text-white">{t.research.professionalNote}</span> {t.research.professionalNoteText}
-          </p>
-        </div>
-
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-            <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{t.research.operationalContexts}</h2>
-            <p className="text-gray-500 text-sm">{t.research.filterByContext}</p>
-          </div>
-          <div className="flex flex-wrap gap-2 mb-8">
-            <button onClick={() => setSelectedContext('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedContext === 'all' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E] hover:text-[#0D0A2E]'}`}>
-              {t.research.all}
-            </button>
-            {contexts.map((context) => (
-              <button key={context.id} onClick={() => setSelectedContext(context.id)} data-testid={`context-${context.id}`}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedContext === context.id ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E] hover:text-[#0D0A2E]'}`}>
-                {context.title}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{t.research.briefings} ({filteredPapers.length})</h3>
-          {filteredPapers.map((paper) => (
-            <button key={paper.id} onClick={() => setSelectedPaper(paper)} className="w-full text-left card paper-card hover:shadow-md transition-all group" data-testid={`paper-${paper.id}`}>
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-4 h-4 text-[#0D0A2E]" />
-                    <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{paper.type}</span>
-                    <span className="text-gray-300">·</span>
-                    <span className="text-xs text-gray-500 flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {new Date(paper.date).toLocaleDateString(dateLocale, { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </span>
-                  </div>
-                  <h4 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{paper.title}</h4>
-                  <p className="text-gray-600 text-sm line-clamp-2 whitespace-pre-line">{formatAdminTextForDisplay(paper.abstract)}</p>
-                </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] group-hover:translate-x-1 transition-all flex-shrink-0 mt-2" />
-              </div>
-            </button>
-          ))}
         </div>
       </div>
 
-      {selectedPaper && (
-        <>
-          <div className="fixed inset-0 bg-black/30 z-[4000]" onClick={() => setSelectedPaper(null)} />
-          <div className="fixed top-0 right-0 h-screen w-full md:w-[600px] bg-white border-l border-gray-200 shadow-2xl z-[4500] flex flex-col overflow-hidden">
-            <div className="flex items-start justify-between gap-4 p-6 border-b border-gray-100 bg-white">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{selectedPaper.type}</span>
-                  <span className="text-gray-300">·</span>
-                  <span className="text-xs text-gray-500">{new Date(selectedPaper.date).toLocaleDateString(dateLocale, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">Method</p>
+            <h2>Start with the pressure, end with a control response</h2>
+          </div>
+
+          <div className="grid-3 stagger">
+            {methodCards.map((item) => (
+              <div key={item.title} className="card reveal">
+                <div className="card-icon">
+                  <item.icon />
                 </div>
-                <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{selectedPaper.title}</h2>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
               </div>
-              <button onClick={() => setSelectedPaper(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><X className="w-5 h-5 text-gray-500" /></button>
-            </div>
-            <div className="flex-1 overflow-auto p-6">
-              <div className="prose prose-gray max-w-none">
-                <p className="text-lg text-gray-700 font-medium mb-6 pb-6 border-b border-gray-100 whitespace-pre-line">{formatAdminTextForDisplay(selectedPaper.abstract)}</p>
-                {formatAdminTextForDisplay(selectedPaper.content)
-                  .split(/\n{2,}/)
-                  .filter(Boolean)
-                  .map((paragraph, i) => (
-                    <p key={i} className="text-gray-600 leading-relaxed mb-4 whitespace-pre-line">{paragraph}</p>
-                  ))}
-              </div>
-            </div>
-            <div className="p-4 border-t border-gray-100 bg-gray-50">
-              <p className="text-xs text-gray-500 text-center">{t.research.context}: {contexts.find(c => c.id === selectedPaper.context)?.title || 'General'}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">Briefings</p>
+            <h2>Browse by context</h2>
+            <p className="body-sm">Filter by the operating context behind the request.</p>
+          </div>
+
+          <div className="filters reveal">
+            {filters.map((item) => (
+              <button
+                key={item.key}
+                type="button"
+                className={`filter-pill${activeFilter === item.key ? ' active' : ''}`}
+                onClick={() => setActiveFilter(item.key)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid-2 stagger">
+            {visibleBriefings.map((item) => (
+              <article key={item.title} className="research-card reveal visible">
+                <div className="research-meta">
+                  <span className="research-tag">Briefing</span>
+                  <span className="research-date">{item.date}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="cta-banner reveal">
+            <h2>Facing a similar challenge?</h2>
+            <p className="body-sm">A debrief can help translate the signal into control logic that fits your operating context.</p>
+            <div className="btn-row">
+              <Link to="/connect" className="btn-primary">
+                Book a debrief
+                <ArrowRight />
+              </Link>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </section>
     </div>
   );
 };

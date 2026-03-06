@@ -1,0 +1,18 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="favicon-gem" x1="24" y1="15.2" x2="24" y2="22.8" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DAC8FF" />
+      <stop offset="0.48" stop-color="#A774FF" />
+      <stop offset="1" stop-color="#6F44D9" />
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="#F6F2FB" />
+  <path d="M24 5.4L42.6 24L24 42.6L5.4 24L24 5.4Z" stroke="#241C36" stroke-width="1.75" opacity="0.86" />
+  <path d="M8.25 24C12.87 17.51 18.12 14.26 24 14.26C29.88 14.26 35.13 17.51 39.75 24C35.13 30.49 29.88 33.74 24 33.74C18.12 33.74 12.87 30.49 8.25 24Z" stroke="#241C36" stroke-width="1.7" opacity="0.94" />
+  <path d="M20.95 20.2H27.05L28.45 37.2H19.55L20.95 20.2Z" stroke="#241C36" stroke-width="1.45" fill="#241C36" fill-opacity="0.05" />
+  <path d="M21.4 20.2L24 16.15L26.6 20.2" stroke="#241C36" stroke-width="1.45" stroke-linejoin="round" fill="#241C36" fill-opacity="0.04" />
+  <path d="M20.1 37.2H27.9" stroke="#241C36" stroke-width="1.45" stroke-linecap="round" />
+  <path d="M18.9 40.15H29.1" stroke="#241C36" stroke-width="1.45" stroke-linecap="round" />
+  <path d="M24 15.5L26.2 17.75L24 20.2L21.8 17.75L24 15.5Z" fill="url(#favicon-gem)" stroke="#E6DAFF" stroke-width="0.5" />
+  <path d="M24 22.25L24.9 23.2L24 24.15L23.1 23.2L24 22.25Z" fill="#C8A55A" fill-opacity="0.85" />
+</svg>

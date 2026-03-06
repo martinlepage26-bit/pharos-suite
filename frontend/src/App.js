@@ -1,37 +1,36 @@
-﻿import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "./context/LanguageContext";
+import './App.css';
+import './claude-v01.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 
-// Components
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop";
-import PageMonogram from "./components/PageMonogram";
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+import ScrollToTop from './components/ScrollToTop';
 
-// Pages
-import Home from "./pages/Home";
-import Services from "./pages/Services";
-import ServiceMenu from "./pages/ServiceMenu";
-import Tool from "./pages/Tool";
-import FAQ from "./pages/FAQ";
-import Research from "./pages/Research";
-import About from "./pages/About";
-import Connect from "./pages/Connect";
-import SealedCard from "./pages/SealedCard";
-import Portfolio from "./pages/Portfolio";
-import Library from "./pages/Library";
-import Admin from "./pages/Admin";
-import Cases from "./pages/Cases";
+import About from './pages/About';
+import Admin from './pages/Admin';
+import Cases from './pages/Cases';
+import Connect from './pages/Connect';
+import FAQ from './pages/FAQ';
+import Home from './pages/Home';
+import Library from './pages/Library';
+import Portfolio from './pages/Portfolio';
+import PortalAurorAI from './pages/PortalAurorAI';
+import PortalCompassAI from './pages/PortalCompassAI';
+import Research from './pages/Research';
+import SealedCard from './pages/SealedCard';
+import ServiceMenu from './pages/ServiceMenu';
+import Services from './pages/Services';
+import Tool from './pages/Tool';
 
 function App() {
   return (
     <LanguageProvider>
-      <div className="App min-h-screen bg-[#F6F7FB]">
+      <div className="App min-h-screen">
         <BrowserRouter>
           <ScrollToTop />
           <Navbar />
-          <PageMonogram />
-          <main>
+          <main className="relative">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
@@ -42,6 +41,8 @@ function App() {
               <Route path="/cases" element={<Cases />} />
               <Route path="/about" element={<About />} />
               <Route path="/connect" element={<Connect />} />
+              <Route path="/client-portal/aurorai" element={<PortalAurorAI />} />
+              <Route path="/client-portal/compassai" element={<PortalCompassAI />} />
               <Route path="/sealed-card" element={<SealedCard />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/library" element={<Library />} />
@@ -56,4 +57,3 @@ function App() {
 }
 
 export default App;
-

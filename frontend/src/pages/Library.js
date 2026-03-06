@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { BookOpen, Scale, CircleDot, ExternalLink, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import lighthouseMono from '../assets/logos/governance-lighthouse-seal-monochrome.svg';
 
 const Library = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const [openEntry, setOpenEntry] = useState(null);
 
-  const sectionKeys = ['frameworks', 'legislation', 'standards'];
   const sectionIcons = [BookOpen, Scale, CircleDot];
 
   const sectionItems = [
@@ -17,10 +17,10 @@ const Library = () => {
       { name: 'OECD AI Principles', url: 'https://oecd.ai/en/ai-principles', tag: 'Policy' }
     ],
     [
-      { name: 'EU AI Act', url: 'https://artificialintelligenceact.eu/', tag: 'Regulation' },
-      { name: 'Canada AIDA (Proposed)', url: 'https://ised-isde.canada.ca/site/innovation-better-canada/en/artificial-intelligence-and-data-act', tag: 'Legislation' },
-      { name: 'US Executive Order on AI (2023)', url: 'https://www.whitehouse.gov/briefing-room/presidential-actions/2023/10/30/executive-order-on-the-safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence/', tag: 'Executive' },
-      { name: 'UK AI Safety Institute', url: 'https://www.gov.uk/government/organisations/ai-safety-institute', tag: 'Government' }
+      { name: 'EU AI Act', url: 'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai', tag: 'Regulation' },
+      { name: 'Directive on Automated Decision-Making (Canada)', url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/guide-scope-directive-automated-decision-making.html', tag: 'Directive' },
+      { name: 'OMB Memorandum M-25-21', url: 'https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf', tag: 'Federal Policy' },
+      { name: 'UK AI Security Institute', url: 'https://www.aisi.gov.uk/', tag: 'Government' }
     ],
     [
       { name: 'NIST SP 800-53 (Security Controls)', url: 'https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final', tag: 'Security' },
@@ -35,7 +35,7 @@ const Library = () => {
       org: 'National Institute of Standards and Technology',
       year: '2023',
       type: 'Framework',
-      description: 'The NIST AI Risk Management Framework (AI RMF) provides a voluntary, consensus-driven structure for identifying, assessing, and managing AI risks across the lifecycle. Organized around four core functions—Govern, Map, Measure, and Manage—the framework emphasizes trustworthiness characteristics such as validity, safety, security, accountability, and fairness. Unlike prescriptive regulation, the AI RMF is flexible and sector-agnostic, designed for integration into existing enterprise risk management systems. It is complemented by implementation playbooks and crosswalks to other standards.'
+      description: 'The NIST AI Risk Management Framework (AI RMF) provides a voluntary, consensus-driven structure for identifying, assessing, and managing AI risks across the lifecycle. Organized around four core functions-Govern, Map, Measure, and Manage-the framework emphasizes trustworthiness characteristics such as validity, safety, security, accountability, and fairness. Unlike prescriptive regulation, the AI RMF is flexible and sector-agnostic, designed for integration into existing enterprise risk management systems. It is complemented by implementation playbooks and crosswalks to other standards.'
     },
     {
       title: 'ISO/IEC 42001',
@@ -56,42 +56,42 @@ const Library = () => {
       org: 'Organisation for Economic Co-operation and Development',
       year: '2019',
       type: 'Policy',
-      description: 'The OECD AI Principles are the first intergovernmental AI policy framework adopted by 40+ countries. They articulate five value-based principles—beneficial AI, human-centered values, transparency, robustness, and accountability—alongside five policy recommendations for governments. The Principles emphasize sustainable development, democratic values, and rule of law. They influenced the G20 AI Principles and national strategies worldwide.'
+      description: 'The OECD AI Principles are the first intergovernmental AI policy framework adopted by 40+ countries. They articulate five value-based principles-beneficial AI, human-centered values, transparency, robustness, and accountability-alongside five policy recommendations for governments. The Principles emphasize sustainable development, democratic values, and rule of law. They influenced the G20 AI Principles and national strategies worldwide.'
     },
     {
       title: 'EU AI Act',
       org: 'European Union',
       year: '2024',
       type: 'Regulation',
-      description: 'The EU AI Act establishes the world\'s first comprehensive, binding AI regulatory regime. It adopts a risk-based approach categorizing AI systems as unacceptable, high-risk, limited-risk, or minimal-risk. High-risk systems (e.g., critical infrastructure, employment, law enforcement) must meet strict requirements for data governance, transparency, human oversight, conformity assessment, and post-market monitoring.'
+      description: 'The EU AI Act is the European Union\'s binding AI regulation. It entered into force in 2024 and applies on a phased timeline, with early prohibitions already in effect and broader obligations for general-purpose and high-risk systems arriving in later phases. It uses a risk-based model and is the clearest current reference point for formal AI compliance architecture.'
     },
     {
-      title: 'Artificial Intelligence and Data Act (AIDA)',
+      title: 'Artificial Intelligence and Data Act (AIDA) - historical proposal',
       org: 'Government of Canada',
-      year: 'Proposed',
-      type: 'Legislation',
-      description: 'Canada\'s proposed Artificial Intelligence and Data Act (AIDA), introduced as part of Bill C-27, seeks to regulate high-impact AI systems through obligations on risk mitigation, transparency, and harm prevention. It would require organizations to assess and manage risks, maintain documentation, and report serious incidents. AIDA reflects Canada\'s rights-oriented and innovation-supportive approach to AI governance.'
+      year: 'Bill C-27',
+      type: 'Historical Proposal',
+      description: 'AIDA was proposed as part of Bill C-27 and would have created a federal private-sector framework for high-impact AI systems. It did not become law during the 44th Parliament, so it should be treated as a historical policy proposal rather than a current legal obligation. It remains useful for understanding the direction Canada was considering for private-sector AI regulation.'
     },
     {
-      title: 'Executive Order 14110 on Safe, Secure, and Trustworthy AI',
+      title: 'Executive Order 14110 (revoked in 2025)',
       org: 'United States Executive Branch',
-      year: '2023',
-      type: 'Executive Order',
-      description: 'Issued in October 2023, Executive Order 14110 directs federal agencies to advance AI safety, security, equity, and innovation. It mandates safety testing and red-teaming for frontier models, establishes reporting requirements for powerful AI systems under the Defense Production Act, and directs NIST to develop evaluation standards. The Order addresses privacy, civil rights, labor impacts, and international collaboration.'
+      year: '2023-2025',
+      type: 'Historical Federal Policy',
+      description: 'Executive Order 14110 was a major early U.S. federal AI order focused on safety testing, reporting, standards, and agency coordination. It was revoked in January 2025, so it should not be cited as current U.S. governing policy. It remains relevant as a historical marker of the first federal frontier-model policy phase.'
     },
     {
-      title: 'UK AI Safety Institute',
+      title: 'UK AI Security Institute (formerly AI Safety Institute)',
       org: 'UK Government',
-      year: '2023',
+      year: '2023-2025',
       type: 'Government Initiative',
-      description: 'Established by the UK government, the AI Safety Institute (formerly the Frontier AI Taskforce) focuses on evaluating advanced AI models for systemic risks, including misuse and loss-of-control scenarios. It collaborates internationally on model evaluations, safety research, and technical standards. The Institute played a central role in the 2023 UK AI Safety Summit.'
+      description: 'Established by the UK government to evaluate advanced AI models for systemic risk, the institute was renamed the AI Security Institute in 2025. It remains a live official reference point for model evaluations, safety and security testing, and UK government AI risk work.'
     },
     {
       title: 'NIST Special Publication 800-53',
       org: 'National Institute of Standards and Technology',
       year: '2020',
       type: 'Security Controls',
-      description: 'NIST SP 800-53 provides a comprehensive catalog of security and privacy controls for federal information systems and organizations. Although not AI-specific, it is foundational for AI system deployment within regulated environments. Controls address access control, incident response, system integrity, and risk assessment—critical for AI infrastructure security.'
+      description: 'NIST SP 800-53 provides a comprehensive catalog of security and privacy controls for federal information systems and organizations. Although not AI-specific, it is foundational for AI system deployment within regulated environments. Controls address access control, incident response, system integrity, and risk assessment-critical for AI infrastructure security.'
     },
     {
       title: 'Model Cards for Model Reporting',
@@ -148,99 +148,294 @@ const Library = () => {
     { name: 'Treasury Board AIA Tool', url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/algorithmic-impact-assessment.html', tag: 'Assessment', description: 'Algorithmic Impact Assessment for federal systems' },
     { name: 'NIST AI RMF Playbook', url: 'https://airc.nist.gov/AI_RMF_Knowledge_Base/Playbook', tag: 'Implementation', description: 'Practical guidance for AI risk management' },
     { name: 'Model Card Toolkit', url: 'https://github.com/tensorflow/model-card-toolkit', tag: 'Documentation', description: 'Generate standardized model documentation' },
-    { name: 'Compass AI', url: 'https://compass.ai/', tag: 'Platform', description: 'AI governance and compliance platform' }
+    { name: 'Guide to Peer Review of Automated Decision Systems', url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/guide-peer-review-automated-decision-systems.html', tag: 'Guidance', description: 'Canadian federal guidance on peer review for automated decision systems' }
   ];
 
-  return (
-    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="library-page">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="page-title mb-4">{t.library.title}</h1>
-        <p className="text-gray-600 mb-2 max-w-2xl">{t.library.description}</p>
-        <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-12">{t.library.keywords}</p>
+  const copy = language === 'fr'
+    ? {
+        eyebrow: 'Bibliotheque',
+        title: 'Normes, droit et references de travail pour une gouvernance sous examen.',
+        body: 'Quand un questionnaire, un audit ou une revue demande une norme, une loi ou une source credible, il faut pouvoir partir des references que d autres reconnaitront rapidement.',
+        primaryLabel: 'References essentielles',
+        primaryTitle: 'Commencer par des references qui voyagent bien',
+        primaryBody: 'Cette selection privilegie les cadres, textes et formats documentaires les plus utiles quand il faut justifier un controle, un choix ou une posture.',
+        noteLabel: 'Usage',
+        noteTitle: 'Faire entrer les references dans le travail.',
+        noteBody: 'Une bonne bibliotheque aide a soutenir une decision, une reponse ou un controle. Elle doit raccourcir le temps d explication, pas l allonger.',
+        notePills: ['Reconnu', 'Citable', 'Actionnable'],
+        sections: [
+          {
+            title: 'Cadres et systemes de management',
+            body: 'A utiliser quand il faut poser la structure de risque, d oversight et de responsabilite du programme.'
+          },
+          {
+            title: 'Droit et orientations reglementaires',
+            body: 'A utiliser quand la question porte sur l exposition juridique, les obligations ou les attentes du secteur public.'
+          },
+          {
+            title: 'Documentation et references de controle',
+            body: 'A utiliser quand il faut choisir le format d une preuve, d une fiche technique ou d une trace de gouvernance.'
+          }
+        ],
+        toolsLabel: 'Execution',
+        toolsTitle: 'Outils utiles quand il faut passer a l action',
+        toolsBody: 'Des points d appui pratiques pour transformer une reference en evaluation, modele ou processus de travail.',
+        bibliographyLabel: 'Lectures longues',
+        bibliographyTitle: 'Bibliographie annotee',
+        bibliographyBody: 'Des notes plus longues pour les references qui meritent davantage qu un simple lien.',
+        finalNote: 'Portee',
+        finalBody: 'Cette bibliotheque est volontairement selective. Elle privilegie les references les plus utiles quand la pression est immediate et signale explicitement les elements historiques qui ne sont plus des obligations actuelles.'
+      }
+    : {
+        eyebrow: 'Library',
+        title: 'Standards, law, and references for scrutiny',
+        body: 'When a questionnaire, audit, or review asks for a standard, statute, or credible source, start with references reviewers recognize quickly.',
+        primaryLabel: 'Core references',
+        primaryTitle: 'Start with references that travel well',
+        primaryBody: 'This selection prioritizes the frameworks, texts, and documentation formats most useful when a team has to justify a control, a decision, or an operating posture.',
+        noteLabel: 'Use',
+        noteTitle: 'Pull references into the work',
+        noteBody: 'A useful library should help support a decision, an answer, or a control. It should reduce explanation time, not add more reading for its own sake.',
+        notePills: ['Recognized', 'Citable', 'Operational'],
+        sections: [
+          {
+            title: 'Frameworks and management systems',
+            body: 'Use these when you need the structural model for risk, oversight, and accountability.'
+          },
+          {
+            title: 'Law and regulatory direction',
+            body: 'Use these when the question is legal exposure, mandatory obligations, or public-sector expectations.'
+          },
+          {
+            title: 'Documentation and control references',
+            body: 'Use these when you need a concrete format for records, technical evidence, or governance artifacts.'
+          }
+        ],
+        toolsLabel: 'Execution',
+        toolsTitle: 'Tools for when the work needs to move',
+        toolsBody: 'Practical starting points for turning a reference into an assessment, template, or working process.',
+        bibliographyLabel: 'Long-form references',
+        bibliographyTitle: 'Annotated bibliography',
+        bibliographyBody: 'Longer notes for the references that deserve more than a link.',
+        finalNote: 'Scope',
+        finalBody: 'This library is intentionally selective. It prioritizes references that are recognizable, practical, and useful when the pressure is immediate, and it labels historical items when they are no longer current obligations.'
+      };
 
-        <div className="space-y-6 mb-12">
-          {sectionKeys.map((key, idx) => {
-            const Icon = sectionIcons[idx];
-            return (
-              <div key={key} className="bg-white border-l-4 border-[#0D0A2E] rounded-xl shadow-[0_4px_16px_rgba(11,15,26,0.06)] p-5 card-hover-lift" data-testid={`library-section-${idx}`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0D0A2E]/15 to-[#2D2380]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#0D0A2E]" /></div>
-                  <h2 className="font-semibold text-xl text-[#1a1a1a]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}>{t.library.sections[key]}</h2>
+  const referenceSections = copy.sections.map((section, idx) => ({
+    ...section,
+    icon: sectionIcons[idx],
+    items: sectionItems[idx]
+  }));
+
+  return (
+    <div className="min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="library-page">
+      <div className="mx-auto max-w-[1240px]">
+        <section className="brand-panel-dark brand-top-rule relative mb-8 overflow-hidden rounded-[34px] px-6 py-8 text-white md:px-8 md:py-10">
+          <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />
+          <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
+          <div className="relative grid gap-8 lg:grid-cols-[1fr_0.96fr] lg:items-start">
+            <div>
+              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                {copy.eyebrow}
+              </p>
+              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                {copy.title}
+              </h1>
+              <p className="mt-4 max-w-[52ch] text-[13px] leading-[1.68] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif" }}>
+                {copy.body}
+              </p>
+            </div>
+
+            <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                {copy.noteLabel}
+              </p>
+              <div className="mt-4 grid gap-5 rounded-[24px] border border-[#13254C]/12 bg-white/84 p-5 md:grid-cols-[0.85fr_1.15fr] md:items-center">
+                <div className="flex flex-col items-center text-center">
+                  <img src={lighthouseMono} alt="Govern AI monochrome seal" className="w-full max-w-[210px] rounded-[18px] bg-[#0F1D37] p-4" />
                 </div>
-                <div className="space-y-2">
-                  {sectionItems[idx].map((item, i) => (
-                    <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-[#F6F7FB] to-[#F6F7FB]/50 hover:from-[#0D0A2E]/8 hover:to-[#2D2380]/5 border border-transparent hover:border-[#0D0A2E]/10 transition-all group" data-testid={`library-item-${idx}-${i}`}>
-                      <div className="flex items-center gap-3">
-                        <span className="font-medium text-gray-800 group-hover:text-[#0D0A2E] transition-colors">{item.name}</span>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-[#0D0A2E]/10 text-[#0D0A2E]/70 font-medium">{item.tag}</span>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#0D0A2E] transition-colors" />
-                    </a>
-                  ))}
+                <div>
+                  <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                    {copy.noteTitle}
+                  </h2>
+                  <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
+                    {copy.noteBody}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {copy.notePills.map((pill) => (
+                      <span
+                        key={pill}
+                        className="inline-flex items-center rounded-full border border-[#D6CCBB] bg-[#FBF7EF] px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-[#13254C]"
+                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                      >
+                        {pill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            );
-          })}
-
-          {/* Online Tools Section */}
-          <div className="bg-white border-l-4 border-[#7b2cbf] rounded-xl shadow-[0_4px_16px_rgba(11,15,26,0.06)] p-5 card-hover-lift" data-testid="library-section-tools">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7b2cbf]/15 to-[#2D2380]/10 flex items-center justify-center"><Wrench className="w-5 h-5 text-[#7b2cbf]" /></div>
-              <h2 className="font-semibold text-xl text-[#1a1a1a]" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}>Online Tools</h2>
-            </div>
-            <div className="space-y-2">
-              {onlineTools.map((tool, i) => (
-                <a key={i} href={tool.url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-[#F6F7FB] to-[#F6F7FB]/50 hover:from-[#7b2cbf]/8 hover:to-[#2D2380]/5 border border-transparent hover:border-[#7b2cbf]/10 transition-all group" data-testid={`library-tool-${i}`}>
-                  <div className="flex items-center gap-3 flex-1">
-                    <span className="font-medium text-gray-800 group-hover:text-[#7b2cbf] transition-colors">{tool.name}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#7b2cbf]/10 text-[#7b2cbf]/70 font-medium">{tool.tag}</span>
-                    <span className="text-sm text-gray-500 ml-2 hidden md:inline">{tool.description}</span>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#7b2cbf] transition-colors" />
-                </a>
-              ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Annotated Bibliography */}
-        <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6">Annotated Bibliography</h2>
-        <p className="text-gray-600 mb-6">Detailed descriptions of key AI governance resources. Click to expand.</p>
-        <div className="space-y-3 mb-12">
-          {annotatedBibliography.map((entry, index) => (
-            <div key={index} className="bg-white rounded-xl border border-gray-100 shadow-[0_2px_8px_rgba(11,15,26,0.04)] overflow-hidden card-hover-lift">
-              <button
-                onClick={() => setOpenEntry(openEntry === index ? null : index)}
-                className="w-full text-left p-4 flex items-center justify-between gap-4 hover:bg-[#7b2cbf]/5 transition-colors"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-[#0B0F1A]">{entry.title}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#7b2cbf]/10 text-[#7b2cbf] font-medium">{entry.type}</span>
+        <section className="mb-8">
+          <div className="mb-5 max-w-[820px]">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              {copy.primaryLabel}
+            </p>
+            <h2 className="mt-2 text-[30px] text-[#10162A] md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+              {copy.primaryTitle}
+            </h2>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+              {copy.primaryBody}
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {referenceSections.map((section, idx) => {
+              const Icon = section.icon;
+              return (
+                <div key={section.title} className="rounded-[28px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_16px_30px_rgba(8,20,40,0.05)]" data-testid={`library-section-${idx}`}>
+                  <div className="mb-4 flex items-start gap-3">
+                    <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-[#B89B5E]/18 bg-[#F2E8D8]">
+                      <Icon className="h-5 w-5 text-[#13254C]" />
+                    </div>
+                    <div>
+                      <h2 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                        {section.title}
+                      </h2>
+                      <p className="mt-2 text-sm leading-[1.72] text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                        {section.body}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-500">{entry.org} · {entry.year}</p>
+                  <div className="space-y-2">
+                    {section.items.map((item, index) => (
+                      <a
+                        key={index}
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center justify-between gap-4 rounded-[20px] border border-[#E6DDCD] bg-[#FBF7EF] p-4 transition-colors hover:border-[#B89B5E]/34"
+                        data-testid={`library-item-${idx}-${index}`}
+                      >
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                              {item.name}
+                            </span>
+                            <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                              {item.tag}
+                            </span>
+                          </div>
+                        </div>
+                        <ExternalLink className="h-4 w-4 flex-shrink-0 text-[#20314F]/44 transition-colors group-hover:text-[#13254C]" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                {openEntry === index ? (
-                  <ChevronUp className="w-5 h-5 text-[#7b2cbf] flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                )}
-              </button>
-              {openEntry === index && (
-                <div className="px-4 pb-4 text-gray-600 border-t border-gray-100 pt-3 text-sm leading-relaxed">
-                  {entry.description}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+              );
+            })}
 
-        <div className="mt-8 p-4 bg-[#0D0A2E]/5 rounded-xl border border-[#0D0A2E]/20">
-          <p className="text-sm text-gray-600">
-            <span className="font-semibold text-[#0B0F1A]">{t.library.note}</span> {t.library.noteText}
-          </p>
+            <div className="rounded-[28px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_16px_30px_rgba(8,20,40,0.05)]" data-testid="library-section-tools">
+              <div className="mb-4 flex items-start gap-3">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-[#B89B5E]/18 bg-[#F2E8D8]">
+                  <Wrench className="h-5 w-5 text-[#13254C]" />
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                    {copy.toolsLabel}
+                  </p>
+                  <h2 className="mt-2 text-[26px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                    {copy.toolsTitle}
+                  </h2>
+                  <p className="mt-2 text-sm text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                    {copy.toolsBody}
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-2">
+                {onlineTools.map((tool, index) => (
+                  <a
+                    key={index}
+                    href={tool.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-4 rounded-[20px] border border-[#E6DDCD] bg-[#FBF7EF] p-4 transition-colors hover:border-[#B89B5E]/34"
+                    data-testid={`library-tool-${index}`}
+                  >
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                          {tool.name}
+                        </span>
+                        <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                          {tool.tag}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-sm text-[#20314F]/64" style={{ fontFamily: "'Lato', sans-serif" }}>
+                        {tool.description}
+                      </p>
+                    </div>
+                    <ExternalLink className="h-4 w-4 flex-shrink-0 text-[#20314F]/44 transition-colors group-hover:text-[#13254C]" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="brand-panel rounded-[32px] px-6 py-7 md:px-8 md:py-8">
+          <div className="mb-6 max-w-[820px]">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              {copy.bibliographyLabel}
+            </p>
+            <h2 className="mt-2 text-[30px] text-[#10162A] md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+              {copy.bibliographyTitle}
+            </h2>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+              {copy.bibliographyBody}
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {annotatedBibliography.map((entry, index) => (
+              <div key={index} className="overflow-hidden rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                <button
+                  onClick={() => setOpenEntry(openEntry === index ? null : index)}
+                  className="flex w-full items-center justify-between gap-4 p-4 text-left transition-colors hover:bg-[#FBF7EF]"
+                >
+                  <div className="flex-1">
+                    <div className="mb-1 flex flex-wrap items-center gap-2">
+                      <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                        {entry.title}
+                      </span>
+                      <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                        {entry.type}
+                      </span>
+                    </div>
+                    <p className="text-sm text-[#20314F]/64" style={{ fontFamily: "'Lato', sans-serif" }}>
+                      {entry.org} · {entry.year}
+                    </p>
+                  </div>
+                  {openEntry === index ? (
+                    <ChevronUp className="h-5 w-5 flex-shrink-0 text-[#13254C]" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 flex-shrink-0 text-[#20314F]/44" />
+                  )}
+                </button>
+                {openEntry === index && (
+                  <div className="border-t border-[#E6DDCD] px-4 pb-4 pt-4 text-sm leading-[1.8] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+                    {entry.description}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div className="mt-8 rounded-[24px] border border-[#D6CCBB] bg-[#FBF7EF] p-5 text-sm leading-[1.8] text-[#20314F]/74 shadow-[0_12px_24px_rgba(8,20,40,0.04)]" style={{ fontFamily: "'Lato', sans-serif" }}>
+          <span className="font-semibold text-[#10162A]">{copy.finalNote}:</span> {copy.finalBody}
         </div>
       </div>
     </div>

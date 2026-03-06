@@ -1,66 +1,91 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useLanguage } from '../context/LanguageContext';
+import LighthouseGlyph from './LighthouseGlyph';
+
+const navItems = [
+  { path: '/', label: 'Home' },
+  { path: '/services', label: 'Services' },
+  { path: '/research', label: 'Research' },
+  { path: '/about', label: 'About' },
+  { path: '/connect', label: 'Connect' }
+];
 
 const Navbar = () => {
   const location = useLocation();
-  const { t, language, toggleLanguage } = useLanguage();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const navItems = [
-    { path: '/', label: t.nav.home },
-    { path: '/services', label: t.nav.services },
-    { path: '/research', label: t.nav.research },
-    { path: '/library', label: t.nav.library },
-    { path: '/about', label: t.nav.about },
-    { path: '/connect', label: t.nav.connect }
-  ];
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 20);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    document.body.style.overflow = '';
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const homeHeroVisible = location.pathname === '/' && !scrolled;
+  const navClass = ['nav', scrolled ? 'scrolled' : '', homeHeroVisible ? 'hero-visible' : ''].filter(Boolean).join(' ');
 
   return (
-    <nav className="w-full px-6 md:px-10 py-2.5 bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/10" data-testid="navbar">
-      <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-5">
-        <Link to="/" className="flex items-baseline gap-2" data-testid="nav-brand">
-          <span
-            className="text-[29px] md:text-[32px] font-semibold leading-none text-[#111827]"
-            style={{ fontFamily: "'Source Serif 4', serif" }}
-          >
-            Martin Lepage PhD
-          </span>
-          <span
-            className="hidden md:block text-[14px] leading-none text-[#111827]/45"
-            style={{ fontFamily: "'Lato', sans-serif" }}
-          >
-            {language === 'fr' ? 'Consultant en Gouvernance IA' : 'AI Governance Consulting'}
-          </span>
-        </Link>
+    <>
+      <nav className={navClass} data-testid="navbar">
+        <div className="nav-inner">
+          <Link to="/" className="nav-brand" aria-label="Govern AI home">
+            <LighthouseGlyph className="nav-logo" />
+            <span className="nav-wordmark">Govern AI</span>
+          </Link>
 
-        <div className="flex items-center gap-1 md:gap-2">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-[10px] md:text-[11px] tracking-[0.12em] uppercase px-2.5 py-1 rounded-full transition-all ${
-                  isActive
-                    ? 'text-[#0D0A2E] bg-[#EEF0FF] border border-[#0D0A2E]/20'
-                    : 'text-[#0B0F1A]/50 hover:text-[#0B0F1A]'
-                }`}
-                style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 500 }}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          <button
-            onClick={toggleLanguage}
-            data-testid="lang-toggle"
-            className="text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-[#0B0F1A]/50 hover:text-[#0B0F1A] px-2 py-1"
-            style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 500 }}
-          >
-            {language === 'en' ? 'FR' : 'EN'}
-          </button>
+          <div className="nav-right">
+            <div className="nav-links">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link key={item.path} to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <button className="nav-lang" type="button" disabled title="French version coming soon" aria-disabled="true">
+                FR
+              </button>
+            </div>
+            <button
+              className={`nav-hamburger${menuOpen ? ' open' : ''}`}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
         </div>
+      </nav>
+
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
+        {navItems.map((item) => (
+          <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)}>
+            {item.label}
+          </Link>
+        ))}
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-muted)' }}>
+          FR coming soon
+        </span>
       </div>
-    </nav>
+    </>
   );
 };
 
