@@ -37,30 +37,30 @@ const Tool = () => {
     ? {
         eyebrow: 'Outil',
         title: 'Un instantane rapide pour voir ou la gouvernance tient, et ou elle reste encore fragile.',
-        body: 'Choisissez l environnement le plus proche de votre travail, repondez a huit questions, et obtenez une lecture rapide des zones ou les controles, la preuve et les droits de decision sont encore trop minces.',
+        body: 'Choisissez l environnement le plus proche de votre travail, repondez a huit questions, et obtenez une lecture rapide des zones ou les controles, la preuve et les droits de decision restent trop minces pour soutenir une revue sereinement.',
         noteLabel: 'Ce que fait l outil',
         noteTitle: 'Reperer la couche manquante avant que la revue ne la force.',
-        noteBody: 'Cet outil ne remplace pas un audit ni une certification. Il sert a calibrer si l inventaire, la priorisation, les controles, la preuve et la cadence sont deja en place.',
+        noteBody: 'Cet outil ne remplace pas un audit ni une certification. Il sert a calibrer si l inventaire, la priorisation, les controles, la preuve et la cadence sont deja en place, et a garder les affirmations dans les limites de ce qui est vraiment demonstrable.',
         noteCards: [
           {
             icon: ClipboardList,
             title: 'Inventaire',
-            description: 'Voir si les usages et dependances sont clairement nommes.'
+            description: 'Voir si les usages et dependances sont clairement nommes et assez traces pour etre revus.'
           },
           {
             icon: Radar,
             title: 'Controle',
-            description: 'Voir si la logique de revue et d escalation est definie.'
+            description: 'Voir si la logique de revue, d escalation et de traitement des ecarts est definie.'
           },
           {
             icon: ShieldCheck,
             title: 'Preuve',
-            description: 'Voir si la documentation existe deja dans une forme lisible.'
+            description: 'Voir si la documentation existe deja dans une forme lisible et defendable.'
           }
         ],
         runLabel: 'Evaluation',
         runTitle: 'Faire l instantane de preparation',
-        runBody: 'Le resultat n est pas un verdict final. C est un signal sur l endroit ou le travail doit commencer.',
+        runBody: 'Le resultat n est pas un verdict final. C est un signal sur l endroit ou le travail doit commencer, et sur les zones ou le statut devrait rester provisoire.',
         sectorPrompt: 'Choisissez l environnement le plus proche de votre travail',
         questionPrompt: 'Repondez selon l etat actuel, pas selon le modele ideal',
         reset: 'Recommencer',
@@ -70,30 +70,30 @@ const Tool = () => {
     : {
         eyebrow: 'Tool',
         title: 'A quick snapshot of governance strength and thin spots',
-        body: 'Choose the closest environment, answer eight questions, and get a fast signal on where governance still needs structure.',
+        body: 'Choose the closest environment, answer eight questions, and get a fast signal on where governance still needs structure before review pressure turns those gaps into blockers.',
         noteLabel: 'What the tool does',
         noteTitle: 'Locate the missing layer before review forces it.',
-        noteBody: 'This is not a certification or an audit. It is a short calibration to see whether inventory, tiering, controls, evidence, and cadence are already in place.',
+        noteBody: 'This is not a certification or an audit. It is a short calibration to see whether inventory, tiering, controls, evidence, and cadence are already in place, and to keep the resulting claims inside what can actually be demonstrated.',
         noteCards: [
           {
             icon: ClipboardList,
             title: 'Inventory',
-            description: 'Check whether systems, uses, and dependencies are clearly named.'
+            description: 'Check whether systems, uses, and dependencies are clearly named and traceable enough for review.'
           },
           {
             icon: Radar,
             title: 'Control',
-            description: 'Check whether review logic and escalation paths are defined.'
+            description: 'Check whether review logic, escalation paths, and gap handling are defined.'
           },
           {
             icon: ShieldCheck,
             title: 'Evidence',
-            description: 'Check whether documentation already exists in a legible form.'
+            description: 'Check whether documentation already exists in a legible and defensible form.'
           }
         ],
         runLabel: 'Assessment',
         runTitle: 'Run the readiness snapshot',
-        runBody: 'The result is not a final judgment. It is a signal about where the work likely needs to begin.',
+        runBody: 'The result is not a final judgment. It is a signal about where the work likely needs to begin and where the status should remain provisional.',
         sectorPrompt: 'Choose the environment closest to your work',
         questionPrompt: 'Answer for the current state, not the ideal one',
         reset: 'Start over',
@@ -438,6 +438,11 @@ const Tool = () => {
                       <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
                         {t.tool.results.recommendedSteps}
                       </h4>
+                      <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+                        {language === 'fr'
+                          ? 'Ces suites recommandent un point de depart. Elles ne transforment pas automatiquement un etat partiel en gouvernance complete.'
+                          : 'These next steps recommend a starting point. They do not automatically turn a partial state into complete governance.'}
+                      </p>
                       <ul className="mt-4 space-y-3">
                         {nextSteps.map((stepItem, index) => (
                           <li key={index} className="flex items-start gap-2 text-sm leading-[1.72] text-[#20314F]/74" style={{ fontFamily: "'Lato', sans-serif" }}>

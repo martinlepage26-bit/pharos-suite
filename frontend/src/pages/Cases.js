@@ -26,8 +26,8 @@ const Cases = () => {
     : 'Case studies for AI under real review';
 
   const heroBody = language === 'fr'
-    ? 'Des exemples de travail de gouvernance la ou la pression est concrete: questionnaires, audit, achats, risque et supervision continue.'
-    : 'Examples of governance work where the pressure is concrete, from questionnaires and audit to procurement, risk, and ongoing oversight.';
+    ? 'Des exemples de travail de gouvernance la ou la pression est concrete: questionnaires, audit, achats, risque et supervision continue. Chaque dossier montre ce qui a pu etre soutenu par la preuve, et non une version lisse du travail.'
+    : 'Examples of governance work where the pressure is concrete, from questionnaires and audit to procurement, risk, and ongoing oversight. Each dossier shows what could actually be supported by evidence, not a polished after-the-fact version of the work.';
 
   return (
     <div data-testid="cases-page">
@@ -46,7 +46,7 @@ const Cases = () => {
           <div className="section-header reveal">
             <p className="eyebrow">{language === 'fr' ? 'Secteurs' : 'Sectors'}</p>
             <h2>{t.cases.sectorsWeServe}</h2>
-            <p className="body-sm">{language === 'fr' ? 'Chaque contexte change la forme de la preuve, la logique de revue et la vitesse d escalation.' : 'Each operating context changes the evidence burden, the review logic, and the speed of escalation.'}</p>
+            <p className="body-sm">{language === 'fr' ? 'Chaque contexte change la forme de la preuve, la logique de revue et la vitesse d escalation, donc les affirmations doivent rester proportionnees a ce dossier.' : 'Each operating context changes the evidence burden, the review logic, and the speed of escalation, so the resulting claims have to stay proportionate to that dossier.'}</p>
           </div>
 
           <div className="grid-3 stagger">
@@ -80,7 +80,7 @@ const Cases = () => {
           <div className="section-header reveal">
             <p className="eyebrow">{language === 'fr' ? 'Dossiers' : 'Selected dossiers'}</p>
             <h2>{language === 'fr' ? 'Mandats representatifs' : 'Representative engagements'}</h2>
-            <p className="body-sm">{language === 'fr' ? 'Chaque etude montre comment la gouvernance se traduit en decisions, artefacts et controles lisibles.' : 'Each case shows how governance turns into clearer decisions, usable artifacts, and review-ready controls.'}</p>
+            <p className="body-sm">{language === 'fr' ? 'Chaque etude montre comment la gouvernance se traduit en decisions, artefacts et controles lisibles, avec les limites du dossier encore visibles.' : 'Each case shows how governance turns into clearer decisions, usable artifacts, and review-ready controls while keeping the dossier limits visible.'}</p>
           </div>
 
           <div className="stagger" style={{ display: 'grid', gap: '24px' }}>

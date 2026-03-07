@@ -23,22 +23,22 @@ const ServiceMenu = () => {
     ? {
         eyebrow: 'Menu des services',
         title: 'Des mandats structures pour repondre a l examen sans creer de theatre de gouvernance.',
-        body: 'Le menu sert a lire la difference entre les points d entree: poser la fondation, resserrer les controles et la preuve, ou maintenir une supervision stable pendant que les systemes evoluent.',
+        body: 'Le menu sert a lire la difference entre les points d entree: poser la fondation, resserrer les controles et la preuve, ou maintenir une supervision stable pendant que les systemes evoluent sans promettre plus que ce qui peut etre soutenu.',
         noteTitle: 'Comment lire le menu',
-        noteBody: 'Choisissez d abord selon la source de pression, pas selon le vocabulaire. Le bon mandat est celui qui produit les pieces dont la revue aura besoin.',
+        noteBody: 'Choisissez d abord selon la source de pression, pas selon le vocabulaire. Le bon mandat est celui qui produit les pieces dont la revue aura besoin et qui laisse les zones encore ouvertes clairement visibles.',
         packageLabel: 'Mandats',
         packageTitle: 'Choisir le mandat qui correspond a la pression',
-        packageBody: 'Chaque mandat est defini par son meilleur contexte, ses livrables explicites et ce que l organisation obtient a la fin.',
+        packageBody: 'Chaque mandat est defini par son meilleur contexte, ses livrables explicites et ce que l organisation obtient a la fin sans glisser vers une promesse implicite de conformite totale.',
         deliverables: 'Livrables',
         produces: 'Ce que cela produit',
         bestFor: 'Ideal pour',
         discuss: 'Discuter de ce mandat',
         driversLabel: 'Dimensionnement',
         driversTitle: 'Ce qui fait varier la portee',
-        driversBody: 'Le travail change selon le nombre de systemes, le niveau de revue attendu et la sensibilite des decisions soutenues par l IA.',
+        driversBody: 'Le travail change selon le nombre de systemes, le niveau de revue attendu et la sensibilite des decisions soutenues par l IA, donc le niveau de preuve a tenir augmente aussi.',
         closingLabel: 'Prochain pas',
         closingTitle: 'Besoin d aide pour choisir le bon point d entree?',
-        closingBody: 'Un debrief court suffit pour choisir le mandat, la portee et les premiers livrables les plus utiles.',
+        closingBody: 'Un debrief court suffit pour choisir le mandat, la portee et les premiers livrables les plus utiles sans surestimer l etat de preparation actuel.',
         actions: {
           connect: 'Reserver un debrief',
           tool: 'Evaluer la preparation'
@@ -64,22 +64,22 @@ const ServiceMenu = () => {
     : {
         eyebrow: 'Service menu',
         title: 'Packages that answer scrutiny without governance theatre',
-        body: 'The menu distinguishes the entry points: lay the foundation, tighten controls and evidence, or keep oversight stable as systems change.',
+        body: 'The menu distinguishes the entry points: lay the foundation, tighten controls and evidence, or keep oversight stable as systems change without implying a stronger governance state than the evidence can support.',
         noteTitle: 'How to read the menu',
-        noteBody: 'Choose first by pressure source, not by vocabulary. The right package is the one that produces the materials the review will actually ask for.',
+        noteBody: 'Choose first by pressure source, not by vocabulary. The right package is the one that produces the materials the review will actually ask for and leaves unresolved areas visible instead of smoothing them over.',
         packageLabel: 'Packages',
         packageTitle: 'Choose the package that matches the pressure',
-        packageBody: 'Each package is defined by its best fit, explicit deliverables, and what the organization is left with at the end.',
+        packageBody: 'Each package is defined by its best fit, explicit deliverables, and what the organization is left with at the end without turning a scoped engagement into an implied compliance promise.',
         deliverables: 'Deliverables',
         produces: 'What it produces',
         bestFor: 'Ideal for',
         discuss: 'Discuss this package',
         driversLabel: 'Scoping',
         driversTitle: 'What changes the scope',
-        driversBody: 'The work shifts with the number of systems in scope, the level of review expected, and the sensitivity of the decisions the AI supports.',
+        driversBody: 'The work shifts with the number of systems in scope, the level of review expected, and the sensitivity of the decisions the AI supports, so the evidence burden shifts with it.',
         closingLabel: 'Next step',
         closingTitle: 'Need help choosing the right entry point?',
-        closingBody: 'A short debrief is enough to choose the package, the scope, and the first outputs that are most likely to matter.',
+        closingBody: 'A short debrief is enough to choose the package, the scope, and the first outputs that are most likely to matter without overstating current readiness.',
         actions: {
           connect: 'Book a debrief',
           tool: 'Assess readiness'
@@ -133,7 +133,7 @@ const ServiceMenu = () => {
         : [
             'A working governance model teams can use immediately',
             'Clearer roles for procurement, audit, and internal review',
-            'A defensible baseline for escalation and oversight'
+            'A defensible baseline for escalation and oversight, with open gaps still visible'
           ]
     },
     {
@@ -165,7 +165,7 @@ const ServiceMenu = () => {
         : [
             'A documentation structure that is ready for procurement',
             'Legible evidence expectations for audit',
-            'Named owners for controls and upkeep'
+            'Named owners for controls, upkeep, and unresolved follow-up'
           ]
     },
     {
@@ -197,7 +197,7 @@ const ServiceMenu = () => {
         : [
             'Stable oversight without slowing delivery',
             'Documentation that stays legible as systems change',
-            'Usable summaries for leadership and committees'
+            'Usable summaries for leadership and committees that distinguish current proof from remaining uncertainty'
           ]
     }
   ];
