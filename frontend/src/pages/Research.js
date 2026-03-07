@@ -60,17 +60,17 @@ const methodCards = [
   {
     icon: Target,
     title: 'Spot the signal',
-    description: 'Identify the incident, risk, or constraint that requires a governance response.'
+    description: 'Identify the incident, risk, or institutional constraint that requires a governance response.'
   },
   {
     icon: FileCheck2,
     title: 'Translate to a control',
-    description: 'Turn the problem into a review expectation, threshold, or documentation requirement.'
+    description: 'Turn the problem into a review expectation, threshold, evidence need, or documentation requirement.'
   },
   {
     icon: BookOpen,
     title: 'Make it legible',
-    description: 'Produce something a customer, auditor, or committee can actually follow.'
+    description: 'Produce something a customer, auditor, or committee can follow, including what remains uncertain.'
   }
 ];
 
@@ -90,7 +90,7 @@ const Research = () => {
             <p className="eyebrow">Research</p>
             <h1>Briefings for scrutiny, review, and control design</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Each briefing takes a real signal, names the governance pressure it creates, and turns it into control logic teams can apply.
+              Each briefing starts with a real signal, names the governance pressure it creates, and turns it into control logic, claim boundaries, and evidence questions teams can actually use.
             </p>
           </div>
         </div>
@@ -100,7 +100,7 @@ const Research = () => {
         <div className="container">
           <div className="section-header reveal">
             <p className="eyebrow">Method</p>
-            <h2>Start with the pressure, end with a control response</h2>
+            <h2>Start with the pressure, end with a reviewable control response</h2>
           </div>
 
           <div className="grid-3 stagger">
@@ -122,7 +122,7 @@ const Research = () => {
           <div className="section-header reveal">
             <p className="eyebrow">Briefings</p>
             <h2>Browse by context</h2>
-            <p className="body-sm">Filter by the operating context behind the request.</p>
+            <p className="body-sm">Filter by the operating context behind the review demand.</p>
           </div>
 
           <div className="filters reveal">
@@ -157,7 +157,7 @@ const Research = () => {
         <div className="container">
           <div className="cta-banner reveal">
             <h2>Facing a similar challenge?</h2>
-            <p className="body-sm">A debrief can help translate the signal into control logic that fits your operating context.</p>
+            <p className="body-sm">A debrief can help translate the signal into control logic, evidence needs, and a proportionate next step.</p>
             <div className="btn-row">
               <Link to="/connect" className="btn-primary">
                 Book a debrief

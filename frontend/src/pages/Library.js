@@ -155,70 +155,70 @@ const Library = () => {
     ? {
         eyebrow: 'Bibliotheque',
         title: 'Normes, droit et references de travail pour une gouvernance sous examen.',
-        body: 'Quand un questionnaire, un audit ou une revue demande une norme, une loi ou une source credible, il faut pouvoir partir des references que d autres reconnaitront rapidement.',
+        body: 'Quand un questionnaire, un audit ou une revue demande une norme, une loi ou une source credible, il faut pouvoir partir de references reconnues rapidement et dont le statut peut etre verifie.',
         primaryLabel: 'References essentielles',
-        primaryTitle: 'Commencer par des references qui voyagent bien',
-        primaryBody: 'Cette selection privilegie les cadres, textes et formats documentaires les plus utiles quand il faut justifier un controle, un choix ou une posture.',
+        primaryTitle: 'Commencer par des references qui tiennent en revue',
+        primaryBody: 'Cette selection privilegie les cadres, textes et formats documentaires les plus utiles quand il faut justifier un controle, une decision, ou expliquer pourquoi une affirmation doit rester plus etroite que le langage marketing autour d elle.',
         noteLabel: 'Usage',
-        noteTitle: 'Faire entrer les references dans le travail.',
-        noteBody: 'Une bonne bibliotheque aide a soutenir une decision, une reponse ou un controle. Elle doit raccourcir le temps d explication, pas l allonger.',
+        noteTitle: 'Faire entrer les references dans un travail verifiable.',
+        noteBody: 'Une bonne bibliotheque aide a soutenir une decision, une reponse ou un controle avec des sources actuelles, citables, et proportionnees a l affirmation avancee.',
         notePills: ['Reconnu', 'Citable', 'Actionnable'],
         sections: [
           {
             title: 'Cadres et systemes de management',
-            body: 'A utiliser quand il faut poser la structure de risque, d oversight et de responsabilite du programme.'
+            body: 'A utiliser quand il faut poser la structure de risque, d oversight, de responsabilite et de gestion de la preuve.'
           },
           {
             title: 'Droit et orientations reglementaires',
-            body: 'A utiliser quand la question porte sur l exposition juridique, les obligations ou les attentes du secteur public.'
+            body: 'A utiliser quand la question porte sur l exposition juridique, les obligations, ou les attentes du secteur public qu il faut nommer avec precision.'
           },
           {
             title: 'Documentation et references de controle',
-            body: 'A utiliser quand il faut choisir le format d une preuve, d une fiche technique ou d une trace de gouvernance.'
+            body: 'A utiliser quand il faut choisir le format d une preuve, d une fiche technique ou d une trace de gouvernance que d autres pourront inspecter.'
           }
         ],
         toolsLabel: 'Execution',
-        toolsTitle: 'Outils utiles quand il faut passer a l action',
-        toolsBody: 'Des points d appui pratiques pour transformer une reference en evaluation, modele ou processus de travail.',
+        toolsTitle: 'Outils pour transformer des references en preuve de travail',
+        toolsBody: 'Des points d appui pratiques pour transformer une reference en evaluation, modele ou processus de travail sans exagerer ce qui existe deja.',
         bibliographyLabel: 'Lectures longues',
         bibliographyTitle: 'Bibliographie annotee',
-        bibliographyBody: 'Des notes plus longues pour les references qui meritent davantage qu un simple lien.',
+        bibliographyBody: 'Des notes plus longues pour les references qui meritent davantage qu un simple lien et demandent un minimum de contexte avant revue.',
         finalNote: 'Portee',
-        finalBody: 'Cette bibliotheque est volontairement selective. Elle privilegie les references les plus utiles quand la pression est immediate et signale explicitement les elements historiques qui ne sont plus des obligations actuelles.'
+        finalBody: 'Cette bibliotheque est volontairement selective. Elle privilegie les references les plus utiles quand la pression est immediate et signale explicitement les elements historiques pour qu ils ne soient pas confondus avec des obligations actuelles.'
       }
     : {
         eyebrow: 'Library',
         title: 'Standards, law, and references for scrutiny',
-        body: 'When a questionnaire, audit, or review asks for a standard, statute, or credible source, start with references reviewers recognize quickly.',
+        body: 'When a questionnaire, audit, or review asks for a standard, statute, or credible source, start with references reviewers recognize quickly and whose status can be verified.',
         primaryLabel: 'Core references',
-        primaryTitle: 'Start with references that travel well',
-        primaryBody: 'This selection prioritizes the frameworks, texts, and documentation formats most useful when a team has to justify a control, a decision, or an operating posture.',
+        primaryTitle: 'Start with references that hold up in review',
+        primaryBody: 'This selection prioritizes the frameworks, texts, and documentation formats most useful when a team has to justify a control, a decision, or explain why a claim should stay narrower than the surrounding marketing language.',
         noteLabel: 'Use',
-        noteTitle: 'Pull references into the work',
-        noteBody: 'A useful library should help support a decision, an answer, or a control. It should reduce explanation time, not add more reading for its own sake.',
+        noteTitle: 'Pull references into reviewable work',
+        noteBody: 'A useful library should help support a decision, an answer, or a control with sources that are current, citable, and proportionate to the claim being made.',
         notePills: ['Recognized', 'Citable', 'Operational'],
         sections: [
           {
             title: 'Frameworks and management systems',
-            body: 'Use these when you need the structural model for risk, oversight, and accountability.'
+            body: 'Use these when you need the structural model for risk, oversight, accountability, and evidence stewardship.'
           },
           {
             title: 'Law and regulatory direction',
-            body: 'Use these when the question is legal exposure, mandatory obligations, or public-sector expectations.'
+            body: 'Use these when the question is legal exposure, mandatory obligations, or public-sector expectations that need to be stated precisely.'
           },
           {
             title: 'Documentation and control references',
-            body: 'Use these when you need a concrete format for records, technical evidence, or governance artifacts.'
+            body: 'Use these when you need a concrete format for records, technical evidence, or governance artifacts that others can inspect.'
           }
         ],
         toolsLabel: 'Execution',
-        toolsTitle: 'Tools for when the work needs to move',
-        toolsBody: 'Practical starting points for turning a reference into an assessment, template, or working process.',
+        toolsTitle: 'Tools for turning references into working evidence',
+        toolsBody: 'Practical starting points for turning a reference into an assessment, template, or working process without overstating what is already in place.',
         bibliographyLabel: 'Long-form references',
         bibliographyTitle: 'Annotated bibliography',
-        bibliographyBody: 'Longer notes for the references that deserve more than a link.',
+        bibliographyBody: 'Longer notes for the references that deserve more than a link and need brief context before review.',
         finalNote: 'Scope',
-        finalBody: 'This library is intentionally selective. It prioritizes references that are recognizable, practical, and useful when the pressure is immediate, and it labels historical items when they are no longer current obligations.'
+        finalBody: 'This library is intentionally selective. It prioritizes references that are recognizable, practical, and useful when the pressure is immediate. Historical items are labeled so older policy signals are not mistaken for current obligations.'
       };
 
   const referenceSections = copy.sections.map((section, idx) => ({

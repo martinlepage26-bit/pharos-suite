@@ -17,17 +17,17 @@ const FAQ = () => {
     ? {
         eyebrow: 'FAQ',
         title: 'Des reponses directes pour les equipes qui doivent rendre leur gouvernance lisible.',
-        body: 'Ces questions reviennent quand une equipe prepare une revue, un questionnaire, une discussion de direction ou un premier mandat. Les reponses visent le travail reel, pas le theatre de conformite.',
+        body: 'Ces questions reviennent quand une equipe prepare une revue, un questionnaire, une discussion de direction ou un premier mandat. Les reponses restent proches de ce qui peut etre demontre, de ce qui manque encore, et de ce qu il ne faut pas exagerer.',
         noteLabel: 'Usage',
         noteTitle: 'Commencer par les questions qui reviennent sous pression.',
-        noteBody: 'Quand l examen arrive, les memes demandes reviennent: qui decide, quel dossier existe, quelles preuves tiennent, et comment le travail commence sans se figer.',
+        noteBody: 'Quand l examen arrive, les memes demandes reviennent: qui decide, quel dossier existe, quelles preuves tiennent, et ou la preuve reste trop mince pour soutenir une affirmation plus forte.',
         notePills: ['Decision', 'Preuve', 'Mandat'],
         sectionIntroLabel: 'Themes',
         sectionIntroTitle: 'Les questions se regroupent autour de trois besoins',
-        sectionIntroBody: 'Comprendre ce que la gouvernance est, ce qu il faut avoir en main pour la revue, et comment les mandats se structurent.',
+        sectionIntroBody: 'Comprendre ce que la gouvernance est, ce qu il faut avoir en main pour la revue, et comment le travail reste proportionne a la preuve disponible.',
         closingLabel: 'Suite',
         closingTitle: 'Besoin d une reponse liee a votre cas concret?',
-        closingBody: 'Le meilleur prochain pas est un debrief court avec le contexte, la source de pression et les livrables dont vous aurez besoin.',
+        closingBody: 'Le meilleur prochain pas est un debrief court avec le contexte, la source de pression et le niveau de preuve que la situation exigera.',
         actions: {
           connect: 'Reserver un debrief',
           tool: 'Evaluer la preparation',
@@ -42,7 +42,7 @@ const FAQ = () => {
             items: [
               {
                 q: 'Qu est-ce que la gouvernance IA, concretement?',
-                a: 'C est le systeme operatoire qui rend l usage de l IA lisible, controle et defensable. Cela inclut les droits de decision, la logique de priorisation, les controles, les preuves et la cadence de revue.'
+                a: 'C est le systeme operatoire qui rend l usage de l IA lisible, controle et defensable en revue. Cela inclut les droits de decision, la logique de priorisation, les controles, les preuves et la cadence de revue.'
               },
               {
                 q: 'Quelle difference entre ethique de l IA et gouvernance IA?',
@@ -62,11 +62,11 @@ const FAQ = () => {
             items: [
               {
                 q: 'Que veulent vraiment les auditeurs et les equipes d approvisionnement?',
-                a: 'Ils veulent pouvoir dire oui sans prendre un risque aveugle. Cela veut dire des niveaux de risque, des droits de decision, des controles nommes, des tests, et un dossier qui se laisse suivre sans explications improvisees.'
+                a: 'Ils veulent pouvoir dire oui sans prendre un risque aveugle. Cela veut dire des niveaux de risque, des droits de decision, des controles nommes, des tests, et un dossier qui se laisse suivre sans explications improvisees ni promesses gonflees.'
               },
               {
                 q: 'Quels documents faut-il avoir en premier?',
-                a: <>Commencez par un inventaire des usages et fournisseurs, une logique de priorisation, un registre de controles et un dossier de revue. La <Link to="/library" className="text-[#13254C] underline-offset-4 hover:underline">Library</Link> donne les references, et les <Link to="/services/menu" className="text-[#13254C] underline-offset-4 hover:underline">mandats</Link> montrent ce que cela produit.</>
+                a: <>Commencez par un inventaire des usages et fournisseurs, une logique de priorisation, un registre de controles et un dossier de revue qui montre ce qui est demontre et ce qui reste ouvert. La <Link to="/library" className="text-[#13254C] underline-offset-4 hover:underline">Library</Link> donne les references, et les <Link to="/services/menu" className="text-[#13254C] underline-offset-4 hover:underline">mandats</Link> montrent ce que cela produit.</>
               },
               {
                 q: 'La gouvernance ralentit-elle les equipes?',
@@ -82,7 +82,7 @@ const FAQ = () => {
             items: [
               {
                 q: 'A quoi ressemble un mandat typique?',
-                a: 'Le travail commence generalement par un cadrage: quels systemes sont en jeu, quelle pression s exerce et quelles decisions doivent etre rendues plus nettes. Ensuite viennent la priorisation, les controles, la documentation et, si besoin, une cadence de maintien.'
+                a: 'Le travail commence generalement par un cadrage: quels systemes sont en jeu, quelle pression s exerce et quelles decisions doivent etre rendues plus nettes. Ensuite viennent la priorisation, les controles, la documentation, et une vue claire de ce qui tient deja, de ce qui demande plus de preuve et, si besoin, une cadence de maintien.'
               },
               {
                 q: 'Faut-il gouverner aussi l IA de fournisseurs?',
@@ -99,17 +99,17 @@ const FAQ = () => {
     : {
         eyebrow: 'FAQ',
         title: 'Straight answers for teams that need legible governance',
-        body: 'These are the questions that surface during review, questionnaires, leadership discussions, and early scoping.',
+        body: 'These are the questions that surface during review, questionnaires, leadership discussions, and early scoping. The answers stay close to what can be evidenced now, what still needs work, and what should not be overstated.',
         noteLabel: 'Use',
         noteTitle: 'Start with the questions that recur under pressure.',
-        noteBody: 'When scrutiny shows up, the same requests follow. Who decides, what packet exists, what proof can hold up, and how the work starts without turning into governance theatre.',
+        noteBody: 'When scrutiny shows up, the same requests follow. Who decides, what packet exists, what proof can hold up, and where the evidence is still thin enough that the claim should stay narrow.',
         notePills: ['Decision', 'Evidence', 'Engagement'],
         sectionIntroLabel: 'Themes',
         sectionIntroTitle: 'The questions cluster around three practical needs',
-        sectionIntroBody: 'Understanding what governance is, what has to exist for review, and how the work is usually structured.',
+        sectionIntroBody: 'Understanding what governance is, what has to exist for review, and how the work stays proportionate to the evidence behind it.',
         closingLabel: 'Next step',
         closingTitle: 'Need an answer tied to your actual situation?',
-        closingBody: 'The best next move is a short debrief with the context, the pressure source, and the deliverables you are likely to need.',
+        closingBody: 'The best next move is a short debrief with the context, the pressure source, and the evidence burden you are likely to face.',
         actions: {
           connect: 'Book a debrief',
           tool: 'Assess readiness',
@@ -124,7 +124,7 @@ const FAQ = () => {
             items: [
               {
                 q: 'What is AI governance in practical terms?',
-                a: 'It is the operating system that makes AI use legible, controlled, and defensible. That includes decision rights, tiering logic, controls, evidence, and an ongoing review cadence.'
+                a: 'It is the operating system that makes AI use legible, controlled, and defensible in review. That includes decision rights, tiering logic, controls, evidence, and an ongoing review cadence.'
               },
               {
                 q: 'What is the difference between AI ethics and AI governance?',
@@ -144,11 +144,11 @@ const FAQ = () => {
             items: [
               {
                 q: 'What do auditors and procurement teams actually want?',
-                a: 'They want to be able to say yes without taking blind risk. That means risk tiers, named decision rights, clear controls, testing expectations, and a packet they can follow without improvisation.'
+                a: 'They want to be able to say yes without taking blind risk. That means risk tiers, named decision rights, clear controls, testing expectations, and a packet they can follow without improvisation or inflated claims.'
               },
               {
                 q: 'What documents should exist first?',
-                a: <>Start with a use-case and vendor inventory, tiering logic, a control register, and a review packet. The <Link to="/library" className="text-[#13254C] underline-offset-4 hover:underline">Library</Link> points to the reference materials, and the <Link to="/services/menu" className="text-[#13254C] underline-offset-4 hover:underline">service menu</Link> shows what the resulting work product can look like.</>
+                a: <>Start with a use-case and vendor inventory, tiering logic, a control register, and a review packet that shows what is evidenced now and what remains open. The <Link to="/library" className="text-[#13254C] underline-offset-4 hover:underline">Library</Link> points to the reference materials, and the <Link to="/services/menu" className="text-[#13254C] underline-offset-4 hover:underline">service menu</Link> shows what the resulting work product can look like.</>
               },
               {
                 q: 'Will governance slow teams down?',
@@ -164,7 +164,7 @@ const FAQ = () => {
             items: [
               {
                 q: 'What does a typical engagement produce?',
-                a: 'Most engagements begin with calibration: which systems matter, what pressure is present, and which decisions need to become clearer. From there the work usually moves into tiering, controls, documentation, and if needed an upkeep cadence.'
+                a: 'Most engagements begin with calibration: which systems matter, what pressure is present, and which decisions need to become clearer. From there the work usually moves into tiering, controls, documentation, and a clear view of what can be supported now, what needs more evidence, and if needed an upkeep cadence.'
               },
               {
                 q: 'Do we still need governance if we rely on vendor AI?',
