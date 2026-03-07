@@ -34,15 +34,13 @@ const resources = [
   }
 ];
 
-const clientPortalModules = [
+const internalModules = [
   {
     title: 'AurorAI',
-    path: '/client-portal/aurorai',
     description: 'Document intake, extraction, quality gates, and evidence package assembly.'
   },
   {
     title: 'CompassAI',
-    path: '/client-portal/compassai',
     description: 'Use-case registry, evidence intake, risk tiering, and governance deliverables.'
   }
 ];
@@ -155,19 +153,20 @@ const Connect = () => {
               </div>
 
               <div className="reveal" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '32px' }}>
-                <p className="eyebrow" style={{ marginBottom: '16px' }}>Client Portal</p>
+                <p className="eyebrow" style={{ marginBottom: '16px' }}>Internal Modules</p>
+                <p className="body-sm" style={{ marginBottom: '18px' }}>
+                  AurorAI and CompassAI stay behind the Govern AI engagement until we are ready to host them properly.
+                </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
-                  {clientPortalModules.map((item) => (
-                    <Link
+                  {internalModules.map((item) => (
+                    <div
                       key={item.title}
-                      to={item.path}
                       style={{
                         display: 'block',
                         padding: '18px',
                         background: 'var(--color-bg-alt)',
                         borderRadius: 'var(--radius-md)',
-                        border: '1px solid var(--color-border)',
-                        textDecoration: 'none'
+                        border: '1px solid var(--color-border)'
                       }}
                     >
                       <p style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--color-dark)', marginBottom: '6px' }}>
@@ -176,7 +175,7 @@ const Connect = () => {
                       <p style={{ fontSize: '0.8125rem', color: 'var(--color-muted)' }}>
                         {item.description}
                       </p>
-                    </Link>
+                    </div>
                   ))}
                 </div>
 

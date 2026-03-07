@@ -15,8 +15,6 @@ import FAQ from './pages/FAQ';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import Portfolio from './pages/Portfolio';
-import PortalAurorAI from './pages/PortalAurorAI';
-import PortalCompassAI from './pages/PortalCompassAI';
 import Research from './pages/Research';
 import SealedCard from './pages/SealedCard';
 import ServiceMenu from './pages/ServiceMenu';
@@ -41,8 +39,6 @@ function App() {
               <Route path="/cases" element={<Cases />} />
               <Route path="/about" element={<About />} />
               <Route path="/connect" element={<Connect />} />
-              <Route path="/client-portal/aurorai" element={<PortalAurorAI />} />
-              <Route path="/client-portal/compassai" element={<PortalCompassAI />} />
               <Route path="/sealed-card" element={<SealedCard />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/library" element={<Library />} />
