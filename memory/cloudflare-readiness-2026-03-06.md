@@ -7,9 +7,8 @@
 - Pages project already exists: `govern-ai`
 - Custom domains added:
   - `govern-ai.ca`
-  - `www.govern-ai.ca`
-- `frontend/functions/_middleware.js` contains the intended `www -> apex` redirect
-- Live verification still shows `www.govern-ai.ca` serving `200`, so the redirect should be considered pending until Cloudflare completes custom-domain validation or a Bulk Redirect is added
+- `www.govern-ai.ca` was removed from the Pages custom-domain list so it can be handled by a Cloudflare redirect rule
+- Canonical `www -> apex` redirect is now live through a zone-level Single Redirect
 - Deploy commands:
   - `npm run cf:deploy`
   - `npm run cf:preview`

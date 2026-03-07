@@ -17,9 +17,9 @@
   - Resend DKIM
 
 ## Redirect behavior
-- `www.govern-ai.ca` is attached to the same Pages project as the apex and currently serves the site successfully
-- A host-based redirect middleware is deployed in `frontend/functions/_middleware.js`
-- Live verification still shows `www.govern-ai.ca` returning `200`, so the canonical `www -> apex` redirect should be treated as pending until Cloudflare finishes domain validation or a Cloudflare-native Bulk Redirect is added
+- `www.govern-ai.ca` is canonically redirected to `https://govern-ai.ca`
+- The active redirect is implemented as a Cloudflare zone-level Single Redirect
+- The `www` DNS record is a proxied placeholder `A` record to `192.0.2.1`, which Cloudflare recommends for apex redirects
 
 ## Deployment flow
 - Production deploys are currently driven from GitHub on the `main` branch
@@ -54,5 +54,5 @@ Before creating backend subdomains, confirm the stable public origins and whethe
 
 ## Current deployment status
 - `https://govern-ai.ca` responds successfully from Cloudflare Pages
-- `https://www.govern-ai.ca` also responds successfully from Cloudflare Pages
+- `https://www.govern-ai.ca` now returns `308` to the apex hostname
 - The latest production deployment is driven by GitHub `main`
