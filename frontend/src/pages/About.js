@@ -50,7 +50,7 @@ const About = () => (
             <p className="eyebrow" style={{ marginBottom: '16px' }}>About</p>
             <h1>A governance practice built for legibility</h1>
             <p className="body-lg" style={{ marginTop: '20px' }}>
-              The work is to make systems, decisions, and evidence clear enough to hold up under scrutiny.
+              The work is to make systems, decisions, and evidence clear enough to hold up under scrutiny without claiming more than the infrastructure can support.
             </p>
             <div className="divider" />
             <p className="body-sm">
@@ -77,7 +77,7 @@ const About = () => (
               </p>
               <div className="divider" />
               <p className="body-sm" style={{ marginTop: '16px' }}>
-                The practice combines system reading, documentation structure, and control discipline. The goal is not to produce more theory. The goal is to help organizations answer clearly when a customer, auditor, or decision-maker asks how AI is actually governed.
+                The practice combines system reading, evidence structure, and control discipline. The goal is not to produce more theory. The goal is to help organizations answer clearly when a customer, auditor, or decision-maker asks how AI is actually governed and what can genuinely be verified.
               </p>
             </div>
           </div>
@@ -91,7 +91,7 @@ const About = () => (
           <p className="eyebrow">How the practice operates</p>
           <h2>What AI governance practice means in Canada</h2>
           <p className="body-sm">
-            AI governance in Canada is a system aligned with Treasury Board directives, Quebec&apos;s automated decision-making requirements under Law 25, and the evidence expectations surrounding deployed AI systems.
+            AI governance in Canada is a system aligned with Treasury Board directives, Quebec&apos;s automated decision-making requirements under Law 25, and the evidence expectations surrounding deployed AI systems. It is also a claim-discipline problem: weak evidence should narrow the claim, not be narrated past.
           </p>
         </div>
 

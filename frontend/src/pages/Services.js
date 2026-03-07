@@ -120,7 +120,7 @@ const Services = () => {
             <p className="eyebrow">Services</p>
             <h1>Packages structured to answer scrutiny</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Choose by pressure source, not by vocabulary. The right package is the one that produces the materials the review will actually ask for.
+              Choose by pressure source, not by vocabulary. The right package is the one that produces the materials the review will actually ask for and makes clear what still requires judgment, evidence, or follow-up work.
             </p>
           </div>
         </div>
@@ -167,7 +167,7 @@ const Services = () => {
             <p className="eyebrow">Scoping</p>
             <h2>What changes the scope</h2>
             <p className="body-sm">
-              The work shifts with the number of systems, the level of review expected, and the sensitivity of the decisions the AI supports.
+              The work shifts with the number of systems, the level of review expected, the sensitivity of the decisions the AI supports, and the strength of the evidence already in hand.
             </p>
           </div>
 
@@ -188,7 +188,7 @@ const Services = () => {
             <p className="eyebrow">Pricing</p>
             <h2>How engagements are priced</h2>
             <p className="body-sm">
-              Every engagement is scoped and priced after an initial debrief. Pricing reflects the number of systems, the depth of review expected, and the duration of the work.
+              Every engagement is scoped and priced after an initial debrief. Pricing reflects the number of systems, the depth of review expected, the condition of the evidence layer, and the duration of the work.
             </p>
           </div>
 

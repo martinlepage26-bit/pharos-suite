@@ -114,7 +114,7 @@ const Home = () => (
           </p>
           <h1>Legible AI governance under pressure</h1>
           <p className="body-lg">
-            When procurement, audit, or the board asks how AI is governed, Govern AI helps your team answer without improvising.
+            When procurement, audit, or the board asks how AI is governed, Govern AI helps your team answer with evidence, decision rights, and documentation that can be reviewed.
           </p>
           <div className="hero-cta-row">
             <Link to="/connect" className="btn-primary">
@@ -133,7 +133,7 @@ const Home = () => (
           <p className="eyebrow">What review bodies need to see</p>
           <h2>A governance posture that stays legible under pressure</h2>
           <p className="body-sm">
-            Decision rights, risk tiers, controls, and evidence should be easy to follow when external scrutiny arrives.
+            Decision rights, risk tiers, controls, and evidence should be easy to follow when external scrutiny arrives. The work is to make governance reviewable without claiming more than the evidence can support.
           </p>
         </div>
 
@@ -207,7 +207,7 @@ const Home = () => (
           <p className="eyebrow">Deliverables</p>
           <h2>Artifacts that make governance credible</h2>
           <p className="body-sm">
-            What persuades is not abstract trust language. It is a set of documents that makes governance legible, testable, and easy to review.
+            What persuades is not abstract trust language or compliance theatre. It is a set of documents that makes governance legible, testable, and easy to review.
           </p>
         </div>
 
@@ -254,7 +254,7 @@ const Home = () => (
       <div className="container">
         <div className="cta-banner reveal">
           <h2>Make governance legible before it gets tested</h2>
-          <p className="body-sm">The first engagement is meant to calm the pressure around questionnaires, controls, documentation, decision rights, and the next move.</p>
+          <p className="body-sm">The first engagement is meant to identify what can already be evidenced, what is missing, and what should not be overstated while the work is still taking shape.</p>
           <div className="btn-row">
             <Link to="/connect" className="btn-primary">
               Book a debrief

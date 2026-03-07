@@ -72,7 +72,7 @@ const Connect = () => {
             <p className="eyebrow">Connect</p>
             <h1>Start with a 30-minute debrief</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Enough to understand the pressure, choose the right package, and scope the first deliverables.
+              Enough to understand the pressure, define the evidence burden, and scope the first deliverables.
             </p>
           </div>
         </div>
@@ -84,7 +84,7 @@ const Connect = () => {
             <div className="reveal">
               <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '40px' }}>
                 <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Book a debrief</h2>
-                <p className="body-sm" style={{ marginBottom: '32px' }}>Fill in the basics. Martin will follow up within one business day.</p>
+                <p className="body-sm" style={{ marginBottom: '32px' }}>Fill in the basics. Martin will follow up within one business day with a scoped next step rather than a generic pitch.</p>
 
                 <form onSubmit={handleSubmit}>
                   <div className="form-field">
@@ -155,7 +155,7 @@ const Connect = () => {
               <div className="reveal" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '32px' }}>
                 <p className="eyebrow" style={{ marginBottom: '16px' }}>Internal Modules</p>
                 <p className="body-sm" style={{ marginBottom: '18px' }}>
-                  AurorAI and CompassAI stay behind the Govern AI engagement until we are ready to host them properly.
+                  AurorAI and CompassAI stay behind the Govern AI engagement until their hosting, evidence lineage, and review surfaces are ready to be presented more directly.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                   {internalModules.map((item) => (
@@ -196,7 +196,7 @@ const Connect = () => {
                 </p>
                 <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--color-dark)' }}>Take a quick readiness signal</p>
                 <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)', marginTop: '8px' }}>
-                  Answer eight questions and get a fast signal on where governance needs structure.
+                  Answer eight questions and get a fast signal on where governance needs structure before a formal review asks for it.
                 </p>
               </Link>
             </div>
