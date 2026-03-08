@@ -12,7 +12,13 @@ import {
 } from 'lucide-react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import LighthouseGlyph from '../components/LighthouseGlyph';
-import { getShowcaseVariant, showcaseVariants } from '../data/showcaseVariants';
+import {
+  getShowcaseVariant,
+  showcaseCoreUseCases,
+  showcaseDeliveryStructure,
+  showcaseMission,
+  showcaseVariants
+} from '../data/showcaseVariants';
 
 const variantIcons = {
   'pubmed-command': Search,
@@ -28,25 +34,25 @@ function VariantSurface({ variant }) {
       <div className="showcase-surface showcase-surface--pubmed">
         <div className="showcase-searchbar">
           <Search size={16} />
-          <span>Search governance packets, board notes, or evidence artifacts</span>
+          <span>Search packets, controls, vendor reviews, or oversight notes</span>
         </div>
         <div className="showcase-surface__pills">
-          <span>Procurement packet</span>
-          <span>Model approval</span>
-          <span>Risk tiering</span>
+          <span>Questionnaire packet</span>
+          <span>Control register</span>
+          <span>Vendor diligence</span>
         </div>
         <div className="showcase-result-list">
           <article>
-            <strong>Governance review packet</strong>
-            <p>Owner: Martin Lepage, PhD - Updated March 2026 - Evidence complete</p>
+            <strong>Controls and Evidence Pack</strong>
+            <p>11 controls mapped to risk tiers, evidence owners, and review cadence.</p>
           </article>
           <article>
-            <strong>Escalation and decision matrix</strong>
-            <p>3 review paths - Audit, board, procurement - Ready to export</p>
+            <strong>Questionnaire response packet</strong>
+            <p>Procurement-ready answers tied to decision rights, monitoring notes, and open gaps.</p>
           </article>
           <article>
-            <strong>Control register summary</strong>
-            <p>12 controls linked to monitoring, review cadence, and artifacts</p>
+            <strong>Vendor review dossier</strong>
+            <p>Diligence criteria, contract language, and reassessment triggers for third-party AI.</p>
           </article>
         </div>
       </div>
@@ -57,21 +63,24 @@ function VariantSurface({ variant }) {
     return (
       <div className="showcase-surface showcase-surface--clubmed">
         <div className="showcase-atlas-banner">
-          <span>Governance itineraries</span>
-          <strong>Choose the pressure route that best matches the moment.</strong>
+          <span>Guided advisory routes</span>
+          <strong>Choose the real Govern AI track from the pressure in front of you.</strong>
         </div>
         <div className="showcase-atlas-grid">
           <article>
-            <span className="showcase-chip">Audit</span>
-            <strong>Calm the audit request</strong>
+            <span className="showcase-chip">Foundation</span>
+            <strong>Establish the baseline</strong>
+            <p>Inventory systems, define tiers, and make approval logic explicit.</p>
           </article>
           <article>
-            <span className="showcase-chip">Procurement</span>
-            <strong>Package the customer response</strong>
+            <span className="showcase-chip">Evidence</span>
+            <strong>Package the review response</strong>
+            <p>Turn governance into a packet procurement, audit, or customers can follow.</p>
           </article>
           <article>
-            <span className="showcase-chip">Leadership</span>
-            <strong>Frame the executive review</strong>
+            <span className="showcase-chip">Oversight</span>
+            <strong>Keep leadership current</strong>
+            <p>Support committees, executives, and live delivery with ongoing upkeep.</p>
           </article>
         </div>
       </div>
@@ -83,26 +92,26 @@ function VariantSurface({ variant }) {
       <div className="showcase-surface showcase-surface--coursera">
         <div className="showcase-searchbar">
           <Search size={16} />
-          <span>Search governance pathways, packets, and starter kits</span>
+          <span>Search sectors, packets, and governance pathways</span>
         </div>
         <div className="showcase-logo-row">
-          <span>Boards</span>
-          <span>Risk teams</span>
+          <span>Regulated systems</span>
+          <span>Enterprise SaaS</span>
           <span>Public sector</span>
-          <span>Procurement</span>
+          <span>Procurement and vendor risk</span>
         </div>
         <div className="showcase-course-grid">
           <article>
-            <strong>Questionnaire Response Kit</strong>
-            <p>Fast pathway for procurement and diligence teams.</p>
+            <strong>Governance Foundation</strong>
+            <p>Start with inventory, tiers, decision rights, and cadence when the baseline is thin.</p>
           </article>
           <article>
-            <strong>Governance Baseline Sprint</strong>
-            <p>Map decision rights, risk tiers, and approval logic.</p>
+            <strong>Controls and Evidence Pack</strong>
+            <p>Best when questionnaires, audit, or regulator-facing review demand reusable artifacts.</p>
           </article>
           <article>
-            <strong>Review-Ready Evidence System</strong>
-            <p>Build reusable artifacts for external scrutiny.</p>
+            <strong>Oversight Retainer</strong>
+            <p>Keep live systems governable as committees, vendors, and delivery teams keep moving.</p>
           </article>
         </div>
       </div>
@@ -114,20 +123,20 @@ function VariantSurface({ variant }) {
       <div className="showcase-surface showcase-surface--udem">
         <div className="showcase-editorial-lead">
           <span className="showcase-chip">Lead bulletin</span>
-          <strong>Govern AI expands the public-facing structure of its research and advisory practice.</strong>
+          <strong>Govern AI organizes research, dossiers, and advisory work around governable AI under scrutiny.</strong>
         </div>
         <div className="showcase-editorial-grid">
           <article>
             <span>Research</span>
-            <strong>New governance library for Canadian organizations</strong>
+            <strong>Research library for audit, procurement, and oversight questions</strong>
           </article>
           <article>
-            <span>Practice</span>
-            <strong>Service dossiers organized by review context</strong>
+            <span>Cases</span>
+            <strong>Dossiers that show how governance work holds up in real review contexts</strong>
           </article>
           <article>
-            <span>Field notes</span>
-            <strong>Editorial updates on audit, procurement, and oversight</strong>
+            <span>Services</span>
+            <strong>The three delivery tracks framed as a public-facing governance practice</strong>
           </article>
         </div>
       </div>
@@ -142,16 +151,16 @@ function VariantSurface({ variant }) {
           <span>Ask Govern AI</span>
         </div>
         <div className="showcase-chat-input">
-          How should we answer a customer questionnaire about model governance?
+          We received a procurement questionnaire asking who approves AI use and how evidence is maintained.
         </div>
         <div className="showcase-chat-answer">
-          <strong>Start with a compact answer and anchor it in evidence.</strong>
-          <p>Route the reader to decision rights, risk tiering, monitoring, and the review packet. Keep the tone calm, specific, and source-backed.</p>
+          <strong>Start from the pressure source, then route to the right packet.</strong>
+          <p>If the baseline is still being set, begin with Governance Foundation. If the structure exists but the packet is weak, move into Controls and Evidence Pack. If the system is live, use the Oversight Retainer to keep the answer current.</p>
         </div>
         <div className="showcase-surface__pills showcase-surface__pills--signal">
-          <span>Decision matrix</span>
-          <span>Control register</span>
-          <span>Packet sources</span>
+          <span>Foundation</span>
+          <span>Evidence pack</span>
+          <span>Oversight</span>
         </div>
       </div>
     </div>
@@ -247,10 +256,48 @@ const VariantPage = () => {
         </div>
       </section>
 
+      <section className="showcase-variant__section showcase-variant__section--anchors">
+        <div className="showcase-variant__section-heading">
+          <span className="showcase-chip">Govern AI anchors</span>
+          <h2>Mission, implementation, and use cases this direction must preserve</h2>
+        </div>
+
+        <div className="showcase-anchor-grid">
+          <article className="showcase-anchor-card showcase-anchor-card--mission">
+            <span className="showcase-chip">Mission</span>
+            <h3>{showcaseMission.title}</h3>
+            <p>{showcaseMission.body}</p>
+          </article>
+
+          {showcaseDeliveryStructure.map((item) => (
+            <article key={item.title} className="showcase-anchor-card">
+              <span className="showcase-chip">Delivery track</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+              <span className="showcase-anchor-card__note">{item.fit}</span>
+            </article>
+          ))}
+        </div>
+
+        <div className="showcase-variant__subheading">
+          <span className="showcase-chip">Original use cases</span>
+          <p>The visual treatment can change, but these pressure routes should remain obvious.</p>
+        </div>
+
+        <div className="showcase-usecase-grid">
+          {showcaseCoreUseCases.map((item) => (
+            <article key={item.title} className="showcase-anchor-card">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="showcase-variant__section">
         <div className="showcase-variant__section-heading">
-          <span className="showcase-chip">Structural translation</span>
-          <h2>How this pattern changes the public site</h2>
+          <span className="showcase-chip">Implementation structure</span>
+          <h2>How this direction expresses the real Govern AI delivery model</h2>
         </div>
         <div className="showcase-variant__module-grid">
           {variant.modules.map((module) => (
@@ -264,8 +311,8 @@ const VariantPage = () => {
 
       <section className="showcase-variant__section showcase-variant__section--alt">
         <div className="showcase-variant__section-heading">
-          <span className="showcase-chip">User journey</span>
-          <h2>The intended flow through this version</h2>
+          <span className="showcase-chip">Use-case flow</span>
+          <h2>How a visitor moves from pressure to packet in this version</h2>
         </div>
         <div className="showcase-variant__journey">
           {variant.journey.map((step, index) => (
@@ -280,7 +327,7 @@ const VariantPage = () => {
       <section className="showcase-variant__cta">
         <div>
           <span className="showcase-chip">Compare quickly</span>
-          <h2>Jump across the other directions without leaving the gallery.</h2>
+          <h2>Compare the other directions without losing the core mission.</h2>
         </div>
         <div className="showcase-variant__cta-actions">
           <Link to={`/showcase/${prevVariant.slug}`} className="showcase-button showcase-button--secondary">

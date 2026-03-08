@@ -1,162 +1,270 @@
+export const showcaseMission = {
+  title: 'Legible AI governance under pressure',
+  body:
+    'Every showcase direction should preserve Govern AI\'s real posture: governance documentation derives from evidence, decision rights and thresholds stay explicit, and the public site helps teams answer procurement, audit, vendor review, and oversight pressure without overstating product maturity.'
+};
+
+export const showcaseImplementationPillars = [
+  {
+    title: 'Evidence before claims',
+    text: 'Packets, controls, and summaries should narrow to what can be shown now. The gallery should not imply certification, guaranteed compliance, or stronger public readiness than the underlying evidence can support.'
+  },
+  {
+    title: 'Structured implementation',
+    text: 'The public structure still needs to route people into the real delivery model: Governance Foundation, Controls and Evidence Pack, and Oversight Retainer.'
+  },
+  {
+    title: 'Private modules stay private',
+    text: 'AurorAI and CompassAI support the practice behind the scenes, but the public site should treat them as internal delivery modules until their review surfaces are ready.'
+  }
+];
+
+export const showcaseDeliveryStructure = [
+  {
+    title: 'Governance Foundation',
+    fit: 'For teams establishing governance or aligning it across functions.',
+    text: 'Build the baseline: use-case and vendor inventory, risk tiering, decision rights, approval flow, and governance cadence.'
+  },
+  {
+    title: 'Controls and Evidence Pack',
+    fit: 'For procurement scrutiny, customer questionnaires, audit, or formal review.',
+    text: 'Translate the baseline into a control register, testing and monitoring expectations, vendor review questions, and a reusable evidence packet.'
+  },
+  {
+    title: 'Oversight Retainer',
+    fit: 'For organizations with active AI delivery that need stable upkeep.',
+    text: 'Keep decisions, evidence, and controls current as systems, vendors, and regulatory expectations change.'
+  }
+];
+
+export const showcaseCoreUseCases = [
+  {
+    title: 'Procurement and customer questionnaires',
+    text: 'Help teams answer due diligence requests with reusable packets, clear controls, and calm language grounded in evidence.'
+  },
+  {
+    title: 'Audit and evidence readiness',
+    text: 'Make decision rights, thresholds, controls, and documentation easy to follow when internal or external review arrives.'
+  },
+  {
+    title: 'Vendor and third-party AI review',
+    text: 'Translate vendor diligence into structured evaluation, contract-backed proof, and reassessment logic.'
+  },
+  {
+    title: 'Executive and committee oversight',
+    text: 'Give leadership a review-ready operating model with escalation paths, cadence, and evidence upkeep.'
+  }
+];
+
 export const showcaseVariants = [
   {
     slug: 'pubmed-command',
     label: 'PubMed pattern',
-    title: 'Authority Command',
+    title: 'Evidence Index',
     referenceLabel: 'PubMed',
     referenceUrl: 'https://pubmed.ncbi.nlm.nih.gov/',
-    summary: 'Search-first governance with clinical clarity, metadata cues, and review-ready evidence blocks.',
-    palette: ['Slate', 'Clinical blue', 'Paper'],
+    summary: 'Search-first governance for procurement, audit, and vendor review with stronger evidence indexing and source cues.',
+    palette: ['Indigo', 'Paper', 'Ochre'],
     tone: 'Precise, credible, search-led',
     hero: {
-      eyebrow: 'Search-led trust',
-      title: 'Surface the governance answer before the request escalates.',
-      body: 'This direction adapts PubMed\'s disciplined search hierarchy to procurement, audit, and board review. It feels authoritative, structured, and easy to scan under pressure.',
+      eyebrow: 'Evidence navigation',
+      title: 'Find the exact governance answer before the request escalates.',
+      body:
+        'This direction translates PubMed\'s disciplined search hierarchy into Govern AI\'s real practice: review packets, control references, and evidence metadata that help teams answer scrutiny quickly and honestly.',
       primary: 'Search the packet',
-      secondary: 'View evidence map'
+      secondary: 'Open evidence map'
     },
     metrics: [
-      { value: '24h', label: 'Questionnaire turnaround target' },
-      { value: '3', label: 'Primary review tracks' },
-      { value: '92%', label: 'Artifacts already reusable' }
+      { value: '4', label: 'core pressure routes covered' },
+      { value: '3', label: 'reusable packet types' },
+      { value: '1', label: 'searchable evidence index' }
     ],
     modules: [
-      { title: 'Searchable governance index', text: 'Search controls, approval logic, packets, and policy anchors from a single command surface.' },
-      { title: 'Structured evidence metadata', text: 'Every artifact carries owner, review date, status, and escalation relevance.' },
-      { title: 'Reference-heavy reading mode', text: 'Ideal for people who need to verify claims instead of interpreting brand language.' }
+      {
+        title: 'Searchable packet registry',
+        text: 'Surface questionnaires, control summaries, and review packets from one evidence-led entry point.'
+      },
+      {
+        title: 'Artifact metadata that carries review weight',
+        text: 'Each record shows owner, review date, evidence strength, and where escalation starts.'
+      },
+      {
+        title: 'Research-grade reading mode',
+        text: 'Useful when buyers, auditors, or internal reviewers need sources and structure more than brand language.'
+      }
     ],
     journey: [
-      'Query the governance question.',
-      'Filter to the exact review packet.',
-      'Open the decision trail and source notes.'
+      'Start from the review question.',
+      'Open the matching packet or control record.',
+      'Escalate into a debrief only when the evidence gap is clear.'
     ]
   },
   {
     slug: 'clubmed-atlas',
     label: 'Club Med pattern',
-    title: 'Premium Atlas',
+    title: 'Guided Engagement Atlas',
     referenceLabel: 'Club Med',
     referenceUrl: 'https://www.clubmed.ca/',
-    summary: 'Large-format sections, premium visual rhythm, and an itinerary-style funnel for service discovery.',
-    palette: ['Midnight', 'Sand', 'Sunrise coral'],
-    tone: 'Immersive, warm, premium',
+    summary: 'A warmer, guided route through the three real engagement structures and four core pressure scenarios.',
+    palette: ['Terracotta', 'Ochre', 'Indigo'],
+    tone: 'Warm, premium, advisory',
     hero: {
-      eyebrow: 'Premium narrative',
-      title: 'Turn governance into a guided journey instead of a wall of obligations.',
-      body: 'This direction borrows Club Med\'s section pacing and large-card storytelling to make the service offering feel more intentional, premium, and easier to browse.',
+      eyebrow: 'Guided service journey',
+      title: 'Frame governance as a clear route through pressure, not a wall of obligations.',
+      body:
+        'This direction uses guided pacing and premium section breaks to help visitors choose between Governance Foundation, Controls and Evidence Pack, and Oversight Retainer based on the pressure they are facing now.',
       primary: 'Plan the engagement',
-      secondary: 'See service routes'
+      secondary: 'See pressure routes'
     },
     metrics: [
-      { value: '4', label: 'Core pressure pathways' },
-      { value: '1', label: 'Lead advisor through the whole cycle' },
-      { value: '6', label: 'Weeks to a documented baseline' }
+      { value: '3', label: 'engagement structures' },
+      { value: '4', label: 'pressure scenarios' },
+      { value: '1', label: 'lead advisor through the cycle' }
     ],
     modules: [
-      { title: 'Destination-style service cards', text: 'Package work by pressure point so the route feels curated and easy to compare.' },
-      { title: 'Immersive section breaks', text: 'Use cinematic panels and calmer pacing instead of dense, consecutive blocks.' },
-      { title: 'High-trust concierge CTA', text: 'Frame Martin as the guide through procurement, audit, and executive review.' }
+      {
+        title: 'Pressure-led service routes',
+        text: 'Lead with procurement, audit, vendor review, and oversight so visitors can recognize themselves quickly.'
+      },
+      {
+        title: 'Premium advisory rhythm',
+        text: 'Use larger section breaks and calmer pacing to make the practice feel intentional without losing specificity.'
+      },
+      {
+        title: 'Concierge debrief framing',
+        text: 'Keep Martin as the visible guide who translates a pressure moment into the next practical packet or engagement.'
+      }
     ],
     journey: [
-      'Choose the pressure scenario.',
-      'See the recommended engagement route.',
-      'Book a guided governance debrief.'
+      'Choose the pressure source.',
+      'See the matching engagement structure.',
+      'Book a debrief with the right scope already in view.'
     ]
   },
   {
     slug: 'coursera-campus',
     label: 'Coursera pattern',
-    title: 'Learning Marketplace',
+    title: 'Operational Pathways',
     referenceLabel: 'Coursera',
     referenceUrl: 'https://www.coursera.org/',
-    summary: 'Card-led discovery, program-style pathways, and conversion-oriented proof sections.',
-    palette: ['Indigo', 'Sky', 'White'],
-    tone: 'Scalable, browsable, conversion-focused',
+    summary: 'Pathway-based discovery for sectors, governance packages, and original Govern AI use cases.',
+    palette: ['Indigo', 'Ochre', 'Ivory'],
+    tone: 'Browsable, structured, operational',
     hero: {
-      eyebrow: 'Program discovery',
-      title: 'Browse governance pathways like a trusted capability marketplace.',
-      body: 'This direction translates Coursera\'s catalog logic into offers, starter kits, and service ladders. It is designed for fast scanning and clear progression from overview to action.',
+      eyebrow: 'Pathway logic',
+      title: 'Browse governance routes by sector, pressure, and deliverable.',
+      body:
+        'This direction adapts catalog logic into a clearer public structure for regulated systems, enterprise SaaS, procurement, public sector work, and the three engagement packages that support them.',
       primary: 'Explore pathways',
       secondary: 'Compare packages'
     },
     metrics: [
-      { value: '12', label: 'Modular governance building blocks' },
-      { value: '5', label: 'Common use-case tracks' },
-      { value: '3x', label: 'Faster pathway comparison' }
+      { value: '5', label: 'sector contexts highlighted' },
+      { value: '3', label: 'service packages compared' },
+      { value: '4', label: 'core artifacts made visible' }
     ],
     modules: [
-      { title: 'Catalog-style offers', text: 'Present services as stackable tracks with outcomes, effort, and who they are best for.' },
-      { title: 'Proof through structured cards', text: 'Logos, case snapshots, and frameworks become scannable conversion assets.' },
-      { title: 'Clearer decision making', text: 'Buyers can compare routes quickly without needing a custom walkthrough first.' }
+      {
+        title: 'Sector-led discovery',
+        text: 'Let visitors browse by operating context before they choose a package or debrief.'
+      },
+      {
+        title: 'Package comparison without oversell',
+        text: 'Make deliverables, outcomes, and fit visible without promising more than the evidence layer can support.'
+      },
+      {
+        title: 'Starter-kit style progression',
+        text: 'Good for visitors who want structured comparison before they want conversation.'
+      }
     ],
     journey: [
       'Pick the operating context.',
-      'Compare matched governance tracks.',
-      'Move into a debrief or starter kit.'
+      'Compare the matching package structure.',
+      'Move into the right next step with clearer expectations.'
     ]
   },
   {
     slug: 'udem-bulletin',
     label: 'UdeM pattern',
-    title: 'Institutional Bulletin',
+    title: 'Research and Dossiers Bulletin',
     referenceLabel: 'Universite de Montreal',
     referenceUrl: 'https://www.umontreal.ca/',
-    summary: 'Institutional navigation, editorial hierarchy, and a more academic public-facing structure.',
+    summary: 'An institutional editorial front door that ties research, library, case dossiers, and services into one coherent public mission.',
     palette: ['Burgundy', 'Ivory', 'Charcoal'],
     tone: 'Institutional, editorial, rigorous',
     hero: {
-      eyebrow: 'Institutional structure',
-      title: 'Present the practice like an academic institution with a public mission.',
-      body: 'This direction uses UdeM-inspired hierarchy and editorial blocks to make Govern AI feel research-led, mission-driven, and comfortable for public and regulated audiences.',
+      eyebrow: 'Institutional framing',
+      title: 'Make the practice feel research-led, public-facing, and structurally serious.',
+      body:
+        'This direction leans into Martin Lepage, PhD, the research library, and editorial hierarchy while keeping the advisory mission clear: usable governance under pressure, not abstract theory.',
       primary: 'Read the bulletin',
       secondary: 'Open research'
     },
     metrics: [
-      { value: '8', label: 'Editorial blocks across the homepage' },
-      { value: '2', label: 'Primary audiences: public and enterprise' },
-      { value: '1', label: 'Unified governance bulletin' }
+      { value: '3', label: 'public pillars: research, practice, dossiers' },
+      { value: '1', label: 'clear institutional front door' },
+      { value: '4', label: 'review contexts carried through' }
     ],
     modules: [
-      { title: 'Editorial homepage sections', text: 'Mix research, services, and field notes as a coherent institutional front door.' },
-      { title: 'Mega-menu ready information architecture', text: 'Structure the public site to scale like a university or research institute.' },
-      { title: 'Academic trust cues', text: 'Lean into Martin Lepage, PhD and a stronger library/research framing.' }
+      {
+        title: 'Editorial homepage logic',
+        text: 'Put research, cases, library materials, and services into one front door that feels mission-led and coherent.'
+      },
+      {
+        title: 'Bulletin and dossier structure',
+        text: 'Helpful when public-sector or regulated audiences need to understand the practice before they engage.'
+      },
+      {
+        title: 'Stronger research credibility cues',
+        text: 'Accentuate the research-led identity without confusing public thought leadership with productized claims.'
+      }
     ],
     journey: [
-      'Read the lead bulletin.',
-      'Navigate to research, services, or dossiers.',
-      'Connect after the institutional story is clear.'
+      'Read the lead bulletin or field note.',
+      'Move into research, cases, or the library.',
+      'Connect once the institutional logic feels clear.'
     ]
   },
   {
     slug: 'perplexity-signal',
     label: 'Perplexity pattern',
-    title: 'Signal Engine',
+    title: 'Answer-Led Intake',
     referenceLabel: 'Perplexity',
     referenceUrl: 'https://www.perplexity.ai/',
-    summary: 'Dark conversational search, luminous greens, and answer-engine UX for governance questions.',
-    palette: ['Graphite', 'Sage green', 'Mint glow'],
-    tone: 'Conversational, intelligent, calm',
+    summary: 'A calm answer-engine front door for governance questions, routed toward packets, services, and evidence-backed next steps.',
+    palette: ['Graphite', 'Sage', 'Ochre'],
+    tone: 'Conversational, calm, source-aware',
     hero: {
-      eyebrow: 'Answer-engine mode',
-      title: 'Ask a governance question and route people toward an evidence-backed next step.',
-      body: 'This fifth direction adapts Perplexity\'s calm dark surfaces and green signal accents into a consultative answer engine. It feels modern, smart, and direct without becoming a clone.',
-      primary: 'Ask a question',
-      secondary: 'See answer flows'
+      eyebrow: 'Answer-engine intake',
+      title: 'Start from the governance question and route people toward the right packet or engagement.',
+      body:
+        'This direction keeps the interface conversational while staying grounded in Govern AI\'s real posture: concise answers, source cues, and clear movement toward procurement, audit, vendor review, or oversight support.',
+      primary: 'Ask the question',
+      secondary: 'See answer flow'
     },
     metrics: [
-      { value: '1', label: 'Unified prompt surface' },
-      { value: '7', label: 'Common governance prompts' },
-      { value: 'Live', label: 'Sources and citations mindset' }
+      { value: '1', label: 'unified question entry point' },
+      { value: '4', label: 'pressure routes surfaced' },
+      { value: '3', label: 'next-step outputs suggested' }
     ],
     modules: [
-      { title: 'Prompt-led entry point', text: 'Let the homepage feel like the start of a guided answer rather than a brochure.' },
-      { title: 'Source-backed response blocks', text: 'Use citation chips, summary cards, and follow-up prompts to reinforce trust.' },
-      { title: 'Modern dark theme system', text: 'Bring in graphite, fog, and green signal accents as a flexible new palette.' }
+      {
+        title: 'Question-led homepage',
+        text: 'Start with the real pressure question instead of making visitors decode a brochure.'
+      },
+      {
+        title: 'Source-backed answer blocks',
+        text: 'Use structured answer cards to keep claims narrow and route visitors into packets, research, or services.'
+      },
+      {
+        title: 'Modern intake without gimmicks',
+        text: 'Feels contemporary while preserving review logic, evidence discipline, and advisory seriousness.'
+      }
     ],
     journey: [
-      'Start from the governance question.',
-      'Read a concise answer with source cues.',
-      'Escalate to the right service or review packet.'
+      'Start from the pressure question.',
+      'Read a concise answer with evidence cues.',
+      'Escalate into the right packet, pathway, or debrief.'
     ]
   }
 ];
@@ -166,94 +274,94 @@ export const currentSiteEntry = {
   label: 'Current production',
   title: 'Current Govern AI',
   route: '/',
-  summary: 'The current live design built around the lighthouse mark and a dark hero.',
-  palette: ['Night', 'Violet', 'Paper']
+  summary: 'The live advisory front door: evidence-first positioning, the real three-package structure, and direct routes into services, cases, and research.',
+  palette: ['Indigo', 'Terracotta', 'Ochre']
 };
 
 export const aoThemePresets = [
   {
-    id: 'institutional',
-    label: 'Institutional',
-    emphasis: 'Trust and tech',
-    primaryColors: ['Navy', 'Steel', 'Sky blue'],
-    coreFeeling: 'Professional, safe',
-    bestFor: 'Treasury management and formal governance',
-    summary: 'Use deep blues and cool silver to signal reliable governance with a live protocol layer.',
-    whyItWorks: 'It blends institutional trust with Web3 clarity and tells users the organization can be trusted with real assets.',
-    vibe: 'Structured, precise, board-ready',
+    id: 'evidence-led',
+    label: 'Evidence-led',
+    emphasis: 'Review clarity',
+    primaryColors: ['Indigo', 'Ivory', 'Ochre'],
+    coreFeeling: 'Precise, inspectable',
+    bestFor: 'Audit readiness and procurement response',
+    summary: 'Lead with structured metadata, compact reading modes, and restrained accents so packets and controls feel easy to verify.',
+    whyItWorks: 'It reinforces the core promise that governance claims should be traceable, reviewable, and narrow enough to defend.',
+    vibe: 'Institutional, reference-led, disciplined',
     swatches: [
-      { label: 'Navy', value: '#10233f' },
-      { label: 'Steel', value: '#8b98ac' },
-      { label: 'Sky', value: '#4a8cff' },
-      { label: 'Paper', value: '#f5f7fb' }
+      { label: 'Indigo', value: '#1a2440' },
+      { label: 'Ivory', value: '#f5efe2' },
+      { label: 'Ochre', value: '#c98a2e' },
+      { label: 'Slate', value: '#6f7482' }
     ],
     preview: {
-      background: '#edf3fb',
-      surface: '#ffffff',
-      surfaceStrong: '#12233d',
-      text: '#13233d',
-      muted: '#61738f',
-      accent: '#4a8cff',
-      accentSoft: 'rgba(74, 140, 255, 0.16)',
-      border: 'rgba(16, 35, 63, 0.12)',
-      glow: 'rgba(74, 140, 255, 0.18)'
+      background: '#f4efe6',
+      surface: '#fffaf2',
+      surfaceStrong: '#1a2440',
+      text: '#1c2536',
+      muted: '#667086',
+      accent: '#c98a2e',
+      accentSoft: 'rgba(201, 138, 46, 0.14)',
+      border: 'rgba(28, 37, 54, 0.12)',
+      glow: 'rgba(108, 93, 159, 0.16)'
     }
   },
   {
-    id: 'organic',
-    label: 'Organic',
-    emphasis: 'Ecosystem growth',
-    primaryColors: ['Moss', 'Sand', 'Terracotta'],
-    coreFeeling: 'Collaborative, vital',
-    bestFor: 'Social, grant, and community treasury DAOs',
-    summary: 'Lead with forest green, off-white, slate, and a warm terracotta accent to make governance feel alive and trustworthy.',
-    whyItWorks: 'It shifts the story from code alone to stewardship, shared growth, and long-term flourishing.',
-    vibe: 'Grounded, human, regenerative',
+    id: 'practice-led',
+    label: 'Practice-led',
+    emphasis: 'Advisory warmth',
+    primaryColors: ['Terracotta', 'Plum', 'Sand'],
+    coreFeeling: 'Warm, human, premium',
+    bestFor: 'Debriefs, service navigation, executive conversations',
+    summary: 'Use warmer materials and calmer section pacing to make the advisory relationship feel clear without softening the substance.',
+    whyItWorks: 'It supports Govern AI as a serious practice led by a named advisor rather than an abstract platform pitch.',
+    vibe: 'Guided, warm, confident',
     recommended: true,
     swatches: [
-      { label: 'Moss', value: '#355b3f' },
-      { label: 'Sand', value: '#efe7d8' },
-      { label: 'Slate', value: '#44524a' },
-      { label: 'Terracotta', value: '#c97752' }
+      { label: 'Terracotta', value: '#b76046' },
+      { label: 'Plum', value: '#4b3359' },
+      { label: 'Sand', value: '#efe4d4' },
+      { label: 'Ochre', value: '#c98a2e' }
     ],
     preview: {
-      background: '#f6f1e7',
-      surface: '#fffaf1',
-      surfaceStrong: '#203127',
-      text: '#24342c',
-      muted: '#5c6d63',
-      accent: '#4d7a54',
-      accentSoft: 'rgba(77, 122, 84, 0.14)',
-      border: 'rgba(36, 52, 44, 0.12)',
-      glow: 'rgba(201, 119, 82, 0.16)'
+      background: '#f4ece2',
+      surface: '#fff7ef',
+      surfaceStrong: '#3a283e',
+      text: '#302233',
+      muted: '#73646d',
+      accent: '#b76046',
+      accentSoft: 'rgba(183, 96, 70, 0.14)',
+      border: 'rgba(48, 34, 51, 0.12)',
+      glow: 'rgba(201, 138, 46, 0.16)'
     }
   },
   {
-    id: 'systemic',
-    label: 'Systemic',
-    emphasis: 'Cyber architect',
-    primaryColors: ['Black', 'Charcoal', 'Neon'],
-    coreFeeling: 'Modern, efficient',
-    bestFor: 'Protocol governance and technical infrastructure',
-    summary: 'Use deep charcoal with neon cyan or violet accents to emphasize live proposals, engineering precision, and machine trust.',
-    whyItWorks: 'It appeals to the developer mindset and reinforces the autonomous, always-on side of governance.',
-    vibe: 'Dense, technical, high signal',
+    id: 'signal-led',
+    label: 'Signal-led',
+    emphasis: 'Question intake',
+    primaryColors: ['Graphite', 'Sage', 'Ochre'],
+    coreFeeling: 'Modern, direct, calm',
+    bestFor: 'Fast triage and answer-led entry',
+    summary: 'Keep the surface darker and more compact so visitors can start from a pressure question and move quickly to the right evidence path.',
+    whyItWorks: 'It modernizes the front door without losing Govern AI\'s claim discipline or review-ready structure.',
+    vibe: 'Focused, answer-led, contemporary',
     swatches: [
-      { label: 'Black', value: '#070b10' },
-      { label: 'Charcoal', value: '#141b24' },
-      { label: 'Neon', value: '#67e8f9' },
-      { label: 'White', value: '#f5fbff' }
+      { label: 'Graphite', value: '#11171d' },
+      { label: 'Sage', value: '#82b08f' },
+      { label: 'Ochre', value: '#d3a250' },
+      { label: 'Fog', value: '#edf5f1' }
     ],
     preview: {
-      background: '#0a1015',
-      surface: '#111922',
-      surfaceStrong: '#071019',
-      text: '#edf7ff',
-      muted: '#8ca4b6',
-      accent: '#67e8f9',
-      accentSoft: 'rgba(103, 232, 249, 0.16)',
-      border: 'rgba(237, 247, 255, 0.12)',
-      glow: 'rgba(147, 51, 234, 0.18)'
+      background: '#0f1519',
+      surface: '#151e24',
+      surfaceStrong: '#0b1216',
+      text: '#edf5f1',
+      muted: '#a6b7b1',
+      accent: '#82b08f',
+      accentSoft: 'rgba(130, 176, 143, 0.16)',
+      border: 'rgba(237, 245, 241, 0.12)',
+      glow: 'rgba(201, 138, 46, 0.16)'
     }
   }
 ];
