@@ -26,8 +26,8 @@ const Cases = () => {
     : 'Case studies for AI under real review';
 
   const heroBody = language === 'fr'
-    ? 'Des exemples de travail de gouvernance la ou la pression est concrete: questionnaires, audit, achats, risque et supervision continue. Chaque dossier montre ce qui a pu etre soutenu par la preuve, et non une version lisse du travail.'
-    : 'Examples of governance work where the pressure is concrete, from questionnaires and audit to procurement, risk, and ongoing oversight. Each dossier shows what could actually be supported by evidence, not a polished after-the-fact version of the work.';
+    ? 'Des exemples de travail de gouvernance la ou la pression est concrete: questionnaires, audit, achats, risque et supervision continue. Chaque dossier montre ce que la preuve permet vraiment de soutenir.'
+    : 'Examples of governance work where the pressure is concrete, from questionnaires and audit to procurement, risk, and ongoing oversight. Each dossier shows what the evidence can genuinely support.';
 
   return (
     <div data-testid="cases-page">
@@ -46,7 +46,7 @@ const Cases = () => {
           <div className="section-header reveal">
             <p className="eyebrow">{language === 'fr' ? 'Secteurs' : 'Sectors'}</p>
             <h2>{t.cases.sectorsWeServe}</h2>
-            <p className="body-sm">{language === 'fr' ? 'Chaque contexte change la forme de la preuve, la logique de revue et la vitesse d escalation, donc les affirmations doivent rester proportionnees a ce dossier.' : 'Each operating context changes the evidence burden, the review logic, and the speed of escalation, so the resulting claims have to stay proportionate to that dossier.'}</p>
+            <p className="body-sm">{language === 'fr' ? 'Chaque contexte change la forme de la preuve, la logique de revue et la vitesse d escalation.' : 'Each operating context changes the evidence burden, the review logic, and the speed of escalation.'}</p>
           </div>
 
           <div className="grid-3 stagger">
@@ -80,7 +80,7 @@ const Cases = () => {
           <div className="section-header reveal">
             <p className="eyebrow">{language === 'fr' ? 'Dossiers' : 'Selected dossiers'}</p>
             <h2>{language === 'fr' ? 'Mandats representatifs' : 'Representative engagements'}</h2>
-            <p className="body-sm">{language === 'fr' ? 'Chaque etude montre comment la gouvernance se traduit en decisions, artefacts et controles lisibles, avec les limites du dossier encore visibles.' : 'Each case shows how governance turns into clearer decisions, usable artifacts, and review-ready controls while keeping the dossier limits visible.'}</p>
+            <p className="body-sm">{language === 'fr' ? 'Chaque etude montre comment la gouvernance se traduit en decisions, artefacts et controles lisibles.' : 'Each case shows how governance turns into clearer decisions, usable artifacts, and review-ready controls.'}</p>
           </div>
 
           <div className="stagger" style={{ display: 'grid', gap: '24px' }}>
@@ -122,7 +122,7 @@ const Cases = () => {
           <div className="fixed inset-0 z-[4000] bg-black/40" onClick={() => setSelectedCase(null)} />
           <div className="fixed inset-y-0 right-0 z-[4500] w-full max-w-[720px] overflow-hidden border-l border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_24px_60px_rgba(0,0,0,0.18)]">
             <div style={{ height: '100%', overflowY: 'auto' }}>
-              <div style={{ position: 'sticky', top: 0, zIndex: 2, borderBottom: '1px solid var(--color-border)', background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(12px)' }}>
+              <div style={{ position: 'sticky', top: 0, zIndex: 2, borderBottom: '1px solid var(--color-border)', background: 'rgba(18,14,24,0.92)', backdropFilter: 'blur(12px)' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', padding: '24px' }}>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '10px' }}>

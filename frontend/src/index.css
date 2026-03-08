@@ -6,35 +6,38 @@
 @tailwind utilities;
 
 :root {
-  --brand-night: #110f18;
-  --brand-navy: #241c36;
-  --brand-ink: #1c1825;
-  --brand-steel: #6d6779;
-  --brand-brass: #8e79b8;
-  --brand-brass-soft: rgba(142, 121, 184, 0.2);
-  --brand-ivory: #f6f2fb;
-  --brand-paper: #fbf9fe;
-  --brand-sand: #ece6f5;
-  --brand-line: rgba(36, 28, 54, 0.14);
-  --brand-line-strong: rgba(36, 28, 54, 0.24);
-  --white: #ffffff;
-  --black: #0b0f1a;
-  --black-60: rgba(11, 15, 26, 0.6);
-  --black-40: rgba(11, 15, 26, 0.4);
-  --black-20: rgba(11, 15, 26, 0.2);
-  --black-10: rgba(11, 15, 26, 0.1);
+  --brand-night: #120e18;
+  --brand-navy: #1a1530;
+  --brand-ink: #f1e7d8;
+  --brand-steel: #baa891;
+  --brand-brass: #c78c34;
+  --brand-brass-soft: rgba(199, 140, 52, 0.18);
+  --brand-ivory: #17111c;
+  --brand-paper: #21192d;
+  --brand-sand: #2a2136;
+  --brand-line: rgba(199, 140, 52, 0.14);
+  --brand-line-strong: rgba(199, 140, 52, 0.24);
+  --white: #f6ecdd;
+  --black: #09060f;
+  --black-60: rgba(241, 231, 216, 0.64);
+  --black-40: rgba(186, 168, 145, 0.72);
+  --black-20: rgba(241, 231, 216, 0.18);
+  --black-10: rgba(241, 231, 216, 0.1);
+  --earth-indigo-rgb: 104, 89, 149;
+  --earth-terracotta-rgb: 183, 96, 70;
+  --earth-ochre-rgb: 199, 140, 52;
   --font-serif: 'Source Serif 4', Georgia, serif;
   --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
   --font-heading: 'IBM Plex Sans', system-ui, sans-serif;
   --font-body: 'Lato', 'IBM Plex Sans', sans-serif;
-  --shadow-sm: 0 10px 22px rgba(8, 20, 40, 0.06);
-  --shadow-md: 0 18px 40px rgba(8, 20, 40, 0.1);
-  --shadow-lg: 0 28px 60px rgba(8, 20, 40, 0.16);
+  --shadow-sm: 0 10px 20px rgba(5, 3, 10, 0.2);
+  --shadow-md: 0 16px 30px rgba(5, 3, 10, 0.28);
+  --shadow-lg: 0 24px 46px rgba(5, 3, 10, 0.36);
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--brand-ivory);
+  background: var(--brand-night);
 }
 
 body {
@@ -44,9 +47,10 @@ body {
   line-height: 1.65;
   color: var(--brand-ink);
   background:
-    radial-gradient(circle at 12% 8%, rgba(142, 121, 184, 0.08) 0%, rgba(142, 121, 184, 0) 24%),
-    radial-gradient(circle at 82% 10%, rgba(200, 165, 106, 0.1) 0%, rgba(200, 165, 106, 0) 18%),
-    linear-gradient(180deg, #faf7fd 0%, #f0eaf6 100%);
+    radial-gradient(circle at 12% 8%, rgba(var(--earth-ochre-rgb), 0.08) 0%, rgba(var(--earth-ochre-rgb), 0) 24%),
+    radial-gradient(circle at 82% 10%, rgba(var(--earth-indigo-rgb), 0.14) 0%, rgba(var(--earth-indigo-rgb), 0) 18%),
+    radial-gradient(circle at 54% 82%, rgba(var(--earth-terracotta-rgb), 0.1) 0%, rgba(var(--earth-terracotta-rgb), 0) 22%),
+    linear-gradient(180deg, #120e18 0%, #171122 100%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "liga" 1, "kern" 1;
@@ -84,8 +88,8 @@ h3, h4, h5, h6 {
 }
 
 ::selection {
-  background: rgba(142, 121, 184, 0.28);
-  color: var(--brand-night);
+  background: rgba(var(--earth-terracotta-rgb), 0.34);
+  color: var(--white);
 }
 
 a {
@@ -96,25 +100,25 @@ a {
 
 @layer base {
   :root {
-    --background: 246 242 251;
-    --foreground: 28 24 37;
-    --card: 255 255 255;
-    --card-foreground: 22 33 50;
-    --popover: 255 255 255;
-    --popover-foreground: 22 33 50;
-    --primary: 17 15 24;
-    --primary-foreground: 246 242 251;
-    --secondary: 251 249 254;
-    --secondary-foreground: 28 24 37;
-    --muted: 236 230 245;
-    --muted-foreground: 109 103 121;
-    --accent: 142 121 184;
-    --accent-foreground: 246 242 251;
+    --background: 18 14 24;
+    --foreground: 241 231 216;
+    --card: 33 25 45;
+    --card-foreground: 241 231 216;
+    --popover: 33 25 45;
+    --popover-foreground: 241 231 216;
+    --primary: 199 140 52;
+    --primary-foreground: 23 15 10;
+    --secondary: 26 21 48;
+    --secondary-foreground: 241 231 216;
+    --muted: 33 25 45;
+    --muted-foreground: 186 168 145;
+    --accent: 183 96 70;
+    --accent-foreground: 246 236 221;
     --destructive: 220 38 38;
     --destructive-foreground: 255 255 255;
-    --border: 224 217 236;
-    --input: 224 217 236;
-    --ring: 142 121 184;
+    --border: 199 140 52;
+    --input: 33 25 45;
+    --ring: 199 140 52;
     --radius: 0.75rem;
   }
 }

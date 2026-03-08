@@ -27,10 +27,6 @@ const resources = [
   {
     title: 'Sample evidence packet',
     description: 'A redacted example of what a governance review packet looks like.'
-  },
-  {
-    title: 'Procurement response template',
-    description: 'A starting structure for AI governance questionnaire responses.'
   }
 ];
 
@@ -82,9 +78,9 @@ const Connect = () => {
         <div className="container">
           <div className="connect-grid">
             <div className="reveal">
-              <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '40px' }}>
+              <div className="editorial-panel">
                 <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Book a debrief</h2>
-                <p className="body-sm" style={{ marginBottom: '32px' }}>Fill in the basics. Martin will follow up within one business day with a scoped next step rather than a generic pitch.</p>
+                <p className="body-sm" style={{ marginBottom: '32px' }}>Fill in the basics. Martin will follow up with a scoped next step rather than a generic pitch.</p>
 
                 <form onSubmit={handleSubmit}>
                   <div className="form-field">
@@ -138,8 +134,8 @@ const Connect = () => {
             </div>
 
             <div>
-              <div className="reveal" style={{ background: 'var(--color-dark)', borderRadius: 'var(--radius-lg)', padding: '32px', color: '#F5F5F0', marginBottom: '24px' }}>
-                <p className="eyebrow" style={{ marginBottom: '12px', color: '#D8C08A' }}>Direct contact</p>
+              <div className="reveal editorial-panel-dark" style={{ color: '#F5F5F0', marginBottom: '24px' }}>
+                <p className="eyebrow" style={{ marginBottom: '12px', color: 'var(--glow-primary)' }}>Direct contact</p>
                 <p style={{ fontSize: '1.125rem', fontWeight: 500, marginBottom: '4px' }}>
                   <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
                 </p>
@@ -152,24 +148,18 @@ const Connect = () => {
                 </a>
               </div>
 
-              <div className="reveal" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '32px' }}>
+              <div className="reveal editorial-panel">
                 <p className="eyebrow" style={{ marginBottom: '16px' }}>Internal Modules</p>
                 <p className="body-sm" style={{ marginBottom: '18px' }}>
-                  AurorAI and CompassAI stay behind the Govern AI engagement until their hosting, evidence lineage, and review surfaces are ready to be presented more directly.
+                  AurorAI and CompassAI stay behind the Govern AI engagement until their hosting, lineage, and review surfaces are ready to be presented directly.
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
+                <div className="plain-stack" style={{ marginBottom: '24px' }}>
                   {internalModules.map((item) => (
                     <div
                       key={item.title}
-                      style={{
-                        display: 'block',
-                        padding: '18px',
-                        background: 'var(--color-bg-alt)',
-                        borderRadius: 'var(--radius-md)',
-                        border: '1px solid var(--color-border)'
-                      }}
+                      className="plain-stack-item"
                     >
-                      <p style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--color-dark)', marginBottom: '6px' }}>
+                      <p style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--color-text)', marginBottom: '6px' }}>
                         {item.title}
                       </p>
                       <p style={{ fontSize: '0.8125rem', color: 'var(--color-muted)' }}>
@@ -180,23 +170,23 @@ const Connect = () => {
                 </div>
 
                 <p className="eyebrow" style={{ marginBottom: '16px' }}>Resources</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div className="plain-stack">
                   {resources.map((item) => (
-                    <div key={item.title} style={{ padding: '16px', background: 'var(--color-bg-alt)', borderRadius: 'var(--radius-md)' }}>
-                  <p style={{ fontWeight: 500, fontSize: '0.9375rem', color: 'var(--color-dark)', marginBottom: '4px' }}>{item.title}</p>
-                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-muted)' }}>{item.description}</p>
-                </div>
-              ))}
+                    <div key={item.title} className="plain-stack-item">
+                      <p style={{ fontWeight: 500, fontSize: '0.9375rem', color: 'var(--color-text)', marginBottom: '4px' }}>{item.title}</p>
+                      <p style={{ fontSize: '0.8125rem', color: 'var(--color-muted)' }}>{item.description}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <Link to="/tool" className="reveal" style={{ display: 'block', marginTop: '24px', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '24px', transition: 'all 0.3s' }}>
+              <Link to="/tool" className="reveal link-slab">
                 <p style={{ fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-muted-light)', marginBottom: '8px' }}>
                   Not sure where to start?
                 </p>
-                <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--color-dark)' }}>Take a quick readiness signal</p>
+                <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--color-text)' }}>Take a quick readiness signal</p>
                 <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)', marginTop: '8px' }}>
-                  Answer eight questions and get a fast signal on where governance needs structure before a formal review asks for it.
+                  Answer eight questions and get a fast signal on where governance needs structure before review asks for it.
                 </p>
               </Link>
             </div>

@@ -1,0 +1,597 @@
+[data-testid="game-page"] {
+  min-height: 100vh;
+}
+
+.govern-game-page__hero {
+  padding: calc(72px + 56px) 0 44px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(0, 240, 255, 0.14) 0%, rgba(0, 240, 255, 0) 22%),
+    radial-gradient(circle at 18% 68%, rgba(199, 61, 42, 0.12) 0%, rgba(199, 61, 42, 0) 20%),
+    linear-gradient(180deg, #060b14 0%, #09111f 100%);
+}
+
+.govern-game-page__hero-copy {
+  max-width: 760px;
+}
+
+.govern-game-page__hero-copy h1 {
+  margin: 16px 0 18px;
+  max-width: 12ch;
+  color: var(--glow-primary);
+  text-shadow:
+    0 0 22px rgba(0, 240, 255, 0.24),
+    0 0 42px rgba(199, 61, 42, 0.08);
+}
+
+.govern-game-page__hero-copy .body-lg {
+  max-width: 42rem;
+  color: rgba(226, 232, 240, 0.84);
+}
+
+.govern-game-page__section {
+  padding-top: 28px;
+}
+
+.govern-game {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.govern-game__sidebar,
+.govern-game__board-shell {
+  min-width: 0;
+}
+
+.govern-game__panel,
+.govern-game__stat,
+.govern-game__board,
+.govern-game__meta-card,
+.govern-game__lane-label,
+.govern-game__control {
+  border: 1px solid rgba(0, 240, 255, 0.14);
+  background: rgba(13, 22, 39, 0.86);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+.govern-game__panel {
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.govern-game__panel + .govern-game__panel,
+.govern-game__panel + .govern-game__stats,
+.govern-game__stats + .govern-game__panel {
+  margin-top: 18px;
+}
+
+.govern-game__panel h2 {
+  margin: 12px 0 12px;
+  max-width: 14ch;
+}
+
+.govern-game__panel p {
+  margin: 0;
+}
+
+.govern-game__panel--compact {
+  padding: 20px;
+}
+
+.govern-game__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.govern-game__stat {
+  border-radius: 20px;
+  padding: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.govern-game__stat span {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted-light);
+}
+
+.govern-game__stat strong {
+  font-size: 1.6rem;
+  color: var(--white);
+}
+
+.govern-game__integrity,
+.govern-game__timer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.govern-game__integrity strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.3rem;
+  color: var(--white);
+}
+
+.govern-game__integrity-pips {
+  display: flex;
+  gap: 8px;
+}
+
+.govern-game__integrity-pips span {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(13, 22, 39, 0.72);
+}
+
+.govern-game__integrity-pips span.is-active {
+  background: linear-gradient(135deg, #0088cc 0%, #00f0ff 100%);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.28);
+}
+
+.govern-game__timer-badge {
+  min-width: 120px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(199, 61, 42, 0.22);
+  background: rgba(199, 61, 42, 0.1);
+  text-align: right;
+}
+
+.govern-game__timer-badge span {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.govern-game__timer-badge strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.35rem;
+  color: #ffd3cd;
+}
+
+.govern-game__lane-guide {
+  display: grid;
+  gap: 12px;
+}
+
+.govern-game__lane-guide-card {
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  background: rgba(6, 11, 20, 0.72);
+}
+
+.govern-game__lane-guide-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: var(--white);
+}
+
+.govern-game__lane-guide-card p,
+.govern-game__status {
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.govern-game__lane-guide-card--procurement svg,
+.govern-game__control--procurement svg,
+.govern-game__lane-label--procurement svg {
+  color: #00f0ff;
+}
+
+.govern-game__lane-guide-card--audit svg,
+.govern-game__control--audit svg,
+.govern-game__lane-label--audit svg {
+  color: #9ba8d1;
+}
+
+.govern-game__lane-guide-card--oversight svg,
+.govern-game__control--oversight svg,
+.govern-game__lane-label--oversight svg {
+  color: #ef8b7d;
+}
+
+.govern-game__sidebar-actions {
+  margin-top: 18px;
+}
+
+.govern-game__board-shell {
+  display: grid;
+  gap: 16px;
+}
+
+.govern-game__lane-header {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.govern-game__lane-label {
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.govern-game__lane-label strong,
+.govern-game__lane-label span {
+  display: block;
+}
+
+.govern-game__lane-label strong {
+  color: var(--white);
+  font-size: 0.95rem;
+}
+
+.govern-game__lane-label span {
+  margin-top: 4px;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-light);
+}
+
+.govern-game__lane-label.is-active {
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 18px 42px rgba(0, 240, 255, 0.08);
+}
+
+.govern-game__board {
+  position: relative;
+  min-height: 640px;
+  border-radius: 30px;
+  overflow: hidden;
+  outline: none;
+  background:
+    radial-gradient(circle at top right, rgba(0, 240, 255, 0.12) 0%, rgba(0, 240, 255, 0) 26%),
+    radial-gradient(circle at bottom left, rgba(199, 61, 42, 0.1) 0%, rgba(199, 61, 42, 0) 22%),
+    linear-gradient(180deg, #07111f 0%, #050b14 100%);
+}
+
+.govern-game__board:focus-visible {
+  border-color: rgba(0, 240, 255, 0.32);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.12), 0 18px 38px rgba(0, 0, 0, 0.34);
+}
+
+.govern-game__gridlines,
+.govern-game__lane-column,
+.govern-game__judgment-line,
+.govern-game__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.govern-game__gridlines {
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 98%);
+}
+
+.govern-game__lane-column {
+  width: 33.333%;
+  border-right: 1px solid rgba(0, 240, 255, 0.08);
+}
+
+.govern-game__lane-column:last-of-type {
+  border-right: 0;
+}
+
+.govern-game__lane-column.is-active {
+  background: linear-gradient(180deg, rgba(0, 240, 255, 0.05) 0%, rgba(0, 240, 255, 0.01) 100%);
+}
+
+.govern-game__judgment-line {
+  top: auto;
+  bottom: 90px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0) 0%, rgba(0, 240, 255, 0.9) 50%, rgba(0, 240, 255, 0) 100%);
+}
+
+.govern-game__judgment-line span {
+  position: absolute;
+  top: -22px;
+  right: 24px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.6);
+}
+
+.govern-game__packet,
+.govern-game__player {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.govern-game__packet {
+  z-index: 2;
+  min-width: 128px;
+  max-width: 160px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 240, 255, 0.16);
+  background: rgba(6, 11, 20, 0.92);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.36);
+}
+
+.govern-game__packet span,
+.govern-game__packet strong {
+  display: block;
+}
+
+.govern-game__packet span {
+  color: var(--white);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.govern-game__packet strong {
+  margin-top: 6px;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.govern-game__packet--procurement {
+  border-color: rgba(0, 240, 255, 0.24);
+}
+
+.govern-game__packet--procurement strong {
+  color: #00f0ff;
+}
+
+.govern-game__packet--audit {
+  border-color: rgba(110, 121, 155, 0.26);
+}
+
+.govern-game__packet--audit strong {
+  color: #cfd6ee;
+}
+
+.govern-game__packet--oversight {
+  border-color: rgba(199, 61, 42, 0.28);
+}
+
+.govern-game__packet--oversight strong {
+  color: #ef8b7d;
+}
+
+.govern-game__packet.is-priority {
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.46), 0 0 18px rgba(199, 61, 42, 0.14);
+}
+
+.govern-game__player {
+  z-index: 3;
+  bottom: 34px;
+  min-width: 170px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 240, 255, 0.24);
+  background: linear-gradient(135deg, rgba(8, 16, 28, 0.96) 0%, rgba(13, 22, 39, 0.98) 100%);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.42);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.govern-game__player svg {
+  color: var(--white);
+}
+
+.govern-game__player strong,
+.govern-game__player span {
+  display: block;
+}
+
+.govern-game__player strong {
+  font-size: 0.9rem;
+  color: var(--white);
+}
+
+.govern-game__player span {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.62);
+}
+
+.govern-game__player--procurement {
+  border-color: rgba(0, 240, 255, 0.28);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.42), 0 0 24px rgba(0, 240, 255, 0.12);
+}
+
+.govern-game__player--audit {
+  border-color: rgba(110, 121, 155, 0.32);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.42), 0 0 24px rgba(110, 121, 155, 0.12);
+}
+
+.govern-game__player--oversight {
+  border-color: rgba(199, 61, 42, 0.32);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.42), 0 0 24px rgba(199, 61, 42, 0.12);
+}
+
+.govern-game__overlay {
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: rgba(2, 8, 20, 0.72);
+  padding: 24px;
+}
+
+.govern-game__overlay-card {
+  width: min(100%, 440px);
+  padding: 28px;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 240, 255, 0.16);
+  background: rgba(13, 22, 39, 0.94);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.govern-game__overlay-card h3 {
+  margin: 12px 0 12px;
+  color: var(--white);
+}
+
+.govern-game__overlay-card p {
+  color: var(--color-muted);
+}
+
+.govern-game__overlay-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+
+.govern-game__overlay-summary article {
+  padding: 14px 12px;
+  border-radius: 18px;
+  background: rgba(6, 11, 20, 0.72);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+}
+
+.govern-game__overlay-summary span {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.58);
+}
+
+.govern-game__overlay-summary strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.2rem;
+  color: var(--white);
+}
+
+.govern-game__overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.govern-game__controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.govern-game__control {
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--white);
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.govern-game__control:hover {
+  transform: translateY(-1px);
+}
+
+.govern-game__control.is-active {
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 14px 30px rgba(0, 240, 255, 0.08);
+}
+
+.govern-game__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.govern-game__meta-card {
+  border-radius: 22px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.govern-game__meta-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+.govern-game__meta-card p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+@media (max-width: 1080px) {
+  .govern-game {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .govern-game-page__hero {
+    padding: calc(60px + 46px) 0 34px;
+  }
+
+  .govern-game-page__hero-copy h1 {
+    max-width: 10.5ch;
+  }
+
+  .govern-game__stats,
+  .govern-game__lane-header,
+  .govern-game__controls,
+  .govern-game__meta,
+  .govern-game__overlay-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .govern-game__board {
+    min-height: 560px;
+  }
+
+  .govern-game__packet {
+    min-width: 98px;
+    max-width: 108px;
+    padding: 10px 10px;
+  }
+
+  .govern-game__packet span {
+    font-size: 0.72rem;
+  }
+
+  .govern-game__player {
+    min-width: 138px;
+    bottom: 26px;
+    padding: 12px 14px;
+  }
+
+  .govern-game__overlay-card {
+    padding: 22px;
+  }
+
+  .govern-game__overlay-actions {
+    flex-direction: column;
+  }
+}

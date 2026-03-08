@@ -6,7 +6,7 @@ const pressurePoints = [
   {
     icon: BriefcaseBusiness,
     title: 'Procurement',
-    description: 'When a buyer asks for questionnaires, controls, and a credible answer on governance.'
+    description: 'When a buyer asks for controls, questionnaires, and a credible governance answer.'
   },
   {
     icon: Radar,
@@ -21,7 +21,7 @@ const pressurePoints = [
   {
     icon: Building2,
     title: 'Executive oversight',
-    description: 'When leadership wants a simple, review-ready escalation logic that can be maintained.'
+    description: 'When leadership wants escalation logic that stays simple and maintainable.'
   }
 ];
 
@@ -39,12 +39,12 @@ const methods = [
   {
     step: '03',
     title: 'Structure the response',
-    description: 'Assign decisions, controls, and the documentation logic.'
+    description: 'Assign decisions, controls, and documentation.'
   },
   {
     step: '04',
     title: 'Maintain legibility',
-    description: 'Set a light cadence so the governance posture stays operable.'
+    description: 'Set a light cadence so the posture stays operable.'
   }
 ];
 
@@ -52,12 +52,12 @@ const artifacts = [
   {
     icon: FileCheck2,
     title: 'Decision matrix',
-    description: 'Shows who approves, who escalates, and what must be recorded.'
+    description: 'Shows who approves, who escalates, and what gets recorded.'
   },
   {
     icon: Radar,
     title: 'Tiering logic',
-    description: 'Defines which cases require deeper review, and why.'
+    description: 'Defines which cases require deeper review and why.'
   },
   {
     icon: FolderSearch,
@@ -75,14 +75,14 @@ const routes = [
   {
     icon: BriefcaseBusiness,
     title: 'Calm the questionnaire',
-    description: 'For teams that need fast, defensible responses to procurement or customer review.',
+    description: 'For teams that need defensible responses to procurement or customer review.',
     cta: 'Get started',
     to: '/connect'
   },
   {
     icon: Building2,
     title: 'Build the foundation',
-    description: 'For product and AI teams that need clear controls without slowing delivery.',
+    description: 'For teams that need clear controls without slowing delivery.',
     cta: 'View services',
     to: '/services'
   },
@@ -96,10 +96,10 @@ const routes = [
 ];
 
 const reviewNeeds = [
-  'Decision rights assigned',
-  'Risk tiers and thresholds defined',
-  'Evidence packet ready for review',
-  'Escalation cadence documented'
+  'Clear decision rights',
+  'Risk tiers with thresholds',
+  'Evidence packet ready',
+  'Escalation cadence noted'
 ];
 
 const Home = () => (
@@ -114,7 +114,7 @@ const Home = () => (
           </p>
           <h1>Legible AI governance under pressure</h1>
           <p className="body-lg">
-            When procurement, audit, or the board asks how AI is governed, Govern AI helps your team answer with evidence, decision rights, and documentation that can be reviewed.
+            When procurement, audit, or the board asks how AI is governed, Govern AI helps your team answer with evidence, clear decision rights, and review-ready documentation.
           </p>
           <div className="hero-cta-row">
             <Link to="/connect" className="btn-primary">
@@ -133,11 +133,11 @@ const Home = () => (
           <p className="eyebrow">What review bodies need to see</p>
           <h2>A governance posture that stays legible under pressure</h2>
           <p className="body-sm">
-            Decision rights, risk tiers, controls, and evidence should be easy to follow when external scrutiny arrives. The work is to make governance reviewable without claiming more than the evidence can support.
+            Decision rights, risk tiers, controls, and evidence should stay easy to follow when scrutiny arrives.
           </p>
         </div>
 
-        <div className="card reveal">
+        <div className="editorial-panel reveal">
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
             <div className="card-icon" style={{ width: '56px', height: '56px', marginBottom: 0 }}>
               <LighthouseGlyph className="nav-logo" title="Govern AI review mark" />
@@ -164,7 +164,7 @@ const Home = () => (
           <p className="eyebrow">Pressure points</p>
           <h2>Scrutiny creates friction at four points</h2>
           <p className="body-sm">
-            Governance work rarely starts in the abstract. It starts when a deal, review, or oversight request exposes gaps in how decisions are made and documented.
+            Governance work rarely starts in the abstract. It starts when a deal, review, or oversight request exposes gaps in decisions and documentation.
           </p>
         </div>
 
@@ -207,7 +207,7 @@ const Home = () => (
           <p className="eyebrow">Deliverables</p>
           <h2>Artifacts that make governance credible</h2>
           <p className="body-sm">
-            What persuades is not abstract trust language or compliance theatre. It is a set of documents that makes governance legible, testable, and easy to review.
+            What persuades is not trust language. It is a document set that makes governance legible, testable, and easy to review.
           </p>
         </div>
 
@@ -254,7 +254,7 @@ const Home = () => (
       <div className="container">
         <div className="cta-banner reveal">
           <h2>Make governance legible before it gets tested</h2>
-          <p className="body-sm">The first engagement is meant to identify what can already be evidenced, what is missing, and what should not be overstated while the work is still taking shape.</p>
+          <p className="body-sm">The first engagement identifies what can already be evidenced, what is missing, and what should stay narrow for now.</p>
           <div className="btn-row">
             <Link to="/connect" className="btn-primary">
               Book a debrief

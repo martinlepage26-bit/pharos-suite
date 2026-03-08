@@ -15,8 +15,8 @@ const packages = [
     ],
     outcomes: [
       'A working governance model teams can use immediately',
-      'Clearer roles for procurement, audit, and internal review',
-      'A defensible baseline for escalation and oversight'
+      'Clearer roles for procurement and review',
+      'A defensible baseline for escalation'
     ]
   },
   {
@@ -31,7 +31,7 @@ const packages = [
     ],
     outcomes: [
       'Documentation structure ready for procurement',
-      'Legible evidence expectations for audit',
+      'Evidence expectations that audit teams can follow',
       'Named owners for controls and upkeep'
     ]
   },
@@ -97,15 +97,11 @@ const faqs = [
   },
   {
     question: 'How long does a typical engagement take?',
-    answer: 'A governance foundation can be delivered in 3 to 6 weeks. Controls and evidence packs typically run 4 to 8 weeks. Retainers are monthly. The timeline depends on the number of systems and the review expectations.'
-  },
-  {
-    question: 'What industries do you work with?',
-    answer: 'Financial services, healthcare, public sector, enterprise SaaS, and any organization deploying AI systems that face procurement, audit, or regulatory review. The governance logic adapts to the context while the deliverable standards stay consistent.'
+    answer: 'A governance foundation can be delivered in 3 to 6 weeks. Controls and evidence packs usually run 4 to 8 weeks. Retainers are monthly.'
   },
   {
     question: 'Can you support teams outside Canada?',
-    answer: 'Yes. The governance frameworks are built to be jurisdiction-aware. The practice is deeply rooted in Canadian requirements, but the underlying logic of risk tiering, decision rights, and evidence architecture applies more broadly.'
+    answer: 'Yes. The frameworks are jurisdiction-aware. The practice is rooted in Canadian requirements, but the logic of tiering, decision rights, and evidence architecture travels well.'
   }
 ];
 
@@ -120,7 +116,7 @@ const Services = () => {
             <p className="eyebrow">Services</p>
             <h1>Packages structured to answer scrutiny</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Choose by pressure source, not by vocabulary. The right package is the one that produces the materials the review will actually ask for and makes clear what still requires judgment, evidence, or follow-up work.
+              Choose by pressure source, not vocabulary. The right package produces the materials the review will actually ask for and makes clear what still needs judgment or follow-up.
             </p>
           </div>
         </div>
@@ -164,11 +160,11 @@ const Services = () => {
       <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
         <div className="container">
           <div className="section-header reveal">
-            <p className="eyebrow">Scoping</p>
-            <h2>What changes the scope</h2>
-            <p className="body-sm">
-              The work shifts with the number of systems, the level of review expected, the sensitivity of the decisions the AI supports, and the strength of the evidence already in hand.
-            </p>
+          <p className="eyebrow">Scoping</p>
+          <h2>What changes the scope</h2>
+          <p className="body-sm">
+              Scope shifts with the number of systems, the level of review expected, the sensitivity of the decisions, and the strength of the evidence already in hand.
+          </p>
           </div>
 
           <div className="grid-3 stagger">
@@ -185,11 +181,11 @@ const Services = () => {
       <section className="section">
         <div className="container">
           <div className="section-header reveal">
-            <p className="eyebrow">Pricing</p>
-            <h2>How engagements are priced</h2>
-            <p className="body-sm">
-              Every engagement is scoped and priced after an initial debrief. Pricing reflects the number of systems, the depth of review expected, the condition of the evidence layer, and the duration of the work.
-            </p>
+          <p className="eyebrow">Pricing</p>
+          <h2>How engagements are priced</h2>
+          <p className="body-sm">
+              Every engagement is scoped and priced after an initial debrief. Pricing reflects system count, review depth, evidence condition, and duration.
+          </p>
           </div>
 
           <div className="grid-3 stagger">
@@ -236,9 +232,9 @@ const Services = () => {
 
       <section className="section">
         <div className="container">
-          <div className="cta-banner reveal">
-            <h2>Need help choosing the right entry point?</h2>
-            <p className="body-sm">A short debrief is enough to choose the package, the scope, and the first outputs that matter most.</p>
+        <div className="cta-banner reveal">
+          <h2>Need help choosing the right entry point?</h2>
+          <p className="body-sm">A short debrief is enough to choose the package, the scope, and the first outputs that matter most.</p>
             <div className="btn-row">
               <Link to="/connect" className="btn-primary">
                 Book a debrief
