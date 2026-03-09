@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Cpu, ExternalLink, FileText, Scale, Shield } from 'lucide-react';
-import { formatAdminTextForDisplay } from '../lib/textFormat';
+import RichTextContent from '../components/RichTextContent';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -62,6 +62,7 @@ const Portfolio = () => {
           {!loading ? (
             <div className="stagger" style={{ display: 'grid', gap: '20px' }}>
               {publications.map((pub, index) => {
+                const previewText = pub.abstract || pub.description;
                 const content = (
                   <>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '12px' }}>
@@ -70,7 +71,7 @@ const Portfolio = () => {
                       {pub.venue ? <span className="research-date">{pub.venue}</span> : null}
                     </div>
                     <h3 style={{ marginBottom: '10px' }}>{pub.title}</h3>
-                    <p>{formatAdminTextForDisplay(pub.description)}</p>
+                    {previewText ? <RichTextContent text={previewText} /> : null}
                   </>
                 );
 
@@ -108,7 +109,7 @@ const Portfolio = () => {
                 <div key={paper.id} className="card reveal" data-testid={`working-paper-${index}`}>
                   <span className="eyebrow" style={{ marginBottom: '10px', display: 'inline-block' }}>In development</span>
                   <h3 style={{ marginBottom: '10px' }}>{paper.title}</h3>
-                  <p>{formatAdminTextForDisplay(paper.description)}</p>
+                  <RichTextContent text={paper.abstract || paper.description} />
                 </div>
               ))}
             </div>

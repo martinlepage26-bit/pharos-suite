@@ -187,30 +187,30 @@ const FAQ = () => {
           <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
           <div className="relative grid gap-8 lg:grid-cols-[1fr_0.96fr] lg:items-start">
             <div>
-              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.eyebrow}
               </p>
-              <h1 className="max-w-[16ch] text-[29px] leading-[1.04] tracking-[-0.05em] text-[#F6F0E4] sm:text-[32px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <h1 className="max-w-[16ch] text-[29px] leading-[1.04] tracking-[-0.05em] text-[#F6F0E4] sm:text-[32px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.title}
               </h1>
-              <p className="mt-4 max-w-[58ch] text-[14px] leading-[1.7] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif" }}>
+              <p className="mt-4 max-w-[58ch] text-[14px] leading-[1.7] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.body}
               </p>
             </div>
 
             <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.noteLabel}
               </p>
               <div className="mt-4 grid gap-5 rounded-[24px] border border-[#13254C]/12 bg-white/84 p-5 md:grid-cols-[0.85fr_1.15fr] md:items-center">
                 <div className="flex flex-col items-center text-center">
-                  <img src={lighthouseMono} alt="Govern AI monochrome seal" className="w-full max-w-[210px] rounded-[18px] bg-[#0F1D37] p-4" />
+                  <img src={lighthouseMono} alt="PHAROS monochrome seal" className="w-full max-w-[210px] rounded-[18px] bg-[#0F1D37] p-4" />
                 </div>
                 <div>
-                  <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                  <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {copy.noteTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
+                  <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
                     {copy.noteBody}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -218,7 +218,7 @@ const FAQ = () => {
                       <span
                         key={pill}
                         className="inline-flex items-center rounded-full border border-[#D6CCBB] bg-[#FBF7EF] px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-[#13254C]"
-                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                        style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                       >
                         {pill}
                       </span>
@@ -232,13 +232,13 @@ const FAQ = () => {
 
         <section className="brand-panel mb-8 rounded-[32px] px-6 py-7 md:px-8 md:py-8">
           <div className="mb-6 max-w-[860px]">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
               {copy.sectionIntroLabel}
             </p>
-            <h2 className="mt-2 max-w-[15ch] text-[27px] leading-[1.06] text-[#10162A] md:max-w-none md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+            <h2 className="mt-2 max-w-[15ch] text-[27px] leading-[1.06] text-[#10162A] md:max-w-none md:text-[38px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
               {copy.sectionIntroTitle}
             </h2>
-            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
               {copy.sectionIntroBody}
             </p>
           </div>
@@ -251,10 +251,10 @@ const FAQ = () => {
                     <section.icon className="h-5 w-5 text-[#13254C]" />
                   </div>
                   <div>
-                    <h2 className="text-[24px] leading-[1.08] text-[#10162A] md:text-[26px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                    <h2 className="text-[24px] leading-[1.08] text-[#10162A] md:text-[26px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                       {section.title}
                     </h2>
-                    <p className="mt-2 text-sm leading-[1.72] text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                    <p className="mt-2 text-sm leading-[1.72] text-[#20314F]/68" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                       {section.description}
                     </p>
                   </div>
@@ -270,7 +270,7 @@ const FAQ = () => {
                           className="flex w-full items-center justify-between gap-4 p-4 text-left transition-colors hover:bg-[#F7F1E6]"
                           data-testid={`faq-${section.key}-${index}`}
                         >
-                          <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                          <span className="text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                             {item.q}
                           </span>
                           {isOpen ? (
@@ -280,7 +280,7 @@ const FAQ = () => {
                           )}
                         </button>
                         {isOpen && (
-                          <div className="border-t border-[#E6DDCD] px-4 pb-4 pt-4 text-sm leading-[1.8] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+                          <div className="border-t border-[#E6DDCD] px-4 pb-4 pt-4 text-sm leading-[1.8] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                             {item.a}
                           </div>
                         )}
@@ -295,13 +295,13 @@ const FAQ = () => {
 
         <section className="brand-panel-dark rounded-[30px] px-6 py-7 text-white md:px-8 md:py-8">
           <div className="max-w-[760px]">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
               {copy.closingLabel}
             </p>
-            <h2 className="mt-2 text-[30px] md:text-[36px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+            <h2 className="mt-2 text-[30px] md:text-[36px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
               {copy.closingTitle}
             </h2>
-            <p className="mt-3 text-sm leading-[1.75] text-white/78" style={{ fontFamily: "'Lato', sans-serif" }}>
+            <p className="mt-3 text-sm leading-[1.75] text-white/78" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
               {copy.closingBody}
             </p>
           </div>

@@ -35,6 +35,11 @@
 - Preview deploy:
   - `npm run cf:preview`
 
+## Admin passphrase
+- The `/admin` flow now expects the backend environment variable `ADMIN_PASSPHRASE`
+- Configure that variable anywhere the backend runs before using or deploying Admin
+- The frontend no longer relies on a build-time public passphrase for admin access
+
 ## Backend subdomains
 Not created yet:
 - `api.govern-ai.ca`

@@ -586,7 +586,22 @@ export const fr = {
     confirmed: 'Confirm\u00e9',
     cancelled: 'Annul\u00e9',
     confirm: 'Confirmer',
-    abstract: 'R\u00e9sum\u00e9'
+    abstract: 'R\u00e9sum\u00e9',
+    publish: 'Publier',
+    preview: 'Aper\u00e7u',
+    hidePreview: "Masquer l'aper\u00e7u",
+    saving: 'Enregistrement...',
+    newDraft: 'Nouveau brouillon',
+    section: 'Section',
+    websiteSections: 'Sections du site',
+    entries: 'Entr\u00e9es',
+    content: '\u00c9diteur de contenu',
+    editorHelp: 'La mise en forme prend en charge le gras, l\u2019italique, le soulignement, les puces et les listes num\u00e9rot\u00e9es.',
+    linkTarget: 'Cible du lien',
+    publisherLabel: '\u00c9diteur',
+    publisherIntro: 'Choisissez o\u00f9 la publication doit appara\u00eetre, puis fa\u00e7onnez le contenu avant de l\u2019enregistrer ou de le publier.',
+    publisherSubtitle: 'G\u00e9rez le texte des publications, pr\u00e9visualisez-le et publiez-le dans les sections du site depuis un seul espace.',
+    previewEmpty: "Commencez \u00e0 \u00e9crire et l'aper\u00e7u mis en forme appara\u00eetra ici."
   },
 
   bookingCalendar: {

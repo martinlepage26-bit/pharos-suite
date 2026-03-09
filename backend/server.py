@@ -1,12 +1,16 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, Depends, Header, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import asyncio
+import base64
+import hashlib
+import hmac
 import shutil
 import json
+import time
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Dict, List, Optional
@@ -24,6 +28,8 @@ COMPASSAI_ENV_FILE = ROOT_DIR.parent.parent / "CompassAI" / "backend" / ".env"
 resend.api_key = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()]
+ADMIN_PASSPHRASE = os.environ.get('ADMIN_PASSPHRASE', '')
+ADMIN_TOKEN_TTL_SECONDS = 60 * 60 * 12
 
 mongo_url = os.environ.get('MONGO_URL')
 if not mongo_url:
@@ -40,6 +46,15 @@ async def get_database():
     return db
 
 
+def _b64_encode(value: bytes) -> str:
+    return base64.urlsafe_b64encode(value).rstrip(b"=").decode("ascii")
+
+
+def _b64_decode(value: str) -> bytes:
+    padding = "=" * (-len(value) % 4)
+    return base64.urlsafe_b64decode(f"{value}{padding}")
+
+
 def load_env_value(path: Path, key: str) -> str:
     if not path.exists():
         return ""
@@ -54,6 +69,54 @@ def load_env_value(path: Path, key: str) -> str:
                 return value.strip().strip('"').strip("'")
 
     return ""
+
+
+def create_admin_token() -> str:
+    if not ADMIN_PASSPHRASE:
+        raise RuntimeError("ADMIN_PASSPHRASE is not configured")
+
+    payload_segment = _b64_encode(json.dumps({
+        "exp": int(time.time()) + ADMIN_TOKEN_TTL_SECONDS
+    }, separators=(",", ":")).encode("utf-8"))
+    signature = hmac.new(
+        ADMIN_PASSPHRASE.encode("utf-8"),
+        payload_segment.encode("ascii"),
+        hashlib.sha256
+    ).digest()
+    return f"{payload_segment}.{_b64_encode(signature)}"
+
+
+def verify_admin_token(token: str) -> bool:
+    if not ADMIN_PASSPHRASE:
+        return False
+
+    try:
+        payload_segment, signature_segment = token.split(".", 1)
+        expected_signature = hmac.new(
+            ADMIN_PASSPHRASE.encode("utf-8"),
+            payload_segment.encode("ascii"),
+            hashlib.sha256
+        ).digest()
+        provided_signature = _b64_decode(signature_segment)
+        if not hmac.compare_digest(expected_signature, provided_signature):
+            return False
+
+        payload = json.loads(_b64_decode(payload_segment).decode("utf-8"))
+        return int(payload.get("exp", 0)) > int(time.time())
+    except Exception:
+        return False
+
+
+def require_admin(authorization: Optional[str] = Header(default=None)) -> None:
+    if not ADMIN_PASSPHRASE:
+        raise HTTPException(status_code=503, detail="Admin access is not configured")
+
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Admin authorization required")
+
+    token = authorization.split(" ", 1)[1].strip()
+    if not token or not verify_admin_token(token):
+        raise HTTPException(status_code=401, detail="Admin token is invalid or expired")
 
 
 async def probe_http(url: str, timeout: int = 4) -> Dict[str, Any]:
@@ -111,6 +174,9 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+class AdminLoginInput(BaseModel):
+    passphrase: str
+
 class Publication(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -123,6 +189,7 @@ class Publication(BaseModel):
     internal: bool = False
     status: str = "published"
     abstract: str = ""
+    site_section: str = "about_publications"
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 class PublicationCreate(BaseModel):
@@ -135,6 +202,7 @@ class PublicationCreate(BaseModel):
     internal: bool = False
     status: str = "published"
     abstract: str = ""
+    site_section: str = "about_publications"
 
 class PublicationUpdate(BaseModel):
     type: Optional[str] = None
@@ -146,6 +214,7 @@ class PublicationUpdate(BaseModel):
     internal: Optional[bool] = None
     status: Optional[str] = None
     abstract: Optional[str] = None
+    site_section: Optional[str] = None
 
 class Booking(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -287,8 +356,22 @@ async def get_status_checks():
     return status_checks
 
 
+@api_router.post("/admin/login")
+async def admin_login(input: AdminLoginInput):
+    if not ADMIN_PASSPHRASE:
+        raise HTTPException(status_code=503, detail="Admin access is not configured")
+
+    if not hmac.compare_digest(input.passphrase, ADMIN_PASSPHRASE):
+        raise HTTPException(status_code=401, detail="Invalid passphrase")
+
+    return {
+        "token": create_admin_token(),
+        "expires_in": ADMIN_TOKEN_TTL_SECONDS,
+    }
+
+
 @api_router.get("/admin/platform-status")
-async def get_platform_status():
+async def get_platform_status(admin_ok: None = Depends(require_admin)):
     compassai_emergent_key = load_env_value(COMPASSAI_ENV_FILE, "EMERGENT_LLM_KEY")
     compassai_resend_key = load_env_value(COMPASSAI_ENV_FILE, "RESEND_API_KEY")
 
@@ -366,7 +449,7 @@ async def get_publications():
     return pubs
 
 @api_router.post("/publications", response_model=Publication)
-async def create_publication(input: PublicationCreate):
+async def create_publication(input: PublicationCreate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     pub = Publication(**input.model_dump())
     doc = pub.model_dump()
@@ -374,7 +457,7 @@ async def create_publication(input: PublicationCreate):
     return pub
 
 @api_router.put("/publications/{pub_id}", response_model=Publication)
-async def update_publication(pub_id: str, input: PublicationUpdate):
+async def update_publication(pub_id: str, input: PublicationUpdate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     update_data = {k: v for k, v in input.model_dump().items() if v is not None}
     if not update_data:
@@ -387,7 +470,7 @@ async def update_publication(pub_id: str, input: PublicationUpdate):
     return result
 
 @api_router.delete("/publications/{pub_id}")
-async def delete_publication(pub_id: str):
+async def delete_publication(pub_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     result = await database.publications.delete_one({"id": pub_id})
     if result.deleted_count == 0:
@@ -458,7 +541,7 @@ def new_booking_notification_html(booking):
 # ─── Bookings ───
 
 @api_router.get("/bookings", response_model=List[Booking])
-async def get_bookings():
+async def get_bookings(admin_ok: None = Depends(require_admin)):
     database = await get_database()
     bookings = await database.bookings.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
     return bookings
@@ -479,7 +562,7 @@ async def create_booking(input: BookingCreate):
     return booking
 
 @api_router.put("/bookings/{booking_id}/status")
-async def update_booking_status(booking_id: str, input: BookingStatusUpdate):
+async def update_booking_status(booking_id: str, input: BookingStatusUpdate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     if input.status not in ["pending", "confirmed", "cancelled"]:
         raise HTTPException(status_code=400, detail="Invalid status")
@@ -506,7 +589,7 @@ async def update_booking_status(booking_id: str, input: BookingStatusUpdate):
     return result
 
 @api_router.delete("/bookings/{booking_id}")
-async def delete_booking(booking_id: str):
+async def delete_booking(booking_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     result = await database.bookings.delete_one({"id": booking_id})
     if result.deleted_count == 0:
@@ -608,7 +691,7 @@ SEED_WORKING_PAPERS = [
 # ─── FAQ Endpoints ───
 
 @api_router.get("/faq", response_model=List[FAQItem])
-async def get_faq_items():
+async def get_faq_items(admin_ok: None = Depends(require_admin)):
     database = await get_database()
     items = await database.faq_items.find({}, {"_id": 0}).sort("order", 1).to_list(100)
     return items
@@ -620,7 +703,7 @@ async def get_faq_by_section(section: str):
     return items
 
 @api_router.post("/faq", response_model=FAQItem)
-async def create_faq_item(input: FAQItemCreate):
+async def create_faq_item(input: FAQItemCreate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     item = FAQItem(**input.model_dump())
     doc = item.model_dump()
@@ -628,7 +711,7 @@ async def create_faq_item(input: FAQItemCreate):
     return item
 
 @api_router.put("/faq/{item_id}", response_model=FAQItem)
-async def update_faq_item(item_id: str, input: FAQItemUpdate):
+async def update_faq_item(item_id: str, input: FAQItemUpdate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     update_data = {k: v for k, v in input.model_dump().items() if v is not None}
     if not update_data:
@@ -641,7 +724,7 @@ async def update_faq_item(item_id: str, input: FAQItemUpdate):
     return result
 
 @api_router.delete("/faq/{item_id}")
-async def delete_faq_item(item_id: str):
+async def delete_faq_item(item_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     result = await database.faq_items.delete_one({"id": item_id})
     if result.deleted_count == 0:
@@ -651,7 +734,7 @@ async def delete_faq_item(item_id: str):
 # ─── Service Packages Endpoints ───
 
 @api_router.get("/services", response_model=List[ServicePackage])
-async def get_service_packages():
+async def get_service_packages(admin_ok: None = Depends(require_admin)):
     database = await get_database()
     packages = await database.service_packages.find({}, {"_id": 0}).sort("package_number", 1).to_list(10)
     return packages
@@ -663,7 +746,7 @@ async def get_active_service_packages():
     return packages
 
 @api_router.post("/services", response_model=ServicePackage)
-async def create_service_package(input: ServicePackageCreate):
+async def create_service_package(input: ServicePackageCreate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     package = ServicePackage(**input.model_dump())
     doc = package.model_dump()
@@ -671,7 +754,7 @@ async def create_service_package(input: ServicePackageCreate):
     return package
 
 @api_router.put("/services/{package_id}", response_model=ServicePackage)
-async def update_service_package(package_id: str, input: ServicePackageUpdate):
+async def update_service_package(package_id: str, input: ServicePackageUpdate, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     update_data = {k: v for k, v in input.model_dump().items() if v is not None}
     if not update_data:
@@ -684,7 +767,7 @@ async def update_service_package(package_id: str, input: ServicePackageUpdate):
     return result
 
 @api_router.delete("/services/{package_id}")
-async def delete_service_package(package_id: str):
+async def delete_service_package(package_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     result = await database.service_packages.delete_one({"id": package_id})
     if result.deleted_count == 0:

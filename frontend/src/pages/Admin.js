@@ -1,41 +1,23 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown, Server, Bot, Cloud, RefreshCw } from 'lucide-react';
+import PublicationPublisher from '../components/admin/PublicationPublisher';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
-const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
-const PUBLICATION_TYPES = ['', 'Insight', 'Paper', 'Briefing', 'Protocol', 'Working Paper', 'Article', 'Service'];
-const PUBLICATION_VENUES = ['', 'Govern AI', 'LinkedIn', 'Substack', 'Medium', 'Conference', 'Journal', 'Client Deliverable'];
-const PUBLICATION_LINK_TARGETS = [
-  { value: '', label: 'None' },
-  { value: '/portfolio#insights', label: 'Portfolio → Insights section' },
-  { value: '/portfolio#papers', label: 'Portfolio → Papers section' },
-  { value: '/services/menu', label: 'Service Offers page' },
-];
-
-const getDefaultPublicationLink = (publicationType) => {
-  const normalizedType = (publicationType || '').trim().toLowerCase();
-  if (normalizedType.includes('insight')) return '/portfolio#insights';
-  if (normalizedType.includes('paper')) return '/portfolio#papers';
-  return '';
-};
-
-const isPresetPublicationLink = (linkValue) => PUBLICATION_LINK_TARGETS.some((target) => target.value === linkValue);
+const ADMIN_SESSION_KEY = 'govern-ai-admin-token';
 
 const Admin = () => {
   const { t } = useLanguage();
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authToken, setAuthToken] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    return window.sessionStorage.getItem(ADMIN_SESSION_KEY) || '';
+  });
   const [passphrase, setPassphrase] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('publications');
+  const authenticated = Boolean(authToken);
 
-  // Publications state
   const [publications, setPublications] = useState([]);
-  const [editingPub, setEditingPub] = useState(null);
-  const [showPubForm, setShowPubForm] = useState(false);
-  const [pubForm, setPubForm] = useState({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' });
-  const [pubLinkTarget, setPubLinkTarget] = useState('');
-  const [pubCustomLink, setPubCustomLink] = useState('');
-  const [expandedPubIds, setExpandedPubIds] = useState({});
 
   // Bookings state
   const [bookings, setBookings] = useState([]);
@@ -59,6 +41,55 @@ const Admin = () => {
   const [platformStatusLoading, setPlatformStatusLoading] = useState(false);
   const [platformStatusError, setPlatformStatusError] = useState('');
 
+  const resetAdminSession = useCallback((message = '') => {
+    setAuthToken('');
+    setPassphrase('');
+    setLoginError(message);
+    setBookings([]);
+    setFaqItems([]);
+    setServicePackages([]);
+    setPlatformStatus(null);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (authToken) {
+      window.sessionStorage.setItem(ADMIN_SESSION_KEY, authToken);
+    } else {
+      window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    }
+  }, [authToken]);
+
+  const authFetch = useCallback(async (url, options = {}) => {
+    if (!authToken) {
+      throw new Error('Admin session missing');
+    }
+
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+
+    if (response.status === 401 || response.status === 403) {
+      resetAdminSession('Your admin session expired. Please sign in again.');
+      throw new Error('Admin session expired');
+    }
+
+    if (response.status === 503) {
+      resetAdminSession('Admin access is not configured on the backend yet.');
+      throw new Error('Admin access is not configured');
+    }
+
+    return response;
+  }, [authToken, resetAdminSession]);
+
   const loadPublications = useCallback(async () => {
     try {
       const res = await fetch(`${API_URL}/api/publications`);
@@ -69,33 +100,36 @@ const Admin = () => {
 
   const loadBookings = useCallback(async () => {
     try {
-      const res = await fetch(`${API_URL}/api/bookings`);
+      const res = await authFetch(`${API_URL}/api/bookings`);
+      if (!res.ok) throw new Error(`Bookings request failed with ${res.status}`);
       const data = await res.json();
       setBookings(data);
     } catch (e) { /* silent */ }
-  }, []);
+  }, [authFetch]);
 
   const loadFaqItems = useCallback(async () => {
     try {
-      const res = await fetch(`${API_URL}/api/faq`);
+      const res = await authFetch(`${API_URL}/api/faq`);
+      if (!res.ok) throw new Error(`FAQ request failed with ${res.status}`);
       const data = await res.json();
       setFaqItems(data);
     } catch (e) { /* silent */ }
-  }, []);
+  }, [authFetch]);
 
   const loadServicePackages = useCallback(async () => {
     try {
-      const res = await fetch(`${API_URL}/api/services`);
+      const res = await authFetch(`${API_URL}/api/services`);
+      if (!res.ok) throw new Error(`Services request failed with ${res.status}`);
       const data = await res.json();
       setServicePackages(data);
     } catch (e) { /* silent */ }
-  }, []);
+  }, [authFetch]);
 
   const loadPlatformStatus = useCallback(async () => {
     setPlatformStatusLoading(true);
     setPlatformStatusError('');
     try {
-      const res = await fetch(`${API_URL}/api/admin/platform-status`);
+      const res = await authFetch(`${API_URL}/api/admin/platform-status`);
       if (!res.ok) {
         throw new Error(`Status request failed with ${res.status}`);
       }
@@ -106,7 +140,7 @@ const Admin = () => {
     } finally {
       setPlatformStatusLoading(false);
     }
-  }, []);
+  }, [authFetch]);
 
   useEffect(() => {
     if (authenticated) {
@@ -118,68 +152,40 @@ const Admin = () => {
     }
   }, [authenticated, loadPublications, loadBookings, loadFaqItems, loadServicePackages, loadPlatformStatus]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (passphrase === ADMIN_PASSPHRASE) setAuthenticated(true);
-  };
+    setLoginError('');
 
-  // Publication CRUD
-  const handlePubSubmit = async (e) => {
-    e.preventDefault();
     try {
-      const inferredLink = getDefaultPublicationLink(pubForm.type);
-      const resolvedLink = (pubCustomLink || pubLinkTarget || inferredLink).trim();
-      const payload = { ...pubForm, link: resolvedLink, internal: resolvedLink.startsWith('/') || pubForm.internal };
+      const response = await fetch(`${API_URL}/api/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passphrase })
+      });
 
-      if (editingPub) {
-        await fetch(`${API_URL}/api/publications/${editingPub.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      } else {
-        await fetch(`${API_URL}/api/publications`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+      if (response.status === 401) {
+        throw new Error('Incorrect passphrase.');
       }
-      setShowPubForm(false);
-      setEditingPub(null);
-      setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' });
-      setPubLinkTarget('');
-      setPubCustomLink('');
-      loadPublications();
-    } catch (e) { /* silent */ }
-  };
 
-  const handleEditPub = (pub) => {
-    setEditingPub(pub);
-    setPubForm({ type: pub.type, title: pub.title, venue: pub.venue, year: pub.year, description: pub.description, link: pub.link, internal: pub.internal, status: pub.status, abstract: pub.abstract || '' });
-    const existingLink = (pub.link || '').trim();
-    if (isPresetPublicationLink(existingLink)) {
-      setPubLinkTarget(existingLink);
-      setPubCustomLink('');
-    } else {
-      setPubLinkTarget('');
-      setPubCustomLink(existingLink);
+      if (response.status === 503) {
+        throw new Error('Admin access is not configured on the backend yet.');
+      }
+
+      if (!response.ok) {
+        throw new Error(`Admin login failed with ${response.status}`);
+      }
+
+      const data = await response.json();
+      setAuthToken(data.token || '');
+      setPassphrase('');
+    } catch (error) {
+      setLoginError(error.message || 'Could not sign in to Admin.');
     }
-    setShowPubForm(true);
-  };
-
-  const handleDeletePub = async (id) => {
-    if (!window.confirm(t.admin.deleteConfirm)) return;
-    await fetch(`${API_URL}/api/publications/${id}`, { method: 'DELETE' });
-    loadPublications();
-  };
-
-  const insertTextToken = (field, token) => {
-    setPubForm(prev => ({ ...prev, [field]: `${prev[field] || ''}${token}` }));
   };
 
   // Booking handlers
   const handleBookingStatus = async (id, status) => {
-    await fetch(`${API_URL}/api/bookings/${id}/status`, {
+    await authFetch(`${API_URL}/api/bookings/${id}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
@@ -188,7 +194,7 @@ const Admin = () => {
   };
 
   const handleDeleteBooking = async (id) => {
-    await fetch(`${API_URL}/api/bookings/${id}`, { method: 'DELETE' });
+    await authFetch(`${API_URL}/api/bookings/${id}`, { method: 'DELETE' });
     loadBookings();
   };
 
@@ -197,13 +203,13 @@ const Admin = () => {
     e.preventDefault();
     try {
       if (editingFaq) {
-        await fetch(`${API_URL}/api/faq/${editingFaq.id}`, {
+        await authFetch(`${API_URL}/api/faq/${editingFaq.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(faqForm)
         });
       } else {
-        await fetch(`${API_URL}/api/faq`, {
+        await authFetch(`${API_URL}/api/faq`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(faqForm)
@@ -224,13 +230,13 @@ const Admin = () => {
 
   const handleDeleteFaq = async (id) => {
     if (!window.confirm('Delete this FAQ item?')) return;
-    await fetch(`${API_URL}/api/faq/${id}`, { method: 'DELETE' });
+    await authFetch(`${API_URL}/api/faq/${id}`, { method: 'DELETE' });
     loadFaqItems();
   };
 
   const handleFaqOrderChange = async (item, direction) => {
     const newOrder = direction === 'up' ? item.order - 1 : item.order + 1;
-    await fetch(`${API_URL}/api/faq/${item.id}`, {
+    await authFetch(`${API_URL}/api/faq/${item.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ order: newOrder })
@@ -250,13 +256,13 @@ const Admin = () => {
         produces_fr: serviceForm.produces_fr.split('\n').filter(s => s.trim()),
       };
       if (editingService) {
-        await fetch(`${API_URL}/api/services/${editingService.id}`, {
+        await authFetch(`${API_URL}/api/services/${editingService.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       } else {
-        await fetch(`${API_URL}/api/services`, {
+        await authFetch(`${API_URL}/api/services`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -290,7 +296,7 @@ const Admin = () => {
 
   const handleDeleteService = async (id) => {
     if (!window.confirm('Delete this service package?')) return;
-    await fetch(`${API_URL}/api/services/${id}`, { method: 'DELETE' });
+    await authFetch(`${API_URL}/api/services/${id}`, { method: 'DELETE' });
     loadServicePackages();
   };
 
@@ -304,6 +310,7 @@ const Admin = () => {
         <form onSubmit={handleLogin} className="card max-w-sm w-full text-center">
           <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-4">Admin</h2>
           <input type="password" value={passphrase} onChange={(e) => setPassphrase(e.target.value)} placeholder="Passphrase" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none mb-4" data-testid="admin-passphrase" />
+          {loginError ? <p className="text-sm text-red-500 mb-4">{loginError}</p> : null}
           <button type="submit" className="btn-primary w-full" data-testid="admin-login-btn">Enter</button>
         </form>
       </div>
@@ -312,8 +319,11 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="admin-page">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-6">Admin</h1>
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <h1 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-0">Admin</h1>
+          <button type="button" onClick={() => resetAdminSession()} className="btn-ghost text-sm">Sign out</button>
+        </div>
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-8">
@@ -346,136 +356,19 @@ const Admin = () => {
         {activeTab === 'publications' && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{t.admin.publications}</h2>
-              <button onClick={() => { setShowPubForm(true); setEditingPub(null); setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' }); setPubLinkTarget(''); setPubCustomLink(''); }} className="btn-primary flex items-center gap-2 text-sm" data-testid="add-publication-btn">
-                <Plus className="w-4 h-4" /> {t.admin.addPublication}
-              </button>
+              <div>
+                <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{t.admin.publications}</h2>
+                <p className="text-sm text-gray-500 mt-1">{t.admin.publisherSubtitle || 'Manage publication copy, preview it, and publish it into website sections from one workspace.'}</p>
+              </div>
             </div>
 
-            {showPubForm && (
-              <div className="card mb-6 border-l-4 border-[#0D0A2E]" data-testid="publication-form">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-semibold text-[#0B0F1A]">{editingPub ? t.admin.editPublication : t.admin.addPublication}</h3>
-                  <button onClick={() => { setShowPubForm(false); setEditingPub(null); setPubLinkTarget(''); setPubCustomLink(''); }} className="p-1 hover:bg-gray-100 rounded"><X className="w-4 h-4 text-gray-500" /></button>
-                </div>
-                <form onSubmit={handlePubSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.title} *</label>
-                      <input type="text" value={pubForm.title} onChange={e => setPubForm(p => ({ ...p, title: e.target.value }))} required className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" data-testid="pub-title" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.type}</label>
-                      <select value={pubForm.type} onChange={e => setPubForm(p => ({ ...p, type: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
-                        {PUBLICATION_TYPES.map(option => (
-                          <option key={option || 'empty-type'} value={option}>{option || 'Select type'}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.venue}</label>
-                      <select value={pubForm.venue} onChange={e => setPubForm(p => ({ ...p, venue: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
-                        {PUBLICATION_VENUES.map(option => (
-                          <option key={option || 'empty-venue'} value={option}>{option || 'Select venue'}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.year}</label>
-                      <input type="text" value={pubForm.year} onChange={e => setPubForm(p => ({ ...p, year: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.status}</label>
-                      <select value={pubForm.status} onChange={e => setPubForm(p => ({ ...p, status: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
-                        <option value="published">{t.admin.published}</option>
-                        <option value="in_development">{t.admin.inDevelopment}</option>
-                        <option value="draft">{t.admin.draft}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.description}</label>
-                    <div className="flex items-center gap-2 mb-2">
-                      <button type="button" onClick={() => insertTextToken('description', '\n')} className="px-2 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50">+ Line break</button>
-                      <button type="button" onClick={() => insertTextToken('description', '\n\n')} className="px-2 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50">+ Paragraph</button>
-                    </div>
-                    <textarea value={pubForm.description} onChange={e => setPubForm(p => ({ ...p, description: e.target.value }))} rows={4} className="w-full min-h-[110px] max-h-[360px] px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm resize-y" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Link target</label>
-                      <select value={pubLinkTarget} onChange={e => setPubLinkTarget(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
-                        {PUBLICATION_LINK_TARGETS.map(target => (
-                          <option key={target.value || 'empty-link'} value={target.value}>{target.label}</option>
-                        ))}
-                      </select>
-                      <p className="text-[11px] text-gray-500 mt-1">If empty, Insight/Paper entries automatically link to Portfolio sections.</p>
-                    </div>
-                    <div className="flex items-end pb-1">
-                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                        <input type="checkbox" checked={pubForm.internal} onChange={e => setPubForm(p => ({ ...p, internal: e.target.checked }))} className="rounded border-gray-300" />
-                        {t.admin.internal}
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-500 mb-1">Optional custom URL</label>
-                    <input type="text" value={pubCustomLink} onChange={e => setPubCustomLink(e.target.value)} placeholder="/portfolio#insights, /services/menu or https://..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" />
-                  </div>
-                  <div className="flex gap-3 pt-2">
-                    <button type="submit" className="btn-primary text-sm" data-testid="pub-save-btn">{t.admin.save}</button>
-                    <button type="button" onClick={() => { setShowPubForm(false); setEditingPub(null); setPubLinkTarget(''); setPubCustomLink(''); }} className="btn-ghost text-sm">{t.admin.cancel}</button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {publications.length === 0 ? (
-              <p className="text-gray-500 text-sm">{t.admin.noPublications}</p>
-            ) : (
-              <div className="space-y-3">
-                {publications.map((pub) => (
-                  <div key={pub.id} className="card" data-testid={`admin-pub-${pub.id}`}>
-                    <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        {pub.type && <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{pub.type}</span>}
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${pub.status === 'published' ? 'bg-green-100 text-green-700' : pub.status === 'in_development' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
-                          {pub.status === 'published' ? t.admin.published : pub.status === 'in_development' ? t.admin.inDevelopment : t.admin.draft}
-                        </span>
-                        {pub.year && <span className="text-xs text-gray-400">{pub.year}</span>}
-                      </div>
-                      <h3 className="font-medium text-[#0B0F1A] text-sm truncate">{pub.title}</h3>
-                      {pub.description && (
-                        <p className={`text-gray-500 text-xs mt-1 whitespace-pre-line ${expandedPubIds[pub.id] ? '' : 'line-clamp-1'}`}>
-                          {pub.description}
-                        </p>
-                      )}
-                      {pub.description && (
-                        <button
-                          type="button"
-                          onClick={() => setExpandedPubIds((prev) => ({ ...prev, [pub.id]: !prev[pub.id] }))}
-                          className="mt-1 text-[11px] text-[#0D0A2E] hover:underline"
-                        >
-                          {expandedPubIds[pub.id] ? 'Collapse article fields' : 'Expand article fields'}
-                        </button>
-                      )}
-                    </div>
-                    <div className="flex gap-1 flex-shrink-0">
-                      <button onClick={() => handleEditPub(pub)} className="p-2 hover:bg-[#0D0A2E]/10 rounded-lg transition-colors" data-testid={`edit-pub-${pub.id}`}>
-                        <Pencil className="w-4 h-4 text-gray-500 hover:text-[#0D0A2E]" />
-                      </button>
-                      <button onClick={() => handleDeletePub(pub.id)} className="p-2 hover:bg-red-50 rounded-lg transition-colors" data-testid={`delete-pub-${pub.id}`}>
-                        <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />
-                      </button>
-                    </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <PublicationPublisher
+              apiUrl={API_URL}
+              publications={publications}
+              onRefresh={loadPublications}
+              request={authFetch}
+              t={t}
+            />
           </div>
         )}
 

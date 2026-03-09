@@ -587,7 +587,22 @@ export const en = {
     confirmed: 'Confirmed',
     cancelled: 'Cancelled',
     confirm: 'Confirm',
-    abstract: 'Abstract'
+    abstract: 'Abstract',
+    publish: 'Publish',
+    preview: 'Preview',
+    hidePreview: 'Hide preview',
+    saving: 'Saving...',
+    newDraft: 'New draft',
+    section: 'Section',
+    websiteSections: 'Website sections',
+    entries: 'Entries',
+    content: 'Content editor',
+    editorHelp: 'Formatting supports bold, italic, underline, bullet points, and numbered lists.',
+    linkTarget: 'Link target',
+    publisherLabel: 'Publisher',
+    publisherIntro: 'Choose where the publication should appear, then shape the content before saving or publishing.',
+    publisherSubtitle: 'Manage publication copy, preview it, and publish it into website sections from one workspace.',
+    previewEmpty: 'Start writing and the formatted preview will appear here.'
   },
 
   bookingCalendar: {

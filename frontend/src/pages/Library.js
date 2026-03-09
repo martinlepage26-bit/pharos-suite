@@ -235,30 +235,30 @@ const Library = () => {
           <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
           <div className="relative grid gap-8 lg:grid-cols-[1fr_0.96fr] lg:items-start">
             <div>
-              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.eyebrow}
               </p>
-              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.title}
               </h1>
-              <p className="mt-4 max-w-[52ch] text-[13px] leading-[1.68] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif" }}>
+              <p className="mt-4 max-w-[52ch] text-[13px] leading-[1.68] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.body}
               </p>
             </div>
 
             <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.noteLabel}
               </p>
               <div className="mt-4 grid gap-5 rounded-[24px] border border-[#13254C]/12 bg-white/84 p-5 md:grid-cols-[0.85fr_1.15fr] md:items-center">
                 <div className="flex flex-col items-center text-center">
-                  <img src={lighthouseMono} alt="Govern AI monochrome seal" className="w-full max-w-[210px] rounded-[18px] bg-[#0F1D37] p-4" />
+                  <img src={lighthouseMono} alt="PHAROS monochrome seal" className="w-full max-w-[210px] rounded-[18px] bg-[#0F1D37] p-4" />
                 </div>
                 <div>
-                  <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                  <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {copy.noteTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
+                  <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
                     {copy.noteBody}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -266,7 +266,7 @@ const Library = () => {
                       <span
                         key={pill}
                         className="inline-flex items-center rounded-full border border-[#D6CCBB] bg-[#FBF7EF] px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-[#13254C]"
-                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                        style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                       >
                         {pill}
                       </span>
@@ -280,13 +280,13 @@ const Library = () => {
 
         <section className="mb-8">
           <div className="mb-5 max-w-[820px]">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
               {copy.primaryLabel}
             </p>
-            <h2 className="mt-2 text-[30px] text-[#10162A] md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+            <h2 className="mt-2 text-[30px] text-[#10162A] md:text-[38px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
               {copy.primaryTitle}
             </h2>
-            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
               {copy.primaryBody}
             </p>
           </div>
@@ -301,10 +301,10 @@ const Library = () => {
                       <Icon className="h-5 w-5 text-[#13254C]" />
                     </div>
                     <div>
-                      <h2 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                      <h2 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {section.title}
                       </h2>
-                      <p className="mt-2 text-sm leading-[1.72] text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                      <p className="mt-2 text-sm leading-[1.72] text-[#20314F]/68" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                         {section.body}
                       </p>
                     </div>
@@ -321,10 +321,10 @@ const Library = () => {
                       >
                         <div className="flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                            <span className="text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                               {item.name}
                             </span>
-                            <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                            <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                               {item.tag}
                             </span>
                           </div>
@@ -343,13 +343,13 @@ const Library = () => {
                   <Wrench className="h-5 w-5 text-[#13254C]" />
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                     {copy.toolsLabel}
                   </p>
-                  <h2 className="mt-2 text-[26px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                  <h2 className="mt-2 text-[26px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {copy.toolsTitle}
                   </h2>
-                  <p className="mt-2 text-sm text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                  <p className="mt-2 text-sm text-[#20314F]/68" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                     {copy.toolsBody}
                   </p>
                 </div>
@@ -366,14 +366,14 @@ const Library = () => {
                   >
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                        <span className="text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                           {tool.name}
                         </span>
-                        <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                        <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                           {tool.tag}
                         </span>
                       </div>
-                      <p className="mt-1 text-sm text-[#20314F]/64" style={{ fontFamily: "'Lato', sans-serif" }}>
+                      <p className="mt-1 text-sm text-[#20314F]/64" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                         {tool.description}
                       </p>
                     </div>
@@ -387,13 +387,13 @@ const Library = () => {
 
         <section className="brand-panel rounded-[32px] px-6 py-7 md:px-8 md:py-8">
           <div className="mb-6 max-w-[820px]">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
               {copy.bibliographyLabel}
             </p>
-            <h2 className="mt-2 text-[30px] text-[#10162A] md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+            <h2 className="mt-2 text-[30px] text-[#10162A] md:text-[38px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
               {copy.bibliographyTitle}
             </h2>
-            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
               {copy.bibliographyBody}
             </p>
           </div>
@@ -407,14 +407,14 @@ const Library = () => {
                 >
                   <div className="flex-1">
                     <div className="mb-1 flex flex-wrap items-center gap-2">
-                      <span className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                      <span className="text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                         {entry.title}
                       </span>
-                      <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                      <span className="rounded-full border border-[#D6CCBB] bg-white px-2 py-0.5 text-xs text-[#13254C]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                         {entry.type}
                       </span>
                     </div>
-                    <p className="text-sm text-[#20314F]/64" style={{ fontFamily: "'Lato', sans-serif" }}>
+                    <p className="text-sm text-[#20314F]/64" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                       {entry.org} · {entry.year}
                     </p>
                   </div>
@@ -425,7 +425,7 @@ const Library = () => {
                   )}
                 </button>
                 {openEntry === index && (
-                  <div className="border-t border-[#E6DDCD] px-4 pb-4 pt-4 text-sm leading-[1.8] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+                  <div className="border-t border-[#E6DDCD] px-4 pb-4 pt-4 text-sm leading-[1.8] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                     {entry.description}
                   </div>
                 )}
@@ -434,7 +434,7 @@ const Library = () => {
           </div>
         </section>
 
-        <div className="mt-8 rounded-[24px] border border-[#D6CCBB] bg-[#FBF7EF] p-5 text-sm leading-[1.8] text-[#20314F]/74 shadow-[0_12px_24px_rgba(8,20,40,0.04)]" style={{ fontFamily: "'Lato', sans-serif" }}>
+        <div className="mt-8 rounded-[24px] border border-[#D6CCBB] bg-[#FBF7EF] p-5 text-sm leading-[1.8] text-[#20314F]/74 shadow-[0_12px_24px_rgba(8,20,40,0.04)]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
           <span className="font-semibold text-[#10162A]">{copy.finalNote}:</span> {copy.finalBody}
         </div>
       </div>

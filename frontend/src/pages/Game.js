@@ -518,7 +518,7 @@ const Game = () => {
                 >
                   <ShieldCheck size={18} />
                   <div>
-                    <strong>Govern AI</strong>
+                    <strong>PHAROS</strong>
                     <span>{LANES[game.laneIndex].title}</span>
                   </div>
                 </div>

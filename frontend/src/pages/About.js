@@ -1,188 +1,233 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileCheck2, Search, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import LighthouseGlyph from '../components/LighthouseGlyph';
+import RichTextContent from '../components/RichTextContent';
 
-const practiceCards = [
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+const infraFabricCards = [
   {
-    icon: Search,
-    title: 'Classify risk',
-    description: 'Build inventories and tier by impact levels that satisfy both federal and Quebec requirements.'
+    title: 'Claim discipline',
+    description: 'InfraFabric keeps capability claims tied to what the evidence and infrastructure can actually support right now.'
   },
   {
-    icon: ShieldCheck,
-    title: 'Design controls',
-    description: 'Define decision rights and approvals that meet Treasury Board expectations and Law 25 provisions.'
+    title: 'Evidence lineage',
+    description: 'Artifacts, processing runs, review decisions, evidence packages, assessments, and audit events stay explicit instead of collapsing into vague status.'
   },
   {
-    icon: FileCheck2,
-    title: 'Maintain evidence',
-    description: 'Keep documentation current as Canadian AI rules and oversight expectations evolve.'
+    title: 'Fail-closed posture',
+    description: 'If lineage is missing or review evidence is incomplete, the claim narrows and the state stays provisional.'
   }
 ];
 
-const dailyCards = [
+const moduleCards = [
   {
-    title: 'Read systems closely',
-    description: 'Examine decision flows, opaque zones, and what the evidence layer lets others reconstruct.'
+    title: 'AurorAI',
+    description: 'An in-house evidence and document engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
+    portalPath: '/portal/aurorai'
   },
   {
-    title: 'Structure controls',
-    description: 'Define decision rights, review gates, and a cadence that fits operational work.'
-  },
-  {
-    title: 'Maintain proof',
-    description: 'Build the documentation layer that lets teams answer pressure without improvising.'
+    title: 'CompassAI',
+    description: 'An in-house governance engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
+    portalPath: '/portal/compassai'
   }
 ];
 
-const expertiseAreas = [
-  { title: 'Governance', items: ['AI Risk Classification', 'Decision Rights Design', 'Governance Operating Models', 'Lifecycle Gates'] },
-  { title: 'Evidence', items: ['Audit Documentation', 'Evidence Architecture', 'Traceability Systems', 'Reconstruction Capability'] },
-  { title: 'Controls', items: ['Control Register Design', 'Testing Expectations', 'Monitoring Frameworks', 'Threshold Management'] },
-  { title: 'Procurement', items: ['Vendor Due Diligence', 'Questionnaire Design', 'Contract Requirements', 'Reassessment Protocols'] }
-];
+const sortPublications = (left, right) => {
+  const rightYear = Number.parseInt(right.year, 10) || 0;
+  const leftYear = Number.parseInt(left.year, 10) || 0;
+  const yearDelta = rightYear - leftYear;
+  if (yearDelta !== 0) return yearDelta;
 
-const About = () => (
-  <div data-testid="about-page">
-    <div className="page-hero">
-      <div className="container">
-        <div className="about-hero-split">
-          <div>
-            <p className="eyebrow" style={{ marginBottom: '16px' }}>About</p>
-            <h1>A governance practice built for legibility</h1>
-            <p className="body-lg" style={{ marginTop: '20px' }}>
-              The work is to make systems, decisions, and evidence clear enough to hold up under scrutiny without over-claiming.
-            </p>
-            <div className="divider" />
-            <p className="body-sm">
-              Governance built for the Canadian context, including federal directives and Quebec&apos;s Law 25.
-            </p>
-            <p style={{ fontSize: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-muted-light)', marginTop: '12px', fontWeight: 500 }}>
-              Montreal · Quebec · Canada
-            </p>
-            <div style={{ marginTop: '32px', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-              <Link to="/connect" className="btn-dark">
-                Book a debrief
-                <ArrowRight />
-              </Link>
-              <Link to="/research" className="btn-outline">View research</Link>
-            </div>
-          </div>
+  return String(right.created_at || '').localeCompare(String(left.created_at || ''));
+};
 
-          <div className="reveal visible">
-            <div className="editorial-panel">
-              <p className="eyebrow" style={{ marginBottom: '16px' }}>About me</p>
-              <h2 style={{ fontSize: '1.75rem', marginBottom: '16px' }}>Martin Lepage, PhD</h2>
-              <p className="body-sm">
-                Martin Lepage is a Montreal-based AI governance consultant working across federal and Quebec requirements. He helps organizations build governance systems that satisfy Treasury Board directives, Law 25 obligations, and growing review pressure while remaining practical to operate.
+const About = () => {
+  const [publications, setPublications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/publications`)
+      .then((response) => response.json())
+      .then((data) => {
+        const aboutPublications = data
+          .filter((publication) => (
+            publication.status === 'published' &&
+            (!publication.site_section || publication.site_section === 'about_publications')
+          ))
+          .sort(sortPublications);
+
+        setPublications(aboutPublications);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  return (
+    <div data-testid="about-page">
+      <div className="page-hero">
+        <div className="container">
+          <div className="about-hero-split">
+            <div>
+              <p className="eyebrow" style={{ marginBottom: '16px' }}>About</p>
+              <div className="brand-kicker brand-kicker-static">
+                <LighthouseGlyph className="brand-kicker-mark" title="" />
+                <span>PHAROS AI GOVERNANCE</span>
+              </div>
+              <h1>PHAROS AI Governance</h1>
+              <p className="body-lg" style={{ marginTop: '20px' }}>
+                PHAROS is the public-facing AI governance practice led by Martin Lepage: a Montreal-based advisory centered on evidence, deterministic decision rights, controls, and review-ready documentation.
               </p>
               <div className="divider" />
-              <p className="body-sm" style={{ marginTop: '16px' }}>
-                The practice combines system reading, evidence structure, and control discipline so organizations can answer clearly when someone asks how AI is governed and what can genuinely be verified.
+              <p className="body-sm">
+                The work is built for organizations facing procurement pressure, audit review, vendor diligence, or committee oversight and needing governance that remains legible under scrutiny.
+              </p>
+              <p style={{ fontSize: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-muted-light)', marginTop: '12px', fontWeight: 500 }}>
+                Montreal · Quebec · Canada
+              </p>
+              <div style={{ marginTop: '32px', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                <Link to="/connect" className="btn-dark">
+                  Book a debrief
+                  <ArrowRight />
+                </Link>
+                <Link to="/research" className="btn-outline">View research</Link>
+              </div>
+            </div>
+
+            <div className="reveal visible">
+              <div className="editorial-panel">
+                <p className="eyebrow" style={{ marginBottom: '16px' }}>Practice posture</p>
+                <h2 style={{ fontSize: '1.75rem', marginBottom: '16px' }}>Legible governance under pressure</h2>
+                <p className="body-sm">
+                  The standard is simple: governance documentation should derive from evidence, decision rights and thresholds should stay explicit, and public claims should not outrun what the underlying architecture can support.
+                </p>
+                <div className="divider" />
+                <p className="body-sm" style={{ marginTop: '16px' }}>
+                  That posture carries through the advisory work, the documentation structure, and the in-house systems supporting evidence handling and governance assessment behind the scenes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">InfraFabric</p>
+            <h2>The structural framework under the deeper architecture work</h2>
+            <p className="body-sm">
+              InfraFabric is the governance framework that preserves provenance, review gates, evidence lineage, and auditability so no capability claim outruns the state of the underlying infrastructure.
+            </p>
+          </div>
+
+          <div className="grid-3 stagger">
+            {infraFabricCards.map((item) => (
+              <div key={item.title} className="card reveal">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">Internal modules</p>
+            <h2>AurorAI & CompassAI</h2>
+            <p className="body-sm">
+              AurorAI and CompassAI are in-house systems developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission. AurorAI handles evidence and document processing. CompassAI handles governance intake, assessment, and output generation. Portal access is available below, and the shared admin surface remains separate.
+            </p>
+          </div>
+
+          <div className="grid-2 stagger">
+            {moduleCards.map((item) => (
+              <div key={item.title} className="card reveal">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <div style={{ marginTop: '22px', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                  <Link to={item.portalPath} className="btn-dark">
+                    Client portal
+                    <ArrowRight />
+                  </Link>
+                  <Link to="/admin" className="btn-outline">Admin</Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }} id="publications">
+        <div className="container">
+          <div className="section-header reveal">
+            <h2>New Publications Every Week</h2>
+          </div>
+
+          {loading ? <p className="body-sm">Loading publications</p> : null}
+
+          {!loading && publications.length > 0 ? (
+            <div className="stagger" style={{ display: 'grid', gap: '20px' }}>
+              {publications.map((publication) => {
+                const previewText = publication.abstract || publication.description;
+                const meta = (
+                  <div className="publication-card-meta">
+                    {publication.type ? <span className="eyebrow" style={{ marginBottom: 0 }}>{publication.type}</span> : null}
+                    {publication.year ? <span className="research-date">{publication.year}</span> : null}
+                    {publication.venue ? <span className="research-date">{publication.venue}</span> : null}
+                  </div>
+                );
+
+                const content = (
+                  <>
+                    {meta}
+                    <h3 style={{ marginBottom: '12px' }}>{publication.title}</h3>
+                    {previewText ? <RichTextContent text={previewText} /> : null}
+                  </>
+                );
+
+                if (!publication.link) {
+                  return (
+                    <div key={publication.id} className="card reveal">
+                      {content}
+                    </div>
+                  );
+                }
+
+                if (publication.internal) {
+                  return (
+                    <Link key={publication.id} to={publication.link} className="card reveal">
+                      {content}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <a key={publication.id} href={publication.link} target="_blank" rel="noreferrer" className="card reveal">
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '14px' }}>
+                      <div style={{ flex: 1 }}>{content}</div>
+                      <ExternalLink size={18} style={{ flexShrink: 0, color: 'var(--color-accent)' }} />
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          ) : null}
+
+          {!loading && publications.length === 0 ? (
+            <div className="editorial-panel reveal">
+              <p className="body-sm" style={{ marginBottom: 0 }}>
+                No publications are assigned to the About page yet. Publish them from the Admin publisher and they will appear here.
               </p>
             </div>
-          </div>
+          ) : null}
         </div>
-      </div>
+      </section>
     </div>
-
-    <section className="section">
-      <div className="container">
-        <div className="section-header reveal">
-          <p className="eyebrow">How the practice operates</p>
-          <h2>What governance work means in Canada</h2>
-          <p className="body-sm">
-            AI governance in Canada is a system aligned with Treasury Board directives, Quebec&apos;s automated decision-making requirements, and the evidence expectations surrounding deployed AI systems.
-          </p>
-        </div>
-
-        <div className="grid-3 stagger">
-          {practiceCards.map((item) => (
-            <div key={item.title} className="card reveal">
-              <div className="card-icon">
-                <item.icon />
-              </div>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
-      <div className="container">
-        <div className="section-header reveal">
-          <p className="eyebrow">In practice</p>
-          <h2>What that looks like day to day</h2>
-        </div>
-
-        <div className="grid-3 stagger">
-          {dailyCards.map((item) => (
-            <div key={item.title} className="card reveal">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section className="section">
-      <div className="container">
-        <div className="section-header reveal">
-          <p className="eyebrow">Areas of expertise</p>
-          <h2>Where the work concentrates</h2>
-        </div>
-
-        <div className="expertise-grid stagger">
-          {expertiseAreas.map((item) => (
-            <div key={item.title} className="expertise-card reveal">
-              <h4>{item.title}</h4>
-              <ul>
-                {item.items.map((entry) => (
-                  <li key={entry}>{entry}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
-      <div className="container">
-        <div className="section-header reveal">
-          <p className="eyebrow">Featured research</p>
-          <h2>The Sealed Card Protocol</h2>
-          <p className="body-sm">
-            A framework for analyzing how legitimacy is established in generative AI, with attention to mediation, authenticity, and accountability.
-          </p>
-        </div>
-        <div className="reveal" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Link to="/sealed-card" className="btn-dark">
-            Read the protocol
-            <ArrowRight />
-          </Link>
-          <Link to="/connect" className="btn-outline">Discuss the work</Link>
-        </div>
-      </div>
-    </section>
-
-    <section className="section">
-      <div className="container">
-        <div className="cta-banner reveal">
-          <h2>Discuss your governance needs</h2>
-          <p className="body-sm">Whether you&apos;re establishing foundations, preparing for audit, or managing vendor AI risk.</p>
-          <div className="btn-row">
-            <Link to="/connect" className="btn-primary">
-              Book a debrief
-              <ArrowRight />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-);
+  );
+};
 
 export default About;

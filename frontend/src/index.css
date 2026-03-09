@@ -1,35 +1,37 @@
 /* Source stylesheet for Tailwind CLI. Generates src/tailwind.generated.css. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lato:wght@300;400;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --brand-night: #120e18;
-  --brand-navy: #1a1530;
-  --brand-ink: #f1e7d8;
-  --brand-steel: #baa891;
-  --brand-brass: #c78c34;
-  --brand-brass-soft: rgba(199, 140, 52, 0.18);
-  --brand-ivory: #17111c;
-  --brand-paper: #21192d;
-  --brand-sand: #2a2136;
-  --brand-line: rgba(199, 140, 52, 0.14);
-  --brand-line-strong: rgba(199, 140, 52, 0.24);
-  --white: #f6ecdd;
-  --black: #09060f;
-  --black-60: rgba(241, 231, 216, 0.64);
-  --black-40: rgba(186, 168, 145, 0.72);
-  --black-20: rgba(241, 231, 216, 0.18);
-  --black-10: rgba(241, 231, 216, 0.1);
-  --earth-indigo-rgb: 104, 89, 149;
-  --earth-terracotta-rgb: 183, 96, 70;
-  --earth-ochre-rgb: 199, 140, 52;
-  --font-serif: 'Source Serif 4', Georgia, serif;
-  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
-  --font-heading: 'IBM Plex Sans', system-ui, sans-serif;
-  --font-body: 'Lato', 'IBM Plex Sans', sans-serif;
+  --brand-night: #081120;
+  --brand-navy: #102142;
+  --brand-ink: #f4efe7;
+  --brand-steel: #b8c1d2;
+  --brand-brass: #c9952f;
+  --brand-brass-soft: rgba(201, 149, 47, 0.18);
+  --brand-ivory: #0d172b;
+  --brand-paper: #13294d;
+  --brand-sand: #1c3a69;
+  --brand-line: rgba(201, 149, 47, 0.15);
+  --brand-line-strong: rgba(201, 149, 47, 0.26);
+  --white: #f7f3ec;
+  --black: #050c17;
+  --black-60: rgba(244, 239, 231, 0.64);
+  --black-40: rgba(184, 193, 210, 0.72);
+  --black-20: rgba(244, 239, 231, 0.18);
+  --black-10: rgba(244, 239, 231, 0.1);
+  --earth-indigo-rgb: 53, 88, 157;
+  --earth-violet-rgb: 119, 104, 195;
+  --earth-terracotta-rgb: 201, 149, 47;
+  --earth-ochre-rgb: 201, 149, 47;
+  --font-serif: 'Crimson Text', Georgia, serif;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Crimson Text', Georgia, serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
   --shadow-sm: 0 10px 20px rgba(5, 3, 10, 0.2);
   --shadow-md: 0 16px 30px rgba(5, 3, 10, 0.28);
   --shadow-lg: 0 24px 46px rgba(5, 3, 10, 0.36);
@@ -48,9 +50,9 @@ body {
   color: var(--brand-ink);
   background:
     radial-gradient(circle at 12% 8%, rgba(var(--earth-ochre-rgb), 0.08) 0%, rgba(var(--earth-ochre-rgb), 0) 24%),
-    radial-gradient(circle at 82% 10%, rgba(var(--earth-indigo-rgb), 0.14) 0%, rgba(var(--earth-indigo-rgb), 0) 18%),
-    radial-gradient(circle at 54% 82%, rgba(var(--earth-terracotta-rgb), 0.1) 0%, rgba(var(--earth-terracotta-rgb), 0) 22%),
-    linear-gradient(180deg, #120e18 0%, #171122 100%);
+    radial-gradient(circle at 82% 10%, rgba(var(--earth-indigo-rgb), 0.18) 0%, rgba(var(--earth-indigo-rgb), 0) 18%),
+    radial-gradient(circle at 54% 82%, rgba(var(--earth-violet-rgb), 0.06) 0%, rgba(var(--earth-violet-rgb), 0) 22%),
+    linear-gradient(180deg, #081120 0%, #0d1830 56%, #112246 100%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "liga" 1, "kern" 1;
@@ -88,7 +90,7 @@ h3, h4, h5, h6 {
 }
 
 ::selection {
-  background: rgba(var(--earth-terracotta-rgb), 0.34);
+  background: rgba(var(--earth-ochre-rgb), 0.34);
   color: var(--white);
 }
 
@@ -100,20 +102,20 @@ a {
 
 @layer base {
   :root {
-    --background: 18 14 24;
-    --foreground: 241 231 216;
-    --card: 33 25 45;
-    --card-foreground: 241 231 216;
-    --popover: 33 25 45;
-    --popover-foreground: 241 231 216;
-    --primary: 199 140 52;
-    --primary-foreground: 23 15 10;
-    --secondary: 26 21 48;
-    --secondary-foreground: 241 231 216;
-    --muted: 33 25 45;
-    --muted-foreground: 186 168 145;
-    --accent: 183 96 70;
-    --accent-foreground: 246 236 221;
+    --background: 8 17 32;
+    --foreground: 244 239 231;
+    --card: 17 35 69;
+    --card-foreground: 244 239 231;
+    --popover: 17 35 69;
+    --popover-foreground: 244 239 231;
+    --primary: 201 149 47;
+    --primary-foreground: 10 18 32;
+    --secondary: 16 33 66;
+    --secondary-foreground: 244 239 231;
+    --muted: 13 27 54;
+    --muted-foreground: 184 193 210;
+    --accent: 119 104 195;
+    --accent-foreground: 244 239 231;
     --destructive: 220 38 38;
     --destructive-foreground: 255 255 255;
     --border: 199 140 52;

@@ -1,15 +1,15 @@
-const LighthouseGlyph = ({ className = '', title = 'Govern AI observability mark' }) => (
+const LighthouseGlyph = ({ className = '', title = 'PHAROS observability mark' }) => (
   <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden={title ? undefined : true} role={title ? 'img' : 'presentation'}>
     {title ? <title>{title}</title> : null}
     <defs>
       <linearGradient id="govern-gem-gradient" x1="24" y1="15.2" x2="24" y2="22.8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#DAC8FF" />
-        <stop offset="0.48" stopColor="#A774FF" />
-        <stop offset="1" stopColor="#6F44D9" />
+        <stop stopColor="#D9E4FF" />
+        <stop offset="0.52" stopColor="#7D96DE" />
+        <stop offset="1" stopColor="#7162BE" />
       </linearGradient>
       <radialGradient id="govern-iris-gradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(24 24) rotate(90) scale(8.5)">
-        <stop stopColor="#C6B1FF" stopOpacity="0.95" />
-        <stop offset="1" stopColor="#A774FF" stopOpacity="0.1" />
+        <stop stopColor="#D7E1FF" stopOpacity="0.95" />
+        <stop offset="1" stopColor="#8978D8" stopOpacity="0.12" />
       </radialGradient>
       <linearGradient id="govern-beam-gradient" x1="24" y1="8" x2="24" y2="37.5" gradientUnits="userSpaceOnUse">
         <stop stopColor="currentColor" stopOpacity="0.72" />
@@ -34,8 +34,8 @@ const LighthouseGlyph = ({ className = '', title = 'Govern AI observability mark
     <path d="M18.9 40.15H29.1" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" />
     <path d="M24 20.2V37.2" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.22" />
 
-    <path d="M24 15.5L26.2 17.75L24 20.2L21.8 17.75L24 15.5Z" fill="url(#govern-gem-gradient)" stroke="#E6DAFF" strokeWidth="0.5" />
-    <path d="M24 22.25L24.9 23.2L24 24.15L23.1 23.2L24 22.25Z" fill="#C8A55A" fillOpacity="0.85" />
+    <path d="M24 15.5L26.2 17.75L24 20.2L21.8 17.75L24 15.5Z" fill="url(#govern-gem-gradient)" stroke="#E7ECFF" strokeWidth="0.5" />
+    <path d="M24 22.25L24.9 23.2L24 24.15L23.1 23.2L24 22.25Z" fill="#C9952F" fillOpacity="0.88" />
   </svg>
 );
 

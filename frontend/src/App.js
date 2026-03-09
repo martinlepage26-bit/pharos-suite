@@ -7,6 +7,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
+import TypographyPolish from './components/TypographyPolish';
 
 import About from './pages/About';
 import Admin from './pages/Admin';
@@ -29,6 +30,7 @@ function AppRoutes() {
   return (
     <>
       <ScrollToTop />
+      <TypographyPolish />
       <Navbar />
       <main className="relative">
         <Routes>

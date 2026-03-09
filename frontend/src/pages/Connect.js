@@ -13,16 +13,17 @@ const initialForm = {
 const topicOptions = [
   { value: 'procurement', label: 'Procurement or customer questionnaire' },
   { value: 'audit', label: 'Audit or evidence readiness' },
-  { value: 'governance', label: 'Governance framework design' },
+  { value: 'deterministic-governance', label: 'Deterministic governance' },
+  { value: 'pre-mortem', label: 'Pre-mortem review' },
+  { value: 'post-mortem', label: 'Post-mortem review' },
   { value: 'vendor', label: 'Vendor or third-party review' },
-  { value: 'oversight', label: 'Ongoing oversight or retainer' },
   { value: 'other', label: 'Something else' }
 ];
 
 const resources = [
   {
-    title: 'Governance readiness debrief',
-    description: 'A first-pass assessment of maturity, risk concentration, and next steps.'
+    title: 'Deterministic governance review',
+    description: 'A first-pass review of governance strength, risk concentration, and the right next service.'
   },
   {
     title: 'Sample evidence packet',
@@ -52,7 +53,7 @@ const Connect = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent(`Govern AI debrief request: ${form.topic || 'General inquiry'}`);
+    const subject = encodeURIComponent(`PHAROS review request: ${form.topic || 'General inquiry'}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nOrganization: ${form.organization}\nTopic: ${form.topic || 'Not specified'}\n\nCurrent state\n${form.context || 'No additional context provided.'}`
     );
@@ -66,9 +67,9 @@ const Connect = () => {
         <div className="container">
           <div className="section-header">
             <p className="eyebrow">Connect</p>
-            <h1>Start with a 30-minute debrief</h1>
+            <h1>Start with a 30-minute review</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Enough to understand the pressure, define the evidence burden, and scope the first deliverables.
+              Enough to understand the pressure, choose between deterministic governance, a pre-mortem, or a post-mortem, and scope the first deliverables.
             </p>
           </div>
         </div>
@@ -79,7 +80,7 @@ const Connect = () => {
           <div className="connect-grid">
             <div className="reveal">
               <div className="editorial-panel">
-                <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Book a debrief</h2>
+                <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Book a review</h2>
                 <p className="body-sm" style={{ marginBottom: '32px' }}>Fill in the basics. Martin will follow up with a scoped next step rather than a generic pitch.</p>
 
                 <form onSubmit={handleSubmit}>
@@ -151,7 +152,7 @@ const Connect = () => {
               <div className="reveal editorial-panel">
                 <p className="eyebrow" style={{ marginBottom: '16px' }}>Internal Modules</p>
                 <p className="body-sm" style={{ marginBottom: '18px' }}>
-                  AurorAI and CompassAI stay behind the Govern AI engagement until their hosting, lineage, and review surfaces are ready to be presented directly.
+                  AurorAI and CompassAI stay behind the PHAROS engagement until their hosting, lineage, and review surfaces are ready to be presented directly.
                 </p>
                 <div className="plain-stack" style={{ marginBottom: '24px' }}>
                   {internalModules.map((item) => (

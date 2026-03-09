@@ -35,7 +35,7 @@ const StarterKitCTA = () => {
           <img src={lighthouseMark} alt="" className="h-7 w-7" />
         </div>
         <div>
-          <p className="text-[10px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+          <p className="text-[10px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
             Governance starter kit
           </p>
           <h3 className="font-serif text-[28px] font-semibold text-white">
@@ -48,7 +48,7 @@ const StarterKitCTA = () => {
       </div>
 
       <div className="mb-5 rounded-[24px] border border-white/10 bg-white/7 p-4">
-        <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+        <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
           {t.starterKit.included}
         </p>
         <div className="flex flex-wrap gap-x-4 gap-y-1">
@@ -81,7 +81,7 @@ const StarterKitCTA = () => {
               ? 'bg-[#D8C08A] text-[#081428]' 
               : 'bg-[linear-gradient(135deg,#f7f2e8_0%,#eadbc0_100%)] text-[#081428] hover:translate-y-[-1px]'
           }`}
-          style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+          style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
           data-testid="starter-kit-submit"
         >
           {submitted ? (
