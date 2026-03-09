@@ -28,8 +28,8 @@
         "build": "npm run tailwind:build && craco build",
         "tailwind:build": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --minify",
         "tailwind:watch": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --watch",
-        "cf:deploy": "wrangler pages deploy build --project-name govern-ai-frontend",
-        "cf:preview": "wrangler pages deploy build --project-name govern-ai-frontend --branch preview",
+        "cf:deploy": "wrangler pages deploy build --project-name govern-ai",
+        "cf:preview": "wrangler pages deploy build --project-name govern-ai --branch preview",
         "test": "craco test",
         "eject": "react-scripts eject"
     },
