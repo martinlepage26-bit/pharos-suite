@@ -14,7 +14,7 @@ export default {
     const upstreamResponse = await fetch(proxiedRequest);
     const response = new Response(upstreamResponse.body, upstreamResponse);
 
-    response.headers.set("x-pharos-ai-proxy", "cloudflare-worker");
+    response.headers.set("x-govern-ai-proxy", "cloudflare-worker");
     return response;
   },
 };

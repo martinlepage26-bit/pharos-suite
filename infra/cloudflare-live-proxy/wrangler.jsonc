@@ -1,13 +1,13 @@
 {
   "$schema": "../../frontend/node_modules/wrangler/config-schema.json",
-  "name": "pharos-ai-live-proxy",
+  "name": "govern-ai-live-proxy",
   "main": "src/index.js",
   "compatibility_date": "2026-03-09",
   "workers_dev": false,
   "routes": [
     {
-      "pattern": "pharos-ai.ca/*",
-      "zone_name": "pharos-ai.ca"
+      "pattern": "govern-ai.ca/*",
+      "zone_name": "govern-ai.ca"
     }
   ]
 }

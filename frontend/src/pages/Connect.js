@@ -29,7 +29,7 @@ const CONNECT_COPY = {
     context: 'Current state (optional)',
     contextPlaceholder: "Briefly describe your current governance setup, the pressure you're facing, or what triggered this outreach.",
     submit: 'Submit request',
-    submitted: 'Your mail app should open with the draft ready to send. If it does not, write to consult@pharos-ai.ca.',
+    submitted: 'Your mail app should open with the draft ready to send. If it does not, write to consult@govern-ai.ca.',
     directContact: 'Direct contact',
     sendEmail: 'Send an email',
     linkedin: 'Connect on LinkedIn',
@@ -91,7 +91,7 @@ const CONNECT_COPY = {
     context: 'Contexte actuel (facultatif)',
     contextPlaceholder: 'Décrivez brièvement votre dispositif actuel de gouvernance, la pression à laquelle vous faites face ou ce qui a déclenché la prise de contact.',
     submit: 'Envoyer la demande',
-    submitted: 'Votre application de courriel devrait s’ouvrir avec le brouillon prêt à envoyer. Sinon, écrivez à consult@pharos-ai.ca.',
+    submitted: 'Votre application de courriel devrait s’ouvrir avec le brouillon prêt à envoyer. Sinon, écrivez à consult@govern-ai.ca.',
     directContact: 'Contact direct',
     sendEmail: 'Envoyer un courriel',
     linkedin: 'Écrire sur LinkedIn',
@@ -156,7 +156,7 @@ const Connect = () => {
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nOrganization: ${form.organization}\nTopic: ${form.topic || copy.generalInquiry}\n\n${copy.currentState}\n${form.context || copy.noContext}`
     );
-    window.location.href = `mailto:consult@pharos-ai.ca?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:consult@govern-ai.ca?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -227,9 +227,9 @@ const Connect = () => {
 
                 {submitted ? (
                   <p className="body-sm" style={{ marginTop: '20px' }}>
-                    {copy.submitted.split('consult@pharos-ai.ca')[0]}
-                    <a href="mailto:consult@pharos-ai.ca">consult@pharos-ai.ca</a>
-                    {copy.submitted.split('consult@pharos-ai.ca')[1]}
+                    {copy.submitted.split('consult@govern-ai.ca')[0]}
+                    <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
+                    {copy.submitted.split('consult@govern-ai.ca')[1]}
                   </p>
                 ) : null}
               </div>
@@ -239,10 +239,10 @@ const Connect = () => {
               <div className="reveal editorial-panel-dark" style={{ color: '#F5F5F0', marginBottom: '24px' }}>
                 <p className="eyebrow" style={{ marginBottom: '12px', color: 'var(--glow-primary)' }}>{copy.directContact}</p>
                 <p style={{ fontSize: '1.125rem', fontWeight: 500, marginBottom: '4px' }}>
-                  <a href="mailto:consult@pharos-ai.ca">consult@pharos-ai.ca</a>
+                  <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
                 </p>
                 <p style={{ fontSize: '0.875rem', color: 'rgba(245,245,240,0.78)', marginBottom: '20px' }}>{copy.location}</p>
-                <a href="mailto:consult@pharos-ai.ca" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                <a href="mailto:consult@govern-ai.ca" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
                   {copy.sendEmail}
                 </a>
                 <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: '12px', fontSize: '0.875rem', color: 'rgba(245,245,240,0.82)' }}>

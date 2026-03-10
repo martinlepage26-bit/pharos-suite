@@ -1,11 +1,11 @@
 # AurorAI + ComPassAI — Specification Sheets (InfraFabric-Implemented, Bible-Compliant)
 
-Martin Lepage | consult@pharos-ai.ca | Govern AI — AI Governance Practice and Research | 2026-03-06
+Martin Lepage | consult@govern-ai.ca | Govern AI — AI Governance Practice and Research | 2026-03-06
 
 **Status:** `review`
 **Last review date:** 2026-03-06
 **Next checkpoint date:** 2026-04-06
-**Accountable and responsible approver:** Martin Lepage | consult@pharos-ai.ca
+**Accountable and responsible approver:** Martin Lepage | consult@govern-ai.ca
 **InfraFabric framework contributor and designated reviewer:** Danny Stocker | ds@infrafabric.io | InfraFabric Research
 **Provenance note:** AurorAI and ComPassAI are original products of Martin Lepage, developed under GovernAI. Their governance architecture and claim-boundary discipline are built on InfraFabric's structural framework with explicit permission from Danny Stocker, owner of InfraFabric.
 **Backup reviewer/operator:** TBD — open continuity risk; must be named before next checkpoint or this risk remains explicitly unresolved.

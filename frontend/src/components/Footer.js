@@ -53,7 +53,7 @@ const Footer = () => {
           <div className="footer-col">
             <h4>{copy.connect}</h4>
             <Link to="/connect">{copy.book}</Link>
-            <a href="mailto:consult@pharos-ai.ca">consult@pharos-ai.ca</a>
+            <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
             <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
         </div>

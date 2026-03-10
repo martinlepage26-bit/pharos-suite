@@ -8,9 +8,9 @@ This document sets the recommended public backend shape for the next phase.
 
 Use a dedicated API subdomain:
 
-- Public API: `https://api.pharos-ai.ca`
-- Public frontend: `https://pharos-ai.ca`
-- Keep `https://www.pharos-ai.ca` as a redirect to the apex
+- Public API: `https://api.govern-ai.ca`
+- Public frontend: `https://govern-ai.ca`
+- Keep `https://www.govern-ai.ca` as a redirect to the apex
 
 Do not use a same-origin `/api/*` path on the Pages apex yet.
 
@@ -25,12 +25,12 @@ Reason:
 
 Create now:
 
-- `api.pharos-ai.ca` -> govern-ai FastAPI backend
+- `api.govern-ai.ca` -> govern-ai FastAPI backend
 
 Do not create yet:
 
-- `aurorai.pharos-ai.ca`
-- `compassai.pharos-ai.ca`
+- `aurorai.govern-ai.ca`
+- `compassai.govern-ai.ca`
 
 Those modules should stay private until there is a separate decision to expose them.
 
@@ -38,7 +38,7 @@ Those modules should stay private until there is a separate decision to expose t
 
 ### Phase 1: bridge the existing local backend
 
-Publish `api.pharos-ai.ca` through a named Cloudflare Tunnel that points to:
+Publish `api.govern-ai.ca` through a named Cloudflare Tunnel that points to:
 
 ```txt
 http://127.0.0.1:9202
@@ -57,12 +57,12 @@ Keep the FastAPI app bound to localhost. `cloudflared` can proxy to a localhost 
 In the Cloudflare Pages project for `govern-ai`, set the production build environment variable:
 
 ```txt
-REACT_APP_BACKEND_URL=https://api.pharos-ai.ca
+REACT_APP_BACKEND_URL=https://api.govern-ai.ca
 ```
 
 Then trigger a production rebuild so:
 
-- `/admin` posts to `https://api.pharos-ai.ca/api/admin/login`
+- `/admin` posts to `https://api.govern-ai.ca/api/admin/login`
 - `About`, `Portfolio`, and `Services` load live data from the same API origin
 
 ### Phase 3: harden the backend edge
@@ -70,7 +70,7 @@ Then trigger a production rebuild so:
 Set backend CORS explicitly instead of using `*`:
 
 ```txt
-CORS_ORIGINS=https://pharos-ai.ca,https://www.pharos-ai.ca,https://govern-ai.pages.dev
+CORS_ORIGINS=https://govern-ai.ca,https://www.govern-ai.ca,https://govern-ai.pages.dev
 ```
 
 Keep these backend requirements in place:
@@ -82,7 +82,7 @@ Keep these backend requirements in place:
 - `SENDER_EMAIL`
 - `ADMIN_EMAILS`
 
-Add Cloudflare controls on `api.pharos-ai.ca`:
+Add Cloudflare controls on `api.govern-ai.ca`:
 
 - WAF enabled
 - rate limiting on `POST /api/bookings`
@@ -95,7 +95,7 @@ When uptime requirements justify it, move the FastAPI backend off the local mach
 Keep the public hostname the same:
 
 ```txt
-https://api.pharos-ai.ca
+https://api.govern-ai.ca
 ```
 
 Only the origin behind it changes.
@@ -108,7 +108,7 @@ That future host should colocate or replace:
 
 ## Why not `/api/*` on the apex
 
-`pharos-ai.ca` should be the public apex on the Pages project.
+`govern-ai.ca` should be the public apex on the Pages project.
 
 A path-based backend would require an extra proxy layer or Worker route to split:
 
@@ -119,7 +119,7 @@ That is possible later, but it adds moving pieces without solving a problem the 
 
 ## Operational notes
 
-- `api.pharos-ai.ca` via Tunnel is suitable as a bridge, not a final uptime story
+- `api.govern-ai.ca` via Tunnel is suitable as a bridge, not a final uptime story
 - if the local host is asleep, offline, or the local stack is stopped, the public API will fail
 - `platform-status` only remains meaningful if `CompassAI` and `AurorAI` are still reachable from the same machine as the govern-ai backend
 - if Cloudflare Access is added later, prefer protecting the frontend admin route and any separate operator tools, while keeping the public read endpoints reachable by the site
@@ -128,16 +128,16 @@ That is possible later, but it adds moving pieces without solving a problem the 
 
 1. Install and authenticate `cloudflared` on the machine running the govern-ai backend.
 2. Create a named Cloudflare Tunnel.
-3. Add a published application route for `api.pharos-ai.ca` -> `http://127.0.0.1:9202`.
-4. Confirm `https://api.pharos-ai.ca/health` and `https://api.pharos-ai.ca/api/health`.
+3. Add a published application route for `api.govern-ai.ca` -> `http://127.0.0.1:9202`.
+4. Confirm `https://api.govern-ai.ca/health` and `https://api.govern-ai.ca/api/health`.
 5. Set `CORS_ORIGINS` to the explicit site origins.
-6. Set `REACT_APP_BACKEND_URL=https://api.pharos-ai.ca` in Cloudflare Pages production environment variables.
+6. Set `REACT_APP_BACKEND_URL=https://api.govern-ai.ca` in Cloudflare Pages production environment variables.
 7. Trigger a new Pages production deployment.
 8. Verify:
-   - `https://pharos-ai.ca/admin`
-   - `https://pharos-ai.ca/about`
-   - `https://pharos-ai.ca/portfolio`
-   - `https://pharos-ai.ca/services`
+   - `https://govern-ai.ca/admin`
+   - `https://govern-ai.ca/about`
+   - `https://govern-ai.ca/portfolio`
+   - `https://govern-ai.ca/services`
    - booking form submission
 
 ## Source notes

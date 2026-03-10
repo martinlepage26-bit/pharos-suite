@@ -8,7 +8,7 @@ This runbook covers the current local operating model for:
 
 Current public/private split:
 
-- Public frontend target: `https://pharos-ai.ca`
+- Public frontend target: `https://govern-ai.ca`
 - Local frontend preview: `http://127.0.0.1:9201/`
 - Local backends only: `govern-ai`, `AurorAI`, `CompassAI`
 

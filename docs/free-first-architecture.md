@@ -1,8 +1,8 @@
 # Free-First Architecture
 
 ## Public product
-- `pharos-ai.ca` is the intended public website
-- `www.pharos-ai.ca` redirects to the apex domain
+- `govern-ai.ca` is the public website
+- `www.govern-ai.ca` should redirect to the apex domain
 - `AurorAI` and `CompassAI` are treated as internal delivery modules, not public standalone products
 
 ## Current free setup
@@ -17,7 +17,7 @@ If it needs a Python server, Mongo, PDF processing, or file uploads, keep it pri
 ## What to tell yourself
 1. Keep `govern-ai` public
 2. Keep `AurorAI` and `CompassAI` internal
-3. If a public backend is needed, start with only `api.pharos-ai.ca`
+3. If a public backend is needed, start with only `api.govern-ai.ca`
 4. Keep `AurorAI` and `CompassAI` off public subdomains until there is a separate hosting decision
 5. Use one storage plan before exposing heavier backend features
 
