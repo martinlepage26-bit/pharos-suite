@@ -11,20 +11,22 @@
   - `www.govern-ai.ca`
 
 ## DNS state
-- As of `2026-03-09`, the apex web DNS record does not point at Cloudflare Pages yet
+- As of `2026-03-10`, `pharos-ai.ca` is attached to the Pages project but still pending verification
+- As of `2026-03-10`, `www.pharos-ai.ca` is attached to the Pages project but still pending verification
+- Cloudflare Pages reports `CNAME record not set` for both pending domains
+- Public DNS does not currently resolve `pharos-ai.ca` or `www.pharos-ai.ca`
+- RDAP for `pharos-ai.ca` currently returns not found, so the domain does not appear to be registered yet
 - `https://pharos-ai.ca` is the intended public apex hostname for the PHAROS frontend
 - `https://govern-ai.pages.dev` is serving the current PHAROS frontend build
-- Email-related DNS records remain in Cloudflare DNS and were preserved:
-  - inbound MX for `pharos-ai.ca`
-  - SES send records on `send.pharos-ai.ca`
-  - DMARC
-  - Google verification
-  - Resend DKIM
+- The active Cloudflare account currently has a zone for `govern-ai.ca`, not for `pharos-ai.ca`
+- The active local Cloudflare token can manage Pages but cannot create zones or edit DNS
 
 ## Redirect behavior
 - `govern-ai.ca`, `www.govern-ai.ca`, and `www.pharos-ai.ca` should resolve to `https://pharos-ai.ca`
 - The active redirect is implemented as a Cloudflare zone-level Single Redirect
-- `www.pharos-ai.ca` is not in the Pages custom-domain list on purpose
+- `govern-ai.ca` currently returns `308` to `https://pharos-ai.ca/`
+- `www.govern-ai.ca` does not currently resolve in public DNS
+- `www.pharos-ai.ca` is currently in the Pages custom-domain list, but it is still pending because the new domain is not live in DNS yet
 
 ## Deployment flow
 - Production deploys are currently driven from GitHub on the `main` branch
@@ -78,5 +80,5 @@ Use the rollout in `docs/public-backend-plan.md`:
 - `https://govern-ai.pages.dev` is current and healthy
 - `https://pharos-ai.ca` should become the public apex once DNS is switched
 - legacy `govern-ai.ca` hostnames should return `308` to the new apex hostname
-- The latest successful Pages production deployment is from GitHub commit `dd9a40b` on `main`
-- The remaining blocker is the external DNS/domain cutover from `govern-ai.ca` to `pharos-ai.ca`
+- The latest successful Pages production deployment is from GitHub commit `48049d9` on `main`
+- The remaining blocker is no longer just DNS cutover: `pharos-ai.ca` must be registered first, then added as a Cloudflare zone, then delegated to Cloudflare nameservers before Pages can verify it
