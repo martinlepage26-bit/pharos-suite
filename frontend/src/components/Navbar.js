@@ -13,9 +13,9 @@ const Navbar = () => {
     { path: '/', label: t.nav.home },
     { path: '/services', label: t.nav.services },
     { path: '/research', label: t.nav.research },
-    { path: '/about', label: t.nav.about },
-    { path: '/connect', label: t.nav.connect }
+    { path: '/about', label: t.nav.about }
   ];
+  const reviewCta = language === 'fr' ? 'Reserver un echange' : 'Book a review';
 
   const languageButtonLabel = language === 'fr' ? 'EN' : 'FR';
   const languageButtonTitle = language === 'fr'
@@ -67,6 +67,9 @@ const Navbar = () => {
                   </Link>
                 );
               })}
+              <Link to="/connect" className="nav-cta">
+                {reviewCta}
+              </Link>
               <button className="nav-lang" type="button" onClick={toggleLanguage} title={languageButtonTitle}>
                 {languageButtonLabel}
               </button>
@@ -92,6 +95,9 @@ const Navbar = () => {
             {item.label}
           </Link>
         ))}
+        <Link to="/connect" className="nav-cta-mobile" onClick={() => setMenuOpen(false)}>
+          {reviewCta}
+        </Link>
         <button
           type="button"
           className="nav-lang mobile-lang-toggle"

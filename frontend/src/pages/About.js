@@ -4,6 +4,7 @@ import { ArrowRight, ExternalLink } from 'lucide-react';
 import LighthouseGlyph from '../components/LighthouseGlyph';
 import RichTextContent from '../components/RichTextContent';
 import { useLanguage } from '../context/LanguageContext';
+import SignalStrip from '../components/SignalStrip';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -589,7 +590,25 @@ const ABOUT_COPY = {
     location: 'Montreal · Quebec · Canada',
     bookDebrief: 'Book a debrief',
     viewResearch: 'View research',
+    summary: [
+      {
+        label: 'Who it serves',
+        title: 'Organizations facing scrutiny',
+        description: 'Built for procurement, audit, vendor diligence, and committee oversight rather than abstract governance branding.'
+      },
+      {
+        label: 'Operating standard',
+        title: 'Claims stay tied to evidence',
+        description: 'Decision rights, thresholds, and documentation should remain explicit and reviewable instead of being inferred after the fact.'
+      },
+      {
+        label: 'Public entry point',
+        title: 'Debrief first, then route the work',
+        description: 'The public-facing practice begins with a short debrief that identifies the right governance path.'
+      }
+    ],
     methodButton: 'Open method',
+    methodHighlights: ['Bounded inputs', 'Inspectable controls', 'Reconstructable decisions'],
     practiceBody: 'The standard is simple: governance documentation should derive from evidence, decision rights and thresholds should stay explicit, and public claims should not outrun what the underlying architecture can support.',
     practiceBody2: 'That posture carries through the advisory work, the documentation structure, and the in-house systems supporting evidence handling and governance assessment behind the scenes.',
     infraLabel: 'InfraFabric',
@@ -654,7 +673,25 @@ const ABOUT_COPY = {
     location: 'Montréal · Québec · Canada',
     bookDebrief: 'Réserver un échange',
     viewResearch: 'Voir la recherche',
+    summary: [
+      {
+        label: 'Pour qui',
+        title: 'Les organisations sous examen',
+        description: 'La pratique sert l approvisionnement, l audit, la diligence fournisseur et la surveillance de comite plutot qu un discours abstrait sur la gouvernance.'
+      },
+      {
+        label: 'Norme operative',
+        title: 'Les revendications restent attachees a la preuve',
+        description: 'Les droits decisionnels, les seuils et la documentation doivent rester explicites et revisables plutot que reconstruits apres coup.'
+      },
+      {
+        label: 'Entree publique',
+        title: 'Commencer par un echange, puis router le travail',
+        description: 'La pratique publique commence par un court echange qui identifie le bon parcours de gouvernance.'
+      }
+    ],
     methodButton: 'Ouvrir la methode',
+    methodHighlights: ['Entrées bornées', 'Contrôles inspectables', 'Décisions reconstructibles'],
     practiceBody: 'La norme est simple : la documentation de gouvernance doit découler de la preuve, les droits décisionnels et les seuils doivent rester explicites, et les déclarations publiques ne doivent pas dépasser ce que l’architecture sous-jacente peut réellement soutenir.',
     practiceBody2: 'Cette posture traverse le conseil, la structure documentaire et les systèmes internes qui soutiennent en arrière-plan le traitement de la preuve et l’évaluation de gouvernance.',
     infraLabel: 'InfraFabric',
@@ -794,6 +831,7 @@ const About = () => {
               </div>
             </div>
           </div>
+          <SignalStrip items={copy.summary} className="signal-grid-page reveal visible" />
         </div>
       </div>
 
@@ -824,6 +862,11 @@ const About = () => {
             <p className="eyebrow" style={{ marginBottom: '16px' }}>{methods.label}</p>
             <h2 style={{ fontSize: '1.95rem', marginBottom: '18px' }}>{methods.title}</h2>
             <p className="body-sm">{methods.body}</p>
+            <div className="jump-links" style={{ marginTop: '24px' }}>
+              {copy.methodHighlights.map((item) => (
+                <span key={item} className="jump-pill jump-pill-static">{item}</span>
+              ))}
+            </div>
             <div className="divider" />
             <p className="body-sm" style={{ marginTop: '16px', marginBottom: 0 }}>{methods.overviewBody}</p>
             <div style={{ marginTop: '24px', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>

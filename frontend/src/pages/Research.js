@@ -2,14 +2,16 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen, FileCheck2, Target } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import SignalStrip from '../components/SignalStrip';
 
 const RESEARCH_COPY = {
   en: {
     eyebrow: 'Research',
     heroTitle: 'Briefings for scrutiny, review, and control design',
-    heroBody: 'Each briefing starts with a real signal, names the governance pressure it creates, and turns it into control logic, claim boundaries, and evidence questions teams can actually use.',
+    heroBody: 'Each briefing starts from a real signal, names the governance pressure it creates, and turns it into control logic, claim boundaries, and evidence questions teams can use.',
     method: 'Method',
     methodTitle: 'Start with the pressure, end with a reviewable control response',
+    methodBody: 'The aim is not commentary alone. The aim is a control response a reviewer can follow.',
     briefingsLabel: 'Briefings',
     briefingsTitle: 'Browse by context',
     briefingsBody: 'Filter by the operating context behind the review demand.',
@@ -17,6 +19,23 @@ const RESEARCH_COPY = {
     ctaTitle: 'Facing a similar challenge?',
     ctaBody: 'A debrief can help translate the signal into control logic, evidence needs, and a proportionate next step.',
     bookDebrief: 'Book a debrief',
+    summary: [
+      {
+        label: 'Starts from',
+        title: 'A real governance signal',
+        description: 'Each briefing begins with an incident, enforcement pattern, or institutional constraint rather than a generic principle list.'
+      },
+      {
+        label: 'Produces',
+        title: 'Control logic, claim boundaries, and evidence questions',
+        description: 'The output is meant to sharpen what should be controlled, what can be claimed, and what still needs proof.'
+      },
+      {
+        label: 'Useful for',
+        title: 'Teams shaping review posture',
+        description: 'Procurement, audit, policy, and oversight teams can use the briefings to make scrutiny more concrete.'
+      }
+    ],
     filters: [
       { key: 'all', label: 'All' },
       { key: 'regulated', label: 'Regulated Systems' },
@@ -90,9 +109,10 @@ const RESEARCH_COPY = {
   fr: {
     eyebrow: 'Recherche',
     heroTitle: 'Notes d’analyse pour l’examen, la revue et la conception de contrôles',
-    heroBody: 'Chaque note part d’un signal réel, nomme la pression de gouvernance qu’il crée, puis le traduit en logique de contrôle, en limites de revendication et en questions probantes réellement utiles.',
+    heroBody: 'Chaque note part d’un signal réel, nomme la pression de gouvernance qu’il crée, puis le traduit en logique de contrôle, en limites de revendication et en questions probantes utiles aux équipes.',
     method: 'Méthode',
     methodTitle: 'Partir de la pression, finir avec une réponse de contrôle révisable',
+    methodBody: 'L’objectif n’est pas seulement le commentaire. L’objectif est une réponse de contrôle qu’un examinateur peut suivre.',
     briefingsLabel: 'Notes d’analyse',
     briefingsTitle: 'Parcourir par contexte',
     briefingsBody: 'Filtrer selon le contexte opérationnel qui génère la demande d’examen.',
@@ -100,6 +120,23 @@ const RESEARCH_COPY = {
     ctaTitle: 'Vous faites face à un défi semblable ?',
     ctaBody: 'Un échange peut aider à traduire le signal en logique de contrôle, en besoins probants et en prochaine étape proportionnée.',
     bookDebrief: 'Réserver un échange',
+    summary: [
+      {
+        label: 'Point de depart',
+        title: 'Un vrai signal de gouvernance',
+        description: 'Chaque note part d un incident, d un motif d application ou d une contrainte institutionnelle plutot que d une liste abstraite de principes.'
+      },
+      {
+        label: 'Ce que cela produit',
+        title: 'Logique de controle, limites de revendication et questions probantes',
+        description: 'La sortie sert a preciser ce qui doit etre controle, ce qui peut etre affirme et ce qui demande encore de la preuve.'
+      },
+      {
+        label: 'Utile pour',
+        title: 'Les equipes qui preparent la revue',
+        description: 'Les equipes d approvisionnement, d audit, de politique et d oversight peuvent s en servir pour rendre l examen plus concret.'
+      }
+    ],
     filters: [
       { key: 'all', label: 'Tous' },
       { key: 'regulated', label: 'Systèmes réglementés' },
@@ -176,6 +213,10 @@ const Research = () => {
   const { language } = useLanguage();
   const [activeFilter, setActiveFilter] = useState('all');
   const copy = useMemo(() => RESEARCH_COPY[language], [language]);
+  const filterLabels = useMemo(
+    () => Object.fromEntries(copy.filters.filter((item) => item.key !== 'all').map((item) => [item.key, item.label])),
+    [copy.filters]
+  );
 
   const visibleBriefings = useMemo(() => {
     if (activeFilter === 'all') return copy.briefings;
@@ -192,6 +233,7 @@ const Research = () => {
             <p className="body-lg" style={{ marginTop: '16px' }}>
               {copy.heroBody}
             </p>
+            <SignalStrip items={copy.summary} className="signal-grid-page" />
           </div>
         </div>
       </div>
@@ -201,6 +243,7 @@ const Research = () => {
           <div className="section-header reveal">
             <p className="eyebrow">{copy.method}</p>
             <h2>{copy.methodTitle}</h2>
+            <p className="body-sm">{copy.methodBody}</p>
           </div>
 
           <div className="grid-3 stagger">
@@ -243,6 +286,7 @@ const Research = () => {
               <article key={item.title} className="research-card reveal visible">
                 <div className="research-meta">
                   <span className="research-tag">{copy.briefingTag}</span>
+                  <span className="research-context">{filterLabels[item.context]}</span>
                   <span className="research-date">{item.date}</span>
                 </div>
                 <h3>{item.title}</h3>

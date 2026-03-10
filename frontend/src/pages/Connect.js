@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import SignalStrip from '../components/SignalStrip';
 
 const initialForm = {
   name: '',
@@ -16,8 +17,32 @@ const CONNECT_COPY = {
     eyebrow: 'Connect',
     heroTitle: 'Start with a 30-minute review',
     heroBody: 'Enough to understand the pressure, choose between deterministic governance, a pre-mortem, or a post-mortem, and scope the first deliverables.',
+    summary: [
+      {
+        label: 'Best for',
+        title: 'Early review calibration',
+        description: 'Use this page when scrutiny is coming or when a questionnaire, audit, or internal review has already exposed a gap.'
+      },
+      {
+        label: 'Bring',
+        title: 'System, pressure source, and evidence state',
+        description: 'A useful first conversation starts with what is in scope, what triggered the review, and what proof already exists.'
+      },
+      {
+        label: 'Leave with',
+        title: 'A scoped next step',
+        description: 'The outcome is a clearer route into deterministic governance, a pre-mortem, or a post-mortem.'
+      }
+    ],
     formTitle: 'Book a review',
     formBody: 'Fill in the basics. Martin will follow up with a scoped next step rather than a generic pitch.',
+    prepLabel: 'Before you submit',
+    prepTitle: 'The fastest way to make the first review useful',
+    prepItems: [
+      'Name the system, workflow, or use case in question.',
+      'Name the pressure source: procurement, audit, vendor review, launch, or incident response.',
+      'If evidence, documentation, or a failed review already exists, say that up front.'
+    ],
     name: 'Name *',
     namePlaceholder: 'Your full name',
     email: 'Email *',
@@ -31,6 +56,7 @@ const CONNECT_COPY = {
     submit: 'Submit request',
     submitted: 'Your mail app should open with the draft ready to send. If it does not, write to consult@govern-ai.ca.',
     directContact: 'Direct contact',
+    directBody: 'If email is easier, send the same basics directly.',
     sendEmail: 'Send an email',
     linkedin: 'Connect on LinkedIn',
     internalModules: 'Internal modules',
@@ -78,8 +104,32 @@ const CONNECT_COPY = {
     eyebrow: 'Contact',
     heroTitle: 'Commencez par un échange de 30 minutes',
     heroBody: 'Assez pour comprendre la pression en cause, choisir entre une gouvernance déterministe, une revue pré-mortem ou une revue post-mortem, puis cadrer les premiers livrables.',
+    summary: [
+      {
+        label: 'Pour qui',
+        title: 'Le cadrage initial de la revue',
+        description: 'Utilisez cette page quand un examen approche ou quand un questionnaire, un audit ou une revue interne a deja revele un ecart.'
+      },
+      {
+        label: 'Apportez',
+        title: 'Systeme, source de pression et etat de la preuve',
+        description: 'Un premier echange utile commence par ce qui est en portee, ce qui a declenche la revue et quelle preuve existe deja.'
+      },
+      {
+        label: 'Vous repartez avec',
+        title: 'Une prochaine etape cadree',
+        description: 'Le resultat est un parcours plus net vers une gouvernance deterministe, une revue pre-mortem ou une revue post-mortem.'
+      }
+    ],
     formTitle: 'Réserver un échange',
     formBody: 'Donnez l’essentiel. Martin fera un suivi avec une prochaine étape cadrée plutôt qu’un discours générique.',
+    prepLabel: 'Avant l’envoi',
+    prepTitle: 'La façon la plus rapide de rendre le premier échange utile',
+    prepItems: [
+      'Nommez le système, le workflow ou le cas d’usage en question.',
+      'Nommez la source de pression : approvisionnement, audit, revue fournisseur, lancement ou réponse à incident.',
+      'Si de la preuve, de la documentation ou un examen raté existent déjà, dites-le d’emblée.'
+    ],
     name: 'Nom *',
     namePlaceholder: 'Votre nom complet',
     email: 'Courriel *',
@@ -93,6 +143,7 @@ const CONNECT_COPY = {
     submit: 'Envoyer la demande',
     submitted: 'Votre application de courriel devrait s’ouvrir avec le brouillon prêt à envoyer. Sinon, écrivez à consult@govern-ai.ca.',
     directContact: 'Contact direct',
+    directBody: 'Si le courriel est plus simple, envoyez directement les mêmes éléments.',
     sendEmail: 'Envoyer un courriel',
     linkedin: 'Écrire sur LinkedIn',
     internalModules: 'Modules internes',
@@ -170,6 +221,7 @@ const Connect = () => {
             <p className="body-lg" style={{ marginTop: '16px' }}>
               {copy.heroBody}
             </p>
+            <SignalStrip items={copy.summary} className="signal-grid-page" />
           </div>
         </div>
       </div>
@@ -181,6 +233,15 @@ const Connect = () => {
               <div className="editorial-panel">
                 <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>{copy.formTitle}</h2>
                 <p className="body-sm" style={{ marginBottom: '32px' }}>{copy.formBody}</p>
+                <div className="scope-note" style={{ marginBottom: '28px' }}>
+                  <p className="eyebrow" style={{ marginBottom: '12px' }}>{copy.prepLabel}</p>
+                  <strong>{copy.prepTitle}</strong>
+                  <ul className="panel-list">
+                    {copy.prepItems.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
 
                 <form onSubmit={handleSubmit}>
                   <div className="form-field">
@@ -238,6 +299,9 @@ const Connect = () => {
             <div>
               <div className="reveal editorial-panel-dark" style={{ color: '#F5F5F0', marginBottom: '24px' }}>
                 <p className="eyebrow" style={{ marginBottom: '12px', color: 'var(--glow-primary)' }}>{copy.directContact}</p>
+                <p className="body-sm" style={{ color: 'rgba(245,245,240,0.78)', marginBottom: '16px' }}>
+                  {copy.directBody}
+                </p>
                 <p style={{ fontSize: '1.125rem', fontWeight: 500, marginBottom: '4px' }}>
                   <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
                 </p>

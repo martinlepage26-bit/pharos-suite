@@ -9,6 +9,7 @@ const Footer = () => {
     ? {
         brandTitle: 'PHAROS footer mark',
         tagline: 'Une gouvernance lisible quand vient le vrai examen.',
+        proofLine: 'Pour l approvisionnement, l audit, la revue fournisseur et la surveillance de comite.',
         practice: 'Pratique',
         services: 'Services',
         research: 'Recherche',
@@ -20,6 +21,7 @@ const Footer = () => {
     : {
         brandTitle: 'PHAROS footer mark',
         tagline: 'Legible governance for real review.',
+        proofLine: 'For procurement, audit, vendor review, and executive oversight.',
         practice: 'Practice',
         services: 'Services',
         research: 'Research',
@@ -41,6 +43,7 @@ const Footer = () => {
               </span>
             </div>
             <p>{copy.tagline}</p>
+            <p className="footer-proof">{copy.proofLine}</p>
           </div>
 
           <div className="footer-col">

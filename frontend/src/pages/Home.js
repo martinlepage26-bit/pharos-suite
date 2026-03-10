@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, BriefcaseBusiness, Building2, FileCheck2, FolderSearch, Radar, Scale, ShieldCheck, Waypoints } from 'lucide-react';
 import LighthouseGlyph from '../components/LighthouseGlyph';
+import SignalStrip from '../components/SignalStrip';
 
 const pressurePoints = [
   {
@@ -77,29 +78,59 @@ const routes = [
     title: 'Establish deterministic governance',
     description: 'For teams that need explicit decision rights, thresholds, and evidence paths before scrutiny arrives.',
     cta: 'View service',
-    to: '/services'
+    to: '/services#deterministic-governance'
   },
   {
     icon: Building2,
     title: 'Run a pre-mortem review',
     description: 'For teams that want to pressure-test systems before launch, procurement, or major expansion.',
-    cta: 'View services',
-    to: '/services'
+    cta: 'View service',
+    to: '/services#pre-mortem-review'
   },
   {
     icon: Scale,
     title: 'Run a post-mortem review',
     description: 'For teams responding to incidents, failed reviews, audit findings, or governance drift.',
-    cta: 'Book a review',
-    to: '/connect'
+    cta: 'View service',
+    to: '/services#post-mortem-review'
   }
 ];
 
 const reviewNeeds = [
-  'Deterministic decision rights',
-  'Thresholds that do not drift by reviewer',
-  'Evidence packet ready',
-  'Reconstructible post-mortem path'
+  {
+    title: 'Deterministic decision rights',
+    description: 'Clear approvers, escalation logic, and recorded decisions.'
+  },
+  {
+    title: 'Thresholds that do not drift by reviewer',
+    description: 'Review conditions that stay stable across teams and over time.'
+  },
+  {
+    title: 'Evidence packet ready',
+    description: 'Materials a buyer, auditor, or committee can actually follow.'
+  },
+  {
+    title: 'Reconstructible post-mortem path',
+    description: 'A record that shows what happened, why, and what changes next.'
+  }
+];
+
+const heroSignals = [
+  {
+    label: 'Best for',
+    title: 'Teams facing live review pressure',
+    description: 'Built for procurement, audit, vendor diligence, and executive oversight that need a governance answer now.'
+  },
+  {
+    label: 'What PHAROS does',
+    title: 'Turns pressure into control logic',
+    description: 'PHAROS clarifies thresholds, decision rights, and evidence paths so governance can be inspected instead of narrated.'
+  },
+  {
+    label: 'Start with',
+    title: 'A short review',
+    description: 'The first review identifies what can already be evidenced, what is missing, and which service route fits.'
+  }
 ];
 
 const Home = () => (
@@ -115,7 +146,7 @@ const Home = () => (
           </div>
           <h1>Deterministic AI governance under pressure</h1>
           <p className="body-lg">
-            When procurement, audit, or the board asks how AI is governed, PHAROS helps your team answer with evidence, deterministic decision rights, and review-ready documentation.
+            When procurement, audit, or a board asks how AI is governed, PHAROS helps teams answer with evidence, deterministic decision rights, and review-ready documentation.
           </p>
           <div className="hero-cta-row">
             <Link to="/connect" className="btn-primary">
@@ -124,17 +155,24 @@ const Home = () => (
             </Link>
             <Link to="/services" className="btn-secondary">View services</Link>
           </div>
+          <div className="jump-links">
+            <a href="#review-needs" className="jump-pill">Review posture</a>
+            <a href="#pressure-points" className="jump-pill">Pressure points</a>
+            <a href="#method" className="jump-pill">Method</a>
+            <a href="#service-routes" className="jump-pill">Service routes</a>
+          </div>
+          <SignalStrip items={heroSignals} className="signal-grid-hero" />
         </div>
       </div>
     </section>
 
-    <section className="section">
+    <section className="section" id="review-needs" style={{ scrollMarginTop: '108px' }}>
       <div className="container">
         <div className="section-header reveal">
           <p className="eyebrow">What review bodies need to see</p>
           <h2>A deterministic governance posture that stays legible under pressure</h2>
           <p className="body-sm">
-            Decision rights, thresholds, controls, and evidence should stay easy to follow when scrutiny arrives.
+            Decision rights, thresholds, controls, and evidence should remain easy to follow when scrutiny arrives.
           </p>
         </div>
 
@@ -150,8 +188,9 @@ const Home = () => (
           </div>
           <div className="grid-2">
             {reviewNeeds.map((item) => (
-              <div key={item} className="scope-note">
-                <strong>{item}</strong>
+              <div key={item.title} className="scope-note">
+                <strong>{item.title}</strong>
+                <p>{item.description}</p>
               </div>
             ))}
           </div>
@@ -159,13 +198,13 @@ const Home = () => (
       </div>
     </section>
 
-    <section className="section">
+    <section className="section" id="pressure-points" style={{ scrollMarginTop: '108px' }}>
       <div className="container">
         <div className="section-header reveal">
           <p className="eyebrow">Pressure points</p>
           <h2>Scrutiny creates friction at four points</h2>
           <p className="body-sm">
-            Governance work rarely starts in the abstract. It starts when a deal, review, or oversight request exposes non-determinism in decisions, thresholds, and documentation.
+            Governance work rarely starts in the abstract. It starts when a deal, review, or oversight request exposes non-determinism in decisions, thresholds, or documentation.
           </p>
         </div>
 
@@ -183,11 +222,14 @@ const Home = () => (
       </div>
     </section>
 
-    <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+    <section className="section" id="method" style={{ background: 'var(--color-bg-alt)', scrollMarginTop: '108px' }}>
       <div className="container">
         <div className="section-header reveal">
           <p className="eyebrow">Method</p>
           <h2>Four steps to deterministic governance</h2>
+          <p className="body-sm">
+            Read the system, set the thresholds, route the work, and keep the resulting posture reconstructable.
+          </p>
         </div>
 
         <div className="steps stagger">
@@ -226,11 +268,14 @@ const Home = () => (
       </div>
     </section>
 
-    <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+    <section className="section" id="service-routes" style={{ background: 'var(--color-bg-alt)', scrollMarginTop: '108px' }}>
       <div className="container">
         <div className="section-header reveal">
           <p className="eyebrow">Start here</p>
           <h2>Choose the route that matches the pressure</h2>
+          <p className="body-sm">
+            Start with the source of scrutiny, then follow the service path that fits the pressure and the state of the evidence.
+          </p>
         </div>
 
         <div className="grid-3 stagger">
@@ -241,7 +286,7 @@ const Home = () => (
               </div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
-              <div style={{ marginTop: '20px', fontSize: '0.875rem', fontWeight: 500, color: 'var(--color-accent)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div className="card-link-row">
                 {item.cta}
                 <ArrowRight size={14} />
               </div>

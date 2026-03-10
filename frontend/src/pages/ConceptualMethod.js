@@ -141,9 +141,9 @@ function ConceptualMethod() {
           </div>
 
           <div className="editorial-panel-dark reveal visible" style={{ marginTop: '24px' }}>
-            <p className="eyebrow" style={{ marginBottom: '16px', color: 'var(--glow-primary)' }}>{methods.probeSequenceLabel}</p>
-            <p className="body-sm" style={{ color: 'rgba(245,245,240,0.9)' }}>{methods.probeSequenceBody}</p>
-            <p className="body-sm" style={{ color: 'rgba(245,245,240,0.72)', marginBottom: 0 }}>{methods.probeSequenceNote}</p>
+            <p className="eyebrow" style={{ marginBottom: '16px' }}>{methods.probeSequenceLabel}</p>
+            <p className="body-sm">{methods.probeSequenceBody}</p>
+            <p className="body-sm" style={{ marginBottom: 0 }}>{methods.probeSequenceNote}</p>
           </div>
 
           <div className="section-header reveal" style={{ marginTop: '72px' }}>
@@ -200,9 +200,9 @@ function ConceptualMethod() {
           </div>
 
           <div className="editorial-panel-dark reveal visible" style={{ marginTop: '24px' }}>
-            <p className="eyebrow" style={{ marginBottom: '16px', color: 'var(--glow-primary)' }}>{methods.failureSequenceLabel}</p>
-            <p className="body-sm" style={{ color: 'rgba(245,245,240,0.9)' }}>{methods.failureSequenceBody}</p>
-            <p className="body-sm" style={{ color: 'rgba(245,245,240,0.72)', marginBottom: 0 }}>{methods.failureSequenceNote}</p>
+            <p className="eyebrow" style={{ marginBottom: '16px' }}>{methods.failureSequenceLabel}</p>
+            <p className="body-sm">{methods.failureSequenceBody}</p>
+            <p className="body-sm" style={{ marginBottom: 0 }}>{methods.failureSequenceNote}</p>
           </div>
         </div>
       </section>

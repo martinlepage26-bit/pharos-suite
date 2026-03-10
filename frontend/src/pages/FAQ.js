@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, ChevronUp, FileCheck2, ShieldCheck, Waypoints } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import lighthouseMono from '../assets/logos/governance-lighthouse-seal-monochrome.svg';
+import SignalStrip from '../components/SignalStrip';
 
 const FAQ = () => {
   const { language } = useLanguage();
@@ -25,6 +26,23 @@ const FAQ = () => {
         sectionIntroLabel: 'Themes',
         sectionIntroTitle: 'Les questions se regroupent autour de trois besoins',
         sectionIntroBody: 'Comprendre ce que la gouvernance est, ce qu il faut avoir en main pour la revue, et comment le travail reste proportionne a la preuve disponible.',
+        summaryCards: [
+          {
+            label: 'Cette page couvre',
+            title: 'Gouvernance, preuve et mandat',
+            description: 'Les questions qui reviennent quand une equipe doit expliquer comment l IA est gouvernee sous examen.'
+          },
+          {
+            label: 'Les revues demandent d abord',
+            title: 'Qui decide et quelle preuve existe',
+            description: 'Les premiers points de pression portent sur les droits decisionnels, les controles nommes et le dossier de revue.'
+          },
+          {
+            label: 'Le meilleur prochain pas',
+            title: 'S orienter ici, puis cadrer le cas reel',
+            description: 'Utilisez la FAQ pour vous situer, puis passez a un debrief ou a un instantane de preparation quand les faits deviennent specifiques.'
+          }
+        ],
         closingLabel: 'Suite',
         closingTitle: 'Besoin d une reponse liee a votre cas concret?',
         closingBody: 'Le meilleur prochain pas est un debrief court avec le contexte, la source de pression et le niveau de preuve que la situation exigera.',
@@ -107,6 +125,23 @@ const FAQ = () => {
         sectionIntroLabel: 'Themes',
         sectionIntroTitle: 'The questions cluster around three practical needs',
         sectionIntroBody: 'Understanding what governance is, what has to exist for review, and how the work stays proportionate to the evidence behind it.',
+        summaryCards: [
+          {
+            label: 'This page covers',
+            title: 'Governance, evidence, and engagement shape',
+            description: 'The recurring questions teams face when they need to explain how AI is being governed under scrutiny.'
+          },
+          {
+            label: 'Reviewers ask first',
+            title: 'Who decides and what proof exists',
+            description: 'The first pressure points are decision rights, named controls, and the packet a reviewer can actually follow.'
+          },
+          {
+            label: 'Best next move',
+            title: 'Orient here, then scope the real case',
+            description: 'Use the FAQ to get oriented, then move to a debrief or readiness snapshot when the facts become specific.'
+          }
+        ],
         closingLabel: 'Next step',
         closingTitle: 'Need an answer tied to your actual situation?',
         closingBody: 'The best next move is a short debrief with the context, the pressure source, and the evidence burden you are likely to face.',
@@ -242,6 +277,8 @@ const FAQ = () => {
               {copy.sectionIntroBody}
             </p>
           </div>
+
+          <SignalStrip items={copy.summaryCards} className="signal-grid-light reveal visible" />
 
           <div className="space-y-6">
             {copy.sections.map((section) => (

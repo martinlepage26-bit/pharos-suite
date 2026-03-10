@@ -2,14 +2,16 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BriefcaseBusiness, Clock3, Radar } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import SignalStrip from '../components/SignalStrip';
 
 const SERVICES_COPY = {
   en: {
     eyebrow: 'Services',
     heroTitle: 'Services for deterministic governance under pressure',
-    heroBody: 'Choose by pressure source, not vocabulary. The right service produces deterministic decision paths, explicit thresholds, and the materials a real review will actually ask for.',
+    heroBody: 'Choose by pressure source, not vocabulary. The right service produces deterministic decision paths, explicit thresholds, and the materials a real review will ask for.',
     coreOffers: 'Core offers',
     coreTitle: 'Three services for deterministic governance',
+    coreBody: 'Start with the pressure condition. The deliverables differ, but all three services create clearer thresholds, decision rights, and evidence for review.',
     scoping: 'Scoping',
     scopingTitle: 'What changes the scope',
     scopingBody: 'Scope shifts with the number of systems, the level of review expected, the sensitivity of the decisions, and the strength of the evidence already in hand.',
@@ -24,6 +26,23 @@ const SERVICES_COPY = {
     ctaBody: 'A short review is enough to choose whether the work belongs in deterministic governance, a pre-mortem, or a post-mortem.',
     bookReview: 'Book a review',
     assessReadiness: 'Assess readiness',
+    summary: [
+      {
+        label: 'Best for',
+        title: 'Teams under real review pressure',
+        description: 'Use this page when procurement, audit, launch, or incident response is forcing governance choices into the open.'
+      },
+      {
+        label: 'What it changes',
+        title: 'Thresholds, decision rights, and evidence burden',
+        description: 'Each service clarifies who decides, what proof is needed, and where escalation starts.'
+      },
+      {
+        label: 'How it starts',
+        title: 'A short scoped review',
+        description: 'The first review sets the route, the deliverables, and the level of scrutiny the work must withstand.'
+      }
+    ],
     packages: [
       {
         id: 'deterministic-governance',
@@ -133,6 +152,7 @@ const SERVICES_COPY = {
     heroBody: 'Choisissez selon la pression réelle, pas selon le vocabulaire. Le bon service produit des parcours décisionnels déterministes, des seuils explicites et les éléments qu’un vrai examen demandera.',
     coreOffers: 'Offres principales',
     coreTitle: 'Trois services pour une gouvernance déterministe',
+    coreBody: 'Commencez par la condition de pression. Les livrables changent, mais les trois services clarifient les seuils, les droits décisionnels et la preuve pour l’examen.',
     scoping: 'Cadrage',
     scopingTitle: 'Ce qui fait varier la portée',
     scopingBody: 'La portée varie selon le nombre de systèmes, le niveau d’examen attendu, la sensibilité des décisions et la solidité de la preuve déjà disponible.',
@@ -147,6 +167,23 @@ const SERVICES_COPY = {
     ctaBody: 'Un court échange suffit pour déterminer si le travail relève d’une gouvernance déterministe, d’une revue pré-mortem ou d’une revue post-mortem.',
     bookReview: 'Réserver une revue',
     assessReadiness: 'Évaluer la préparation',
+    summary: [
+      {
+        label: 'Pour qui',
+        title: 'Les equipes sous vraie pression de revue',
+        description: 'Utilisez cette page quand l approvisionnement, l audit, le lancement ou la reponse a incident force deja des choix de gouvernance.'
+      },
+      {
+        label: 'Ce que cela clarifie',
+        title: 'Seuils, droits decisionnels et charge de preuve',
+        description: 'Chaque service precise qui decide, quelle preuve doit exister et ou l escalation commence.'
+      },
+      {
+        label: 'Point de depart',
+        title: 'Une courte revue cadree',
+        description: 'Le premier echange fixe le bon parcours, les livrables et le niveau d examen que le travail devra supporter.'
+      }
+    ],
     packages: [
       {
         id: 'deterministic-governance',
@@ -267,6 +304,12 @@ const Services = () => {
             <p className="body-lg" style={{ marginTop: '16px' }}>
               {copy.heroBody}
             </p>
+            <div className="jump-links">
+              <a href="#deterministic-governance" className="jump-pill">{copy.packages[0].title}</a>
+              <a href="#pre-mortem-review" className="jump-pill">{copy.packages[1].title}</a>
+              <a href="#post-mortem-review" className="jump-pill">{copy.packages[2].title}</a>
+            </div>
+            <SignalStrip items={copy.summary} className="signal-grid-page" />
           </div>
         </div>
       </div>
@@ -276,6 +319,9 @@ const Services = () => {
           <div className="section-header reveal">
             <p className="eyebrow">{copy.coreOffers}</p>
             <h2>{copy.coreTitle}</h2>
+            <p className="body-sm">
+              {copy.coreBody}
+            </p>
           </div>
 
           <div className="grid-3 stagger">
@@ -299,6 +345,12 @@ const Services = () => {
                       <li key={point}>{point}</li>
                     ))}
                   </ul>
+                  <div className="package-actions">
+                    <Link to="/connect" className="package-link">
+                      {copy.bookReview}
+                      <ArrowRight size={14} />
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
