@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown, Server, Bot, Cloud, RefreshCw } from 'lucide-react';
 import PublicationPublisher from '../components/admin/PublicationPublisher';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 const ADMIN_SESSION_KEY = 'govern-ai-admin-token';
 
 const Admin = () => {

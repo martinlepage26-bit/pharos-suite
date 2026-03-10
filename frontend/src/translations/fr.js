@@ -199,6 +199,7 @@ export const fr = {
 
   tool: {
     title: 'Instantan\u00e9 de pr\u00e9paration en gouvernance IA',
+    subtitle: '\u00c9valuation pr\u00e9liminaire',
     description: "\u00c9valuez votre pr\u00e9paration aux audits, aux r\u00e9gulateurs et \u00e0 l\u2019\u00e9valuation des risques selon votre secteur.",
     steps: { sector: 'SECTEUR', readiness: 'PR\u00c9PARATION', results: 'R\u00c9SULTATS' },
     step1: {

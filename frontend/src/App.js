@@ -25,6 +25,7 @@ import SealedCard from './pages/SealedCard';
 import ServiceMenu from './pages/ServiceMenu';
 import Services from './pages/Services';
 import Tool from './pages/Tool';
+import TrustAdvantageAnalysis from './pages/TrustAdvantageAnalysis';
 
 function AppRoutes() {
   return (
@@ -50,6 +51,7 @@ function AppRoutes() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/library" element={<Library />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/publications/trust-advantage-analysis" element={<TrustAdvantageAnalysis />} />
         </Routes>
       </main>
       <Footer />

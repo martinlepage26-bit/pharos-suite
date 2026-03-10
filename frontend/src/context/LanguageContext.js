@@ -3,6 +3,31 @@ import { translations } from '../translations';
 
 const LanguageContext = createContext();
 
+const mergeTranslations = (base, override) => {
+  if (Array.isArray(base)) {
+    if (!Array.isArray(override)) return base;
+
+    return base.map((item, index) => {
+      const next = override[index];
+
+      if (item && typeof item === 'object' && !Array.isArray(item)) {
+        return mergeTranslations(item, next || {});
+      }
+
+      return next ?? item;
+    });
+  }
+
+  if (base && typeof base === 'object') {
+    return Object.keys(base).reduce((accumulator, key) => {
+      accumulator[key] = mergeTranslations(base[key], override?.[key]);
+      return accumulator;
+    }, {});
+  }
+
+  return override ?? base;
+};
+
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (!context) {
@@ -28,7 +53,7 @@ export const LanguageProvider = ({ children }) => {
     setLanguage(prev => prev === 'en' ? 'fr' : 'en');
   };
 
-  const t = translations[language];
+  const t = mergeTranslations(translations.en, translations[language] || translations.en);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>

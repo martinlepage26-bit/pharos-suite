@@ -4,7 +4,7 @@ import { Shield, FileText, RefreshCw, ArrowRight, ChevronRight, BriefcaseBusines
 import { useLanguage } from '../context/LanguageContext';
 import lighthouseMark from '../assets/logos/governance-lighthouse-simplified.svg';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 const ServiceMenu = () => {
   const { language } = useLanguage();

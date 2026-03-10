@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import LighthouseGlyph from './LighthouseGlyph';
-
-const navItems = [
-  { path: '/', label: 'Home' },
-  { path: '/services', label: 'Services' },
-  { path: '/research', label: 'Research' },
-  { path: '/about', label: 'About' },
-  { path: '/connect', label: 'Connect' }
-];
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar = () => {
+  const { language, toggleLanguage, t } = useLanguage();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const navItems = [
+    { path: '/', label: t.nav.home },
+    { path: '/services', label: t.nav.services },
+    { path: '/research', label: t.nav.research },
+    { path: '/about', label: t.nav.about },
+    { path: '/connect', label: t.nav.connect }
+  ];
+
+  const languageButtonLabel = language === 'fr' ? 'EN' : 'FR';
+  const languageButtonTitle = language === 'fr'
+    ? 'Switch to English'
+    : 'Passer en français';
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 20);
@@ -43,7 +50,7 @@ const Navbar = () => {
     <>
       <nav className={navClass} data-testid="navbar">
         <div className="nav-inner">
-          <Link to="/" className="nav-brand" aria-label="PHAROS home">
+          <Link to="/" className="nav-brand" aria-label={language === 'fr' ? 'Accueil PHAROS' : 'PHAROS home'}>
             <LighthouseGlyph className="nav-logo" />
             <span className="nav-wordmark">PHAROS</span>
           </Link>
@@ -60,13 +67,13 @@ const Navbar = () => {
                   </Link>
                 );
               })}
-              <button className="nav-lang" type="button" disabled title="French version coming soon" aria-disabled="true">
-                FR
+              <button className="nav-lang" type="button" onClick={toggleLanguage} title={languageButtonTitle}>
+                {languageButtonLabel}
               </button>
             </div>
             <button
               className={`nav-hamburger${menuOpen ? ' open' : ''}`}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? (language === 'fr' ? 'Fermer le menu' : 'Close menu') : (language === 'fr' ? 'Ouvrir le menu' : 'Open menu')}
               aria-expanded={menuOpen}
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
@@ -85,9 +92,17 @@ const Navbar = () => {
             {item.label}
           </Link>
         ))}
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-muted)' }}>
-          FR coming soon
-        </span>
+        <button
+          type="button"
+          className="nav-lang mobile-lang-toggle"
+          onClick={() => {
+            toggleLanguage();
+            setMenuOpen(false);
+          }}
+          title={languageButtonTitle}
+        >
+          {languageButtonLabel}
+        </button>
       </div>
     </>
   );

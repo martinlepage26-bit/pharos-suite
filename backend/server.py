@@ -646,6 +646,19 @@ SEED_PUBLICATIONS = [
         "internal": True,
         "status": "published",
         "abstract": ""
+    },
+    {
+        "id": "pub-trust-advantage-analysis",
+        "type": "Insight",
+        "title": "The Trust Advantage: Why Expertise Wins in the Era of AI-Driven Sales",
+        "venue": "PHAROS",
+        "year": "2026",
+        "description": "A PHAROS analysis of LinkedIn Sales Navigator's 2025 Trust Advantage report, cross-read through a governance lens focused on algorithmic fluency, interruption, and trust.",
+        "link": "/publications/trust-advantage-analysis",
+        "internal": True,
+        "status": "published",
+        "abstract": "This publication argues that in AI-saturated sales environments, trust is built less through access to information than through timely human expertise, contextual judgment, and career-defensible proof. It links buyer-trust findings to a governance analysis of fluency, interruption, and review-ready accountability.",
+        "site_section": "about_publications"
     }
 ]
 

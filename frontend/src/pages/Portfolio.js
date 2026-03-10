@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Cpu, ExternalLink, FileText, Scale, Shield } from 'lucide-react';
 import RichTextContent from '../components/RichTextContent';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 const engagements = [
   { type: 'Governance Foundation', icon: Shield, clients: 'Enterprise organizations', scope: 'AI Governance Framework Design', description: 'Establishing minimum viable governance: use-case inventory, risk tiering, decision rights, approval flows, and operating cadence.', outcomes: ['Use-case maps', 'Risk tier criteria', 'RACI matrices', 'Governance cadence'] },
