@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Depends, Header, HTTPException
+from fastapi import FastAPI, APIRouter, Depends, File, Header, HTTPException, Query, UploadFile
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -11,6 +11,7 @@ import hmac
 import shutil
 import json
 import time
+import sys
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Dict, List, Optional
@@ -24,12 +25,21 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 FRONTEND_DIR = ROOT_DIR.parent / "frontend"
 COMPASSAI_ENV_FILE = ROOT_DIR.parent.parent / "CompassAI" / "backend" / ".env"
+LOTUS_APP_DIR = ROOT_DIR.parent / "pharos_governance_suite" / "lotus_dr_sort"
+LOTUS_UPLOAD_ROOT = LOTUS_APP_DIR / "LOTUS_UPLOADS"
 
-resend.api_key = os.environ.get('RESEND_API_KEY', '')
-SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
-ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()]
-ADMIN_PASSPHRASE = os.environ.get('ADMIN_PASSPHRASE', '')
-ADMIN_TOKEN_TTL_SECONDS = 60 * 60 * 12
+if LOTUS_APP_DIR.exists():
+    lotus_app_path = str(LOTUS_APP_DIR)
+    if lotus_app_path not in sys.path:
+        sys.path.append(lotus_app_path)
+
+try:
+    import lotus_core as lotus
+except Exception as exc:  # pragma: no cover - defensive import reporting
+    lotus = None
+    LOTUS_IMPORT_ERROR = str(exc)
+else:
+    LOTUS_IMPORT_ERROR = ""
 
 mongo_url = os.environ.get('MONGO_URL')
 if not mongo_url:
@@ -69,6 +79,23 @@ def load_env_value(path: Path, key: str) -> str:
                 return value.strip().strip('"').strip("'")
 
     return ""
+
+
+resend.api_key = (
+    os.environ.get('RESEND_API_KEY')
+    or load_env_value(ROOT_DIR / '.env', 'RESEND_API_KEY')
+    or load_env_value(COMPASSAI_ENV_FILE, 'RESEND_API_KEY')
+    or ''
+)
+SENDER_EMAIL = (
+    os.environ.get('SENDER_EMAIL')
+    or load_env_value(ROOT_DIR / '.env', 'SENDER_EMAIL')
+    or load_env_value(COMPASSAI_ENV_FILE, 'SENDER_EMAIL')
+    or 'pharos@govern-ai.ca'
+)
+ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()]
+ADMIN_PASSPHRASE = os.environ.get('ADMIN_PASSPHRASE', '')
+ADMIN_TOKEN_TTL_SECONDS = 60 * 60 * 12
 
 
 def create_admin_token() -> str:
@@ -320,6 +347,193 @@ class ServicePackageUpdate(BaseModel):
     produces_fr: Optional[List[str]] = None
     active: Optional[bool] = None
 
+
+class LotusSectionsInput(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    agency: str = ""
+    strategic: str = ""
+    governance: str = ""
+    operational: str = ""
+    creative: str = ""
+    meaning: str = ""
+
+
+class LotusDraftInput(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    title: str = ""
+    author: str = ""
+    date: str = ""
+    tags: List[str] = Field(default_factory=list)
+    context: str = ""
+    source: str = ""
+    summary: str = ""
+    sections: LotusSectionsInput = Field(default_factory=LotusSectionsInput)
+
+
+class LotusScores(BaseModel):
+    agency_score: int
+    creative_score: int
+    strategic_score: int
+    governance_score: int
+    operational_score: int
+    meaning_score: int
+    signals: List[str] = Field(default_factory=list)
+    matched_terms: Dict[str, List[str]] = Field(default_factory=dict)
+
+
+class LotusNoteSummary(BaseModel):
+    path: str
+    title: str
+    modified_iso: str
+    size_kb: int
+    agency_score: int
+    strategic_score: int
+    creative_score: int
+    governance_score: int
+    operational_score: int
+    meaning_score: int
+    signals: List[str] = Field(default_factory=list)
+    excerpt: str = ""
+
+
+class LotusNoteDetail(LotusNoteSummary):
+    text: str = ""
+
+
+class LotusDraftPreview(BaseModel):
+    title: str
+    markdown: str
+    scores: LotusScores
+
+
+class LotusDraftSaveResponse(LotusDraftPreview):
+    path: str
+
+
+class LotusImportResponse(BaseModel):
+    imported: List[str] = Field(default_factory=list)
+
+
+def _require_lotus() -> Any:
+    if lotus is None:
+        detail = "LOTUS core is unavailable."
+        if LOTUS_IMPORT_ERROR:
+            detail = f"{detail} {LOTUS_IMPORT_ERROR}"
+        raise HTTPException(status_code=503, detail=detail)
+    return lotus
+
+
+def _get_lotus_root() -> Path:
+    lotus_module = _require_lotus()
+    return lotus_module.ensure_lotus_root(LOTUS_UPLOAD_ROOT)
+
+
+def _serialize_lotus_scores(scores: Dict[str, object]) -> LotusScores:
+    return LotusScores(
+        agency_score=int(scores.get("agency_score", 0)),
+        creative_score=int(scores.get("creative_score", 0)),
+        strategic_score=int(scores.get("strategic_score", 0)),
+        governance_score=int(scores.get("governance_score", 0)),
+        operational_score=int(scores.get("operational_score", 0)),
+        meaning_score=int(scores.get("meaning_score", 0)),
+        signals=[str(item) for item in scores.get("signals", []) or []],
+        matched_terms={
+            str(key): [str(term) for term in value]
+            for key, value in (scores.get("matched_terms", {}) or {}).items()
+            if isinstance(value, list)
+        },
+    )
+
+
+def _serialize_lotus_note(note: object, root: Path, *, include_text: bool = False) -> LotusNoteSummary | LotusNoteDetail:
+    payload = {
+        "path": str(getattr(note, "path").relative_to(root)),
+        "title": str(getattr(note, "title", "")),
+        "modified_iso": str(getattr(note, "modified_iso", "")),
+        "size_kb": int(getattr(note, "size_kb", 0)),
+        "agency_score": int(getattr(note, "agency_score", 0)),
+        "strategic_score": int(getattr(note, "strategic_score", 0)),
+        "creative_score": int(getattr(note, "creative_score", 0)),
+        "governance_score": int(getattr(note, "governance_score", 0)),
+        "operational_score": int(getattr(note, "operational_score", 0)),
+        "meaning_score": int(getattr(note, "meaning_score", 0)),
+        "signals": list(getattr(note, "signals", []) or []),
+        "excerpt": str(getattr(note, "excerpt", "")),
+    }
+
+    if include_text:
+        payload["text"] = str(getattr(note, "text", ""))
+        return LotusNoteDetail(**payload)
+
+    return LotusNoteSummary(**payload)
+
+
+def _normalize_lotus_draft(input: LotusDraftInput) -> tuple[str, str, Dict[str, object]]:
+    lotus_module = _require_lotus()
+    note_date = (input.date or "").strip() or datetime.now(timezone.utc).date().isoformat()
+    title = input.title.strip() or "LOTUS note"
+    tags = [tag.strip() for tag in input.tags if tag and tag.strip()]
+    sections = {
+        section_name: getattr(input.sections, section_name, "").strip()
+        for section_name in lotus_module.LOTUS_SCORE_SECTION_ORDER
+    }
+
+    markdown = lotus_module.build_structured_note_markdown(
+        title=title,
+        author=input.author.strip(),
+        note_date=note_date,
+        tags=tags,
+        context=input.context.strip(),
+        source=input.source.strip(),
+        summary=input.summary.strip(),
+        sections=sections,
+    )
+    scores = lotus_module.score_lotus_text(title, markdown)
+    return title, markdown, scores
+
+
+def _resolve_lotus_note_path(relative_path: str) -> Path:
+    lotus_module = _require_lotus()
+    root = _get_lotus_root().resolve()
+    candidate = (root / relative_path).resolve()
+
+    try:
+        candidate.relative_to(root)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Invalid LOTUS note path.") from exc
+
+    if not candidate.is_file():
+        raise HTTPException(status_code=404, detail="LOTUS note not found.")
+
+    if candidate.suffix.lower() not in lotus_module.LOTUS_NOTE_EXTENSIONS:
+        raise HTTPException(status_code=400, detail="Unsupported LOTUS note type.")
+
+    return candidate
+
+
+def _save_uploaded_lotus_notes(files_data: List[tuple[str, bytes]]) -> List[str]:
+    lotus_module = _require_lotus()
+    root = _get_lotus_root()
+    imported: List[str] = []
+
+    for original_name, content in files_data:
+        safe_name = Path(original_name or "LOTUS note.md").name
+        suffix = Path(safe_name).suffix.lower()
+        if suffix not in lotus_module.LOTUS_NOTE_EXTENSIONS:
+            raise HTTPException(status_code=400, detail="LOTUS only accepts .md and .txt uploads right now.")
+
+        stem = Path(safe_name).stem or "LOTUS note"
+        destination = root / safe_name
+        counter = 2
+        while destination.exists():
+            destination = root / f"{stem} [{counter}]{suffix}"
+            counter += 1
+
+        destination.write_bytes(content)
+        imported.append(str(destination.relative_to(root)))
+
+    return imported
+
 # ─── Health ───
 
 @api_router.get("/health")
@@ -440,6 +654,71 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
         "cloudflare": cloudflare,
     }
 
+
+# ─── LOTUS Endpoints ───
+
+@api_router.get("/lotus/notes", response_model=List[LotusNoteSummary])
+async def get_lotus_notes():
+    lotus_module = _require_lotus()
+    root = _get_lotus_root()
+    notes = await asyncio.to_thread(lotus_module.load_lotus_notes, root)
+    return [_serialize_lotus_note(note, root) for note in notes]
+
+
+@api_router.get("/lotus/notes/detail", response_model=LotusNoteDetail)
+async def get_lotus_note_detail(path: str = Query(..., description="Relative path inside LOTUS_UPLOADS.")):
+    lotus_module = _require_lotus()
+    root = _get_lotus_root()
+    target = _resolve_lotus_note_path(path)
+    notes = await asyncio.to_thread(lotus_module.load_lotus_notes, root)
+
+    for note in notes:
+        if getattr(note, "path").resolve() == target:
+            return _serialize_lotus_note(note, root, include_text=True)
+
+    raise HTTPException(status_code=404, detail="LOTUS note not found.")
+
+
+@api_router.post("/lotus/score", response_model=LotusDraftPreview)
+async def preview_lotus_draft(input: LotusDraftInput):
+    title, markdown, scores = await asyncio.to_thread(_normalize_lotus_draft, input)
+    return LotusDraftPreview(
+        title=title,
+        markdown=markdown,
+        scores=_serialize_lotus_scores(scores),
+    )
+
+
+@api_router.post("/lotus/drafts", response_model=LotusDraftSaveResponse)
+async def save_lotus_draft(input: LotusDraftInput):
+    lotus_module = _require_lotus()
+    title, markdown, scores = await asyncio.to_thread(_normalize_lotus_draft, input)
+    root = _get_lotus_root()
+    destination = await asyncio.to_thread(lotus_module.save_structured_note, markdown, title, root)
+    return LotusDraftSaveResponse(
+        title=title,
+        markdown=markdown,
+        scores=_serialize_lotus_scores(scores),
+        path=str(destination.relative_to(root)),
+    )
+
+
+@api_router.post("/lotus/upload", response_model=LotusImportResponse)
+async def upload_lotus_notes(files: List[UploadFile] = File(...)):
+    if not files:
+        raise HTTPException(status_code=400, detail="Select at least one LOTUS note to upload.")
+
+    buffered_files: List[tuple[str, bytes]] = []
+    for upload in files:
+        try:
+            content = await upload.read()
+            buffered_files.append((upload.filename or "LOTUS note.md", content))
+        finally:
+            await upload.close()
+
+    imported = await asyncio.to_thread(_save_uploaded_lotus_notes, buffered_files)
+    return LotusImportResponse(imported=imported)
+
 # ─── Publications ───
 
 @api_router.get("/publications", response_model=List[Publication])
@@ -488,7 +767,7 @@ async def send_email(to: list, subject: str, html: str):
         await asyncio.to_thread(resend.Emails.send, params)
         logger.info(f"Email sent to {to}")
     except Exception as e:
-        logger.error(f"Failed to send email: {e}")
+        logger.error(f"Failed to send email from {SENDER_EMAIL}: {e}")
 
 def booking_confirmation_html(booking):
     return f"""

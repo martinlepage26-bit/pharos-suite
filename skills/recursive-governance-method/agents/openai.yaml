@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recursive Governance Method"
+  short_description: "Analyze recursive governance drift"
+  default_prompt: "Use $recursive-governance-method to analyze this mixed archive, separate source layers from generated layers, and extract bounded governance controls."
