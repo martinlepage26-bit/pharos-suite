@@ -2129,6 +2129,186 @@ body {
   background: linear-gradient(90deg, rgba(var(--color-postmodern-cyan-rgb), 0) 0%, rgba(var(--color-postmodern-cyan-rgb), 0.22) 32%, rgba(var(--color-postmodern-coral-rgb), 0.16) 68%, rgba(var(--color-postmodern-cyan-rgb), 0) 100%);
 }
 
+/* --- Connect page refinement --- */
+[data-testid="connect-page"] .page-hero {
+  text-align: center;
+}
+
+[data-testid="connect-page"] .page-hero .section-header {
+  margin-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+[data-testid="connect-page"] .page-hero h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  max-width: 15ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+[data-testid="connect-page"] .page-hero .body-lg {
+  max-width: 44rem;
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+[data-testid="connect-page"] .connect-grid {
+  gap: 48px;
+  margin-top: 64px;
+}
+
+[data-testid="connect-page"] .form-field {
+  margin-bottom: 24px;
+}
+
+[data-testid="connect-page"] .form-field label {
+  font-size: 0.875rem;
+  margin-bottom: 10px;
+}
+
+[data-testid="connect-page"] .form-field input,
+[data-testid="connect-page"] .form-field select,
+[data-testid="connect-page"] .form-field textarea {
+  padding: 16px;
+  font-size: 1rem;
+  transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
+}
+
+[data-testid="connect-page"] .form-field input:focus,
+[data-testid="connect-page"] .form-field select:focus,
+[data-testid="connect-page"] .form-field textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(var(--glow-primary-rgb), 0.18);
+}
+
+[data-testid="connect-page"] .form-field textarea {
+  min-height: 140px;
+}
+
+[data-testid="connect-page"] .editorial-panel,
+[data-testid="connect-page"] .editorial-panel-dark {
+  padding: 36px;
+}
+
+[data-testid="connect-page"] .editorial-panel h2,
+[data-testid="connect-page"] .editorial-panel-dark h2 {
+  line-height: 1.1;
+}
+
+[data-testid="connect-page"] .scope-note {
+  padding: 20px 24px;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+[data-testid="connect-page"] .scope-note > p:not(.eyebrow) {
+  font-size: 0.9375rem;
+}
+
+[data-testid="connect-page"] .panel-list {
+  gap: 12px;
+  margin-top: 20px;
+}
+
+[data-testid="connect-page"] .panel-list li {
+  padding-left: 20px;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+[data-testid="connect-page"] .panel-list li::before {
+  top: 10px;
+  width: 7px;
+  height: 7px;
+}
+
+[data-testid="connect-page"] .plain-stack {
+  gap: 2px;
+}
+
+[data-testid="connect-page"] .plain-stack-item {
+  padding: 16px 0;
+}
+
+[data-testid="connect-page"] .link-slab {
+  margin-top: 28px;
+  padding-top: 26px;
+}
+
+[data-testid="connect-page"] .btn-dark,
+[data-testid="connect-page"] .btn-primary {
+  min-height: 52px;
+}
+
+[data-testid="connect-page"] .btn-dark {
+  box-shadow:
+    0 10px 18px rgba(12, 8, 4, 0.14),
+    4px 4px 0 rgba(var(--color-postmodern-cyan-rgb), 0.05);
+}
+
+[data-testid="connect-page"] .btn-dark::before {
+  background: linear-gradient(120deg, transparent 0 38%, rgba(244, 239, 231, 0.12) 38% 44%, transparent 44% 100%);
+}
+
+[data-testid="connect-page"] .btn-dark:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 22px rgba(12, 8, 4, 0.16),
+    6px 6px 0 rgba(var(--color-postmodern-coral-rgb), 0.05);
+}
+
+@media (min-width: 768px) {
+  [data-testid="connect-page"] .page-hero {
+    text-align: left;
+  }
+
+  [data-testid="connect-page"] .page-hero .section-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [data-testid="connect-page"] .page-hero h1 {
+    max-width: 18ch;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [data-testid="connect-page"] .page-hero .body-lg {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [data-testid="connect-page"] .connect-grid {
+    align-items: start;
+  }
+
+  [data-testid="connect-page"] .editorial-panel,
+  [data-testid="connect-page"] .editorial-panel-dark {
+    padding: 38px;
+  }
+}
+
+@media (max-width: 767px) {
+  [data-testid="connect-page"] .page-hero h1 {
+    max-width: none;
+    font-size: clamp(2.2rem, 8vw, 2.85rem);
+  }
+
+  [data-testid="connect-page"] .connect-grid {
+    gap: 28px;
+    margin-top: 40px;
+  }
+
+  [data-testid="connect-page"] .editorial-panel,
+  [data-testid="connect-page"] .editorial-panel-dark {
+    padding: 26px 22px;
+  }
+}
+
 @media (max-width: 767px) {
   .signal-grid {
     gap: 12px;
