@@ -117,19 +117,19 @@ const reviewNeeds = [
 
 const heroSignals = [
   {
-    label: 'Best for',
-    title: 'Teams facing live review pressure',
-    description: 'Built for procurement, audit, vendor diligence, and executive oversight that need a governance answer now.'
+    label: 'Practice',
+    title: 'Founder-led governance review',
+    description: 'PHAROS is the governance system; Martin Lepage, PhD leads the review logic, thresholds, and evidence posture.'
   },
   {
-    label: 'What PHAROS does',
-    title: 'Turns pressure into control logic',
-    description: 'PHAROS clarifies thresholds, decision rights, and evidence paths so governance can be inspected instead of narrated.'
+    label: 'Built for',
+    title: 'Procurement, audit, vendor review, and board oversight',
+    description: 'Use it when a buyer, auditor, or committee needs a governance answer that can be followed.'
   },
   {
-    label: 'Start with',
-    title: 'A short review',
-    description: 'The first review identifies what can already be evidenced, what is missing, and which service route fits.'
+    label: 'First move',
+    title: 'Readiness snapshot or scoped review',
+    description: 'Start with the tool or a short review to locate thin thresholds, missing controls, and evidentiary gaps.'
   }
 ];
 
@@ -142,24 +142,19 @@ const Home = () => (
         <div className="hero-content">
           <div className="brand-kicker" style={{ marginBottom: '20px', opacity: 0, transform: 'translateY(30px)', animation: 'fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.05s forwards' }}>
             <LighthouseGlyph className="brand-kicker-mark" title="" />
-            <span>PHAROS AI GOVERNANCE</span>
+            <span>PHAROS — Legible AI Governance</span>
           </div>
-          <h1>Deterministic AI governance under pressure</h1>
+          <h1>Legible AI governance for real review conditions</h1>
           <p className="body-lg">
-            When procurement, audit, or a board asks how AI is governed, PHAROS helps teams answer with evidence, deterministic decision rights, and review-ready documentation.
+            PHAROS helps teams answer scrutiny with deterministic thresholds, named decision rights, and evidence paths that a buyer, auditor, or committee can actually follow.
           </p>
+          <p className="hero-founder-line">A governance practice by Martin Lepage, PhD</p>
           <div className="hero-cta-row">
             <Link to="/connect" className="btn-primary">
               Book a review
               <ArrowRight />
             </Link>
-            <Link to="/services" className="btn-secondary">View services</Link>
-          </div>
-          <div className="jump-links">
-            <a href="#review-needs" className="jump-pill">Review posture</a>
-            <a href="#pressure-points" className="jump-pill">Pressure points</a>
-            <a href="#method" className="jump-pill">Method</a>
-            <a href="#service-routes" className="jump-pill">Service routes</a>
+            <Link to="/tool" className="btn-secondary">Assess readiness</Link>
           </div>
           <SignalStrip items={heroSignals} className="signal-grid-hero" />
         </div>
@@ -299,14 +294,14 @@ const Home = () => (
     <section className="section">
       <div className="container">
         <div className="cta-banner reveal">
-          <h2>Make governance deterministic before it gets tested</h2>
+          <h2>Start with a governance baseline that can survive review</h2>
           <p className="body-sm">The first review identifies what can already be evidenced, what is missing, and whether the work belongs in deterministic governance, a pre-mortem, or a post-mortem.</p>
           <div className="btn-row">
             <Link to="/connect" className="btn-primary">
               Book a review
               <ArrowRight />
             </Link>
-            <Link to="/services" className="btn-secondary">View services</Link>
+            <Link to="/tool" className="btn-secondary">Assess readiness</Link>
           </div>
         </div>
       </div>

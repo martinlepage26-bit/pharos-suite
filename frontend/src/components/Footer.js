@@ -8,6 +8,7 @@ const Footer = () => {
   const copy = language === 'fr'
     ? {
         brandTitle: 'PHAROS footer mark',
+        founderLine: 'Une pratique de Martin Lepage, PhD',
         tagline: 'Une gouvernance lisible quand vient le vrai examen.',
         proofLine: 'Pour l approvisionnement, l audit, la revue fournisseur et la surveillance de comite.',
         practice: 'Pratique',
@@ -20,6 +21,7 @@ const Footer = () => {
       }
     : {
         brandTitle: 'PHAROS footer mark',
+        founderLine: 'A practice by Martin Lepage, PhD',
         tagline: 'Legible governance for real review.',
         proofLine: 'For procurement, audit, vendor review, and executive oversight.',
         practice: 'Practice',
@@ -42,6 +44,7 @@ const Footer = () => {
                 PHAROS
               </span>
             </div>
+            <p className="footer-founder">{copy.founderLine}</p>
             <p>{copy.tagline}</p>
             <p className="footer-proof">{copy.proofLine}</p>
           </div>
