@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import LighthouseGlyph from './LighthouseGlyph';
 import { useLanguage } from '../context/LanguageContext';
 
 const NAV_COPY = {
@@ -146,11 +145,10 @@ const Navbar = () => {
               <span className="nav-sitemap-label">{copy.sitemapLabel}</span>
             </button>
 
-            <Link to="/" className="nav-brand" aria-label={language === 'fr' ? 'Accueil PHAROS' : 'PHAROS home'}>
-              <LighthouseGlyph className="nav-logo" />
-              <span className="nav-wordmark">PHAROS</span>
-            </Link>
-          </div>
+              <Link to="/" className="nav-brand" aria-label={language === 'fr' ? 'Accueil PHAROS' : 'PHAROS home'}>
+                <span className="nav-wordmark">PHAROS</span>
+              </Link>
+            </div>
 
           <div className="nav-right">
             <div className="nav-links">

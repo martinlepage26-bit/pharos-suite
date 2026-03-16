@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import LighthouseGlyph from '../components/LighthouseGlyph';
 import { METHODS_COPY } from './About';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -36,7 +35,6 @@ function ConceptualMethod() {
             <div>
               <p className="eyebrow" style={{ marginBottom: '16px' }}>{methods.label}</p>
               <div className="brand-kicker brand-kicker-static">
-                <LighthouseGlyph className="brand-kicker-mark" title="" />
                 <span>PHAROS AI GOVERNANCE</span>
               </div>
               <h1>{methods.title}</h1>

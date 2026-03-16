@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { BookOpen, Scale, CircleDot, ExternalLink, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import lighthouseMono from '../assets/logos/governance-lighthouse-seal-monochrome.svg';
 
 const Library = () => {
   const { language } = useLanguage();
@@ -250,28 +249,23 @@ const Library = () => {
               <p className="text-[11px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.noteLabel}
               </p>
-              <div className="mt-4 grid gap-5 rounded-[24px] border border-[#13254C]/12 bg-white/84 p-5 md:grid-cols-[0.85fr_1.15fr] md:items-center">
-                <div className="flex flex-col items-center text-center">
-                  <img src={lighthouseMono} alt="PHAROS monochrome seal" className="w-full max-w-[210px] rounded-[18px] bg-[#0F1D37] p-4" />
-                </div>
-                <div>
-                  <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
-                    {copy.noteTitle}
-                  </h2>
-                  <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
-                    {copy.noteBody}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {copy.notePills.map((pill) => (
-                      <span
-                        key={pill}
-                        className="inline-flex items-center rounded-full border border-[#D6CCBB] bg-[#FBF7EF] px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-[#13254C]"
-                        style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
-                      >
-                        {pill}
-                      </span>
-                    ))}
-                  </div>
+              <div className="mt-4 rounded-[24px] border border-[#13254C]/12 bg-white/84 p-5">
+                <h2 className="text-[25px] leading-[1.06] text-[#081428] md:text-[28px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+                  {copy.noteTitle}
+                </h2>
+                <p className="mt-3 text-sm leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(32, 49, 79, 0.76)' }}>
+                  {copy.noteBody}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {copy.notePills.map((pill) => (
+                    <span
+                      key={pill}
+                      className="inline-flex items-center rounded-full border border-[#D6CCBB] bg-[#FBF7EF] px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-[#13254C]"
+                      style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
+                    >
+                      {pill}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>

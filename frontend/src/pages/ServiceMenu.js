@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, FileText, RefreshCw, ArrowRight, ChevronRight, BriefcaseBusiness, Scale, Waypoints } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import lighthouseMark from '../assets/logos/governance-lighthouse-simplified.svg';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -254,19 +253,12 @@ const ServiceMenu = () => {
             </div>
 
             <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-[18px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
-                  <img src={lighthouseMark} alt="PHAROS lighthouse mark" className="h-10 w-10" />
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
-                    {copy.noteTitle}
-                  </p>
-                  <p className="mt-1 text-sm" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
-                    {copy.noteBody}
-                  </p>
-                </div>
-              </div>
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                {copy.noteTitle}
+              </p>
+              <p className="mt-1 text-sm" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
+                {copy.noteBody}
+              </p>
             </div>
           </div>
         </section>

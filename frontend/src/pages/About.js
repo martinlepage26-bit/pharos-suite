@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink } from 'lucide-react';
-import LighthouseGlyph from '../components/LighthouseGlyph';
 import RichTextContent from '../components/RichTextContent';
 import { useLanguage } from '../context/LanguageContext';
 import SignalStrip from '../components/SignalStrip';
@@ -794,7 +793,6 @@ const About = () => {
             <div>
               <p className="eyebrow" style={{ marginBottom: '16px' }}>{copy.eyebrow}</p>
               <div className="brand-kicker brand-kicker-static">
-                <LighthouseGlyph className="brand-kicker-mark" title="" />
                 <span>PHAROS AI GOVERNANCE</span>
               </div>
               <h1>{copy.heroTitle}</h1>

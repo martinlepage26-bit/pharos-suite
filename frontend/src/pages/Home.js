@@ -10,7 +10,6 @@ import {
   ShieldCheck,
   Waypoints
 } from 'lucide-react';
-import LighthouseGlyph from '../components/LighthouseGlyph';
 import MeridianField from '../components/MeridianField';
 import SignalStrip from '../components/SignalStrip';
 import { useLanguage } from '../context/LanguageContext';
@@ -410,21 +409,10 @@ const Home = () => {
                   </article>
                 ))}
               </div>
-              <div className="hero-beam hero-beam-vertical" aria-hidden="true" />
-              <div className="hero-beam hero-beam-horizontal" aria-hidden="true" />
-              <div className="hero-signal-ring" aria-hidden="true" />
-              <div className="hero-mark-lockup">
-                <LighthouseGlyph className="hero-mark" title="" />
-                <div className="hero-wordmark-wrap">
-                  <span className="hero-wordmark">PHAROS</span>
-                  <span className="hero-wordmark-subtitle">{copy.wordmarkSubtitle}</span>
-                </div>
-              </div>
             </div>
 
             <div className="hero-content hero-copy-panel glass-panel">
               <div className="brand-kicker">
-                <LighthouseGlyph className="brand-kicker-mark" title="" />
                 <span>{copy.brandKicker}</span>
               </div>
               <div className="hero-copy-header">
@@ -467,9 +455,6 @@ const Home = () => {
 
           <div className="editorial-panel reveal">
             <div className="feature-lockup">
-              <div className="card-icon">
-                <LighthouseGlyph className="nav-logo" title="" />
-              </div>
               <div>
                 <p className="eyebrow">{copy.standardLabel}</p>
                 <h3>{copy.standardTitle}</h3>

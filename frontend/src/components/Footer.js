@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import LighthouseGlyph from './LighthouseGlyph';
 import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
@@ -43,7 +42,6 @@ const Footer = () => {
         <div className="footer-top">
           <div className="footer-brand">
             <div className="footer-lockup">
-              <LighthouseGlyph className="nav-logo" title={copy.brandTitle} />
               <span className="footer-wordmark">
                 PHAROS
               </span>

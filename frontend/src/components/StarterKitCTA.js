@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Download, CheckCircle, Mail, FileText, Shield, List } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import lighthouseMark from '../assets/logos/governance-lighthouse-simplified.svg';
 
 const StarterKitCTA = () => {
   const [email, setEmail] = useState('');
@@ -31,9 +30,6 @@ const StarterKitCTA = () => {
       <div className="absolute -right-10 top-4 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)] pointer-events-none" />
       <div className="absolute bottom-[-46px] left-[-18px] h-28 w-28 rotate-45 rounded-[18px] border border-[#B89B5E]/14 pointer-events-none" />
       <div className="relative mb-4 flex items-start gap-3">
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-[16px] border border-[#B89B5E]/20 bg-white/8">
-          <img src={lighthouseMark} alt="" className="h-7 w-7" />
-        </div>
         <div>
           <p className="text-[10px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
             Governance starter kit

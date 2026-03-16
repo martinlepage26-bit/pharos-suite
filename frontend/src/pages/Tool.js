@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ArrowRight, ClipboardList, Radar, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import lighthouseMark from '../assets/logos/governance-lighthouse-simplified.svg';
 
 const Tool = () => {
   const { t, language } = useLanguage();
@@ -171,19 +170,12 @@ const Tool = () => {
             </div>
 
             <div className="tool-note-card rounded-[26px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-4 shadow-[0_18px_34px_rgba(8,20,40,0.16)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[16px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
-                  <img src={lighthouseMark} alt="PHAROS lighthouse mark" className="h-8 w-8" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.14em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
-                    {copy.noteLabel}
-                  </p>
-                  <p className="mt-1 text-[13px] leading-[1.4]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
-                    {copy.noteTitle}
-                  </p>
-                </div>
-              </div>
+              <p className="text-[10px] uppercase tracking-[0.14em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                {copy.noteLabel}
+              </p>
+              <p className="mt-1 text-[13px] leading-[1.4]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
+                {copy.noteTitle}
+              </p>
               <p className="mt-3 text-[13px] leading-[1.65] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.noteBody}
               </p>
