@@ -444,7 +444,28 @@
 }
 
 [data-testid="home-page"] {
+  position: relative;
   isolation: isolate;
+}
+
+[data-testid="home-page"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-page-meridians {
+  position: absolute;
+  inset: -6vw 0 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.24;
+  mix-blend-mode: screen;
+  background-image:
+    radial-gradient(circle at 50% 18%, rgba(255, 232, 170, 0.08) 0%, rgba(255, 232, 170, 0) 36%),
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'-420%20-160%202440%201420'%20fill%3D'none'%3E%0A%3Cg%20stroke%3D'%23D8B45B'%20stroke-opacity%3D'0.28'%20stroke-width%3D'1.5'%3E%0A%3Cpath%20d%3D'M-520%20860C-110%20690%20338%20604%20800%20604C1262%20604%201710%20690%202120%20860'%2F%3E%0A%3Cpath%20d%3D'M-520%20776C-110%20646%20338%20580%20800%20580C1262%20580%201710%20646%202120%20776'%2F%3E%0A%3Cpath%20d%3D'M-520%20694C-110%20596%20338%20546%20800%20546C1262%20546%201710%20596%202120%20694'%2F%3E%0A%3Cpath%20d%3D'M-520%20614C-110%20536%20338%20496%20800%20496C1262%20496%201710%20536%202120%20614'%2F%3E%0A%3Cpath%20d%3D'M-520%20534C-110%20476%20338%20446%20800%20446C1262%20446%201710%20476%202120%20534'%2F%3E%0A%3Cpath%20d%3D'M-520%20456C-110%20418%20338%20398%20800%20398C1262%20398%201710%20418%202120%20456'%2F%3E%0A%3Cpath%20d%3D'M-520%20382C-110%20358%20338%20346%20800%20346C1262%20346%201710%20358%202120%20382'%2F%3E%0A%3Cpath%20d%3D'M-120%201180C-240%20900%20-250%20120%20-70%20-220'%2F%3E%0A%3Cpath%20d%3D'M80%201180C-36%20900%20-42%20120%20118%20-220'%2F%3E%0A%3Cpath%20d%3D'M280%201180C170%20900%20170%20120%20310%20-220'%2F%3E%0A%3Cpath%20d%3D'M480%201180C382%20900%20388%20120%20502%20-220'%2F%3E%0A%3Cpath%20d%3D'M680%201180C612%20900%20618%20120%20696%20-220'%2F%3E%0A%3Cpath%20d%3D'M800%201180C800%20900%20800%20120%20800%20-220'%2F%3E%0A%3Cpath%20d%3D'M920%201180C988%20900%20982%20120%20904%20-220'%2F%3E%0A%3Cpath%20d%3D'M1120%201180C1218%20900%201212%20120%201098%20-220'%2F%3E%0A%3Cpath%20d%3D'M1320%201180C1430%20900%201430%20120%201290%20-220'%2F%3E%0A%3Cpath%20d%3D'M1520%201180C1636%20900%201642%20120%201482%20-220'%2F%3E%0A%3Cpath%20d%3D'M1720%201180C1840%20900%201850%20120%201670%20-220'%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D'%23FFF3CD'%20stroke-opacity%3D'0.12'%20stroke-width%3D'0.8'%3E%0A%3Cpath%20d%3D'M-520%20694C-110%20596%20338%20546%20800%20546C1262%20546%201710%20596%202120%20694'%2F%3E%0A%3Cpath%20d%3D'M-520%20534C-110%20476%20338%20446%20800%20446C1262%20446%201710%20476%202120%20534'%2F%3E%0A%3Cpath%20d%3D'M800%201180C800%20900%20800%20120%20800%20-220'%2F%3E%0A%3Cpath%20d%3D'M80%201180C-36%20900%20-42%20120%20118%20-220'%2F%3E%0A%3Cpath%20d%3D'M1520%201180C1636%20900%201642%20120%201482%20-220'%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center center, center center;
+  background-size: 116% 100%, 116% 100%;
 }
 
 [data-testid="home-page"]::before,
@@ -458,14 +479,14 @@
 [data-testid="home-page"]::before {
   z-index: 0;
   background:
-    radial-gradient(circle at 22% 14%, rgba(26, 102, 100, 0.18) 0%, rgba(26, 102, 100, 0) 20%),
-    radial-gradient(circle at 50% 4%, rgba(132, 102, 236, 0.24) 0%, rgba(132, 102, 236, 0) 18%),
-    radial-gradient(circle at 76% 26%, rgba(20, 86, 92, 0.16) 0%, rgba(20, 86, 92, 0) 24%),
-    radial-gradient(circle at 18% 18%, rgba(74, 104, 214, 0.16) 0%, rgba(74, 104, 214, 0) 22%),
-    radial-gradient(circle at 82% 14%, rgba(88, 54, 170, 0.24) 0%, rgba(88, 54, 170, 0) 24%),
-    radial-gradient(circle at 50% 42%, rgba(12, 62, 68, 0.18) 0%, rgba(12, 62, 68, 0) 30%),
-    radial-gradient(circle at 50% 58%, rgba(25, 12, 68, 0.52) 0%, rgba(25, 12, 68, 0) 40%),
-    linear-gradient(180deg, rgba(4, 11, 20, 0.96) 0%, rgba(7, 18, 29, 0.98) 16%, rgba(9, 18, 34, 0.98) 42%, rgba(12, 12, 42, 0.98) 72%, rgba(13, 10, 48, 0.98) 100%);
+    radial-gradient(circle at 22% 14%, rgba(34, 42, 98, 0.16) 0%, rgba(34, 42, 98, 0) 20%),
+    radial-gradient(circle at 50% 4%, rgba(112, 86, 214, 0.22) 0%, rgba(112, 86, 214, 0) 18%),
+    radial-gradient(circle at 74% 24%, rgba(24, 30, 86, 0.16) 0%, rgba(24, 30, 86, 0) 24%),
+    radial-gradient(circle at 18% 18%, rgba(72, 66, 166, 0.14) 0%, rgba(72, 66, 166, 0) 22%),
+    radial-gradient(circle at 82% 14%, rgba(96, 56, 170, 0.22) 0%, rgba(96, 56, 170, 0) 24%),
+    radial-gradient(circle at 50% 42%, rgba(20, 18, 58, 0.24) 0%, rgba(20, 18, 58, 0) 30%),
+    radial-gradient(circle at 50% 58%, rgba(18, 10, 58, 0.52) 0%, rgba(18, 10, 58, 0) 40%),
+    linear-gradient(180deg, rgba(2, 5, 16, 0.99) 0%, rgba(4, 8, 22, 0.995) 18%, rgba(6, 10, 28, 0.995) 42%, rgba(8, 8, 30, 0.995) 72%, rgba(10, 8, 36, 0.995) 100%);
 }
 
 [data-testid="home-page"]::after {
@@ -505,11 +526,11 @@
     radial-gradient(circle at 58% 30%, rgba(255, 248, 228, 0.36) 0 1px, transparent 1.5px),
     radial-gradient(circle at 74% 18%, rgba(255, 248, 228, 0.52) 0 1px, transparent 1.7px),
     radial-gradient(circle at 88% 34%, rgba(255, 248, 228, 0.44) 0 1px, transparent 1.6px),
-    radial-gradient(circle at 18% 24%, rgba(17, 92, 92, 0.12) 0%, rgba(17, 92, 92, 0) 22%),
-    radial-gradient(circle at 78% 16%, rgba(12, 72, 82, 0.1) 0%, rgba(12, 72, 82, 0) 20%),
-    radial-gradient(circle at 50% 0%, rgba(var(--glow-secondary-rgb), 0.12) 0%, rgba(var(--glow-secondary-rgb), 0) 30%),
-    radial-gradient(circle at 50% 24%, rgba(var(--glow-primary-rgb), 0.08) 0%, rgba(var(--glow-primary-rgb), 0) 26%),
-    linear-gradient(180deg, rgba(11, 31, 46, 0.08) 0%, rgba(10, 46, 50, 0.05) 42%, rgba(11, 31, 46, 0) 100%);
+    radial-gradient(circle at 18% 24%, rgba(34, 42, 96, 0.12) 0%, rgba(34, 42, 96, 0) 22%),
+    radial-gradient(circle at 78% 16%, rgba(62, 46, 128, 0.12) 0%, rgba(62, 46, 128, 0) 20%),
+    radial-gradient(circle at 50% 0%, rgba(122, 96, 220, 0.14) 0%, rgba(122, 96, 220, 0) 30%),
+    radial-gradient(circle at 50% 24%, rgba(90, 68, 180, 0.1) 0%, rgba(90, 68, 180, 0) 26%),
+    linear-gradient(180deg, rgba(5, 9, 24, 0.14) 0%, rgba(7, 10, 28, 0.08) 42%, rgba(8, 10, 26, 0) 100%);
 }
 
 .page-hero::after {
@@ -546,21 +567,21 @@
   border-radius: calc(var(--radius-xl) + 0.2rem);
   border-color: rgba(var(--glow-primary-rgb), 0.24);
   background:
-    radial-gradient(circle at 18% 72%, rgba(18, 92, 96, 0.12) 0%, rgba(18, 92, 96, 0) 24%),
-    radial-gradient(circle at 50% 14%, rgba(var(--glow-secondary-rgb), 0.18) 0%, rgba(var(--glow-secondary-rgb), 0) 18%),
-    radial-gradient(circle at 50% 80%, rgba(var(--glow-primary-rgb), 0.08) 0%, rgba(var(--glow-primary-rgb), 0) 24%),
-    linear-gradient(180deg, rgba(9, 27, 38, 0.28) 0%, rgba(11, 43, 50, 0.18) 48%, rgba(15, 59, 62, 0.14) 100%);
+    radial-gradient(circle at 18% 72%, rgba(20, 26, 74, 0.16) 0%, rgba(20, 26, 74, 0) 24%),
+    radial-gradient(circle at 50% 14%, rgba(118, 92, 218, 0.16) 0%, rgba(118, 92, 218, 0) 18%),
+    radial-gradient(circle at 50% 80%, rgba(60, 42, 124, 0.12) 0%, rgba(60, 42, 124, 0) 24%),
+    linear-gradient(180deg, rgba(4, 7, 18, 0.88) 0%, rgba(6, 10, 24, 0.92) 48%, rgba(8, 9, 28, 0.94) 100%);
 }
 
 .hero.hero-pharos .hero-stage {
   border-color: rgba(201, 168, 76, 0.24);
   background:
-    radial-gradient(circle at 24% 70%, rgba(20, 102, 98, 0.14) 0%, rgba(20, 102, 98, 0) 26%),
-    radial-gradient(circle at 50% 12%, rgba(122, 110, 244, 0.16) 0%, rgba(122, 110, 244, 0) 18%),
-    radial-gradient(circle at 18% 82%, rgba(72, 208, 204, 0.12) 0%, rgba(72, 208, 204, 0) 26%),
-    radial-gradient(circle at 74% 22%, rgba(12, 72, 84, 0.14) 0%, rgba(12, 72, 84, 0) 24%),
-    radial-gradient(circle at 82% 18%, rgba(86, 62, 164, 0.22) 0%, rgba(86, 62, 164, 0) 26%),
-    linear-gradient(180deg, rgba(6, 14, 26, 0.78) 0%, rgba(8, 28, 38, 0.84) 40%, rgba(10, 22, 44, 0.86) 68%, rgba(13, 16, 46, 0.82) 100%);
+    radial-gradient(circle at 24% 70%, rgba(24, 28, 82, 0.16) 0%, rgba(24, 28, 82, 0) 26%),
+    radial-gradient(circle at 50% 12%, rgba(118, 94, 224, 0.22) 0%, rgba(118, 94, 224, 0) 18%),
+    radial-gradient(circle at 18% 82%, rgba(44, 34, 112, 0.16) 0%, rgba(44, 34, 112, 0) 26%),
+    radial-gradient(circle at 74% 22%, rgba(18, 16, 56, 0.18) 0%, rgba(18, 16, 56, 0) 24%),
+    radial-gradient(circle at 82% 18%, rgba(96, 62, 180, 0.22) 0%, rgba(96, 62, 180, 0) 26%),
+    linear-gradient(180deg, rgba(2, 4, 14, 0.94) 0%, rgba(4, 7, 18, 0.965) 36%, rgba(6, 8, 24, 0.97) 68%, rgba(8, 8, 30, 0.965) 100%);
 }
 
 .hero-monitor-chrome {

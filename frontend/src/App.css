@@ -67,10 +67,11 @@
   isolation: isolate;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 50% -8%, rgba(var(--glow-secondary-rgb), 0.12) 0%, rgba(var(--glow-secondary-rgb), 0) 24%),
-    radial-gradient(circle at 82% 12%, rgba(var(--glow-primary-rgb), 0.08) 0%, rgba(var(--glow-primary-rgb), 0) 18%),
-    radial-gradient(circle at 18% 100%, rgba(var(--glow-secondary-rgb), 0.08) 0%, rgba(var(--glow-secondary-rgb), 0) 24%),
-    linear-gradient(180deg, #0b1f2e 0%, #0f3138 54%, #0f3b3e 100%);
+    radial-gradient(circle at 50% -8%, rgba(118, 90, 220, 0.18) 0%, rgba(118, 90, 220, 0) 24%),
+    radial-gradient(circle at 82% 12%, rgba(var(--glow-primary-rgb), 0.07) 0%, rgba(var(--glow-primary-rgb), 0) 18%),
+    radial-gradient(circle at 18% 100%, rgba(72, 52, 164, 0.12) 0%, rgba(72, 52, 164, 0) 24%),
+    radial-gradient(circle at 14% 26%, rgba(36, 44, 112, 0.14) 0%, rgba(36, 44, 112, 0) 22%),
+    linear-gradient(180deg, #030611 0%, #060a18 38%, #090a22 72%, #0b0a26 100%);
   color: var(--color-text);
 }
 
@@ -97,12 +98,16 @@
 }
 
 .App::after {
+  inset: -6vw;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' fill='none'%3E%3Cg stroke='%23C9A84C' stroke-opacity='0.22' stroke-width='1.4'%3E%3Cpath d='M-120 760C180 640 500 580 800 580C1100 580 1420 640 1720 760'/%3E%3Cpath d='M-120 680C180 580 500 530 800 530C1100 530 1420 580 1720 680'/%3E%3Cpath d='M-120 610C180 530 500 490 800 490C1100 490 1420 530 1720 610'/%3E%3Cpath d='M-120 540C180 475 500 442 800 442C1100 442 1420 475 1720 540'/%3E%3Cpath d='M-120 470C180 420 500 395 800 395C1100 395 1420 420 1720 470'/%3E%3Cpath d='M-120 400C180 365 500 348 800 348C1100 348 1420 365 1720 400'/%3E%3Cpath d='M200 1060C130 830 130 170 200 -60'/%3E%3Cpath d='M430 1060C360 830 360 170 430 -60'/%3E%3Cpath d='M640 1060C585 830 585 170 640 -60'/%3E%3Cpath d='M800 1060C800 830 800 170 800 -60'/%3E%3Cpath d='M960 1060C1015 830 1015 170 960 -60'/%3E%3Cpath d='M1170 1060C1240 830 1240 170 1170 -60'/%3E%3Cpath d='M1400 1060C1470 830 1470 170 1400 -60'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.28;
+  background-image:
+    radial-gradient(circle at 50% 18%, rgba(255, 232, 170, 0.08) 0%, rgba(255, 232, 170, 0) 36%),
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'-420%20-160%202440%201420'%20fill%3D'none'%3E%0A%3Cg%20stroke%3D'%23D8B45B'%20stroke-opacity%3D'0.28'%20stroke-width%3D'1.5'%3E%0A%3Cpath%20d%3D'M-520%20860C-110%20690%20338%20604%20800%20604C1262%20604%201710%20690%202120%20860'%2F%3E%0A%3Cpath%20d%3D'M-520%20776C-110%20646%20338%20580%20800%20580C1262%20580%201710%20646%202120%20776'%2F%3E%0A%3Cpath%20d%3D'M-520%20694C-110%20596%20338%20546%20800%20546C1262%20546%201710%20596%202120%20694'%2F%3E%0A%3Cpath%20d%3D'M-520%20614C-110%20536%20338%20496%20800%20496C1262%20496%201710%20536%202120%20614'%2F%3E%0A%3Cpath%20d%3D'M-520%20534C-110%20476%20338%20446%20800%20446C1262%20446%201710%20476%202120%20534'%2F%3E%0A%3Cpath%20d%3D'M-520%20456C-110%20418%20338%20398%20800%20398C1262%20398%201710%20418%202120%20456'%2F%3E%0A%3Cpath%20d%3D'M-520%20382C-110%20358%20338%20346%20800%20346C1262%20346%201710%20358%202120%20382'%2F%3E%0A%3Cpath%20d%3D'M-120%201180C-240%20900%20-250%20120%20-70%20-220'%2F%3E%0A%3Cpath%20d%3D'M80%201180C-36%20900%20-42%20120%20118%20-220'%2F%3E%0A%3Cpath%20d%3D'M280%201180C170%20900%20170%20120%20310%20-220'%2F%3E%0A%3Cpath%20d%3D'M480%201180C382%20900%20388%20120%20502%20-220'%2F%3E%0A%3Cpath%20d%3D'M680%201180C612%20900%20618%20120%20696%20-220'%2F%3E%0A%3Cpath%20d%3D'M800%201180C800%20900%20800%20120%20800%20-220'%2F%3E%0A%3Cpath%20d%3D'M920%201180C988%20900%20982%20120%20904%20-220'%2F%3E%0A%3Cpath%20d%3D'M1120%201180C1218%20900%201212%20120%201098%20-220'%2F%3E%0A%3Cpath%20d%3D'M1320%201180C1430%20900%201430%20120%201290%20-220'%2F%3E%0A%3Cpath%20d%3D'M1520%201180C1636%20900%201642%20120%201482%20-220'%2F%3E%0A%3Cpath%20d%3D'M1720%201180C1840%20900%201850%20120%201670%20-220'%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D'%23FFF3CD'%20stroke-opacity%3D'0.12'%20stroke-width%3D'0.8'%3E%0A%3Cpath%20d%3D'M-520%20694C-110%20596%20338%20546%20800%20546C1262%20546%201710%20596%202120%20694'%2F%3E%0A%3Cpath%20d%3D'M-520%20534C-110%20476%20338%20446%20800%20446C1262%20446%201710%20476%202120%20534'%2F%3E%0A%3Cpath%20d%3D'M800%201180C800%20900%20800%20120%20800%20-220'%2F%3E%0A%3Cpath%20d%3D'M80%201180C-36%20900%20-42%20120%20118%20-220'%2F%3E%0A%3Cpath%20d%3D'M1520%201180C1636%20900%201642%20120%201482%20-220'%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center center, center center;
+  background-size: 116% 116%, 116% 116%;
+  opacity: 0.36;
+  mix-blend-mode: screen;
   animation: pharosGridDrift 40s ease-in-out infinite alternate;
 }
 
@@ -127,7 +132,7 @@ body {
   font-size: 0.97rem;
   line-height: 1.58;
   color: var(--color-text);
-  background: var(--color-bg);
+  background: #030611;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -236,7 +241,7 @@ p {
 }
 
 .section-muted {
-  background: linear-gradient(180deg, rgba(8, 31, 46, 0.14) 0%, rgba(15, 59, 62, 0.24) 100%);
+  background: linear-gradient(180deg, rgba(8, 10, 24, 0.34) 0%, rgba(11, 10, 34, 0.26) 100%);
 }
 
 .page-hero {
@@ -781,11 +786,59 @@ p {
   0%,
   100% {
     transform: rotate(-8deg);
-    opacity: 0.78;
   }
   50% {
     transform: rotate(10deg);
-    opacity: 1;
+  }
+}
+
+@keyframes pharosBeamSweepLeft {
+  0%,
+  100% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes pharosBeamSweepDownRight {
+  0%,
+  100% {
+    transform: rotate(28deg);
+  }
+  50% {
+    transform: rotate(40deg) scaleX(1.03);
+  }
+}
+
+@keyframes pharosBeamSweepDownLeft {
+  0%,
+  100% {
+    transform: rotate(-28deg);
+  }
+  50% {
+    transform: rotate(-40deg) scaleX(1.03);
+  }
+}
+
+@keyframes pharosBeamIntensityRight {
+  0%,
+  100% {
+    opacity: 0.94;
+  }
+  50% {
+    opacity: 0.34;
+  }
+}
+
+@keyframes pharosBeamIntensityLeft {
+  0%,
+  100% {
+    opacity: 0.34;
+  }
+  50% {
+    opacity: 0.94;
   }
 }
 
