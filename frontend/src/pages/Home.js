@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Waypoints
 } from 'lucide-react';
+import '../components/HomeHeroLogo.css';
 import MeridianField from '../components/MeridianField';
 import SignalStrip from '../components/SignalStrip';
 import { useLanguage } from '../context/LanguageContext';
@@ -408,6 +409,32 @@ const Home = () => {
                     <p>{item.description}</p>
                   </article>
                 ))}
+              </div>
+              <div className="hero-mark-lockup">
+                <div className="hero-mark-shell">
+                  <div className="hero-eye-origin" aria-hidden="true">
+                    <span className="hero-eye-halo" />
+                    <span className="hero-eye-core" />
+                    <span className="hero-quantum-beam hero-quantum-beam-right" />
+                    <span className="hero-quantum-beam hero-quantum-beam-left" />
+                    <span className="hero-quantum-beam hero-quantum-beam-down-right" />
+                    <span className="hero-quantum-beam hero-quantum-beam-down-left" />
+                    <span className="hero-quantum-beam hero-quantum-beam-up" />
+                  </div>
+                  <img
+                    className="hero-mark hero-mark-image"
+                    src="/images/pharos-main-logo-quantum-lighthouse.png"
+                    alt=""
+                    aria-hidden="true"
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                  />
+                </div>
+                <div className="hero-wordmark-wrap">
+                  <span className="hero-wordmark">PHAROS</span>
+                  <span className="hero-wordmark-subtitle">{copy.wordmarkSubtitle}</span>
+                </div>
               </div>
             </div>
 

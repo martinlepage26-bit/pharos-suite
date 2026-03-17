@@ -7,73 +7,63 @@ const NAV_COPY = {
     navItems: [
       { path: '/', label: 'HOME', matchPaths: ['/'] },
       { path: '/about', label: 'ABOUT', matchPaths: ['/about'] },
-      { path: '/observatory', label: 'OBSERVATORY', matchPaths: ['/observatory', '/research'] },
-      { path: '/governance', label: 'GOVERNANCE', matchPaths: ['/governance', '/services'] },
-      { path: '/methods', label: 'METHODS', matchPaths: ['/methods', '/about/conceptual-method'] },
+      {
+        path: '/governance',
+        label: 'GOVERNANCE',
+        matchPaths: ['/governance', '/services', '/observatory', '/research', '/methods', '/about/conceptual-method'],
+        children: [
+          { path: '/observatory', label: 'OBSERVATORY', matchPaths: ['/observatory', '/research'] },
+          { path: '/methods', label: 'METHODS', matchPaths: ['/methods', '/about/conceptual-method'] }
+        ]
+      },
       { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
     ],
     sitemapLabel: 'Site map',
-    sitemapIntro: 'Public PHAROS surfaces and observatory working layers',
-    sitemapSections: [
-      {
-        title: 'Primary',
-        links: [
-          { path: '/', label: 'HOME', note: 'Entrance and overview' },
-          { path: '/about', label: 'ABOUT', note: 'System brief' },
-          { path: '/observatory', label: 'OBSERVATORY', note: 'Models, institutions, standards, and claims' },
-          { path: '/governance', label: 'GOVERNANCE', note: 'Comparison, review, and legibility' },
-          { path: '/methods', label: 'METHODS', note: 'Evidence, analysis, and oversight' },
-          { path: '/contact', label: 'CONTACT', note: 'Research and collaboration inquiries' }
-        ]
-      },
-      {
-        title: 'Secondary',
-        links: [
-          { path: '/tool', label: 'TOOL', note: 'Quick readiness signal', featured: true },
-          { path: '/faq', label: 'FAQ', note: 'Fast answers' },
-          { path: '/library', label: 'LIBRARY', note: 'Frameworks and sources' },
-          { path: '/cases', label: 'CASES', note: 'Case readings' }
-        ]
-      }
+    sitemapLinks: [
+      { path: '/', label: 'HOME', matchPaths: ['/'] },
+      { path: '/about', label: 'ABOUT', matchPaths: ['/about'] },
+      { path: '/governance', label: 'GOVERNANCE', matchPaths: ['/governance', '/services'] },
+      { path: '/observatory', label: 'OBSERVATORY', matchPaths: ['/observatory', '/research'] },
+      { path: '/methods', label: 'METHODS', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
+      { path: '/tool', label: 'TOOL', matchPaths: ['/tool'] },
+      { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
+      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] },
+      { path: '/library', label: 'LIBRARY', matchPaths: ['/library'] },
+      { path: '/cases', label: 'CASES', matchPaths: ['/cases'] }
     ],
-    mobileContact: 'CONTACT',
-    meetingCta: 'BOOK A MEETING'
+    bookReview: 'BOOK A REVIEW'
   },
   fr: {
     navItems: [
       { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
       { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
-      { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
-      { path: '/governance', label: 'GOUVERNANCE', matchPaths: ['/governance', '/services'] },
-      { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] },
+      {
+        path: '/governance',
+        label: 'GOUVERNANCE',
+        matchPaths: ['/governance', '/services', '/observatory', '/research', '/methods', '/about/conceptual-method'],
+        children: [
+          { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
+          { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] }
+        ]
+      },
       { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
     ],
     sitemapLabel: 'Plan du site',
-    sitemapIntro: 'Surfaces publiques de PHAROS et couches de travail de l observatoire',
-    sitemapSections: [
-      {
-        title: 'Principales',
-        links: [
-          { path: '/', label: 'ACCUEIL', note: 'Entree et vue d ensemble' },
-          { path: '/about', label: 'A PROPOS', note: 'Presentation du systeme' },
-          { path: '/observatory', label: 'OBSERVATOIRE', note: 'Modeles, institutions, normes et revendications' },
-          { path: '/governance', label: 'GOUVERNANCE', note: 'Comparaison, revue et lisibilite' },
-          { path: '/methods', label: 'METHODES', note: 'Preuve, analyse et supervision' },
-          { path: '/contact', label: 'CONTACT', note: 'Demandes de recherche et collaboration' }
-        ]
-      },
-      {
-        title: 'Secondaires',
-        links: [
-          { path: '/tool', label: 'OUTIL', note: 'Signal rapide de preparation', featured: true },
-          { path: '/faq', label: 'FAQ', note: 'Reponses rapides' },
-          { path: '/library', label: 'BIBLIOTHEQUE', note: 'Cadres et sources' },
-          { path: '/cases', label: 'CAS', note: 'Lectures de cas' }
-        ]
-      }
+    sitemapLinks: [
+      { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
+      { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
+      { path: '/governance', label: 'GOUVERNANCE', matchPaths: ['/governance', '/services'] },
+      { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
+      { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
+      { path: '/tool', label: 'OUTIL', matchPaths: ['/tool'] },
+      { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
+      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] },
+      { path: '/library', label: 'BIBLIOTHEQUE', matchPaths: ['/library'] },
+      { path: '/cases', label: 'CAS', matchPaths: ['/cases'] }
     ],
-    mobileContact: 'CONTACT',
-    meetingCta: 'RESERVER UN ECHANGE'
+    bookReview: 'RESERVER UNE REVUE'
   }
 };
 
@@ -124,57 +114,76 @@ const Navbar = () => {
   const navClass = ['nav', scrolled ? 'scrolled' : '', homeHeroVisible ? 'hero-visible' : '']
     .filter(Boolean)
     .join(' ');
+  const isPathActive = (matchPaths) => matchPaths.some((path) => (
+    path === '/'
+      ? location.pathname === '/'
+      : location.pathname === path || location.pathname.startsWith(`${path}/`)
+  ));
 
   return (
     <>
-      <nav className={navClass} data-testid="navbar">
-        <div className="nav-inner">
-          <div className="nav-left">
-            <button
-              className={`nav-sitemap-toggle${sitemapOpen ? ' open' : ''}`}
-              aria-label={sitemapOpen ? (language === 'fr' ? 'Fermer le plan du site' : 'Close site map') : (language === 'fr' ? 'Ouvrir le plan du site' : 'Open site map')}
-              aria-expanded={sitemapOpen}
-              type="button"
-              onClick={() => setSitemapOpen((open) => !open)}
-            >
-              <span className="nav-sitemap-lines" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-              </span>
-              <span className="nav-sitemap-label">{copy.sitemapLabel}</span>
-            </button>
+      <header className="site-header">
+        <nav className={navClass} data-testid="navbar" aria-label={language === 'fr' ? 'Navigation principale' : 'Primary navigation'}>
+          <div className="nav-inner">
+            <div className="nav-left">
+              <button
+                className={`nav-sitemap-toggle${sitemapOpen ? ' open' : ''}`}
+                aria-label={sitemapOpen ? (language === 'fr' ? 'Fermer le plan du site' : 'Close site map') : (language === 'fr' ? 'Ouvrir le plan du site' : 'Open site map')}
+                aria-expanded={sitemapOpen}
+                type="button"
+                onClick={() => setSitemapOpen((open) => !open)}
+              >
+                <span className="nav-sitemap-lines" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </button>
 
-              <Link to="/" className="nav-brand" aria-label={language === 'fr' ? 'Accueil PHAROS' : 'PHAROS home'}>
-                <span className="nav-wordmark">PHAROS</span>
+              <Link to="/contact" className="nav-book-review">
+                {copy.bookReview}
               </Link>
             </div>
 
-          <div className="nav-right">
-            <div className="nav-links">
-              {copy.navItems.map((item) => {
-                const isActive = item.matchPaths.some((path) => (
-                  path === '/'
-                    ? location.pathname === '/'
-                    : location.pathname === path || location.pathname.startsWith(`${path}/`)
-                ));
+            <div className="nav-right">
+              <div className="nav-links">
+                {copy.navItems.map((item) => {
+                  const isActive = isPathActive(item.matchPaths);
 
-                return (
-                  <Link key={item.path} to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <button className="nav-lang" type="button" onClick={toggleLanguage} title={languageButtonTitle}>
-                {languageButtonLabel}
-              </button>
+                  if (item.children) {
+                    return (
+                      <div key={item.path} className={`nav-item nav-item-has-children${isActive ? ' active' : ''}`}>
+                        <Link to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                          {item.label}
+                        </Link>
+                        <div className="nav-dropdown" aria-label={item.label}>
+                          {item.children.map((child) => {
+                            const childActive = isPathActive(child.matchPaths);
+                            return (
+                              <Link key={child.path} to={child.path} className={`nav-dropdown-link${childActive ? ' active' : ''}`}>
+                                {child.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Link key={item.path} to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                      {item.label}
+                    </Link>
+                  );
+                })}
+                <button className="nav-lang" type="button" onClick={toggleLanguage} title={languageButtonTitle}>
+                  {languageButtonLabel}
+                </button>
+              </div>
             </div>
-            <Link to="/contact" className="nav-meeting">
-              {copy.meetingCta}
-            </Link>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
       <button
         type="button"
@@ -185,39 +194,23 @@ const Navbar = () => {
 
       <aside className={`sitemap-panel${sitemapOpen ? ' open' : ''}`} aria-hidden={!sitemapOpen}>
         <div className="sitemap-panel-inner">
-          <div className="sitemap-header">
-            <p className="eyebrow">{copy.sitemapLabel}</p>
-            <p className="sitemap-intro">{copy.sitemapIntro}</p>
-          </div>
-
-          <div className="sitemap-grid">
-            {copy.sitemapSections.map((section) => (
-              <div key={section.title} className="sitemap-section">
-                <p className="sitemap-section-title">{section.title}</p>
-                <div className="sitemap-links">
-                  {section.links.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`sitemap-link${item.featured ? ' featured' : ''}`}
-                      onClick={() => setSitemapOpen(false)}
-                    >
-                      <span className="sitemap-link-title">{item.label}</span>
-                      <span className="sitemap-link-meta">{item.note}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="sitemap-links sitemap-links-compact">
+            {copy.sitemapLinks.map((item) => {
+              const isActive = isPathActive(item.matchPaths);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`sitemap-link compact${isActive ? ' active' : ''}`}
+                  onClick={() => setSitemapOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="sitemap-actions">
-            <Link to="/contact" className="nav-cta-mobile" onClick={() => setSitemapOpen(false)}>
-              {copy.meetingCta}
-            </Link>
-            <Link to="/contact" className="nav-cta-mobile" onClick={() => setSitemapOpen(false)}>
-              {copy.mobileContact}
-            </Link>
             <button
               type="button"
               className="nav-lang mobile-lang-toggle"
