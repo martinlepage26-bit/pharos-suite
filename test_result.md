@@ -135,7 +135,7 @@ backend:
         comment: "Passed in-process FastAPI harness validation with a fake database layer when no Mongo daemon was initially available."
       - working: true
         agent: "main"
-        comment: "Passed live API validation against a temporary MongoMemoryServer instance and a real `uvicorn server:app` process on `http://127.0.0.1:9202`. Verified health, services, admin login, platform status, and bookings create/list/status/delete under the PHAROS-facing runtime, plus publication CRUD in a validation mode that exercised editorial routes. This is not the same thing as default fail-closed public-runtime behavior for publications."
+        comment: "Passed live API validation against a temporary MongoMemoryServer instance and a real `uvicorn server:app` process on `http://127.0.0.1:9202`. Verified health, services, admin login, platform status, and bookings create/list/status/delete under the PHAROS-facing runtime. Publication and Lotus routes now remain explicitly fail-closed on the PHAROS backend."
 
 frontend:
   - task: "PHAROS frontend build validation"
@@ -155,31 +155,17 @@ frontend:
   - task: "Trust Advantage route validation"
     implemented: true
     working: true
-    file: "frontend/src/pages/TrustAdvantageAnalysis.js"
+    file: "frontend/src/App.js"
     stuck_count: 0
     priority: "medium"
     needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "New route present in working tree and should be included in this test run."
+        comment: "Legacy publication route remains in scope only as a boundary and redirect compatibility check."
       - working: true
         agent: "main"
-        comment: "Boundary-route validation passed. Confirmed `frontend/src/App.js` now blocks `/publications/trust-advantage-analysis` with a `SurfaceBoundary`, `frontend/public/_redirects` sends that path to `/observatory`, and legacy publication link/seed residue still exists in frontend/backend sources. This is not evidence of an active PHAROS publication page."
-  - task: "Trust Advantage publication asset validation"
-    implemented: true
-    working: true
-    file: "frontend/public/publications/trust-advantage-analysis-march-2026.docx"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-      - working: "NA"
-        agent: "main"
-        comment: "Second-pass task added. Need to verify the publication asset exists and is included in the built output."
-      - working: true
-        agent: "main"
-        comment: "Passed asset validation. Confirmed the `.docx` exists in both `frontend/public/publications/` and `frontend/build/publications/`, the built `_redirects` file contains `/* /index.html 200`, and the built asset served with HTTP 200 from a temporary local static server. This is static publication-asset residue, not proof of an active PHAROS publication page."
+        comment: "Boundary-route validation passed. Confirmed `frontend/src/App.js` blocks `/publications/trust-advantage-analysis` with a `SurfaceBoundary`, and `frontend/public/_redirects` sends that path to `/observatory`. This is compatibility handling, not an active PHAROS publication page."
   - task: "PHAROS domain rename validation"
     implemented: true
     working: true
@@ -227,9 +213,9 @@ agent_communication:
   - agent: "main"
     message: "Baseline run completed. Frontend production build passed, backend syntax smoke passed, and Trust Advantage route wiring was confirmed. Interactive UI and live API integration remain unrun in this test pass."
   - agent: "main"
-    message: "Continuing the test loop instead of deferring. Next pass is live backend/API validation plus built publication asset verification."
+    message: "Continuing the test loop instead of deferring. Next pass is live backend/API validation plus compatibility-route verification."
   - agent: "main"
-    message: "Live backend/API pass succeeded with a temporary MongoMemoryServer-backed stack, and the built Trust Advantage publication asset served correctly. Current PHAROS local test loop is green."
+    message: "Live backend/API pass succeeded with a temporary MongoMemoryServer-backed stack, and the legacy Trust Advantage route stayed compatibility-blocked as expected. Current PHAROS local test loop is green."
   - agent: "main"
     message: "Starting a new pass focused on `pharos-ai.ca` domain validation, covering the frontend build and a clean domain-reference sweep."
   - agent: "main"

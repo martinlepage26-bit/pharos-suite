@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Depends, File, Header, HTTPException, Query, UploadFile
+from fastapi import FastAPI, APIRouter, Depends, Header, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -11,7 +11,6 @@ import hmac
 import shutil
 import json
 import time
-import sys
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Dict, List, Optional
@@ -25,27 +24,6 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 FRONTEND_DIR = ROOT_DIR.parent / "frontend"
 COMPASSAI_ENV_FILE = ROOT_DIR.parent.parent / "CompassAI" / "backend" / ".env"
-LOTUS_SURFACE_ENABLED = os.environ.get("ENABLE_LOTUS_SURFACE", "").strip().lower() in {"1", "true", "yes", "on"}
-LOTUS_COMPAT_MODULE_PATH = os.environ.get("LOTUS_COMPAT_MODULE_PATH", "").strip()
-LOTUS_UPLOAD_ROOT_RAW = os.environ.get("LOTUS_UPLOAD_ROOT", "").strip()
-LOTUS_UPLOAD_ROOT = Path(LOTUS_UPLOAD_ROOT_RAW).expanduser() if LOTUS_UPLOAD_ROOT_RAW else None
-EDITORIAL_SURFACES_ENABLED = os.environ.get("ENABLE_EDITORIAL_SURFACES", "").strip().lower() in {"1", "true", "yes", "on"}
-
-lotus = None
-LOTUS_IMPORT_ERROR = ""
-
-if LOTUS_SURFACE_ENABLED:
-    if LOTUS_COMPAT_MODULE_PATH:
-        lotus_app_path = str(Path(LOTUS_COMPAT_MODULE_PATH).expanduser())
-        if lotus_app_path not in sys.path:
-            sys.path.append(lotus_app_path)
-        try:
-            import lotus_core as lotus
-        except Exception as exc:  # pragma: no cover - defensive import reporting
-            lotus = None
-            LOTUS_IMPORT_ERROR = str(exc)
-    else:
-        LOTUS_IMPORT_ERROR = "LOTUS_COMPAT_MODULE_PATH is not configured"
 
 DEFAULT_CORS_ORIGINS = [
     "http://localhost:3000",
@@ -222,45 +200,6 @@ class StatusCheckCreate(BaseModel):
 class AdminLoginInput(BaseModel):
     passphrase: str
 
-class Publication(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    type: str = ""
-    title: str
-    venue: str = ""
-    year: str = ""
-    description: str = ""
-    link: str = ""
-    internal: bool = False
-    status: str = "published"
-    abstract: str = ""
-    site_section: str = "pharos_insights"
-    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
-
-class PublicationCreate(BaseModel):
-    type: str = ""
-    title: str
-    venue: str = ""
-    year: str = ""
-    description: str = ""
-    link: str = ""
-    internal: bool = False
-    status: str = "published"
-    abstract: str = ""
-    site_section: str = "pharos_insights"
-
-class PublicationUpdate(BaseModel):
-    type: Optional[str] = None
-    title: Optional[str] = None
-    venue: Optional[str] = None
-    year: Optional[str] = None
-    description: Optional[str] = None
-    link: Optional[str] = None
-    internal: Optional[bool] = None
-    status: Optional[str] = None
-    abstract: Optional[str] = None
-    site_section: Optional[str] = None
-
 class Booking(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -366,210 +305,18 @@ class ServicePackageUpdate(BaseModel):
     active: Optional[bool] = None
 
 
-class LotusSectionsInput(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    agency: str = ""
-    strategic: str = ""
-    governance: str = ""
-    operational: str = ""
-    creative: str = ""
-    meaning: str = ""
-
-
-class LotusDraftInput(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    title: str = ""
-    author: str = ""
-    date: str = ""
-    tags: List[str] = Field(default_factory=list)
-    context: str = ""
-    source: str = ""
-    summary: str = ""
-    sections: LotusSectionsInput = Field(default_factory=LotusSectionsInput)
-
-
-class LotusScores(BaseModel):
-    agency_score: int
-    creative_score: int
-    strategic_score: int
-    governance_score: int
-    operational_score: int
-    meaning_score: int
-    signals: List[str] = Field(default_factory=list)
-    matched_terms: Dict[str, List[str]] = Field(default_factory=dict)
-
-
-class LotusNoteSummary(BaseModel):
-    path: str
-    title: str
-    modified_iso: str
-    size_kb: int
-    agency_score: int
-    strategic_score: int
-    creative_score: int
-    governance_score: int
-    operational_score: int
-    meaning_score: int
-    signals: List[str] = Field(default_factory=list)
-    excerpt: str = ""
-
-
-class LotusNoteDetail(LotusNoteSummary):
-    text: str = ""
-
-
-class LotusDraftPreview(BaseModel):
-    title: str
-    markdown: str
-    scores: LotusScores
-
-
-class LotusDraftSaveResponse(LotusDraftPreview):
-    path: str
-
-
-class LotusImportResponse(BaseModel):
-    imported: List[str] = Field(default_factory=list)
-
-
-def _require_lotus() -> Any:
-    if not LOTUS_SURFACE_ENABLED:
-        raise HTTPException(
-            status_code=410,
-            detail="Lotus is not part of the PHAROS public surface. Use the separate Lotus service or workspace instead."
-        )
-
-    if lotus is None:
-        if LOTUS_IMPORT_ERROR:
-            logger.warning("Lotus import unavailable on this PHAROS deployment: %s", LOTUS_IMPORT_ERROR)
-        detail = "Lotus support is enabled, but the Lotus backend module is unavailable on this deployment."
-        raise HTTPException(status_code=503, detail=detail)
-    return lotus
-
-
-def _require_editorial_surfaces() -> None:
-    if not EDITORIAL_SURFACES_ENABLED:
-        raise HTTPException(
-            status_code=410,
-            detail="Editorial and publication endpoints are not available on this PHAROS backend."
-        )
-
-
-def _get_lotus_root() -> Path:
-    lotus_module = _require_lotus()
-    if LOTUS_UPLOAD_ROOT is None:
-        raise HTTPException(
-            status_code=503,
-            detail="Lotus support is enabled, but LOTUS_UPLOAD_ROOT is not configured on this deployment."
-        )
-    return lotus_module.ensure_lotus_root(LOTUS_UPLOAD_ROOT)
-
-
-def _serialize_lotus_scores(scores: Dict[str, object]) -> LotusScores:
-    return LotusScores(
-        agency_score=int(scores.get("agency_score", 0)),
-        creative_score=int(scores.get("creative_score", 0)),
-        strategic_score=int(scores.get("strategic_score", 0)),
-        governance_score=int(scores.get("governance_score", 0)),
-        operational_score=int(scores.get("operational_score", 0)),
-        meaning_score=int(scores.get("meaning_score", 0)),
-        signals=[str(item) for item in scores.get("signals", []) or []],
-        matched_terms={
-            str(key): [str(term) for term in value]
-            for key, value in (scores.get("matched_terms", {}) or {}).items()
-            if isinstance(value, list)
-        },
+def raise_lotus_surface_removed() -> None:
+    raise HTTPException(
+        status_code=410,
+        detail="Lotus is not part of the PHAROS public surface. Use the separate Lotus service or workspace instead."
     )
 
 
-def _serialize_lotus_note(note: object, root: Path, *, include_text: bool = False) -> LotusNoteSummary | LotusNoteDetail:
-    payload = {
-        "path": str(getattr(note, "path").relative_to(root)),
-        "title": str(getattr(note, "title", "")),
-        "modified_iso": str(getattr(note, "modified_iso", "")),
-        "size_kb": int(getattr(note, "size_kb", 0)),
-        "agency_score": int(getattr(note, "agency_score", 0)),
-        "strategic_score": int(getattr(note, "strategic_score", 0)),
-        "creative_score": int(getattr(note, "creative_score", 0)),
-        "governance_score": int(getattr(note, "governance_score", 0)),
-        "operational_score": int(getattr(note, "operational_score", 0)),
-        "meaning_score": int(getattr(note, "meaning_score", 0)),
-        "signals": list(getattr(note, "signals", []) or []),
-        "excerpt": str(getattr(note, "excerpt", "")),
-    }
-
-    if include_text:
-        payload["text"] = str(getattr(note, "text", ""))
-        return LotusNoteDetail(**payload)
-
-    return LotusNoteSummary(**payload)
-
-
-def _normalize_lotus_draft(input: LotusDraftInput) -> tuple[str, str, Dict[str, object]]:
-    lotus_module = _require_lotus()
-    note_date = (input.date or "").strip() or datetime.now(timezone.utc).date().isoformat()
-    title = input.title.strip() or "LOTUS note"
-    tags = [tag.strip() for tag in input.tags if tag and tag.strip()]
-    sections = {
-        section_name: getattr(input.sections, section_name, "").strip()
-        for section_name in lotus_module.LOTUS_SCORE_SECTION_ORDER
-    }
-
-    markdown = lotus_module.build_structured_note_markdown(
-        title=title,
-        author=input.author.strip(),
-        note_date=note_date,
-        tags=tags,
-        context=input.context.strip(),
-        source=input.source.strip(),
-        summary=input.summary.strip(),
-        sections=sections,
+def raise_publications_surface_removed() -> None:
+    raise HTTPException(
+        status_code=410,
+        detail="Editorial and publication endpoints are not available on this PHAROS backend."
     )
-    scores = lotus_module.score_lotus_text(title, markdown)
-    return title, markdown, scores
-
-
-def _resolve_lotus_note_path(relative_path: str) -> Path:
-    lotus_module = _require_lotus()
-    root = _get_lotus_root().resolve()
-    candidate = (root / relative_path).resolve()
-
-    try:
-        candidate.relative_to(root)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail="Invalid LOTUS note path.") from exc
-
-    if not candidate.is_file():
-        raise HTTPException(status_code=404, detail="LOTUS note not found.")
-
-    if candidate.suffix.lower() not in lotus_module.LOTUS_NOTE_EXTENSIONS:
-        raise HTTPException(status_code=400, detail="Unsupported LOTUS note type.")
-
-    return candidate
-
-
-def _save_uploaded_lotus_notes(files_data: List[tuple[str, bytes]]) -> List[str]:
-    lotus_module = _require_lotus()
-    root = _get_lotus_root()
-    imported: List[str] = []
-
-    for original_name, content in files_data:
-        safe_name = Path(original_name or "LOTUS note.md").name
-        suffix = Path(safe_name).suffix.lower()
-        if suffix not in lotus_module.LOTUS_NOTE_EXTENSIONS:
-            raise HTTPException(status_code=400, detail="LOTUS only accepts .md and .txt uploads right now.")
-
-        stem = Path(safe_name).stem or "LOTUS note"
-        destination = root / safe_name
-        counter = 2
-        while destination.exists():
-            destination = root / f"{stem} [{counter}]{suffix}"
-            counter += 1
-
-        destination.write_bytes(content)
-        imported.append(str(destination.relative_to(root)))
-
-    return imported
 
 # ─── Health ───
 
@@ -701,70 +448,49 @@ def raise_lotus_surface_removed() -> None:
     )
 
 
-@api_router.get("/lotus/notes", response_model=List[LotusNoteSummary])
+@api_router.get("/lotus/notes")
 async def get_lotus_notes():
     raise_lotus_surface_removed()
 
 
-@api_router.get("/lotus/notes/detail", response_model=LotusNoteDetail)
-async def get_lotus_note_detail(path: str = Query(..., description="Relative Lotus note path.")):
+@api_router.get("/lotus/notes/detail")
+async def get_lotus_note_detail():
     raise_lotus_surface_removed()
 
 
-@api_router.post("/lotus/score", response_model=LotusDraftPreview)
-async def preview_lotus_draft(input: LotusDraftInput):
+@api_router.post("/lotus/score")
+async def preview_lotus_draft():
     raise_lotus_surface_removed()
 
 
-@api_router.post("/lotus/drafts", response_model=LotusDraftSaveResponse)
-async def save_lotus_draft(input: LotusDraftInput):
+@api_router.post("/lotus/drafts")
+async def save_lotus_draft():
     raise_lotus_surface_removed()
 
 
-@api_router.post("/lotus/upload", response_model=LotusImportResponse)
-async def upload_lotus_notes(files: List[UploadFile] = File(...)):
+@api_router.post("/lotus/upload")
+async def upload_lotus_notes():
     raise_lotus_surface_removed()
 
 # ─── Publications ───
 
-@api_router.get("/publications", response_model=List[Publication])
+@api_router.get("/publications")
 async def get_publications():
-    _require_editorial_surfaces()
-    database = await get_database()
-    pubs = await database.publications.find({}, {"_id": 0}).to_list(100)
-    return pubs
+    raise_publications_surface_removed()
 
-@api_router.post("/publications", response_model=Publication)
-async def create_publication(input: PublicationCreate, admin_ok: None = Depends(require_admin)):
-    _require_editorial_surfaces()
-    database = await get_database()
-    pub = Publication(**input.model_dump())
-    doc = pub.model_dump()
-    await database.publications.insert_one(doc)
-    return pub
+@api_router.post("/publications")
+async def create_publication():
+    raise_publications_surface_removed()
 
-@api_router.put("/publications/{pub_id}", response_model=Publication)
-async def update_publication(pub_id: str, input: PublicationUpdate, admin_ok: None = Depends(require_admin)):
-    _require_editorial_surfaces()
-    database = await get_database()
-    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
-    if not update_data:
-        raise HTTPException(status_code=400, detail="No fields to update")
-    result = await database.publications.find_one_and_update(
-        {"id": pub_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
-    )
-    if not result:
-        raise HTTPException(status_code=404, detail="Publication not found")
-    return result
+@api_router.put("/publications/{pub_id}")
+async def update_publication(pub_id: str):
+    del pub_id
+    raise_publications_surface_removed()
 
 @api_router.delete("/publications/{pub_id}")
-async def delete_publication(pub_id: str, admin_ok: None = Depends(require_admin)):
-    _require_editorial_surfaces()
-    database = await get_database()
-    result = await database.publications.delete_one({"id": pub_id})
-    if result.deleted_count == 0:
-        raise HTTPException(status_code=404, detail="Publication not found")
-    return {"status": "deleted"}
+async def delete_publication(pub_id: str):
+    del pub_id
+    raise_publications_surface_removed()
 
 # ─── Email Functions ───
 
@@ -897,99 +623,6 @@ async def get_booked_slots():
     ).to_list(500)
     return bookings
 
-# ─── Seed Data ───
-
-SEED_PUBLICATIONS = [
-    {
-        "id": "pub-sealed-card",
-        "type": "Protocol",
-        "title": "The Sealed Card Protocol: Mediated Legitimacy, Charging, and Governance at the Seam",
-        "venue": "Research Protocol",
-        "year": "2024",
-        "description": "A framework for analyzing how legitimacy is established in the context of generative AI and mediation.",
-        "link": "/sealed-card",
-        "internal": True,
-        "status": "published",
-        "abstract": ""
-    },
-    {
-        "id": "pub-incident-analysis",
-        "type": "Briefing Series",
-        "title": "AI Governance Incident Analysis",
-        "venue": "Research Briefings",
-        "year": "2024",
-        "description": "Seven case studies translating real AI incidents into operational controls: Amazon hiring bias, Clearview data provenance, Zillow forecasting, Dutch welfare scandal, COMPAS, Samsung leaks, Air Canada chatbot.",
-        "link": "/research",
-        "internal": True,
-        "status": "published",
-        "abstract": ""
-    },
-    {
-        "id": "pub-readiness-snapshot",
-        "type": "Framework",
-        "title": "AI Governance Readiness Snapshot",
-        "venue": "Assessment Tool",
-        "year": "2024",
-        "description": "Interactive assessment tool measuring governance maturity across eight dimensions: inventory, risk tiering, decision rights, controls, evidence, vendor review, cadence, and documentation.",
-        "link": "/tool",
-        "internal": True,
-        "status": "published",
-        "abstract": ""
-    },
-    {
-        "id": "pub-trust-advantage-analysis",
-        "type": "Insight",
-        "title": "The Trust Advantage: Why Expertise Wins in the Era of AI-Driven Sales",
-        "venue": "PHAROS",
-        "year": "2026",
-        "description": "A PHAROS analysis of LinkedIn Sales Navigator's 2025 Trust Advantage report, cross-read through a governance lens focused on algorithmic fluency, interruption, and trust.",
-        "link": "/observatory",
-        "internal": True,
-        "status": "published",
-        "abstract": "This publication argues that in AI-saturated sales environments, trust is built less through access to information than through timely human expertise, contextual judgment, and career-defensible proof. It links buyer-trust findings to a governance analysis of fluency, interruption, and review-ready accountability.",
-        "site_section": "pharos_insights"
-    }
-]
-
-SEED_WORKING_PAPERS = [
-    {
-        "id": "wp-risk-tiering",
-        "type": "Working Paper",
-        "title": "Risk Tiering for AI Systems: A Practical Framework",
-        "venue": "",
-        "year": "",
-        "description": "Structured criteria for classifying AI use cases by impact, sensitivity, autonomy, and exposure. Includes worked examples across sectors.",
-        "link": "",
-        "internal": False,
-        "status": "in_development",
-        "abstract": "Structured criteria for classifying AI use cases by impact, sensitivity, autonomy, and exposure. Includes worked examples across sectors."
-    },
-    {
-        "id": "wp-evidence-architecture",
-        "type": "Working Paper",
-        "title": "Evidence Architecture for AI Governance",
-        "venue": "",
-        "year": "",
-        "description": "How to design documentation systems that survive audit scrutiny: versioning, ownership, change logs, and reconstruction capability.",
-        "link": "",
-        "internal": False,
-        "status": "in_development",
-        "abstract": "How to design documentation systems that survive audit scrutiny: versioning, ownership, change logs, and reconstruction capability."
-    },
-    {
-        "id": "wp-vendor-due-diligence",
-        "type": "Working Paper",
-        "title": "Vendor AI Due Diligence: A Procurement Framework",
-        "venue": "",
-        "year": "",
-        "description": "Questionnaire design, evaluation criteria, and contractual requirements for third-party AI systems.",
-        "link": "",
-        "internal": False,
-        "status": "in_development",
-        "abstract": "Questionnaire design, evaluation criteria, and contractual requirements for third-party AI systems."
-    }
-]
-
 # ─── FAQ Endpoints ───
 
 @api_router.get("/faq", response_model=List[FAQItem])
@@ -1075,18 +708,6 @@ async def delete_service_package(package_id: str, admin_ok: None = Depends(requi
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Service package not found")
     return {"status": "deleted"}
-
-async def seed_publications():
-    if not EDITORIAL_SURFACES_ENABLED:
-        return
-    database = await get_database()
-    count = await database.publications.count_documents({})
-    if count == 0:
-        all_pubs = SEED_PUBLICATIONS + SEED_WORKING_PAPERS
-        for pub in all_pubs:
-            pub["created_at"] = datetime.now(timezone.utc).isoformat()
-        await database.publications.insert_many(all_pubs)
-        logger.info(f"Seeded {len(all_pubs)} publications")
 
 # Seed FAQ Items
 SEED_FAQ_ITEMS = [
@@ -1200,7 +821,6 @@ logger = logging.getLogger(__name__)
 @app.on_event("startup")
 async def startup_db_client():
     await get_database()
-    await seed_publications()
     await seed_faq_items()
     await seed_service_packages()
     logger.info("Database connection initialized")

@@ -181,10 +181,6 @@ describe('PHAROS route smoke coverage', () => {
         return Promise.resolve(makeJsonResponse([]));
       }
 
-      if (requestUrl.includes('/api/publications')) {
-        return Promise.resolve(makeJsonResponse([]));
-      }
-
       if (requestUrl.includes('/api/admin/login')) {
         return Promise.resolve(makeJsonResponse({ token: 'test-token' }));
       }

@@ -1,13 +1,9 @@
 """
-Backend API tests for Publications and Bookings CRUD operations.
-Tests the new features added for AI Governance consulting website:
-- Publications: GET, POST, PUT, DELETE
-- Bookings: GET, POST, PUT (status), DELETE, booked-slots
+Backend API tests for PHAROS boundary and bookings behavior.
 
-Boundary note:
-- Publication CRUD coverage reflects an editorial-enabled or validation-harness mode.
-- It does not by itself prove the default PHAROS public-runtime behavior, which is fail-closed when `ENABLE_EDITORIAL_SURFACES` is disabled.
-- Booking coverage still maps to PHAROS-facing runtime families.
+Coverage in this file:
+- Publications: explicit fail-closed boundary assertions
+- Bookings: GET, POST, PUT (status), DELETE, booked-slots
 """
 import pytest
 import requests
@@ -37,152 +33,33 @@ class TestHealth:
         print(f"✓ Health check passed: {data}")
 
 
-class TestPublicationsGet:
-    """Publications GET endpoint tests"""
-    
-    def test_get_publications_returns_list(self, api_client):
-        """GET /api/publications returns seeded publications"""
-        response = api_client.get(f"{BASE_URL}/api/publications")
-        assert response.status_code == 200
-        data = response.json()
-        assert isinstance(data, list)
-        print(f"✓ GET /api/publications returned {len(data)} publications")
-    
-    def test_get_publications_has_seeded_data(self, api_client):
-        """Verify seeded publications exist (3 published + 3 in_development)"""
-        response = api_client.get(f"{BASE_URL}/api/publications")
-        assert response.status_code == 200
-        data = response.json()
-        
-        published = [p for p in data if p.get('status') == 'published']
-        in_dev = [p for p in data if p.get('status') == 'in_development']
-        
-        print(f"✓ Found {len(published)} published, {len(in_dev)} in_development")
-        assert len(data) >= 6, f"Expected at least 6 seeded publications, got {len(data)}"
-    
-    def test_publications_have_required_fields(self, api_client):
-        """Verify publication structure"""
-        response = api_client.get(f"{BASE_URL}/api/publications")
-        assert response.status_code == 200
-        data = response.json()
-        
-        if data:
-            pub = data[0]
-            required = ['id', 'title', 'status']
-            for field in required:
-                assert field in pub, f"Missing field: {field}"
-            print(f"✓ Publications have required fields: {required}")
+class TestPublicationsBoundary:
+    """Publication endpoints stay outside the PHAROS backend surface."""
 
+    def test_get_publications_returns_410(self, api_client):
+        """GET /api/publications is explicitly fail-closed."""
+        response = api_client.get(f"{BASE_URL}/api/publications")
+        assert response.status_code == 410
+        assert "publication" in response.json().get("detail", "").lower()
+        print("✓ GET /api/publications returns 410 boundary response")
 
-class TestPublicationsCRUD:
-    """Publications Create, Update, Delete tests"""
-    
-    def test_create_publication_success(self, api_client):
-        """POST /api/publications creates a new publication"""
-        unique_id = str(uuid.uuid4())[:8]
-        payload = {
-            "title": f"TEST_Publication_{unique_id}",
-            "type": "Test Type",
-            "venue": "Test Venue",
-            "year": "2026",
-            "description": "Test description for automated test",
-            "link": "/test-link",
-            "internal": False,
-            "status": "published",
-            "abstract": "Test abstract"
-        }
-        
-        response = api_client.post(f"{BASE_URL}/api/publications", json=payload)
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
-        
-        data = response.json()
-        assert data["title"] == payload["title"]
-        assert data["type"] == payload["type"]
-        assert data["status"] == "published"
-        assert "id" in data
-        
-        print(f"✓ Created publication: {data['id']}")
-        return data["id"]
-    
-    def test_create_and_verify_persistence(self, api_client):
-        """Create publication and verify it persists via GET"""
-        unique_id = str(uuid.uuid4())[:8]
-        payload = {
-            "title": f"TEST_Persist_{unique_id}",
-            "type": "Persistence Test",
-            "status": "in_development"
-        }
-        
-        # Create
-        create_res = api_client.post(f"{BASE_URL}/api/publications", json=payload)
-        assert create_res.status_code == 200
-        created = create_res.json()
-        pub_id = created["id"]
-        
-        # Verify via GET
-        get_res = api_client.get(f"{BASE_URL}/api/publications")
-        assert get_res.status_code == 200
-        all_pubs = get_res.json()
-        
-        found = next((p for p in all_pubs if p["id"] == pub_id), None)
-        assert found is not None, f"Publication {pub_id} not found after creation"
-        assert found["title"] == payload["title"]
-        
-        print(f"✓ Publication {pub_id} persisted and verified")
-    
-    def test_update_publication_success(self, api_client):
-        """PUT /api/publications/{id} updates a publication"""
-        # First create
-        unique_id = str(uuid.uuid4())[:8]
-        create_payload = {"title": f"TEST_Update_{unique_id}", "status": "draft"}
-        create_res = api_client.post(f"{BASE_URL}/api/publications", json=create_payload)
-        assert create_res.status_code == 200
-        pub_id = create_res.json()["id"]
-        
-        # Update
-        update_payload = {"title": f"TEST_Updated_{unique_id}", "status": "published", "year": "2025"}
-        update_res = api_client.put(f"{BASE_URL}/api/publications/{pub_id}", json=update_payload)
-        assert update_res.status_code == 200
-        
-        updated = update_res.json()
-        assert updated["title"] == update_payload["title"]
-        assert updated["status"] == "published"
-        assert updated["year"] == "2025"
-        
-        print(f"✓ Updated publication {pub_id}")
-    
-    def test_update_nonexistent_returns_404(self, api_client):
-        """PUT /api/publications/{id} returns 404 for invalid ID"""
+    def test_post_publications_returns_410(self, api_client):
+        """POST /api/publications is explicitly fail-closed."""
+        response = api_client.post(f"{BASE_URL}/api/publications", json={"title": "TEST_Boundary"})
+        assert response.status_code == 410
+        print("✓ POST /api/publications returns 410 boundary response")
+
+    def test_put_publications_returns_410(self, api_client):
+        """PUT /api/publications/{id} is explicitly fail-closed."""
         response = api_client.put(f"{BASE_URL}/api/publications/nonexistent-id-123", json={"title": "test"})
-        assert response.status_code == 404
-        print("✓ Update nonexistent publication returns 404")
-    
-    def test_delete_publication_success(self, api_client):
-        """DELETE /api/publications/{id} removes a publication"""
-        # First create
-        unique_id = str(uuid.uuid4())[:8]
-        create_res = api_client.post(f"{BASE_URL}/api/publications", json={"title": f"TEST_Delete_{unique_id}"})
-        assert create_res.status_code == 200
-        pub_id = create_res.json()["id"]
-        
-        # Delete
-        delete_res = api_client.delete(f"{BASE_URL}/api/publications/{pub_id}")
-        assert delete_res.status_code == 200
-        assert delete_res.json().get("status") == "deleted"
-        
-        # Verify deletion
-        get_res = api_client.get(f"{BASE_URL}/api/publications")
-        all_pubs = get_res.json()
-        found = next((p for p in all_pubs if p["id"] == pub_id), None)
-        assert found is None, f"Publication {pub_id} still exists after deletion"
-        
-        print(f"✓ Deleted publication {pub_id} and verified removal")
-    
-    def test_delete_nonexistent_returns_404(self, api_client):
-        """DELETE /api/publications/{id} returns 404 for invalid ID"""
+        assert response.status_code == 410
+        print("✓ PUT /api/publications/{id} returns 410 boundary response")
+
+    def test_delete_publications_returns_410(self, api_client):
+        """DELETE /api/publications/{id} is explicitly fail-closed."""
         response = api_client.delete(f"{BASE_URL}/api/publications/nonexistent-id-456")
-        assert response.status_code == 404
-        print("✓ Delete nonexistent publication returns 404")
+        assert response.status_code == 410
+        print("✓ DELETE /api/publications/{id} returns 410 boundary response")
 
 
 class TestBookingsGet:
@@ -398,19 +275,9 @@ class TestBookedSlots:
 # Cleanup fixtures
 @pytest.fixture(scope="module", autouse=True)
 def cleanup_test_data(api_client):
-    """Cleanup TEST_ prefixed publications and bookings after all tests"""
+    """Cleanup TEST_ prefixed bookings after all tests"""
     yield
-    
-    # Cleanup publications
-    try:
-        pubs_res = api_client.get(f"{BASE_URL}/api/publications")
-        if pubs_res.status_code == 200:
-            for pub in pubs_res.json():
-                if pub.get("title", "").startswith("TEST_"):
-                    api_client.delete(f"{BASE_URL}/api/publications/{pub['id']}")
-    except:
-        pass
-    
+
     # Cleanup bookings
     try:
         bookings_res = api_client.get(f"{BASE_URL}/api/bookings")

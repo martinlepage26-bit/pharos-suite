@@ -1,12 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown, Server, Bot, Cloud, RefreshCw } from 'lucide-react';
-import PublicationPublisher from '../components/admin/PublicationPublisher';
+import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown, Server, Bot, Cloud, RefreshCw } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 const ADMIN_SESSION_KEY = 'pharos-ai-admin-token';
 const LEGACY_ADMIN_SESSION_KEY = 'govern-ai-admin-token';
-const EDITORIAL_SURFACES_ENABLED = false;
 
 const Admin = () => {
   const { t } = useLanguage();
@@ -20,10 +18,8 @@ const Admin = () => {
   });
   const [passphrase, setPassphrase] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [activeTab, setActiveTab] = useState(EDITORIAL_SURFACES_ENABLED ? 'publications' : 'bookings');
+  const [activeTab, setActiveTab] = useState('bookings');
   const authenticated = Boolean(authToken);
-
-  const [publications, setPublications] = useState([]);
 
   // Bookings state
   const [bookings, setBookings] = useState([]);
@@ -73,12 +69,6 @@ const Admin = () => {
     }
   }, [authToken]);
 
-  useEffect(() => {
-    if (!EDITORIAL_SURFACES_ENABLED && activeTab === 'publications') {
-      setActiveTab('bookings');
-    }
-  }, [activeTab]);
-
   const authFetch = useCallback(async (url, options = {}) => {
     if (!authToken) {
       throw new Error('Admin session missing');
@@ -104,14 +94,6 @@ const Admin = () => {
 
     return response;
   }, [authToken, resetAdminSession]);
-
-  const loadPublications = useCallback(async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/publications`);
-      const data = await res.json();
-      setPublications(data);
-    } catch (e) { /* silent */ }
-  }, []);
 
   const loadBookings = useCallback(async () => {
     try {
@@ -159,15 +141,12 @@ const Admin = () => {
 
   useEffect(() => {
     if (authenticated) {
-      if (EDITORIAL_SURFACES_ENABLED) {
-        loadPublications();
-      }
       loadBookings();
       loadFaqItems();
       loadServicePackages();
       loadPlatformStatus();
     }
-  }, [authenticated, loadPublications, loadBookings, loadFaqItems, loadServicePackages, loadPlatformStatus]);
+  }, [authenticated, loadBookings, loadFaqItems, loadServicePackages, loadPlatformStatus]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -344,12 +323,6 @@ const Admin = () => {
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {EDITORIAL_SURFACES_ENABLED ? (
-            <button onClick={() => setActiveTab('publications')} data-testid="admin-tab-publications"
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'publications' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
-              <BookOpen className="w-4 h-4" /> {t.admin.publications}
-            </button>
-          ) : null}
           <button onClick={() => setActiveTab('bookings')} data-testid="admin-tab-bookings"
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'bookings' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
             <CalendarDays className="w-4 h-4" /> {t.admin.bookings}
@@ -370,26 +343,6 @@ const Admin = () => {
             <Server className="w-4 h-4" /> Platform
           </button>
         </div>
-
-        {/* Publications Tab */}
-        {EDITORIAL_SURFACES_ENABLED && activeTab === 'publications' && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{t.admin.publications}</h2>
-                <p className="text-sm text-gray-500 mt-1">{t.admin.publisherSubtitle || 'Manage publication copy, preview it, and publish it into website sections from one workspace.'}</p>
-              </div>
-            </div>
-
-            <PublicationPublisher
-              apiUrl={API_URL}
-              publications={publications}
-              onRefresh={loadPublications}
-              request={authFetch}
-              t={t}
-            />
-          </div>
-        )}
 
         {/* Bookings Tab */}
         {activeTab === 'bookings' && (

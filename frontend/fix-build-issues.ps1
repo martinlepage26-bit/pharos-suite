@@ -54,14 +54,6 @@ $faqContent = $faqContent -replace 'const\s*\{\s*t,\s*language\s*\}\s*=\s*useTra
 Set-Content -Path $faqPath -Value $faqContent -Encoding UTF8
 Write-Host "Commented out unused variables in $faqPath"
 
-# Fix Portfolio.js - remove Award import
-$portfolioPath = "src/pages/Portfolio.js"
-$portfolioContent = Get-Content -Path $portfolioPath -Raw
-# Remove Award from import line
-$portfolioContent = $portfolioContent -replace ',\s*Award', '' -replace 'import\s*\{\s*Award\s*\}\s*from\s*["'']lucide-react["''];?\s*', ''
-Set-Content -Path $portfolioPath -Value $portfolioContent -Encoding UTF8
-Write-Host "Fixed unused import in $portfolioPath"
-
 # Fix SealedCard.js - remove AlertCircle import
 $sealedCardPath = "src/pages/SealedCard.js"
 $sealedCardContent = Get-Content -Path $sealedCardPath -Raw

@@ -46,16 +46,13 @@ Reason:
 ### Move out of this repo or PHAROS surface
 
 - `/home/cerebrhoe/repos/pharos-ai/frontend/src/App.js`
-- `/home/cerebrhoe/repos/pharos-ai/frontend/src/pages/PortalLotus.js`
-- `/home/cerebrhoe/repos/pharos-ai/frontend/src/pages/TrustAdvantageAnalysis.js`
-- `/home/cerebrhoe/repos/pharos-ai/frontend/public/publications/trust-advantage-analysis-march-2026.docx`
 - `/home/cerebrhoe/repos/pharos-ai/frontend/public/_redirects`
 - `/home/cerebrhoe/repos/pharos-ai/backend/server.py`
 
 Reason:
-- `PortalLotus` and Lotus API routes do not belong on `pharos-ai.ca`.
+- Legacy Lotus and publication routes do not belong on `pharos-ai.ca`.
 - Publication and portfolio routes are not part of the bounded PHAROS surface.
-- The Trust Advantage page route is now boundary-blocked and redirected, but static publication residue still exists in the repo and should be treated as migration residue rather than as a reopened PHAROS publication surface.
+- The Trust Advantage page route is boundary-blocked and redirected as compatibility behavior, not as a live PHAROS publication surface.
 - Editorial/publication APIs should be re-homed to the Martin-side `governai.ca` stack before being re-enabled.
 
 ### Leave unchanged
