@@ -409,6 +409,11 @@ li {
 }
 
 .feature-lockup,
+.site-header {
+  position: relative;
+  z-index: 100;
+}
+
 .footer-lockup {
   display: flex;
   align-items: center;
@@ -954,13 +959,6 @@ li {
   min-width: 0;
 }
 
-.nav-logo {
-  width: 1.9rem;
-  height: 1.9rem;
-  color: var(--obs-gold);
-  filter: drop-shadow(0 0 12px rgba(124, 198, 208, 0.16));
-}
-
 .nav-wordmark {
   color: var(--obs-text);
   font-family: var(--font-mono);
@@ -1434,12 +1432,6 @@ li {
   text-transform: uppercase;
 }
 
-.brand-kicker-mark {
-  width: 1.1rem;
-  height: 1.1rem;
-  color: var(--obs-gold);
-}
-
 .anchor-offset {
   scroll-margin-top: calc(var(--nav-height) + 1rem);
 }
@@ -1488,12 +1480,25 @@ li {
   gap: 1rem;
 }
 
+[data-testid="services-page"] .package {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 [data-testid="services-page"] .package-header {
-  min-height: auto;
+  min-height: 12.75rem;
+  align-content: start;
+}
+
+[data-testid="services-page"] .package-body {
+  flex: 1;
+  align-content: start;
 }
 
 [data-testid="services-page"] .package-actions {
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
 }
 
 [data-testid="research-page"] .grid-2 {
@@ -1609,10 +1614,6 @@ li {
   .nav-inner {
     width: calc(100% - 1rem);
     padding-inline: 0.85rem;
-  }
-
-  .nav-brand .nav-wordmark {
-    display: none;
   }
 
   .nav-right {

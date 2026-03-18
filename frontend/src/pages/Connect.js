@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
 import { useLanguage } from '../context/LanguageContext';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
@@ -90,8 +91,8 @@ const CONNECT_COPY = {
     directBody: 'If the online request flow is not the right fit, email directly instead.',
     sendEmail: 'Send an email',
     linkedin: 'Connect on LinkedIn',
-    internalModules: 'Internal modules',
-    internalBody: 'AurorAI and CompassAI stay behind the PHAROS engagement until their hosting, lineage, and review surfaces are ready to be presented directly.',
+    internalModules: 'PHAROS products',
+    internalBody: 'AurorAI and CompassAI stay under the PHAROS surface until their hosting, lineage, and review paths are ready for standalone presentation.',
     resources: 'Resources',
     startPrompt: 'Not sure where to start?',
     startTitle: 'Take a quick readiness signal',
@@ -203,8 +204,8 @@ const CONNECT_COPY = {
     directBody: 'Si le parcours de réservation en ligne ne convient pas, écrivez directement.',
     sendEmail: 'Envoyer un courriel',
     linkedin: 'Écrire sur LinkedIn',
-    internalModules: 'Modules internes',
-    internalBody: 'AurorAI et CompassAI demeurent derrière l’engagement PHAROS tant que leur hébergement, leur chaîne de preuve et leurs surfaces de révision ne sont pas prêts à être présentés directement.',
+    internalModules: 'Produits PHAROS',
+    internalBody: 'AurorAI et CompassAI demeurent sous la surface PHAROS tant que leur hébergement, leur chaîne de preuve et leurs parcours de revue ne sont pas prêts pour une présentation autonome.',
     resources: 'Ressources',
     startPrompt: 'Vous ne savez pas par où commencer ?',
     startTitle: 'Obtenez un signal rapide de préparation',
@@ -258,6 +259,8 @@ const Connect = () => {
 
   const copy = useMemo(() => CONNECT_COPY[language], [language]);
   const activeSummary = copy.summary[activeSummaryIndex] || copy.summary[0];
+  const contactEmail = PUBLIC_ASSURANCE_META.contactEmail;
+  const contactHref = `mailto:${contactEmail}`;
 
   useEffect(() => {
     let cancelled = false;
@@ -341,8 +344,8 @@ const Connect = () => {
       }
     } catch (_error) {
       setSubmitError(language === 'fr'
-        ? "La demande de réservation n’a pas pu être envoyée. Veuillez réessayer ou écrire à pharos@govern-ai.ca."
-        : 'Booking request could not be sent. Please try again or email pharos@govern-ai.ca.');
+        ? `La demande de réservation n’a pas pu être envoyée. Veuillez réessayer ou écrire à ${contactEmail}.`
+        : `Booking request could not be sent. Please try again or email ${contactEmail}.`);
     } finally {
       setSubmitting(false);
     }
@@ -522,14 +525,11 @@ const Connect = () => {
                   {copy.directBody}
                 </p>
                 <p className="footer-founder">
-                  <a href="mailto:pharos@govern-ai.ca">pharos@govern-ai.ca</a>
+                  <a href={contactHref}>{contactEmail}</a>
                 </p>
                 <p className="body-sm">{copy.location}</p>
-                <a href="mailto:pharos@govern-ai.ca" className="btn-primary button-block">
+                <a href={contactHref} className="btn-primary button-block">
                   {copy.sendEmail}
-                </a>
-                <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer" className="link-slab page-inline-note">
-                  {copy.linkedin} →
                 </a>
               </div>
 

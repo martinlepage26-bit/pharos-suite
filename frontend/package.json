@@ -1,5 +1,5 @@
 {
-    "name": "frontend",
+    "name": "pharos-ai-frontend",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -25,7 +25,7 @@
     "scripts": {
         "start": "concurrently -k \"npm:tailwind:watch\" \"npm:react:start\"",
         "react:start": "craco start",
-        "build": "npm run tailwind:build && craco build",
+        "build": "npm run tailwind:build && craco build && node scripts/generate-static-route-pages.cjs",
         "tailwind:build": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --minify",
         "tailwind:watch": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --watch",
         "cf:deploy": "wrangler pages deploy build --project-name govern-ai --branch main --commit-dirty=true",

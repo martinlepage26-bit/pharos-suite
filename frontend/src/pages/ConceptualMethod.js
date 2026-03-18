@@ -9,6 +9,27 @@ const PAGE_COPY = {
     integrationTitle: 'From ethical concern to workflow control',
     integrationBody: 'This page frames the method as a practical way to integrate ethics into AI models by turning ethical concerns into bounded inputs, comparative tests, control extraction, and deployment-time safeguards.',
     heroBody2: 'Instead of treating ethics as an after-the-fact statement, the method embeds ethics through corpus design, declared intent, recursive comparison, failure analysis, and interface-bound controls.',
+    frameworkLabel: 'Framework mapping',
+    frameworkTitle: 'How PHAROS maps to named standards and review duties',
+    frameworkBody: 'PHAROS is not a shortcut around formal standards. It is a mechanism-first governance method that can be mapped to named frameworks when procurement, audit, or regulatory review requires those touchpoints.',
+    frameworkMappingLabel: 'PHAROS mapping',
+    frameworkCards: [
+      {
+        title: 'NIST AI RMF',
+        description: 'Useful when a review needs a Govern, Map, Measure, Manage structure rather than ad hoc governance language.',
+        mapping: 'Pressure reading and threshold setting support Govern and Map, while evidence paths, review packets, and follow-through cadence support Measure and Manage.'
+      },
+      {
+        title: 'ISO/IEC 42001',
+        description: 'Useful when an organization needs management-system style discipline around scope, roles, documented controls, and review cadence.',
+        mapping: 'PHAROS surfaces scope boundaries, decision rights, evidence artifacts, and review intervals in a way that can plug into a broader AI management system.'
+      },
+      {
+        title: 'EU AI Act and comparable high-stakes review',
+        description: 'Useful when teams need named obligations around risk tiering, human oversight, technical documentation, and post-incident follow-through.',
+        mapping: 'PHAROS makes thresholds explicit, names human escalation, structures documentation burdens, and turns incidents or failed reviews into post-mortem control updates.'
+      }
+    ],
     backToAbout: 'Back to About',
     bookDebrief: 'Book a debrief'
   },
@@ -17,6 +38,27 @@ const PAGE_COPY = {
     integrationTitle: 'De la question ethique au controle de workflow',
     integrationBody: 'Cette page presente la methode comme une maniere pratique d’integrer l’ethique aux modeles d’IA en transformant les enjeux ethiques en entrees bornees, tests comparatifs, extraction de controles et sauvegardes au moment du deploiement.',
     heroBody2: 'Au lieu de traiter l’ethique comme une declaration apres coup, la methode l’integre par la conception du corpus, l’intention declaree, la comparaison recursive, l’analyse des echecs et des controles attaches aux interfaces.',
+    frameworkLabel: 'Cartographie des cadres',
+    frameworkTitle: 'Comment PHAROS se relie aux normes et obligations nommees',
+    frameworkBody: 'PHAROS n est pas un raccourci autour des normes formelles. C est une methode de gouvernance orientee mecanisme qui peut etre reliee a des cadres nommes lorsque l approvisionnement, l audit ou la revue reglementaire exige ces points d ancrage.',
+    frameworkMappingLabel: 'Cartographie PHAROS',
+    frameworkCards: [
+      {
+        title: 'NIST AI RMF',
+        description: 'Utile lorsqu une revue demande une structure Govern, Map, Measure, Manage plutot qu un langage de gouvernance ad hoc.',
+        mapping: 'La lecture de la pression et la fixation des seuils soutiennent Govern et Map, tandis que les parcours de preuve, les dossiers de revue et la cadence de suivi soutiennent Measure et Manage.'
+      },
+      {
+        title: 'ISO/IEC 42001',
+        description: 'Utile lorsqu une organisation a besoin d une discipline de type systeme de management autour de la portee, des roles, des controles documentes et de la cadence de revue.',
+        mapping: 'PHAROS rend visibles les limites de portee, les droits decisionnels, les artefacts de preuve et les intervalles de revue de facon a pouvoir s inserer dans un systeme de management IA plus large.'
+      },
+      {
+        title: 'EU AI Act et revues comparables a forts enjeux',
+        description: 'Utile lorsque des equipes ont besoin d obligations nommees autour du tiering de risque, de la supervision humaine, de la documentation technique et du suivi post-incident.',
+        mapping: 'PHAROS rend les seuils explicites, nomme l escalation humaine, structure la charge documentaire et transforme les incidents ou revues echouees en mises a jour post-mortem des controles.'
+      }
+    ],
     backToAbout: 'Retour a propos',
     bookDebrief: 'Reserver un echange'
   }
@@ -90,6 +132,24 @@ function ConceptualMethod() {
                 <p className="eyebrow" style={{ marginBottom: '12px' }}>{item.num}</p>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="section-header reveal" style={{ marginTop: '72px' }}>
+            <p className="eyebrow">{page.frameworkLabel}</p>
+            <h2>{page.frameworkTitle}</h2>
+            <p className="body-sm">{page.frameworkBody}</p>
+          </div>
+
+          <div className="grid-3 stagger">
+            {page.frameworkCards.map((item) => (
+              <div key={item.title} className="card reveal">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <p className="body-sm page-inline-note" style={{ marginBottom: 0 }}>
+                  <strong>{page.frameworkMappingLabel}:</strong> {item.mapping}
+                </p>
               </div>
             ))}
           </div>

@@ -1,0 +1,146 @@
+{
+  "site_name": "PHAROS",
+  "canonical_url": "https://pharos-ai.ca",
+  "public_surface_version": "2026-03-18.1",
+  "jurisdictional_root": "Canada",
+  "accountable_human": {
+    "name": "Martin Lepage, PhD",
+    "role": "Accountable human reviewer and publisher",
+    "contact_email": "pharos@pharos-ai.ca",
+    "location": "Montreal, Quebec, Canada"
+  },
+  "review_state": {
+    "reviewed_on": "2026-03-18",
+    "next_review_due": "2026-06-18",
+    "review_triggers": [
+      "material public claim change",
+      "public route or boundary change",
+      "product surface promotion to standalone public status",
+      "canonical domain or public machine-readable record change"
+    ]
+  },
+  "assurance_alias_routes": [
+    "/transparency",
+    "/trust",
+    "/auditability"
+  ],
+  "claim_boundary": {
+    "supported_readings": [
+      "PHAROS describes its public services, methods, and review posture.",
+      "The website discloses accountable human review, route boundaries, and review dates.",
+      "The readiness tool is a calibration aid and not a certification."
+    ],
+    "non_claims": [
+      "The site is not legal advice.",
+      "The site is not a certification packet or audit opinion.",
+      "Website copy alone does not prove deployment-specific compliance.",
+      "AI-assisted drafting does not upgrade unsupported claims into supported claims."
+    ]
+  },
+  "ai_assistance_disclosure": {
+    "statement": "Generative AI may be used for structural drafting and language revision on this public site. It is not treated as an evidentiary authority. Source selection, claim boundaries, review dates, and final publication judgment remain under human control."
+  },
+  "auditability_controls": [
+    {
+      "control": "Machine-readable transparency record",
+      "owner": "PHAROS public site owner",
+      "trigger": "Material public claim, route, or public product posture change",
+      "evidence": [
+        "/pharos-transparency.json",
+        "/assurance"
+      ],
+      "review_interval": "On material change and at scheduled assurance review"
+    },
+    {
+      "control": "Public evidence ladder",
+      "owner": "PHAROS public site owner",
+      "trigger": "External review of method, references, or readiness posture",
+      "evidence": [
+        "/methods",
+        "/library",
+        "/faq",
+        "/tool",
+        "/contact"
+      ],
+      "review_interval": "Whenever public routes or public explanations change"
+    },
+    {
+      "control": "Explicit public non-claims",
+      "owner": "PHAROS public site owner",
+      "trigger": "Any proposed expansion of public marketing or assurance language",
+      "evidence": [
+        "/assurance"
+      ],
+      "review_interval": "Before publication of material claim changes"
+    },
+    {
+      "control": "Named review triggers",
+      "owner": "PHAROS public site owner",
+      "trigger": "Claim, route, domain, or product-surface status change",
+      "evidence": [
+        "review_state.review_triggers"
+      ],
+      "review_interval": "Continuous trigger-based review"
+    }
+  ],
+  "public_routes": [
+    "/",
+    "/about",
+    "/observatory",
+    "/governance",
+    "/methods",
+    "/assurance",
+    "/tool",
+    "/faq",
+    "/cases",
+    "/library",
+    "/services/menu",
+    "/contact",
+    "/portal/aurorai",
+    "/portal/compassai"
+  ],
+  "evidence_surfaces": [
+    {
+      "route": "/methods",
+      "purpose": "Method and control logic"
+    },
+    {
+      "route": "/library",
+      "purpose": "External frameworks, law, and documentation references"
+    },
+    {
+      "route": "/faq",
+      "purpose": "Bounded answers about scope, evidence, and engagements"
+    },
+    {
+      "route": "/tool",
+      "purpose": "Non-certifying readiness snapshot"
+    },
+    {
+      "route": "/contact",
+      "purpose": "Human escalation path for deployment-specific review"
+    }
+  ],
+  "change_log": [
+    {
+      "date": "2026-03-18",
+      "change": "Normalized the public contact address to pharos@pharos-ai.ca across the homepage shell and shared contact surfaces."
+    },
+    {
+      "date": "2026-03-18",
+      "change": "Added route-specific static HTML output and rewrites so core public pages remain legible without JavaScript."
+    },
+    {
+      "date": "2026-03-14",
+      "change": "Strengthened the public assurance surface with explicit auditability controls and alias routes for assurance review."
+    },
+    {
+      "date": "2026-03-14",
+      "change": "Updated the transparency record with accountable location, jurisdictional root, control entries, and change history."
+    },
+    {
+      "date": "2026-03-14",
+      "change": "Linked the homepage review section more directly to the public assurance surface."
+    }
+  ]
+}

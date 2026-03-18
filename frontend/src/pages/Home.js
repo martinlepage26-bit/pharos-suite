@@ -25,8 +25,13 @@ const HOME_COPY = {
     heroBody:
       'When procurement, audit, or executive review asks how AI is governed, PHAROS helps teams answer with evidence, deterministic decision rights, explicit thresholds, and review-ready documentation.',
     heroFounderLine: 'Built for procurement, audit, vendor review, and executive oversight.',
+    heroProofLine:
+      'Mechanism in practice: a PHAROS packet can include a decision matrix, threshold map, and evidence path cross-walked to NIST AI RMF, ISO/IEC 42001, or EU AI Act review duties when the review requires it.',
+    heroTrustLine:
+      'Representative dossiers span financial services, healthcare, enterprise technology, and public sector review conditions.',
     primaryCta: 'Book a review',
-    secondaryCta: 'View services',
+    secondaryCta: 'See how it works',
+    secondaryHref: '#method',
     reviewBodyTitle: 'What Review Bodies Need To See',
     reviewBodyHeading: 'A governance posture that stays legible when scrutiny arrives',
     reviewBodyText:
@@ -203,8 +208,13 @@ const HOME_COPY = {
     heroBody:
       'Lorsque l approvisionnement, l audit ou une revue executive demande comment l IA est gouvernee, PHAROS aide les equipes a repondre avec de la preuve, des droits de decision deterministes, des seuils explicites et une documentation prete pour examen.',
     heroFounderLine: 'Concu pour l approvisionnement, l audit, la revue fournisseur et la supervision executive.',
+    heroProofLine:
+      'Mecanisme concret : un dossier PHAROS peut inclure une matrice de decision, une carte des seuils et un parcours de preuve relies au NIST AI RMF, a l ISO/IEC 42001 ou aux obligations de revue de l EU AI Act lorsque la revue l exige.',
+    heroTrustLine:
+      'Des dossiers representatifs couvrent les services financiers, la sante, la technologie d entreprise et les conditions de revue du secteur public.',
     primaryCta: 'Reserver une revue',
-    secondaryCta: 'Voir les services',
+    secondaryCta: 'Voir le fonctionnement',
+    secondaryHref: '#method',
     reviewBodyTitle: 'Ce Que Les Instances De Revue Doivent Voir',
     reviewBodyHeading: 'Une posture de gouvernance qui reste lisible lorsque l examen arrive',
     reviewBodyText:
@@ -458,12 +468,14 @@ const Home = () => {
               </div>
               <p className="body-lg page-hero-copy">{copy.heroBody}</p>
               <p className="hero-founder-line">{copy.heroFounderLine}</p>
+              <p className="body-sm page-inline-note">{copy.heroProofLine}</p>
+              <p className="body-sm page-inline-note">{copy.heroTrustLine}</p>
               <div className="hero-cta-row">
                 <Link to="/contact" className="btn-primary">
                   {copy.primaryCta}
                   <ArrowRight />
                 </Link>
-                <Link to="/governance" className="btn-secondary">{copy.secondaryCta}</Link>
+                <a href={copy.secondaryHref} className="btn-secondary">{copy.secondaryCta}</a>
               </div>
               <SignalStrip items={copy.heroSignals} className="signal-grid-hero" />
             </div>
@@ -595,7 +607,7 @@ const Home = () => {
                 {copy.primaryCta}
                 <ArrowRight />
               </Link>
-              <Link to="/governance" className="btn-secondary">{copy.secondaryCta}</Link>
+              <a href={copy.secondaryHref} className="btn-secondary">{copy.secondaryCta}</a>
             </div>
           </div>
         </div>

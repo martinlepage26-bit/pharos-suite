@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
 
 const Footer = () => {
   const { language } = useLanguage();
+  const contactHref = `mailto:${PUBLIC_ASSURANCE_META.contactEmail}`;
 
   const copy = language === 'fr'
     ? {
-        brandTitle: 'PHAROS footer mark',
-        founderLine: 'Une pratique de Martin Lepage, PhD',
+        founderLine: 'Dirigé par Martin Lepage, PhD',
         tagline: 'Un observatoire decentralise pour la gouvernance de l IA.',
         proofLine: 'Observer, structurer et evaluer la gouvernance a travers les modeles, les institutions, les normes et les revendications.',
         navigation: 'Navigation',
@@ -16,13 +17,15 @@ const Footer = () => {
         observatory: 'Observatoire',
         governance: 'Gouvernance',
         methods: 'Methodes',
+        assurance: 'Assurance',
         connect: 'Contact',
         book: 'Demandes de recherche et de collaboration',
-        location: 'Montréal, Québec, Canada'
+        record: 'Registre de transparence',
+        reviewed: `Derniere revue ${PUBLIC_ASSURANCE_META.reviewedOnLabelFr}`,
+        location: 'Montreal, Quebec, Canada'
       }
     : {
-        brandTitle: 'PHAROS footer mark',
-        founderLine: 'A practice by Martin Lepage, PhD',
+        founderLine: 'Led by Martin Lepage, PhD',
         tagline: 'A decentralized observatory for AI governance.',
         proofLine: 'Observing, structuring, and evaluating governance across models, institutions, standards, and claims.',
         navigation: 'Navigation',
@@ -31,8 +34,11 @@ const Footer = () => {
         observatory: 'Observatory',
         governance: 'Governance',
         methods: 'Methods',
+        assurance: 'Assurance',
         connect: 'Contact',
         book: 'Research and collaboration inquiries',
+        record: 'Transparency record',
+        reviewed: `Last reviewed ${PUBLIC_ASSURANCE_META.reviewedOnLabelEn}`,
         location: 'Montreal, Quebec, Canada'
       };
 
@@ -58,19 +64,24 @@ const Footer = () => {
             <Link to="/observatory">{copy.observatory}</Link>
             <Link to="/governance">{copy.governance}</Link>
             <Link to="/methods">{copy.methods}</Link>
+            <Link to="/assurance">{copy.assurance}</Link>
           </div>
 
           <div className="footer-col">
             <h4>{copy.connect}</h4>
             <Link to="/contact">{copy.book}</Link>
-            <a href="mailto:pharos@govern-ai.ca">pharos@govern-ai.ca</a>
-            <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href={contactHref}>{PUBLIC_ASSURANCE_META.contactEmail}</a>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>&copy; 2026 Martin Lepage, PhD &middot; PHAROS</span>
+          <span>&copy; 2026 PHAROS AI Governance</span>
           <div className="footer-bottom-links">
+            <Link to="/assurance">{copy.assurance}</Link>
+            <a href={PUBLIC_ASSURANCE_META.transparencyRecordPath} target="_blank" rel="noreferrer">
+              {copy.record}
+            </a>
+            <span>{copy.reviewed}</span>
             <span>{copy.location}</span>
           </div>
         </div>

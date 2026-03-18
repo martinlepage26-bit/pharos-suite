@@ -152,31 +152,31 @@ const Tool = () => {
 
   return (
     <div className="tool-page min-h-screen bg-transparent px-5 pb-8 pt-[92px] md:px-8 md:pb-10 md:pt-[108px]" data-testid="tool-page">
-      <div className="mx-auto max-w-[1160px]">
-        <section className="tool-hero-panel brand-panel-dark brand-top-rule relative mb-6 overflow-hidden rounded-[30px] px-5 py-6 text-white md:px-7 md:py-7">
+      <div className="mx-auto max-w-[1080px]">
+        <section className="tool-hero-panel brand-panel-dark brand-top-rule relative mb-5 overflow-hidden rounded-[28px] px-4 py-5 text-white md:px-6 md:py-6">
           <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />
           <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
-          <div className="relative grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+          <div className="relative grid gap-4 lg:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.92fr)] lg:items-start">
             <div>
               <p className="mb-3 text-[10px] uppercase tracking-[0.2em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.eyebrow}
               </p>
-              <h1 className="max-w-[16ch] text-[26px] leading-[1.03] tracking-[-0.05em] text-[#F6F0E4] sm:text-[30px] md:max-w-[12ch] md:text-[48px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+              <h1 className="max-w-[13ch] text-[23px] leading-[1.03] tracking-[-0.05em] text-[#F6F0E4] sm:text-[28px] md:max-w-[14ch] md:text-[40px] lg:text-[44px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.title}
               </h1>
-              <p className="mt-3 max-w-[54ch] text-[13px] leading-[1.65] text-white/82 md:mt-4 md:max-w-[60ch] md:text-[15px] md:leading-[1.72]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+              <p className="mt-3 max-w-[56ch] text-[13px] leading-[1.62] text-white/82 md:mt-3.5 md:max-w-[58ch] md:text-[14px] md:leading-[1.68]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.body}
               </p>
             </div>
 
-            <div className="tool-note-card rounded-[26px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-4 shadow-[0_18px_34px_rgba(8,20,40,0.16)]">
+            <div className="tool-note-card rounded-[24px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-3.5 shadow-[0_18px_34px_rgba(8,20,40,0.16)] md:p-4">
               <p className="text-[10px] uppercase tracking-[0.14em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.noteLabel}
               </p>
-              <p className="mt-1 text-[13px] leading-[1.4]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
+              <p className="mt-1 text-[12.5px] leading-[1.38] md:text-[13px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
                 {copy.noteTitle}
               </p>
-              <p className="mt-3 text-[13px] leading-[1.65] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+              <p className="mt-2.5 text-[12.5px] leading-[1.6] text-[#20314F]/76 md:text-[13px] md:leading-[1.62]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.noteBody}
               </p>
             </div>

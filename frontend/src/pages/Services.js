@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BriefcaseBusiness, Clock3, Radar } from 'lucide-react';
+import { ArrowRight, BriefcaseBusiness, Building2, Clock3, HeartPulse, Landmark, Radar } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import SignalStrip from '../components/SignalStrip';
 
@@ -12,6 +12,11 @@ const SERVICES_COPY = {
     coreOffers: 'Core offers',
     coreTitle: 'Three services for deterministic governance',
     coreBody: 'Start with the pressure condition. The deliverables differ, but all three services create clearer thresholds, decision rights, and evidence for review.',
+    verticals: 'By operating context',
+    verticalsTitle: 'How the work changes by sector',
+    verticalsBody: 'The service route stays consistent, but the pressure source, evidence burden, and review packet shift by operating context.',
+    verticalPressureLabel: 'Typical pressure',
+    verticalOutputsLabel: 'What usually changes',
     scoping: 'Scoping',
     scopingTitle: 'What changes the scope',
     scopingBody: 'Scope shifts with the number of systems, the level of review expected, the sensitivity of the decisions, and the strength of the evidence already in hand.',
@@ -96,6 +101,36 @@ const SERVICES_COPY = {
         ]
       }
     ],
+    verticalsList: [
+      {
+        icon: HeartPulse,
+        title: 'Healthcare and clinical settings',
+        pressure: 'Vendor validation, clinical oversight, human review, and patient-safety escalation.',
+        description: 'The work tightens approval conditions, evidence expectations, and escalation logic around systems that may influence care, triage, or operational clinical workflows.',
+        outputs: 'Validation question sets, oversight rules, escalation thresholds, and review packets for clinical or procurement review.'
+      },
+      {
+        icon: BriefcaseBusiness,
+        title: 'Financial services and lending',
+        pressure: 'Model risk, audit examination, decision explainability, and adverse-impact scrutiny.',
+        description: 'The work clarifies risk tiering, decision rights, and documentation so governance can withstand internal audit, regulator, or customer review without post-hoc reconstruction.',
+        outputs: 'Tiering logic, decision matrices, evidence trails, and audit response materials.'
+      },
+      {
+        icon: Landmark,
+        title: 'Public sector and benefits administration',
+        pressure: 'Due process, contestability, citizen data handling, and fairness review.',
+        description: 'The work focuses on high-stakes thresholds, human escalation, retention discipline, and the ability to explain how an AI-assisted process affected a public decision.',
+        outputs: 'Contestability paths, retention rules, fairness monitoring requirements, and documented escalation points.'
+      },
+      {
+        icon: Building2,
+        title: 'Enterprise software and AI procurement',
+        pressure: 'Customer questionnaires, vendor diligence, enterprise deal review, and board-level assurance requests.',
+        description: 'The work aligns public claims, control documentation, and evidence collection so revenue pressure does not force governance language beyond what the underlying system can support.',
+        outputs: 'Control registers, customer documentation packs, evidence playbooks, and procurement response templates.'
+      }
+    ],
     scopingCards: [
       {
         title: 'System portfolio',
@@ -153,6 +188,11 @@ const SERVICES_COPY = {
     coreOffers: 'Offres principales',
     coreTitle: 'Trois services pour une gouvernance déterministe',
     coreBody: 'Commencez par la condition de pression. Les livrables changent, mais les trois services clarifient les seuils, les droits décisionnels et la preuve pour l’examen.',
+    verticals: 'Par contexte d exploitation',
+    verticalsTitle: 'Comment le travail change selon le secteur',
+    verticalsBody: 'Le parcours de service reste stable, mais la source de pression, la charge de preuve et le dossier de revue changent selon le contexte d exploitation.',
+    verticalPressureLabel: 'Pression typique',
+    verticalOutputsLabel: 'Ce qui change le plus',
     scoping: 'Cadrage',
     scopingTitle: 'Ce qui fait varier la portée',
     scopingBody: 'La portée varie selon le nombre de systèmes, le niveau d’examen attendu, la sensibilité des décisions et la solidité de la preuve déjà disponible.',
@@ -235,6 +275,36 @@ const SERVICES_COPY = {
           'Une responsabilité claire pour la remédiation et son séquencement',
           'Une posture de gouvernance déterministe plus forte après l’échec'
         ]
+      }
+    ],
+    verticalsList: [
+      {
+        icon: HeartPulse,
+        title: 'Sante et milieux cliniques',
+        pressure: 'Validation fournisseur, supervision clinique, revue humaine et escalation liee a la securite des patients.',
+        description: 'Le travail resserre les conditions d approbation, les attentes de preuve et la logique d escalation autour des systemes qui peuvent influencer les soins, le triage ou les workflows cliniques.',
+        outputs: 'Jeux de questions de validation, regles de supervision, seuils d escalation et dossiers de revue pour la clinique ou l approvisionnement.'
+      },
+      {
+        icon: BriefcaseBusiness,
+        title: 'Services financiers et credit',
+        pressure: 'Risque modele, examen d audit, explicabilite des decisions et scrutiny sur les impacts defavorables.',
+        description: 'Le travail clarifie la hierarchisation du risque, les droits decisionnels et la documentation afin que la gouvernance tienne sous audit interne, revue reglementaire ou diligence client.',
+        outputs: 'Logique de tiering, matrices de decision, traces de preuve et materiaux de reponse a l audit.'
+      },
+      {
+        icon: Landmark,
+        title: 'Secteur public et administration des prestations',
+        pressure: 'Due process, contestabilite, gestion des donnees citoyennes et revue d equite.',
+        description: 'Le travail se concentre sur les seuils a forts enjeux, l escalation humaine, la discipline de retention et la capacite d expliquer comment un processus assiste par IA a influence une decision publique.',
+        outputs: 'Parcours de contestation, regles de retention, exigences de suivi d equite et points d escalation documentes.'
+      },
+      {
+        icon: Building2,
+        title: 'Logiciels d entreprise et approvisionnement IA',
+        pressure: 'Questionnaires clients, diligence fournisseur, revue de deals enterprise et demandes d assurance au niveau de la direction.',
+        description: 'Le travail aligne les revendications publiques, la documentation de controle et la collecte de preuve afin que la pression commerciale n oblige pas le langage de gouvernance a depasser ce que le systeme peut reellement soutenir.',
+        outputs: 'Registres de controle, dossiers documentaires clients, playbooks de preuve et modeles de reponse a l approvisionnement.'
       }
     ],
     scopingCards: [
@@ -352,6 +422,36 @@ const Services = () => {
                     </Link>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-muted">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.verticals}</p>
+            <h2>{copy.verticalsTitle}</h2>
+            <p className="body-sm">
+              {copy.verticalsBody}
+            </p>
+          </div>
+
+          <div className="grid-2 stagger">
+            {copy.verticalsList.map((item) => (
+              <div key={item.title} className="card reveal">
+                <div className="card-icon">
+                  <item.icon />
+                </div>
+                <h3>{item.title}</h3>
+                <p className="body-sm page-inline-note">
+                  <strong>{copy.verticalPressureLabel}:</strong> {item.pressure}
+                </p>
+                <p>{item.description}</p>
+                <p className="body-sm page-inline-note">
+                  <strong>{copy.verticalOutputsLabel}:</strong> {item.outputs}
+                </p>
               </div>
             ))}
           </div>

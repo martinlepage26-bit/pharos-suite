@@ -1,29 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink } from 'lucide-react';
-import RichTextContent from '../components/RichTextContent';
+import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import SignalStrip from '../components/SignalStrip';
-
-const API_URL = process.env.REACT_APP_BACKEND_URL || '';
-
-const sortPublications = (left, right) => {
-  const rightYear = Number.parseInt(right.year, 10) || 0;
-  const leftYear = Number.parseInt(left.year, 10) || 0;
-  const yearDelta = rightYear - leftYear;
-  if (yearDelta !== 0) return yearDelta;
-
-  return String(right.created_at || '').localeCompare(String(left.created_at || ''));
-};
-
-const FEATURED_PUBLICATION = {
-  id: 'pub-trust-advantage-analysis',
-  link: '/publications/trust-advantage-analysis',
-  internal: true,
-  status: 'published',
-  site_section: 'about_publications',
-  created_at: '2026-03-09T00:00:00Z'
-};
 
 export const METHODS_COPY = {
   en: {
@@ -606,6 +585,26 @@ const ABOUT_COPY = {
         description: 'The public-facing practice begins with a short debrief that identifies the right governance path.'
       }
     ],
+    credibilityLabel: 'Practitioner-researcher credibility',
+    credibilityTitle: 'Why this practice can speak to both theory and live review pressure',
+    credibilityBody: 'PHAROS is informed by advisory work, method development, and system design under real evidence constraints rather than by governance branding alone.',
+    credibilityCards: [
+      {
+        label: 'Practice',
+        title: 'Built around procurement, audit, and oversight',
+        description: 'The public-facing work starts from concrete review conditions such as procurement questionnaires, audit requests, vendor diligence, and committee scrutiny.'
+      },
+      {
+        label: 'Research',
+        title: 'Grounded in interpretive and ethical disciplines',
+        description: 'The method draws on sociology, cultural studies, comparative literature, and applied ethics to surface governance mechanisms that generic compliance language often misses.'
+      },
+      {
+        label: 'Systems',
+        title: 'Evidence discipline shaped by regulated environments',
+        description: 'Traceability, review gates, lineage, and fail-closed claim boundaries are informed by work shaped around regulated clinical and pharmaceutical settings.'
+      }
+    ],
     methodButton: 'Open method',
     methodHighlights: ['Bounded inputs', 'Inspectable controls', 'Reconstructable decisions'],
     practiceBody: 'The standard is simple: governance documentation should derive from evidence, decision rights and thresholds should stay explicit, and public claims should not outrun what the underlying architecture can support.',
@@ -627,40 +626,26 @@ const ABOUT_COPY = {
         description: 'If lineage is missing or review evidence is incomplete, the claim narrows and the state stays provisional.'
       }
     ],
-    modulesLabel: 'Internal modules',
+    modulesLabel: 'PHAROS products',
     modulesTitle: 'AurorAI & CompassAI',
-    modulesBody: 'AurorAI and CompassAI are in-house systems developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission. AurorAI handles evidence and document processing. CompassAI handles governance intake, assessment, and output generation. Portal access is available below, and the shared admin surface remains separate.',
+    modulesBody: 'AurorAI and CompassAI are PHAROS products developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission. AurorAI handles evidence and document processing. CompassAI handles governance intake, assessment, and output generation. Their product surfaces remain under PHAROS while separate standalone hosting is still being staged.',
     modules: [
       {
         title: 'AurorAI',
-        description: 'An in-house evidence and document engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
+        description: 'A PHAROS evidence and document engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
         portalPath: '/portal/aurorai'
       },
       {
         title: 'CompassAI',
-        description: 'An in-house governance engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
+        description: 'A PHAROS governance engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
         portalPath: '/portal/compassai'
       }
     ],
-    portalButton: 'Client portal',
+    portalButton: 'Open product',
     adminButton: 'Admin',
     pharosLabel: 'Why PHAROS',
     pharosTitle: 'A lighthouse name for a governance system',
-    pharosBody: 'The Pharos of Alexandria, one of the Seven Wonders of the ancient world, was not only a monument. It was orientation infrastructure: it made the coastline legible at distance, marked the threshold of safe entry, and helped ships move without striking what they could not yet see. This governance system carries that name for the same reason. PHAROS exists to make AI pathways, thresholds, evidence, and decision rights visible early enough that an organization can move under scrutiny without steering blind.',
-    publicationsTitle: 'New Publications Every Week',
-    loading: 'Loading publications',
-    empty: 'No publications are assigned to the About page yet. Publish them from the Admin publisher and they will appear here.',
-    readPublication: 'Read publication',
-    openDocument: 'Open document',
-    featuredPublication: {
-      ...FEATURED_PUBLICATION,
-      type: 'Insight',
-      title: 'The Trust Advantage: Why Expertise Wins in the Era of AI-Driven Sales',
-      venue: 'PHAROS',
-      year: '2026',
-      description: 'A PHAROS analysis of LinkedIn Sales Navigator’s 2025 Trust Advantage report, read alongside a governance paper on algorithmic fluency and interruption.',
-      abstract: 'This publication argues that in AI-saturated sales environments, trust is built less through access to information than through timely human expertise, contextual judgment, and career-defensible proof. It links LinkedIn’s commercial findings on buyer trust to a governance lens focused on fluency, interruption, and review-ready accountability.'
-    }
+    pharosBody: 'The Pharos of Alexandria, one of the Seven Wonders of the ancient world, was not only a monument. It was orientation infrastructure: it made the coastline legible at distance, marked the threshold of safe entry, and helped ships move without striking what they could not yet see. This governance system carries that name for the same reason. PHAROS exists to make AI pathways, thresholds, evidence, and decision rights visible early enough that an organization can move under scrutiny without steering blind.'
   },
   fr: {
     eyebrow: 'À propos',
@@ -689,6 +674,26 @@ const ABOUT_COPY = {
         description: 'La pratique publique commence par un court echange qui identifie le bon parcours de gouvernance.'
       }
     ],
+    credibilityLabel: 'Credibilite praticien-chercheur',
+    credibilityTitle: 'Pourquoi cette pratique peut parler a la fois a la theorie et a la pression de revue reelle',
+    credibilityBody: 'PHAROS est informe par du travail de conseil, du developpement methodologique et de la conception de systemes sous vraies contraintes de preuve, et non par une simple couche de branding.',
+    credibilityCards: [
+      {
+        label: 'Pratique',
+        title: 'Construit autour de l approvisionnement, de l audit et de la supervision',
+        description: 'Le travail public commence par des conditions de revue concretes comme les questionnaires d acheteurs, les demandes d audit, la diligence fournisseur et le scrutiny des comites.'
+      },
+      {
+        label: 'Recherche',
+        title: 'Ancre dans les disciplines interpretatives et ethiques',
+        description: 'La methode s appuie sur la sociologie, les etudes culturelles, la litterature comparee et l ethique appliquee pour faire remonter des mecanismes de gouvernance que la prose generique de conformite laisse souvent invisibles.'
+      },
+      {
+        label: 'Systemes',
+        title: 'Une discipline de preuve faconnee par des environnements reglementes',
+        description: 'La tracabilite, les portes de revue, la lineage et les limites de revendication fail-closed sont influencees par des contextes cliniques et pharmaceutiques reglementes.'
+      }
+    ],
     methodButton: 'Ouvrir la methode',
     methodHighlights: ['Entrées bornées', 'Contrôles inspectables', 'Décisions reconstructibles'],
     practiceBody: 'La norme est simple : la documentation de gouvernance doit découler de la preuve, les droits décisionnels et les seuils doivent rester explicites, et les déclarations publiques ne doivent pas dépasser ce que l’architecture sous-jacente peut réellement soutenir.',
@@ -710,80 +715,36 @@ const ABOUT_COPY = {
         description: 'S’il manque de la traçabilité ou si la preuve de révision est incomplète, la revendication se resserre et l’état demeure provisoire.'
       }
     ],
-    modulesLabel: 'Modules internes',
+    modulesLabel: 'Produits PHAROS',
     modulesTitle: 'AurorAI et CompassAI',
-    modulesBody: 'AurorAI et CompassAI sont des systèmes internes développés par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission. AurorAI prend en charge la preuve et le traitement documentaire. CompassAI prend en charge l’accueil de gouvernance, l’évaluation et la production des livrables. Les portails clients apparaissent ci-dessous, tandis que la surface d’administration demeure distincte.',
+    modulesBody: 'AurorAI et CompassAI sont des produits PHAROS développés par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission. AurorAI prend en charge la preuve et le traitement documentaire. CompassAI prend en charge l’accueil de gouvernance, l’évaluation et la production des livrables. Leurs surfaces produit demeurent sous PHAROS tant que leur hébergement autonome n’est pas encore stabilisé.',
     modules: [
       {
         title: 'AurorAI',
-        description: 'Un moteur interne de preuve et de traitement documentaire développé par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission.',
+        description: 'Un moteur PHAROS de preuve et de traitement documentaire développé par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission.',
         portalPath: '/portal/aurorai'
       },
       {
         title: 'CompassAI',
-        description: 'Un moteur interne de gouvernance développé par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission.',
+        description: 'Un moteur PHAROS de gouvernance développé par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission.',
         portalPath: '/portal/compassai'
       }
     ],
-    portalButton: 'Portail client',
+    portalButton: 'Ouvrir le produit',
     adminButton: 'Admin',
     pharosLabel: 'Pourquoi PHAROS',
     pharosTitle: 'Un nom de phare pour un système de gouvernance',
-    pharosBody: 'Le Pharos d’Alexandrie, l’une des sept merveilles du monde antique, n’était pas seulement un monument. C’était une infrastructure d’orientation : il rendait la côte lisible à distance, signalait le seuil d’entrée sûr et aidait les navires à avancer sans heurter ce qu’ils ne voyaient pas encore. Notre système de gouvernance porte ce nom pour la même raison. PHAROS sert à rendre les trajectoires d’IA, les seuils, la preuve et les droits décisionnels assez visibles tôt dans le processus pour qu’une organisation avance sous examen sans naviguer à l’aveugle.',
-    publicationsTitle: 'Nouvelles publications chaque semaine',
-    loading: 'Chargement des publications',
-    empty: 'Aucune publication n’est encore assignée à la page À propos. Publiez-les dans l’éditeur Admin et elles apparaîtront ici.',
-    readPublication: 'Lire la publication',
-    openDocument: 'Ouvrir le document',
-    featuredPublication: {
-      ...FEATURED_PUBLICATION,
-      type: 'Analyse',
-      title: 'The Trust Advantage: Why Expertise Wins in the Era of AI-Driven Sales',
-      venue: 'PHAROS',
-      year: '2026',
-      description: 'Une analyse PHAROS du rapport Trust Advantage 2025 de LinkedIn Sales Navigator, lue à la lumière d’un texte de gouvernance sur la fluence algorithmique et l’interruption.',
-      abstract: 'Cette publication soutient que, dans des environnements de vente saturés par l’IA, la confiance se construit moins par l’accès à l’information que par l’expertise humaine au bon moment, le jugement contextuel et une preuve défendable. Elle met en relation les constats commerciaux de LinkedIn sur la confiance des acheteurs avec une lecture de gouvernance axée sur la fluence, l’interruption et une reddition de comptes prête pour l’examen.'
-    }
+    pharosBody: 'Le Pharos d’Alexandrie, l’une des sept merveilles du monde antique, n’était pas seulement un monument. C’était une infrastructure d’orientation : il rendait la côte lisible à distance, signalait le seuil d’entrée sûr et aidait les navires à avancer sans heurter ce qu’ils ne voyaient pas encore. Notre système de gouvernance porte ce nom pour la même raison. PHAROS sert à rendre les trajectoires d’IA, les seuils, la preuve et les droits décisionnels assez visibles tôt dans le processus pour qu’une organisation avance sous examen sans naviguer à l’aveugle.'
   }
 };
 
 const About = () => {
   const { language } = useLanguage();
-  const [publications, setPublications] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const copy = ABOUT_COPY[language];
   const methods = METHODS_COPY[language];
   const infraFabricCards = useMemo(() => copy.infraCards, [copy.infraCards]);
   const moduleCards = useMemo(() => copy.modules, [copy.modules]);
-  const staticPublications = useMemo(() => [copy.featuredPublication], [copy.featuredPublication]);
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/publications`)
-      .then((response) => response.json())
-      .then((data) => {
-        const aboutPublications = data
-          .filter((publication) => (
-            publication.status === 'published' &&
-            (!publication.site_section || publication.site_section === 'about_publications')
-          ))
-          .sort(sortPublications);
-
-        const mergedPublications = [...staticPublications];
-        aboutPublications.forEach((publication) => {
-          if (!mergedPublications.some((item) => item.id === publication.id)) {
-            mergedPublications.push(publication);
-          }
-        });
-
-        setPublications(mergedPublications.sort(sortPublications));
-        setLoading(false);
-      })
-      .catch(() => {
-        setPublications(staticPublications);
-        setLoading(false);
-      });
-  }, [staticPublications]);
 
   return (
     <div data-testid="about-page">
@@ -832,6 +793,28 @@ const About = () => {
           <SignalStrip items={copy.summary} className="signal-grid-page reveal visible" />
         </div>
       </div>
+
+      <section className="section section-topless">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.credibilityLabel}</p>
+            <h2>{copy.credibilityTitle}</h2>
+            <p className="body-sm">
+              {copy.credibilityBody}
+            </p>
+          </div>
+
+          <div className="grid-3 stagger">
+            {copy.credibilityCards.map((item) => (
+              <div key={item.title} className="card reveal">
+                <p className="eyebrow" style={{ marginBottom: '12px' }}>{item.label}</p>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
         <div className="container">
@@ -914,87 +897,6 @@ const About = () => {
               {copy.pharosBody}
             </p>
           </div>
-        </div>
-      </section>
-
-      <section className="section" id="publications">
-        <div className="container">
-          <div className="section-header reveal">
-            <h2>{copy.publicationsTitle}</h2>
-          </div>
-
-          {loading ? <p className="body-sm">{copy.loading}</p> : null}
-
-          {!loading && publications.length > 0 ? (
-            <div className="stagger" style={{ display: 'grid', gap: '20px' }}>
-              {publications.map((publication) => {
-                const previewText = publication.abstract || publication.description;
-                const meta = (
-                  <div className="publication-card-meta">
-                    {publication.type ? <span className="eyebrow" style={{ marginBottom: 0 }}>{publication.type}</span> : null}
-                    {publication.year ? <span className="research-date">{publication.year}</span> : null}
-                    {publication.venue ? <span className="research-date">{publication.venue}</span> : null}
-                  </div>
-                );
-
-                const content = (
-                  <>
-                    {meta}
-                    <h3 style={{ marginBottom: '12px' }}>{publication.title}</h3>
-                    {previewText ? <RichTextContent text={previewText} /> : null}
-                    {publication.link ? (
-                      <div
-                        style={{
-                          marginTop: '18px',
-                          paddingTop: '14px',
-                          borderTop: '1px solid var(--color-border-light)',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          fontSize: '0.875rem',
-                          fontWeight: 600,
-                          color: 'var(--color-accent)'
-                        }}
-                      >
-                        <span>{publication.internal ? copy.readPublication : copy.openDocument}</span>
-                        {publication.internal ? <ArrowRight size={16} /> : <ExternalLink size={16} />}
-                      </div>
-                    ) : null}
-                  </>
-                );
-
-                if (!publication.link) {
-                  return (
-                    <div key={publication.id} className="card reveal">
-                      {content}
-                    </div>
-                  );
-                }
-
-                if (publication.internal) {
-                  return (
-                    <Link key={publication.id} to={publication.link} className="card reveal">
-                      {content}
-                    </Link>
-                  );
-                }
-
-                return (
-                  <a key={publication.id} href={publication.link} target="_blank" rel="noreferrer" className="card reveal">
-                    <div style={{ flex: 1 }}>{content}</div>
-                  </a>
-                );
-              })}
-            </div>
-          ) : null}
-
-          {!loading && publications.length === 0 ? (
-            <div className="editorial-panel reveal">
-              <p className="body-sm" style={{ marginBottom: 0 }}>
-                {copy.empty}
-              </p>
-            </div>
-          ) : null}
         </div>
       </section>
     </div>
