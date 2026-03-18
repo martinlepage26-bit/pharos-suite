@@ -36,3 +36,5 @@ obj/
 # Reports / runtime data (usually not versioned)
 test_reports/
 memory/
+output/
+frontend/output/
