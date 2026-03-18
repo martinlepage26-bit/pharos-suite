@@ -43,17 +43,18 @@ This is a boundary-enforcement audit for the GovernAI -> PHAROS migration. It do
 Reason:
 - These files define the live PHAROS shell, browser storage keys, route language, operator-facing labels, or current deployment/domain guidance.
 
-### Move out of this repo or PHAROS surface
+### Keep in repo, but strip PHAROS-external behavior
 
 - `/home/cerebrhoe/repos/pharos-ai/frontend/src/App.js`
 - `/home/cerebrhoe/repos/pharos-ai/frontend/public/_redirects`
 - `/home/cerebrhoe/repos/pharos-ai/backend/server.py`
 
 Reason:
-- Legacy Lotus and publication routes do not belong on `pharos-ai.ca`.
-- Publication and portfolio routes are not part of the bounded PHAROS surface.
-- The Trust Advantage page route is boundary-blocked and redirected as compatibility behavior, not as a live PHAROS publication surface.
-- Editorial/publication APIs should be re-homed to the Martin-side `governai.ca` stack before being re-enabled.
+- These files are still part of the live PHAROS delivery surface and should remain in this repo.
+- `frontend/src/App.js` should keep boundary routes that explicitly block `/portfolio` and legacy publication paths on `pharos-ai.ca`.
+- `frontend/public/_redirects` should keep redirect compatibility behavior for the bounded PHAROS surface.
+- `backend/server.py` should keep PHAROS runtime operations such as bookings, admin, FAQ, services, and platform status while fail-closing Lotus and publication endpoints.
+- Editorial/publication behavior should be re-homed to the Martin-side `governai.ca` stack before being re-enabled anywhere.
 
 ### Leave unchanged
 
