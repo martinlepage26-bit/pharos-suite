@@ -25,21 +25,39 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 FRONTEND_DIR = ROOT_DIR.parent / "frontend"
 COMPASSAI_ENV_FILE = ROOT_DIR.parent.parent / "CompassAI" / "backend" / ".env"
-LOTUS_APP_DIR = ROOT_DIR.parent / "pharos_governance_suite" / "lotus_dr_sort"
-LOTUS_UPLOAD_ROOT = LOTUS_APP_DIR / "LOTUS_UPLOADS"
+LOTUS_SURFACE_ENABLED = os.environ.get("ENABLE_LOTUS_SURFACE", "").strip().lower() in {"1", "true", "yes", "on"}
+LOTUS_COMPAT_MODULE_PATH = os.environ.get("LOTUS_COMPAT_MODULE_PATH", "").strip()
+LOTUS_UPLOAD_ROOT_RAW = os.environ.get("LOTUS_UPLOAD_ROOT", "").strip()
+LOTUS_UPLOAD_ROOT = Path(LOTUS_UPLOAD_ROOT_RAW).expanduser() if LOTUS_UPLOAD_ROOT_RAW else None
+EDITORIAL_SURFACES_ENABLED = os.environ.get("ENABLE_EDITORIAL_SURFACES", "").strip().lower() in {"1", "true", "yes", "on"}
 
-if LOTUS_APP_DIR.exists():
-    lotus_app_path = str(LOTUS_APP_DIR)
-    if lotus_app_path not in sys.path:
-        sys.path.append(lotus_app_path)
+lotus = None
+LOTUS_IMPORT_ERROR = ""
 
-try:
-    import lotus_core as lotus
-except Exception as exc:  # pragma: no cover - defensive import reporting
-    lotus = None
-    LOTUS_IMPORT_ERROR = str(exc)
-else:
-    LOTUS_IMPORT_ERROR = ""
+if LOTUS_SURFACE_ENABLED:
+    if LOTUS_COMPAT_MODULE_PATH:
+        lotus_app_path = str(Path(LOTUS_COMPAT_MODULE_PATH).expanduser())
+        if lotus_app_path not in sys.path:
+            sys.path.append(lotus_app_path)
+        try:
+            import lotus_core as lotus
+        except Exception as exc:  # pragma: no cover - defensive import reporting
+            lotus = None
+            LOTUS_IMPORT_ERROR = str(exc)
+    else:
+        LOTUS_IMPORT_ERROR = "LOTUS_COMPAT_MODULE_PATH is not configured"
+
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:9201",
+    "http://127.0.0.1:9201",
+    "https://pharos-ai.ca",
+    "https://www.pharos-ai.ca",
+    "https://govern-ai.ca",
+    "https://www.govern-ai.ca",
+    "https://govern-ai.pages.dev",
+]
 
 mongo_url = os.environ.get('MONGO_URL')
 if not mongo_url:
@@ -91,7 +109,7 @@ SENDER_EMAIL = (
     os.environ.get('SENDER_EMAIL')
     or load_env_value(ROOT_DIR / '.env', 'SENDER_EMAIL')
     or load_env_value(COMPASSAI_ENV_FILE, 'SENDER_EMAIL')
-    or 'pharos@govern-ai.ca'
+    or 'pharos@pharos-ai.ca'
 )
 ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()]
 ADMIN_PASSPHRASE = os.environ.get('ADMIN_PASSPHRASE', '')
@@ -216,7 +234,7 @@ class Publication(BaseModel):
     internal: bool = False
     status: str = "published"
     abstract: str = ""
-    site_section: str = "about_publications"
+    site_section: str = "pharos_insights"
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 class PublicationCreate(BaseModel):
@@ -229,7 +247,7 @@ class PublicationCreate(BaseModel):
     internal: bool = False
     status: str = "published"
     abstract: str = ""
-    site_section: str = "about_publications"
+    site_section: str = "pharos_insights"
 
 class PublicationUpdate(BaseModel):
     type: Optional[str] = None
@@ -415,16 +433,35 @@ class LotusImportResponse(BaseModel):
 
 
 def _require_lotus() -> Any:
+    if not LOTUS_SURFACE_ENABLED:
+        raise HTTPException(
+            status_code=410,
+            detail="Lotus is not part of the PHAROS public surface. Use the separate Lotus service or workspace instead."
+        )
+
     if lotus is None:
-        detail = "LOTUS core is unavailable."
         if LOTUS_IMPORT_ERROR:
-            detail = f"{detail} {LOTUS_IMPORT_ERROR}"
+            logger.warning("Lotus import unavailable on this PHAROS deployment: %s", LOTUS_IMPORT_ERROR)
+        detail = "Lotus support is enabled, but the Lotus backend module is unavailable on this deployment."
         raise HTTPException(status_code=503, detail=detail)
     return lotus
 
 
+def _require_editorial_surfaces() -> None:
+    if not EDITORIAL_SURFACES_ENABLED:
+        raise HTTPException(
+            status_code=410,
+            detail="Editorial and publication endpoints are not available on this PHAROS backend."
+        )
+
+
 def _get_lotus_root() -> Path:
     lotus_module = _require_lotus()
+    if LOTUS_UPLOAD_ROOT is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Lotus support is enabled, but LOTUS_UPLOAD_ROOT is not configured on this deployment."
+        )
     return lotus_module.ensure_lotus_root(LOTUS_UPLOAD_ROOT)
 
 
@@ -600,8 +637,8 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
 
     services = [
         {
-            "name": "Govern AI backend",
-            "key": "govern-ai",
+            "name": "PHAROS backend",
+            "key": "pharos-ai",
             "url": "http://127.0.0.1:9202/health",
             **govern_ai_probe,
         },
@@ -655,80 +692,51 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
     }
 
 
-# ─── LOTUS Endpoints ───
+# ─── Legacy Lotus-disabled endpoints ───
+
+def raise_lotus_surface_removed() -> None:
+    raise HTTPException(
+        status_code=410,
+        detail="Lotus endpoints are not available on this PHAROS backend."
+    )
+
 
 @api_router.get("/lotus/notes", response_model=List[LotusNoteSummary])
 async def get_lotus_notes():
-    lotus_module = _require_lotus()
-    root = _get_lotus_root()
-    notes = await asyncio.to_thread(lotus_module.load_lotus_notes, root)
-    return [_serialize_lotus_note(note, root) for note in notes]
+    raise_lotus_surface_removed()
 
 
 @api_router.get("/lotus/notes/detail", response_model=LotusNoteDetail)
-async def get_lotus_note_detail(path: str = Query(..., description="Relative path inside LOTUS_UPLOADS.")):
-    lotus_module = _require_lotus()
-    root = _get_lotus_root()
-    target = _resolve_lotus_note_path(path)
-    notes = await asyncio.to_thread(lotus_module.load_lotus_notes, root)
-
-    for note in notes:
-        if getattr(note, "path").resolve() == target:
-            return _serialize_lotus_note(note, root, include_text=True)
-
-    raise HTTPException(status_code=404, detail="LOTUS note not found.")
+async def get_lotus_note_detail(path: str = Query(..., description="Relative Lotus note path.")):
+    raise_lotus_surface_removed()
 
 
 @api_router.post("/lotus/score", response_model=LotusDraftPreview)
 async def preview_lotus_draft(input: LotusDraftInput):
-    title, markdown, scores = await asyncio.to_thread(_normalize_lotus_draft, input)
-    return LotusDraftPreview(
-        title=title,
-        markdown=markdown,
-        scores=_serialize_lotus_scores(scores),
-    )
+    raise_lotus_surface_removed()
 
 
 @api_router.post("/lotus/drafts", response_model=LotusDraftSaveResponse)
 async def save_lotus_draft(input: LotusDraftInput):
-    lotus_module = _require_lotus()
-    title, markdown, scores = await asyncio.to_thread(_normalize_lotus_draft, input)
-    root = _get_lotus_root()
-    destination = await asyncio.to_thread(lotus_module.save_structured_note, markdown, title, root)
-    return LotusDraftSaveResponse(
-        title=title,
-        markdown=markdown,
-        scores=_serialize_lotus_scores(scores),
-        path=str(destination.relative_to(root)),
-    )
+    raise_lotus_surface_removed()
 
 
 @api_router.post("/lotus/upload", response_model=LotusImportResponse)
 async def upload_lotus_notes(files: List[UploadFile] = File(...)):
-    if not files:
-        raise HTTPException(status_code=400, detail="Select at least one LOTUS note to upload.")
-
-    buffered_files: List[tuple[str, bytes]] = []
-    for upload in files:
-        try:
-            content = await upload.read()
-            buffered_files.append((upload.filename or "LOTUS note.md", content))
-        finally:
-            await upload.close()
-
-    imported = await asyncio.to_thread(_save_uploaded_lotus_notes, buffered_files)
-    return LotusImportResponse(imported=imported)
+    raise_lotus_surface_removed()
 
 # ─── Publications ───
 
 @api_router.get("/publications", response_model=List[Publication])
 async def get_publications():
+    _require_editorial_surfaces()
     database = await get_database()
     pubs = await database.publications.find({}, {"_id": 0}).to_list(100)
     return pubs
 
 @api_router.post("/publications", response_model=Publication)
 async def create_publication(input: PublicationCreate, admin_ok: None = Depends(require_admin)):
+    _require_editorial_surfaces()
     database = await get_database()
     pub = Publication(**input.model_dump())
     doc = pub.model_dump()
@@ -737,6 +745,7 @@ async def create_publication(input: PublicationCreate, admin_ok: None = Depends(
 
 @api_router.put("/publications/{pub_id}", response_model=Publication)
 async def update_publication(pub_id: str, input: PublicationUpdate, admin_ok: None = Depends(require_admin)):
+    _require_editorial_surfaces()
     database = await get_database()
     update_data = {k: v for k, v in input.model_dump().items() if v is not None}
     if not update_data:
@@ -750,6 +759,7 @@ async def update_publication(pub_id: str, input: PublicationUpdate, admin_ok: No
 
 @api_router.delete("/publications/{pub_id}")
 async def delete_publication(pub_id: str, admin_ok: None = Depends(require_admin)):
+    _require_editorial_surfaces()
     database = await get_database()
     result = await database.publications.delete_one({"id": pub_id})
     if result.deleted_count == 0:
@@ -933,11 +943,11 @@ SEED_PUBLICATIONS = [
         "venue": "PHAROS",
         "year": "2026",
         "description": "A PHAROS analysis of LinkedIn Sales Navigator's 2025 Trust Advantage report, cross-read through a governance lens focused on algorithmic fluency, interruption, and trust.",
-        "link": "/publications/trust-advantage-analysis",
+        "link": "/observatory",
         "internal": True,
         "status": "published",
         "abstract": "This publication argues that in AI-saturated sales environments, trust is built less through access to information than through timely human expertise, contextual judgment, and career-defensible proof. It links buyer-trust findings to a governance analysis of fluency, interruption, and review-ready accountability.",
-        "site_section": "about_publications"
+        "site_section": "pharos_insights"
     }
 ]
 
@@ -1067,6 +1077,8 @@ async def delete_service_package(package_id: str, admin_ok: None = Depends(requi
     return {"status": "deleted"}
 
 async def seed_publications():
+    if not EDITORIAL_SURFACES_ENABLED:
+        return
     database = await get_database()
     count = await database.publications.count_documents({})
     if count == 0:
@@ -1170,7 +1182,11 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=[
+        origin.strip()
+        for origin in os.environ.get('CORS_ORIGINS', ','.join(DEFAULT_CORS_ORIGINS)).split(',')
+        if origin.strip()
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -1469,8 +1469,7 @@ li {
 [data-testid="about-page"] .page-hero,
 [data-testid="cases-page"] .page-hero,
 [data-testid="portal-aurorai-page"] .page-hero,
-[data-testid="portal-compassai-page"] .page-hero,
-[data-testid="trust-advantage-page"] .page-hero {
+[data-testid="portal-compassai-page"] .page-hero {
   padding-top: clamp(6rem, 10vw, 8rem);
 }
 

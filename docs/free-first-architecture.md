@@ -1,32 +1,40 @@
 # Free-First Architecture
 
 ## Public product
-- `govern-ai.ca` is the public website
-- `www.govern-ai.ca` should redirect to the apex domain
-- `AurorAI` and `CompassAI` are treated as internal delivery modules, not public standalone products
+
+- `pharos-ai.ca` is the PHAROS public website
+- `www.pharos-ai.ca` should redirect to the apex domain
+- `govern-ai.ca` should also redirect to the apex domain during migration
+- `AurorAI` and `CompassAI` are PHAROS products, but not yet standalone public subdomains
 
 ## Current free setup
+
 - Frontend: Cloudflare Pages
 - DNS and redirects: Cloudflare
 - Backends: local only for now
 - Database and file processing: local only for now
 
 ## Simple rule
+
 If it needs a Python server, Mongo, PDF processing, or file uploads, keep it private until we choose one paid host or redesign it for a simpler platform.
 
 ## What to tell yourself
-1. Keep `govern-ai` public
-2. Keep `AurorAI` and `CompassAI` internal
-3. If a public backend is needed, start with only `api.govern-ai.ca`
-4. Keep `AurorAI` and `CompassAI` off public subdomains until there is a separate hosting decision
+
+1. Keep PHAROS public at `pharos-ai.ca`
+2. Keep `AurorAI` and `CompassAI` inside the PHAROS surface until separate hosting is ready
+3. If a public backend is needed, start with only `api.pharos-ai.ca`
+4. Keep heavier product surfaces off standalone public subdomains until hosting decisions are explicit
 5. Use one storage plan before exposing heavier backend features
 
 ## Storage recommendation
+
 - Use `D1` only for lightweight structured records if we simplify the data model
 - Use `R2` for uploaded files and generated evidence packages
 - Do not try to store documents directly in `D1`
 
 ## Next clean path
-1. Keep building the public product in `govern-ai`
+
+1. Keep building the PHAROS public product in this repo
 2. If Admin and dynamic content need to go live, use the bridge plan in `docs/public-backend-plan.md`
-3. Decide later whether `AurorAI` and `CompassAI` stay local, move to one paid host, or get redesigned for Cloudflare-native storage and APIs
+3. Move Martin Lepage profile, resume, publication, and other non-PHAROS material to `governai.ca`
+4. Keep Lotus out of the PHAROS repo and PHAROS public surface

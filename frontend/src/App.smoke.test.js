@@ -77,7 +77,6 @@ const routeCases = [
   ['/contact', 'connect-page'],
   ['/portal/aurorai', 'portal-aurorai-page'],
   ['/portal/compassai', 'portal-compassai-page'],
-  ['/portal/lotus', 'surface-boundary-page'],
   ['/sealed-card', 'sealed-card-page'],
   ['/portfolio', 'surface-boundary-page'],
   ['/library', 'library-page'],

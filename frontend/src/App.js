@@ -55,16 +55,6 @@ function AppRoutes() {
           <Route path="/contact" element={<Connect />} />
           <Route path="/portal/aurorai" element={<PortalAurorAI />} />
           <Route path="/portal/compassai" element={<PortalCompassAI />} />
-          <Route
-            path="/portal/lotus"
-            element={(
-              <SurfaceBoundary
-                eyebrow="Boundary update"
-                title="LOTUS is not part of the PHAROS surface."
-                body="LOTUS belongs on the Martin Lepage and governai.ca side of the migration, not on pharos-ai.ca. This route stays closed here while the product is moved back to its non-PHAROS home."
-              />
-            )}
-          />
           <Route path="/sealed-card" element={<SealedCard />} />
           <Route
             path="/portfolio"

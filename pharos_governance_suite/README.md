@@ -1,59 +1,21 @@
-# PHAROS Governance Desktop Suite
+# PHAROS Governance Desktop Assets
 
-This folder packages the PHAROS-aligned desktop surfaces for:
+This folder still contains desktop-side assets that were developed alongside the PHAROS work.
 
-- `LOTUS`: scoring and structured note intake
-- `Dr. Sort-Academic Helper`: professional document sorting and review
-- `CompassAI`: governance intake and tiering dashboard
+## Current boundary
+
+- `CompassAI`: remains aligned with the PHAROS product family
+- `Lotus`: canonical app files now live under `/home/cerebrhoe/repos/Agency/lotus`
+- `Dr. Sort`: canonical app files now live under `/home/cerebrhoe/repos/Agency/scripto`
 
 ## Layout
 
-- `lotus_dr_sort/`
-  - `lotus_app.py`
-  - `dr_sort_academic_helper.py`
-  - `document_sorter.py`
-  - Windows launchers, icons, rules, and previews
 - `compass_ai/`
   - `CompassAI.html`
-  - Windows launchers, icon, and preview
-
-## What Is Included
-
-- The PHAROS-style visual refresh
-- Desktop launchers and shortcut scripts
-- Curated screenshots of the current surfaces
-- Minimal empty folders for `INBOX/` and `LOTUS_UPLOADS/`
-
-## What Is Not Included
-
-- Local `.venv` folders
-- User data, uploaded notes, reports, quarantine, or sorted libraries
-- Temporary browser caches and test output
-
-## Python Setup
-
-From PowerShell inside `lotus_dr_sort`:
-
-```powershell
-py -m pip install -r requirements.txt
-py .\lotus_app.py
-py .\dr_sort_academic_helper.py
-```
-
-## Windows Launchers
-
-Inside `lotus_dr_sort`:
-
-- `LOTUS.bat`
-- `Dr. Sort-Academic Helper.bat`
-- `create_lotus_desktop_shortcuts.ps1`
-
-Inside `compass_ai`:
-
-- `CompassAI.bat`
-- `create_compass_ai_desktop_shortcut.ps1`
+  - Windows launchers, icon, and preview assets
 
 ## Notes
 
-- `LOTUS` and `Dr. Sort` are Tk desktop apps and use the closest system-font rendering to the PHAROS web look.
-- `CompassAI` is HTML/CSS and can match the PHAROS visual language more directly.
+- Presence in this folder does not mean a surface belongs on `pharos-ai.ca`
+- Treat this folder as CompassAI-only until any later desktop extraction work is planned explicitly
+- The old in-tree `lotus_dr_sort` snapshot is no longer part of this folder and should not be recreated as a PHAROS dependency
