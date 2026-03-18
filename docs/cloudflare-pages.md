@@ -1,79 +1,58 @@
 # Cloudflare Pages
 
-## Live frontend state
-- Pages project: `govern-ai`
-- Pages URL: `https://govern-ai.pages.dev`
-- Active custom domain:
-  - `govern-ai.ca`
-- Additional hostname to restore or redirect:
-  - `www.govern-ai.ca`
-- Removed pending experiment on `2026-03-10`:
-  - `pharos-ai.ca`
-  - `www.pharos-ai.ca`
+## Current repo-side understanding
 
-## DNS state
-- As of `2026-03-10`, `govern-ai.ca` is attached to the Pages project and validated
-- `https://govern-ai.pages.dev` is serving the current PHAROS frontend build
-- The active Cloudflare account has a zone for `govern-ai.ca`
-- The active local Cloudflare token can manage Pages, but it cannot inspect or edit zone-level redirect or DNS rules
+- Canonical PHAROS hostname target: `https://pharos-ai.ca`
+- Redirect hostnames to preserve:
+  - `https://www.pharos-ai.ca`
+  - `https://govern-ai.ca`
+  - `https://www.govern-ai.ca`
+- Current Pages host that still exists in deployment references: `https://govern-ai.pages.dev`
+- Current Pages project name that still exists in deployment references: `govern-ai`
 
-## Redirect behavior
-- The intended canonical hostname is `https://govern-ai.ca`
-- The intended redirect is `https://www.govern-ai.ca` -> `https://govern-ai.ca`
-- `govern-ai.ca` now serves the site again after the hostname rollback deploy
-- `www.govern-ai.ca` is attached to Pages and currently pending validation
-- Finishing the rollback requires waiting for `www.govern-ai.ca` validation to complete in the Cloudflare dashboard
+## Important boundary note
+
+Repo-side changes now treat `pharos-ai.ca` as the PHAROS surface only.
+
+Do not point `governai.ca` at this Pages project. That hostname belongs to Martin Lepage's personal and professional surface, not to PHAROS.
 
 ## Deployment flow
+
 - Production deploys are currently driven from GitHub on the `main` branch
 - Frontend root directory in Cloudflare Pages: `frontend`
 - Build command: `npm install --legacy-peer-deps && npm run build`
 - Output directory: `build`
 
-## Local commands
-- Build:
-  - `npm run build`
-- Direct Pages deploy:
-  - `npm run cf:deploy`
-- Preview deploy:
-  - `npm run cf:preview`
-- Emergency hostname workaround worker:
-  - `infra/cloudflare-live-proxy`
+## Redirect behavior to preserve
 
-## Admin passphrase
-- The `/admin` flow now expects the backend environment variable `ADMIN_PASSPHRASE`
-- Configure that variable anywhere the backend runs before using or deploying Admin
-- The frontend no longer relies on a build-time public passphrase for admin access
+- `https://pharos-ai.ca` should be the canonical public URL
+- `https://www.pharos-ai.ca` should redirect to `https://pharos-ai.ca`
+- `https://govern-ai.ca` should redirect to `https://pharos-ai.ca`
+- `https://www.govern-ai.ca` should redirect to `https://pharos-ai.ca`
+
+## What the repo can change safely
+
+- frontend canonical metadata
+- Pages middleware hostname redirects
+- SPA route redirects for surfaces that no longer belong on PHAROS
+- robots and sitemap assets
+
+## What still needs manual Cloudflare follow-up
+
+- rename or replace the Cloudflare Pages project if you want the external project name to stop saying `govern-ai`
+- attach or verify the apex and redirect hostnames in Cloudflare
+- update any zone-level rules that still point legacy PHAROS traffic somewhere else
 
 ## Backend subdomains
+
 Not created yet:
-- `api.govern-ai.ca`
-- `aurorai.govern-ai.ca`
-- `compassai.govern-ai.ca`
 
-Reason:
-- there is no verified stable public origin for `api.govern-ai.ca`
-- the current candidate `AurorAI` and `CompassAI` origins are preview hosts, not confirmed production origins that are ready for custom-domain binding
-- creating DNS for those now would risk dead or misleading endpoints
+- `api.pharos-ai.ca`
+- `aurorai.pharos-ai.ca`
+- `compassai.pharos-ai.ca`
 
-## Next backend-domain step
-The next approved step is to create only:
+Current stance:
 
-- `api.govern-ai.ca`
-
-Do not create:
-
-- `aurorai.govern-ai.ca`
-- `compassai.govern-ai.ca`
-
-Use the rollout in `docs/public-backend-plan.md`:
-
-- bridge the current FastAPI service through Cloudflare Tunnel first
-- rebuild Pages with `REACT_APP_BACKEND_URL=https://api.govern-ai.ca`
-- keep the API hostname stable if the origin later moves to managed hosting
-
-## Current deployment status
-- `https://govern-ai.pages.dev` is current and healthy
-- `https://govern-ai.ca` is serving as the public apex again
-- The hostname rollback deploy is live on the Pages project
-- The remaining blocker is only `www.govern-ai.ca` still pending validation
+- `AurorAI` and `CompassAI` are PHAROS products
+- they remain under the main PHAROS surface for now
+- do not create standalone public subdomains for them until hosting and boundary decisions are explicit

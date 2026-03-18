@@ -11,7 +11,8 @@ import {
   Sparkles
 } from 'lucide-react';
 
-const BEST_SCORE_KEY = 'govern-ai-game-best-score';
+const BEST_SCORE_KEY = 'pharos-ai-game-best-score';
+const LEGACY_BEST_SCORE_KEY = 'govern-ai-game-best-score';
 const ROUND_SECONDS = 45;
 const START_INTEGRITY = 3;
 const MAX_INTEGRITY = 5;
@@ -61,7 +62,11 @@ const readBestScore = () => {
   }
 
   try {
-    const stored = Number(window.localStorage.getItem(BEST_SCORE_KEY) || 0);
+    const stored = Number(
+      window.localStorage.getItem(BEST_SCORE_KEY)
+      || window.localStorage.getItem(LEGACY_BEST_SCORE_KEY)
+      || 0
+    );
     return Number.isFinite(stored) ? stored : 0;
   } catch (error) {
     return 0;
@@ -332,6 +337,7 @@ const Game = () => {
     if (game.phase === 'ended') {
       try {
         window.localStorage.setItem(BEST_SCORE_KEY, String(game.bestScore));
+        window.localStorage.removeItem(LEGACY_BEST_SCORE_KEY);
       } catch (error) {
         // Ignore storage failures and keep the local run playable.
       }

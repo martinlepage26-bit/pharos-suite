@@ -21,6 +21,7 @@ import {
   clearModuleConfig,
   formatDateTime,
   getModuleConfig,
+  normalizeModuleConfig,
   normalizeList,
   requestModuleJson,
   saveModuleConfig
@@ -36,7 +37,7 @@ const defaultPackageForm = {
   usecase_id: '',
   producer: 'aurorai',
   artifact_type: 'evidence_package',
-  compassai_base_url: process.env.REACT_APP_COMPASSAI_URL || 'http://127.0.0.1:9205'
+  compassai_base_url: process.env.REACT_APP_COMPASSAI_URL || ''
 };
 
 const heroSignals = [
@@ -48,7 +49,7 @@ const heroSignals = [
   {
     label: 'Current backend truth',
     title: 'PDF and TXT only today',
-    description: 'The govern-ai route exposes the live upload contract honestly while flagging `.doc`, `.docx`, and OCR as the next backend lift.'
+    description: 'The PHAROS route exposes the live upload contract honestly while flagging `.doc`, `.docx`, and OCR as the next backend lift.'
   },
   {
     label: 'Governance value',
@@ -57,9 +58,11 @@ const heroSignals = [
   }
 ];
 
+const getSafeConfig = () => normalizeModuleConfig(MODULE_KEY, getModuleConfig(MODULE_KEY));
+
 const PortalAurorAI = () => {
-  const [config, setConfig] = useState(() => getModuleConfig(MODULE_KEY));
-  const [draftConfig, setDraftConfig] = useState(() => getModuleConfig(MODULE_KEY));
+  const [config, setConfig] = useState(getSafeConfig);
+  const [draftConfig, setDraftConfig] = useState(getSafeConfig);
 
   const [loading, setLoading] = useState(true);
   const [secureLoading, setSecureLoading] = useState(false);
@@ -80,7 +83,7 @@ const PortalAurorAI = () => {
   const [uploadForm, setUploadForm] = useState(defaultUploadForm);
   const [packageForm, setPackageForm] = useState(defaultPackageForm);
 
-  const authenticated = Boolean(config.token);
+  const authenticated = Boolean(config?.token);
 
   const categoryBreakdown = useMemo(() => normalizeList(stats, 'stats'), [stats]);
 
@@ -177,10 +180,7 @@ const PortalAurorAI = () => {
   };
 
   const handleSaveConnection = () => {
-    const nextConfig = {
-      baseUrl: draftConfig.baseUrl.trim(),
-      token: draftConfig.token.trim()
-    };
+    const nextConfig = normalizeModuleConfig(MODULE_KEY, draftConfig);
     saveModuleConfig(MODULE_KEY, nextConfig);
     setConfig(nextConfig);
     resetActionState();
@@ -189,7 +189,7 @@ const PortalAurorAI = () => {
 
   const handleResetConnection = () => {
     clearModuleConfig(MODULE_KEY);
-    const nextConfig = getModuleConfig(MODULE_KEY);
+    const nextConfig = getSafeConfig();
     setConfig(nextConfig);
     setDraftConfig(nextConfig);
     resetActionState();
@@ -349,7 +349,7 @@ const PortalAurorAI = () => {
       <div className="page-hero portal-module-hero">
         <div className="container">
           <div className="section-header">
-            <p className="eyebrow">Govern-ai module</p>
+            <p className="eyebrow">PHAROS product</p>
             <h1>AurorAI</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
               Process documents into classified, extractable, governance-ready evidence while keeping each stage legible inside the PHAROS shell.
@@ -421,7 +421,7 @@ const PortalAurorAI = () => {
                       <h2>Read the current IDP contract</h2>
                     </div>
                     <p className="body-sm">
-                      The govern-ai route now exposes the same mission, stage order, and golden rules the AurorAI backend publishes directly.
+                      The PHAROS route now exposes the same mission, stage order, and golden rules the AurorAI backend publishes directly.
                     </p>
                   </div>
 
@@ -450,7 +450,7 @@ const PortalAurorAI = () => {
                       <h2>See what AurorAI is already classifying</h2>
                     </div>
                     <p className="body-sm">
-                      These category counts are public in the backend today, so the govern-ai shell can show adoption without a token.
+                      These category counts are public in the backend today, so the PHAROS shell can show adoption without a token.
                     </p>
                   </div>
 
@@ -580,7 +580,7 @@ const PortalAurorAI = () => {
                       <h2>Classify, summarize, extract, and cite</h2>
                     </div>
                     <p className="body-sm">
-                      These buttons call the live AurorAI endpoints for the selected document. Each response is shown immediately so the govern-ai shell doubles as a review surface.
+                      These buttons call the live AurorAI endpoints for the selected document. Each response is shown immediately so the PHAROS shell doubles as a review surface.
                     </p>
                   </div>
 
@@ -783,7 +783,7 @@ const PortalAurorAI = () => {
                     <h2>AurorAI now feeds the same shell that CompassAI lives in</h2>
                   </div>
                   <p className="body-sm">
-                    The next backend step is to close the document-format and OCR gaps, then normalize bulk and single-document audit behavior behind this same govern-ai front end.
+                    The next backend step is to close the document-format and OCR gaps, then normalize bulk and single-document audit behavior behind this same PHAROS front end.
                   </p>
                 </div>
 

@@ -6,8 +6,8 @@
   "workers_dev": false,
   "routes": [
     {
-      "pattern": "govern-ai.ca/*",
-      "zone_name": "govern-ai.ca"
+      "pattern": "pharos-ai.ca/*",
+      "zone_name": "pharos-ai.ca"
     }
   ]
 }

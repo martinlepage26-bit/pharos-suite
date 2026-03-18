@@ -7,26 +7,19 @@ const PUBLICATION_TYPES = ['', 'Insight', 'Paper', 'Briefing', 'Protocol', 'Work
 const PUBLICATION_VENUES = ['', 'PHAROS', 'LinkedIn', 'Substack', 'Medium', 'Conference', 'Journal', 'Client Deliverable'];
 const PUBLICATION_LINK_TARGETS = [
   { value: '', label: 'None' },
-  { value: '/portfolio#insights', label: 'Portfolio -> Insights section' },
-  { value: '/portfolio#papers', label: 'Portfolio -> Papers section' },
+  { value: '/about#insights', label: 'About -> PHAROS insights' },
   { value: '/services/menu', label: 'Service offers page' },
-  { value: '/about#publications', label: 'About -> Publications section' },
 ];
 const PUBLISHER_SECTIONS = [
   {
-    value: 'about_publications',
-    label: 'About -> Publications',
-    description: 'Use for the publications rail on the About page.',
+    value: 'pharos_insights',
+    label: 'About -> PHAROS insights',
+    description: 'Use for PHAROS-branded insights that should appear on the public About page.',
   },
   {
-    value: 'portfolio_published',
-    label: 'Portfolio -> Published work',
-    description: 'Use for published portfolio entries and linked reading.',
-  },
-  {
-    value: 'portfolio_working_papers',
-    label: 'Portfolio -> Working papers',
-    description: 'Use for drafts, protocols, and material still in development.',
+    value: 'migration_review',
+    label: 'Legacy migration review',
+    description: 'Use for legacy portfolio or non-PHAROS material that should stay out of the PHAROS public surface.',
   },
   {
     value: 'services_reference',
@@ -37,22 +30,24 @@ const PUBLISHER_SECTIONS = [
 
 const getDefaultPublicationLink = (publicationType) => {
   const normalizedType = (publicationType || '').trim().toLowerCase();
-  if (normalizedType.includes('insight')) return '/portfolio#insights';
-  if (normalizedType.includes('paper')) return '/portfolio#papers';
+  if (normalizedType.includes('insight')) return '/about#insights';
   return '';
 };
 
 const isPresetPublicationLink = (linkValue) => PUBLICATION_LINK_TARGETS.some((target) => target.value === linkValue);
 
 const inferSiteSection = (publication = {}) => {
+  if (publication.site_section === 'about_publications') return 'pharos_insights';
+  if (publication.site_section === 'portfolio_published' || publication.site_section === 'portfolio_working_papers') {
+    return 'migration_review';
+  }
   if (publication.site_section) return publication.site_section;
-  if (publication.status === 'in_development') return 'portfolio_working_papers';
+  if (publication.status === 'in_development') return 'migration_review';
   if ((publication.link || '').startsWith('/services')) return 'services_reference';
-  if ((publication.type || '').toLowerCase().includes('paper')) return 'portfolio_published';
-  return 'about_publications';
+  return 'pharos_insights';
 };
 
-const createEmptyPublication = (siteSection = 'about_publications') => ({
+const createEmptyPublication = (siteSection = 'pharos_insights') => ({
   type: '',
   title: '',
   venue: '',
@@ -77,7 +72,7 @@ const sortPublications = (left, right) => {
 };
 
 const PublicationPublisher = ({ apiUrl, publications, onRefresh, request = fetch, t }) => {
-  const [selectedSection, setSelectedSection] = useState('about_publications');
+  const [selectedSection, setSelectedSection] = useState('pharos_insights');
   const [editingPublication, setEditingPublication] = useState(null);
   const [form, setForm] = useState(createEmptyPublication());
   const [linkTarget, setLinkTarget] = useState('');
@@ -484,7 +479,7 @@ const PublicationPublisher = ({ apiUrl, publications, onRefresh, request = fetch
               type="text"
               value={customLink}
               onChange={(event) => setCustomLink(event.target.value)}
-              placeholder="/about#publications or https://..."
+              placeholder="/about#insights or https://..."
             />
           </label>
 

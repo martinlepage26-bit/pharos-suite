@@ -135,7 +135,7 @@ backend:
         comment: "Passed in-process FastAPI harness validation with a fake database layer when no Mongo daemon was initially available."
       - working: true
         agent: "main"
-        comment: "Passed live API validation against a temporary MongoMemoryServer instance and a real `uvicorn server:app` process on `http://127.0.0.1:9202`. Verified health, publications, services, admin login, platform status, bookings create/list/status/delete, and publications create/delete."
+        comment: "Passed live API validation against a temporary MongoMemoryServer instance and a real `uvicorn server:app` process on `http://127.0.0.1:9202`. Verified health, services, admin login, platform status, and bookings create/list/status/delete under the PHAROS-facing runtime, plus publication CRUD in a validation mode that exercised editorial routes. This is not the same thing as default fail-closed public-runtime behavior for publications."
 
 frontend:
   - task: "PHAROS frontend build validation"
@@ -165,7 +165,7 @@ frontend:
         comment: "New route present in working tree and should be included in this test run."
       - working: true
         agent: "main"
-        comment: "Static route validation passed. Confirmed import in `frontend/src/App.js`, route registration for `/publications/trust-advantage-analysis`, and matching publication link/seed references in frontend and backend."
+        comment: "Boundary-route validation passed. Confirmed `frontend/src/App.js` now blocks `/publications/trust-advantage-analysis` with a `SurfaceBoundary`, `frontend/public/_redirects` sends that path to `/observatory`, and legacy publication link/seed residue still exists in frontend/backend sources. This is not evidence of an active PHAROS publication page."
   - task: "Trust Advantage publication asset validation"
     implemented: true
     working: true
@@ -179,7 +179,7 @@ frontend:
         comment: "Second-pass task added. Need to verify the publication asset exists and is included in the built output."
       - working: true
         agent: "main"
-        comment: "Passed asset validation. Confirmed the `.docx` exists in both `frontend/public/publications/` and `frontend/build/publications/`, the built `_redirects` file contains `/* /index.html 200`, and the built asset served with HTTP 200 from a temporary local static server."
+        comment: "Passed asset validation. Confirmed the `.docx` exists in both `frontend/public/publications/` and `frontend/build/publications/`, the built `_redirects` file contains `/* /index.html 200`, and the built asset served with HTTP 200 from a temporary local static server. This is static publication-asset residue, not proof of an active PHAROS publication page."
   - task: "PHAROS domain rename validation"
     implemented: true
     working: true
@@ -190,10 +190,10 @@ frontend:
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Starting repo-side rename pass from `govern-ai.ca` to `pharos-ai.ca`. Need to validate frontend contact surfaces, redirect logic, and affected hostname docs/config."
+        comment: "Starting repo-side rename pass focused on `pharos-ai.ca` contact surfaces, redirect logic, and related hostname docs/config."
       - working: true
         agent: "main"
-        comment: "Repo-side rename pass completed for contact surfaces, redirect middleware, Cloudflare proxy config, and affected hostname planning docs. Remaining `govern-ai.ca` mentions are deliberate legacy redirect references or the unchanged `govern-ai.pages.dev` Pages project host."
+        comment: "Repo-side rename pass completed for the frontend, middleware, and planning docs. Remaining legacy references support the unchanged `govern-ai.pages.dev` Pages project host."
   - task: "PHAROS postmodern accent validation"
     implemented: true
     working: true
@@ -231,6 +231,6 @@ agent_communication:
   - agent: "main"
     message: "Live backend/API pass succeeded with a temporary MongoMemoryServer-backed stack, and the built Trust Advantage publication asset served correctly. Current PHAROS local test loop is green."
   - agent: "main"
-    message: "Starting a new pass for the repo-side hostname rename from govern-ai.ca to pharos-ai.ca. Validation target is frontend build plus a clean domain-reference sweep."
+    message: "Starting a new pass focused on `pharos-ai.ca` domain validation, covering the frontend build and a clean domain-reference sweep."
   - agent: "main"
     message: "Repo-side domain rename validated and the postmodern CSS accent pass compiled successfully. Current frontend build is green after both changes."

@@ -1,12 +1,13 @@
-const STORAGE_PREFIX = 'govern-ai-module-connection';
+const STORAGE_PREFIX = 'pharos-ai-module-connection';
+const LEGACY_STORAGE_PREFIX = 'govern-ai-module-connection';
 
 const DEFAULTS = {
   compassai: {
-    baseUrl: process.env.REACT_APP_COMPASSAI_URL || 'http://127.0.0.1:9205',
+    baseUrl: process.env.REACT_APP_COMPASSAI_URL || '',
     token: process.env.REACT_APP_COMPASSAI_TOKEN || ''
   },
   aurorai: {
-    baseUrl: process.env.REACT_APP_AURORAI_URL || 'http://127.0.0.1:9206',
+    baseUrl: process.env.REACT_APP_AURORAI_URL || '',
     token: process.env.REACT_APP_AURORAI_TOKEN || ''
   }
 };
@@ -16,6 +17,15 @@ const emptyConfig = (moduleKey) => ({
   token: DEFAULTS[moduleKey]?.token || ''
 });
 
+export const normalizeModuleConfig = (moduleKey, config) => {
+  const defaults = emptyConfig(moduleKey);
+
+  return {
+    baseUrl: (config?.baseUrl || defaults.baseUrl || '').trim(),
+    token: (config?.token || defaults.token || '').trim()
+  };
+};
+
 export const getModuleConfig = (moduleKey) => {
   const defaults = emptyConfig(moduleKey);
 
@@ -24,13 +34,13 @@ export const getModuleConfig = (moduleKey) => {
   }
 
   try {
-    const raw = window.localStorage.getItem(`${STORAGE_PREFIX}:${moduleKey}`);
+    const raw = (
+      window.localStorage.getItem(`${STORAGE_PREFIX}:${moduleKey}`)
+      || window.localStorage.getItem(`${LEGACY_STORAGE_PREFIX}:${moduleKey}`)
+    );
     if (!raw) return defaults;
     const parsed = JSON.parse(raw);
-    return {
-      baseUrl: parsed.baseUrl || defaults.baseUrl,
-      token: parsed.token || defaults.token
-    };
+    return normalizeModuleConfig(moduleKey, parsed);
   } catch (error) {
     return defaults;
   }
@@ -39,18 +49,19 @@ export const getModuleConfig = (moduleKey) => {
 export const saveModuleConfig = (moduleKey, config) => {
   if (typeof window === 'undefined') return;
 
+  const normalized = normalizeModuleConfig(moduleKey, config);
+
   window.localStorage.setItem(
     `${STORAGE_PREFIX}:${moduleKey}`,
-    JSON.stringify({
-      baseUrl: (config.baseUrl || '').trim(),
-      token: (config.token || '').trim()
-    })
+    JSON.stringify(normalized)
   );
+  window.localStorage.removeItem(`${LEGACY_STORAGE_PREFIX}:${moduleKey}`);
 };
 
 export const clearModuleConfig = (moduleKey) => {
   if (typeof window === 'undefined') return;
   window.localStorage.removeItem(`${STORAGE_PREFIX}:${moduleKey}`);
+  window.localStorage.removeItem(`${LEGACY_STORAGE_PREFIX}:${moduleKey}`);
 };
 
 const buildHeaders = ({ token, headers = {}, hasJsonBody }) => {

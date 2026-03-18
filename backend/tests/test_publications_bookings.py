@@ -3,6 +3,11 @@ Backend API tests for Publications and Bookings CRUD operations.
 Tests the new features added for AI Governance consulting website:
 - Publications: GET, POST, PUT, DELETE
 - Bookings: GET, POST, PUT (status), DELETE, booked-slots
+
+Boundary note:
+- Publication CRUD coverage reflects an editorial-enabled or validation-harness mode.
+- It does not by itself prove the default PHAROS public-runtime behavior, which is fail-closed when `ENABLE_EDITORIAL_SURFACES` is disabled.
+- Booking coverage still maps to PHAROS-facing runtime families.
 """
 import pytest
 import requests

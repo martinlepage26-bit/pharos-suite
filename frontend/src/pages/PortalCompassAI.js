@@ -20,6 +20,7 @@ import {
   clearModuleConfig,
   formatDateTime,
   getModuleConfig,
+  normalizeModuleConfig,
   requestModuleJson,
   saveModuleConfig
 } from '../lib/modulePortalApi';
@@ -78,7 +79,7 @@ const heroSignals = [
   {
     label: 'Live now',
     title: 'Read surfaces first',
-    description: 'The govern-ai shell can read live stats, records, benchmarks, and deliverables immediately while token-gated actions stay explicit.'
+    description: 'The PHAROS shell can read live stats, records, benchmarks, and deliverables immediately while token-gated actions stay explicit.'
   },
   {
     label: 'Priority',
@@ -91,9 +92,11 @@ const safeArray = (value) => (Array.isArray(value) ? value : []);
 
 const statusTone = (error) => (error ? 'error' : 'success');
 
+const getSafeConfig = () => normalizeModuleConfig(MODULE_KEY, getModuleConfig(MODULE_KEY));
+
 const PortalCompassAI = () => {
-  const [config, setConfig] = useState(() => getModuleConfig(MODULE_KEY));
-  const [draftConfig, setDraftConfig] = useState(() => getModuleConfig(MODULE_KEY));
+  const [config, setConfig] = useState(getSafeConfig);
+  const [draftConfig, setDraftConfig] = useState(getSafeConfig);
 
   const [loading, setLoading] = useState(true);
   const [secureLoading, setSecureLoading] = useState(false);
@@ -123,7 +126,7 @@ const PortalCompassAI = () => {
   const [scheduleForm, setScheduleForm] = useState(defaultScheduleForm);
   const [evidenceForm, setEvidenceForm] = useState(defaultEvidenceForm);
 
-  const authenticated = Boolean(config.token);
+  const authenticated = Boolean(config?.token);
 
   const sectorOptions = Array.from(new Set([
     ...fallbackSectors,
@@ -276,10 +279,7 @@ const PortalCompassAI = () => {
   };
 
   const handleSaveConnection = () => {
-    const nextConfig = {
-      baseUrl: draftConfig.baseUrl.trim(),
-      token: draftConfig.token.trim()
-    };
+    const nextConfig = normalizeModuleConfig(MODULE_KEY, draftConfig);
     saveModuleConfig(MODULE_KEY, nextConfig);
     setConfig(nextConfig);
     resetActionState();
@@ -288,7 +288,7 @@ const PortalCompassAI = () => {
 
   const handleResetConnection = () => {
     clearModuleConfig(MODULE_KEY);
-    const nextConfig = getModuleConfig(MODULE_KEY);
+    const nextConfig = getSafeConfig();
     setConfig(nextConfig);
     setDraftConfig(nextConfig);
     resetActionState();
@@ -544,7 +544,7 @@ const PortalCompassAI = () => {
       <div className="page-hero portal-module-hero">
         <div className="container">
           <div className="section-header">
-            <p className="eyebrow">Govern-ai module</p>
+            <p className="eyebrow">PHAROS product</p>
             <h1>CompassAI</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
               Govern client records, system inventories, evidence, risk assessments, deliverables, and review cadence from one PHAROS-hosted surface.
@@ -976,7 +976,7 @@ const PortalCompassAI = () => {
                       <h2>Read the package a review body will see</h2>
                     </div>
                     <p className="body-sm">
-                      The package view is wired to the selected assessment so the govern-ai shell shows the same roadmap, evidence requests, and checklist logic as CompassAI.
+                      The package view is wired to the selected assessment so the PHAROS shell shows the same roadmap, evidence requests, and checklist logic as CompassAI.
                     </p>
                   </div>
 
@@ -1040,7 +1040,7 @@ const PortalCompassAI = () => {
                       <h2>Compare posture against sector baselines</h2>
                     </div>
                     <p className="body-sm">
-                      Benchmarks are public in the current backend, so the govern-ai shell can expose them before the secured admin surface is finalized.
+                      Benchmarks are public in the current backend, so the PHAROS shell can expose them before the secured admin surface is finalized.
                     </p>
                   </div>
 
@@ -1265,10 +1265,10 @@ const PortalCompassAI = () => {
                 <div className="portal-section-head">
                   <div>
                     <p className="eyebrow">Downstream fit</p>
-                    <h2>CompassAI is now live inside the govern-ai shell</h2>
+                    <h2>CompassAI is now live inside the PHAROS shell</h2>
                   </div>
                   <p className="body-sm">
-                    The next backend move is consolidation, not reinvention: keep the govern-ai routes as the product shell, then rationalize auth, secret handling, and repository boundaries behind them.
+                    The next backend move is consolidation, not reinvention: keep the PHAROS routes as the product shell, then rationalize auth, secret handling, and repository boundaries behind them.
                   </p>
                 </div>
 

@@ -4,17 +4,23 @@ import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, Calenda
 import PublicationPublisher from '../components/admin/PublicationPublisher';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
-const ADMIN_SESSION_KEY = 'govern-ai-admin-token';
+const ADMIN_SESSION_KEY = 'pharos-ai-admin-token';
+const LEGACY_ADMIN_SESSION_KEY = 'govern-ai-admin-token';
+const EDITORIAL_SURFACES_ENABLED = false;
 
 const Admin = () => {
   const { t } = useLanguage();
   const [authToken, setAuthToken] = useState(() => {
     if (typeof window === 'undefined') return '';
-    return window.sessionStorage.getItem(ADMIN_SESSION_KEY) || '';
+    return (
+      window.sessionStorage.getItem(ADMIN_SESSION_KEY)
+      || window.sessionStorage.getItem(LEGACY_ADMIN_SESSION_KEY)
+      || ''
+    );
   });
   const [passphrase, setPassphrase] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [activeTab, setActiveTab] = useState('publications');
+  const [activeTab, setActiveTab] = useState(EDITORIAL_SURFACES_ENABLED ? 'publications' : 'bookings');
   const authenticated = Boolean(authToken);
 
   const [publications, setPublications] = useState([]);
@@ -51,6 +57,7 @@ const Admin = () => {
     setPlatformStatus(null);
     if (typeof window !== 'undefined') {
       window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+      window.sessionStorage.removeItem(LEGACY_ADMIN_SESSION_KEY);
     }
   }, []);
 
@@ -59,10 +66,18 @@ const Admin = () => {
 
     if (authToken) {
       window.sessionStorage.setItem(ADMIN_SESSION_KEY, authToken);
+      window.sessionStorage.removeItem(LEGACY_ADMIN_SESSION_KEY);
     } else {
       window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+      window.sessionStorage.removeItem(LEGACY_ADMIN_SESSION_KEY);
     }
   }, [authToken]);
+
+  useEffect(() => {
+    if (!EDITORIAL_SURFACES_ENABLED && activeTab === 'publications') {
+      setActiveTab('bookings');
+    }
+  }, [activeTab]);
 
   const authFetch = useCallback(async (url, options = {}) => {
     if (!authToken) {
@@ -144,7 +159,9 @@ const Admin = () => {
 
   useEffect(() => {
     if (authenticated) {
-      loadPublications();
+      if (EDITORIAL_SURFACES_ENABLED) {
+        loadPublications();
+      }
       loadBookings();
       loadFaqItems();
       loadServicePackages();
@@ -327,10 +344,12 @@ const Admin = () => {
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-8">
-          <button onClick={() => setActiveTab('publications')} data-testid="admin-tab-publications"
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'publications' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
-            <BookOpen className="w-4 h-4" /> {t.admin.publications}
-          </button>
+          {EDITORIAL_SURFACES_ENABLED ? (
+            <button onClick={() => setActiveTab('publications')} data-testid="admin-tab-publications"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'publications' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
+              <BookOpen className="w-4 h-4" /> {t.admin.publications}
+            </button>
+          ) : null}
           <button onClick={() => setActiveTab('bookings')} data-testid="admin-tab-bookings"
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'bookings' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
             <CalendarDays className="w-4 h-4" /> {t.admin.bookings}
@@ -353,7 +372,7 @@ const Admin = () => {
         </div>
 
         {/* Publications Tab */}
-        {activeTab === 'publications' && (
+        {EDITORIAL_SURFACES_ENABLED && activeTab === 'publications' && (
           <div>
             <div className="flex items-center justify-between mb-6">
               <div>
