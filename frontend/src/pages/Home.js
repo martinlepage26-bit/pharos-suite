@@ -431,15 +431,17 @@ const Home = () => {
               </div>
               <div className="hero-mark-lockup">
                 <div className="hero-mark-shell">
-                  <HeroRadiantEmblem className="hero-emblem" />
-                  <div className="hero-beam-origin" aria-hidden="true">
-                    <span className="hero-word-halo" />
-                    <span className="hero-word-core" />
-                    <span className="hero-quantum-beam hero-quantum-beam-right" />
-                    <span className="hero-quantum-beam hero-quantum-beam-left" />
-                    <span className="hero-quantum-beam hero-quantum-beam-down-right" />
-                    <span className="hero-quantum-beam hero-quantum-beam-down-left" />
-                    <span className="hero-quantum-beam hero-quantum-beam-up" />
+                  <div className="hero-mark-crest">
+                    <HeroRadiantEmblem className="hero-emblem" />
+                    <div className="hero-beam-origin" aria-hidden="true">
+                      <span className="hero-word-halo" />
+                      <span className="hero-word-core" />
+                      <span className="hero-quantum-beam hero-quantum-beam-right" />
+                      <span className="hero-quantum-beam hero-quantum-beam-left" />
+                      <span className="hero-quantum-beam hero-quantum-beam-down-right" />
+                      <span className="hero-quantum-beam hero-quantum-beam-down-left" />
+                      <span className="hero-quantum-beam hero-quantum-beam-up" />
+                    </div>
                   </div>
                   <span className="hero-wordmark hero-wordmark-core">PHAROS</span>
                 </div>

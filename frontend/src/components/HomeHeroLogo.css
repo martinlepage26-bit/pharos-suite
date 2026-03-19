@@ -1,25 +1,25 @@
 .hero-mark-lockup {
   position: absolute;
-  inset: 53% 0 auto;
+  inset: 36% 0 auto;
   display: grid;
   place-items: center;
   gap: 0.18rem;
   text-align: center;
   pointer-events: none;
-  transform: translateY(-33%);
+  transform: translateY(-20%);
   z-index: 2;
 }
 
 .hero-mark-shell {
-  --hero-focal-point-top: 23%;
+  --hero-focal-point-top: 19%;
   --hero-emblem-size: clamp(9.75rem, 23vw, 16rem);
+  --hero-crest-height: calc(var(--hero-emblem-size) * 0.9);
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  min-height: clamp(11.75rem, 27vw, 17rem);
-  padding: 0 clamp(0.35rem, 1vw, 0.6rem) 0.2rem;
+  display: grid;
+  justify-items: center;
+  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+  min-height: auto;
+  padding: 0 clamp(0.35rem, 1vw, 0.6rem);
   isolation: isolate;
 }
 
@@ -31,7 +31,8 @@
 }
 
 .hero-mark-shell::before {
-  inset: 2% 6% 26%;
+  inset: 0 6% auto;
+  height: var(--hero-crest-height);
   border-radius: 50%;
   background:
     radial-gradient(circle at 50% 44%, rgba(214, 244, 255, 0.28) 0%, rgba(135, 215, 255, 0.2) 22%, rgba(77, 166, 255, 0.12) 46%, rgba(31, 86, 220, 0.04) 66%, rgba(31, 86, 220, 0) 82%);
@@ -41,18 +42,25 @@
 }
 
 .hero-mark-shell::after {
-  inset: 10% 20% 40%;
+  inset: 8% 20% auto;
+  height: calc(var(--hero-crest-height) * 0.66);
   border-radius: 50%;
   border: 1px solid rgba(142, 212, 255, 0.18);
   transform: none;
   opacity: 0.42;
 }
 
+.hero-mark-crest {
+  position: relative;
+  width: var(--hero-emblem-size);
+  height: var(--hero-crest-height);
+}
+
 .hero-emblem {
   position: absolute;
   left: 50%;
-  top: var(--hero-focal-point-top);
-  width: var(--hero-emblem-size);
+  top: 50%;
+  width: 100%;
   height: auto;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -65,7 +73,7 @@
 .hero-beam-origin {
   position: absolute;
   left: 50%;
-  top: var(--hero-focal-point-top);
+  top: 50%;
   width: 0;
   height: 0;
   pointer-events: none;
@@ -180,8 +188,10 @@
 }
 
 .hero-wordmark {
+  display: block;
   position: relative;
   z-index: 2;
+  margin-top: 0;
   font-size: clamp(2.25rem, 5.4vw, 4rem);
   font-weight: 600;
   letter-spacing: 0.24em;
@@ -215,20 +225,20 @@
 
 @media (max-width: 760px) {
   .hero-mark-lockup {
-    inset: 50% 0 auto;
+    inset: 38% 0 auto;
     gap: 0.22rem;
-    transform: translateY(-26%);
+    transform: translateY(-18%);
   }
 
   .hero-mark-shell {
-    --hero-focal-point-top: 22%;
+    --hero-focal-point-top: 19%;
     --hero-emblem-size: clamp(7.75rem, 40vw, 11.5rem);
-    min-height: clamp(9.4rem, 38vw, 12.25rem);
+    gap: clamp(0.48rem, 1.8vw, 0.82rem);
   }
 
   .hero-emblem {
-    top: var(--hero-focal-point-top);
-    width: var(--hero-emblem-size);
+    top: 50%;
+    width: 100%;
   }
 
   .hero-word-halo {
@@ -242,6 +252,7 @@
   }
 
   .hero-wordmark {
+    margin-top: 0;
     font-size: clamp(1.55rem, 8vw, 2.45rem);
     letter-spacing: 0.18em;
     transform: translateX(0.11em);
