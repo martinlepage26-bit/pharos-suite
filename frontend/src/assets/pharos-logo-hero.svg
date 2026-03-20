@@ -1,0 +1,419 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="title desc">
+  <title id="title">PHAROS logo rebuilt as vector artwork</title>
+  <desc id="desc">A deep blue square field with dense cyan portal rings, a radiant starburst, a neural network emblem, a luminous staircase, bracket bases, and a centered PHAROS wordmark.</desc>
+
+  <defs>
+    <linearGradient id="field-base" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f67b7" />
+      <stop offset="0.18" stop-color="#1691d8" />
+      <stop offset="0.48" stop-color="#0d4b92" />
+      <stop offset="1" stop-color="#040837" />
+    </linearGradient>
+
+    <radialGradient id="field-top-glow" cx="0.5" cy="0.1" r="0.82">
+      <stop offset="0" stop-color="#61fbff" stop-opacity="0.98" />
+      <stop offset="0.23" stop-color="#31def4" stop-opacity="0.62" />
+      <stop offset="0.58" stop-color="#0d75c9" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#051144" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="field-bottom-vignette" cx="0.5" cy="1" r="0.72">
+      <stop offset="0" stop-color="#03134a" stop-opacity="0.22" />
+      <stop offset="1" stop-color="#020320" stop-opacity="0.96" />
+    </radialGradient>
+
+    <radialGradient id="core-well" cx="0.5" cy="0.46" r="0.46">
+      <stop offset="0" stop-color="#1a7fd0" stop-opacity="0.4" />
+      <stop offset="0.56" stop-color="#0b377f" stop-opacity="0.48" />
+      <stop offset="1" stop-color="#07225f" stop-opacity="0.12" />
+    </radialGradient>
+
+    <radialGradient id="core-glow" cx="0.5" cy="0.45" r="0.42">
+      <stop offset="0" stop-color="#fffef8" stop-opacity="0.98" />
+      <stop offset="0.18" stop-color="#fbffff" stop-opacity="0.9" />
+      <stop offset="0.46" stop-color="#b8fdff" stop-opacity="0.72" />
+      <stop offset="0.72" stop-color="#4ee0ff" stop-opacity="0.34" />
+      <stop offset="1" stop-color="#28bcff" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="quantum-core-bloom" cx="512" cy="432" r="140" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffef9" stop-opacity="1" />
+      <stop offset="0.12" stop-color="#fff6df" stop-opacity="0.96" />
+      <stop offset="0.24" stop-color="#ebffff" stop-opacity="0.98" />
+      <stop offset="0.4" stop-color="#9dfcff" stop-opacity="0.88" />
+      <stop offset="0.64" stop-color="#35d7ff" stop-opacity="0.48" />
+      <stop offset="1" stop-color="#0e7cd5" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="ring-edge" x1="512" y1="24" x2="512" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff5d6" />
+      <stop offset="0.12" stop-color="#fffefe" />
+      <stop offset="0.28" stop-color="#d7fbff" />
+      <stop offset="0.5" stop-color="#50e4ff" />
+      <stop offset="1" stop-color="#1a77cc" />
+    </linearGradient>
+
+    <linearGradient id="ring-body" x1="512" y1="36" x2="512" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1aa5e7" stop-opacity="0.92" />
+      <stop offset="0.34" stop-color="#0d63b5" stop-opacity="0.84" />
+      <stop offset="1" stop-color="#0a276f" stop-opacity="0.72" />
+    </linearGradient>
+
+    <linearGradient id="ring-dark" x1="512" y1="80" x2="512" y2="920" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a75c4" stop-opacity="0.6" />
+      <stop offset="1" stop-color="#09214f" stop-opacity="0.9" />
+    </linearGradient>
+
+    <linearGradient id="ring-lip" x1="512" y1="28" x2="512" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff2c7" />
+      <stop offset="0.16" stop-color="#f8ffff" />
+      <stop offset="0.32" stop-color="#8ef8ff" />
+      <stop offset="1" stop-color="#1ba8f3" />
+    </linearGradient>
+
+    <linearGradient id="beam-stroke" x1="512" y1="168" x2="512" y2="690" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffef8" stop-opacity="0.98" />
+      <stop offset="0.14" stop-color="#ffffff" stop-opacity="0.94" />
+      <stop offset="0.32" stop-color="#d9ffff" stop-opacity="0.86" />
+      <stop offset="0.54" stop-color="#61ebff" stop-opacity="0.58" />
+      <stop offset="1" stop-color="#1c9be5" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="beam-stroke-quantum" x1="512" y1="432" x2="512" y2="244" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffef9" stop-opacity="1" />
+      <stop offset="0.12" stop-color="#ffffff" stop-opacity="0.98" />
+      <stop offset="0.24" stop-color="#fff3d1" stop-opacity="0.88" />
+      <stop offset="0.4" stop-color="#aafcff" stop-opacity="0.96" />
+      <stop offset="0.6" stop-color="#40e4ff" stop-opacity="0.84" />
+      <stop offset="0.82" stop-color="#1aa9f7" stop-opacity="0.34" />
+      <stop offset="1" stop-color="#1576d8" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="node-fill" x1="512" y1="360" x2="512" y2="504" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffef6" />
+      <stop offset="0.18" stop-color="#f0ffff" />
+      <stop offset="0.46" stop-color="#8cf9ff" />
+      <stop offset="1" stop-color="#33ddff" />
+    </linearGradient>
+
+    <linearGradient id="link-stroke" x1="452" y1="370" x2="572" y2="492" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b5ffff" stop-opacity="0.84" />
+      <stop offset="1" stop-color="#4ce5ff" stop-opacity="0.82" />
+    </linearGradient>
+
+    <linearGradient id="stair-fill" x1="512" y1="540" x2="512" y2="872" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="0.16" stop-color="#fff7dd" />
+      <stop offset="0.34" stop-color="#f0ffff" />
+      <stop offset="1" stop-color="#5feeff" />
+    </linearGradient>
+
+    <radialGradient id="stair-glow" cx="0.5" cy="0.64" r="0.34">
+      <stop offset="0" stop-color="#fffef7" stop-opacity="0.9" />
+      <stop offset="0.24" stop-color="#d7ffff" stop-opacity="0.82" />
+      <stop offset="1" stop-color="#34d2ff" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="wordmark-fill" x1="332" y1="892" x2="692" y2="960" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8d6320" />
+      <stop offset="0.16" stop-color="#d4a64a" />
+      <stop offset="0.34" stop-color="#f2cf74" />
+      <stop offset="0.48" stop-color="#fff4c9" />
+      <stop offset="0.62" stop-color="#f3cf72" />
+      <stop offset="0.82" stop-color="#c58f2f" />
+      <stop offset="1" stop-color="#795116" />
+    </linearGradient>
+
+    <linearGradient id="bracket-fill" x1="170" y1="858" x2="272" y2="920" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2b2d71" />
+      <stop offset="0.42" stop-color="#112564" />
+      <stop offset="1" stop-color="#0a1751" />
+    </linearGradient>
+
+    <mask id="portal-opening-mask">
+      <rect width="1024" height="1024" fill="#fff" />
+      <path d="M 396 1024 L 628 1024 C 612 914 584 770 548 582 H 476 C 440 770 412 914 396 1024 Z" fill="#000" />
+    </mask>
+
+    <radialGradient id="beam-core-reveal" cx="512" cy="432" r="132" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000" />
+      <stop offset="0.56" stop-color="#000" />
+      <stop offset="0.84" stop-color="#fff" />
+      <stop offset="1" stop-color="#fff" />
+    </radialGradient>
+
+    <mask id="beam-outer-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#fff" />
+      <circle cx="512" cy="432" r="132" fill="url(#beam-core-reveal)" />
+    </mask>
+
+    <clipPath id="beam-core-clip" clipPathUnits="userSpaceOnUse">
+      <circle cx="512" cy="432" r="152" />
+    </clipPath>
+
+    <filter id="portal-glow" x="-32%" y="-32%" width="164%" height="164%">
+      <feGaussianBlur stdDeviation="7.4" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.02 0 1 0 0 0.98 0 0 1 0 1 0 0 0 0.86 0" result="cyanBlur" />
+      <feMerge>
+        <feMergeNode in="cyanBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="beam-glow" x="-42%" y="-42%" width="184%" height="184%">
+      <feGaussianBlur stdDeviation="5.2" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.03 0 1 0 0 1 0 0 1 0 1 0 0 0 0.76 0" result="beamBlur" />
+      <feMerge>
+        <feMergeNode in="beamBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="tight-glow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="3.8" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.02 0 1 0 0 0.98 0 0 1 0 1 0 0 0 0.86 0" result="tightBlur" />
+      <feMerge>
+        <feMergeNode in="tightBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <line id="beamMajor" x1="512" y1="432" x2="512" y2="168" stroke="url(#beam-stroke)" stroke-width="5.4" stroke-linecap="round" opacity="0.82" />
+    <line id="beamMinor" x1="512" y1="432" x2="512" y2="200" stroke="url(#beam-stroke)" stroke-width="3.6" stroke-linecap="round" opacity="0.64" />
+    <line id="beamNeedle" x1="512" y1="432" x2="512" y2="186" stroke="url(#beam-stroke)" stroke-width="1.35" stroke-linecap="round" opacity="0.4" />
+    <line id="beamCoreMajor" x1="512" y1="432" x2="512" y2="258" stroke="url(#beam-stroke-quantum)" stroke-width="8.6" stroke-linecap="round" opacity="0.88" />
+    <line id="beamCoreMinor" x1="512" y1="432" x2="512" y2="278" stroke="url(#beam-stroke-quantum)" stroke-width="5.1" stroke-linecap="round" opacity="0.72" />
+    <line id="beamCoreNeedle" x1="512" y1="432" x2="512" y2="250" stroke="url(#beam-stroke-quantum)" stroke-width="2" stroke-linecap="round" opacity="0.56" />
+  </defs>
+
+  <g id="portal-rings" mask="url(#portal-opening-mask)" filter="url(#portal-glow)" fill="none">
+    <circle cx="512" cy="488" r="442" stroke="url(#ring-edge)" stroke-width="10.8" opacity="0.98" />
+    <circle cx="512" cy="488" r="429" stroke="url(#ring-body)" stroke-width="24" opacity="0.96" />
+    <circle cx="512" cy="488" r="418" stroke="url(#ring-lip)" stroke-width="3.1" opacity="0.9" />
+    <circle cx="512" cy="488" r="411" stroke="url(#ring-dark)" stroke-width="2.8" opacity="0.62" />
+    <circle cx="512" cy="488" r="404" stroke="url(#ring-dark)" stroke-width="1.2" opacity="0.34" />
+
+    <circle cx="512" cy="488" r="392" stroke="url(#ring-body)" stroke-width="18.2" opacity="0.86" />
+    <circle cx="512" cy="488" r="384" stroke="url(#ring-lip)" stroke-width="2.55" opacity="0.82" />
+    <circle cx="512" cy="488" r="378" stroke="url(#ring-dark)" stroke-width="2.15" opacity="0.54" />
+    <circle cx="512" cy="488" r="371" stroke="url(#ring-dark)" stroke-width="1.1" opacity="0.3" />
+
+    <circle cx="512" cy="488" r="358" stroke="url(#ring-body)" stroke-width="15.2" opacity="0.82" />
+    <circle cx="512" cy="488" r="350" stroke="url(#ring-lip)" stroke-width="2.35" opacity="0.78" />
+    <circle cx="512" cy="488" r="344" stroke="url(#ring-dark)" stroke-width="1.95" opacity="0.5" />
+
+    <circle cx="512" cy="488" r="331" stroke="url(#ring-body)" stroke-width="13" opacity="0.78" />
+    <circle cx="512" cy="488" r="324" stroke="url(#ring-lip)" stroke-width="2.2" opacity="0.76" />
+    <circle cx="512" cy="488" r="318" stroke="url(#ring-dark)" stroke-width="1.75" opacity="0.48" />
+
+    <circle cx="512" cy="488" r="305" stroke="url(#ring-body)" stroke-width="10.8" opacity="0.74" />
+    <circle cx="512" cy="488" r="299" stroke="url(#ring-lip)" stroke-width="2" opacity="0.74" />
+    <circle cx="512" cy="488" r="294" stroke="url(#ring-dark)" stroke-width="1.5" opacity="0.44" />
+
+    <circle cx="512" cy="488" r="286" stroke="url(#ring-edge)" stroke-width="7.6" opacity="0.92" />
+  </g>
+
+  <g id="central-core-glow" transform="translate(0 56) translate(512 432) scale(1.12) translate(-512 -432)">
+    <circle cx="512" cy="432" r="220" fill="url(#core-well)" opacity="0.82" />
+    <circle cx="512" cy="432" r="204" fill="url(#core-glow)" opacity="0.34" />
+    <circle cx="512" cy="432" r="150" fill="url(#core-glow)" opacity="0.48" />
+  </g>
+
+  <g id="light-beams" filter="url(#beam-glow)" transform="translate(0 48) translate(512 432) scale(1.03) translate(-512 -432)">
+    <g id="beam-origin" clip-path="url(#beam-core-clip)">
+      <circle cx="512" cy="432" r="152" fill="url(#quantum-core-bloom)" opacity="0.52" />
+      <circle cx="512" cy="432" r="106" fill="url(#quantum-core-bloom)" opacity="0.68" />
+      <use href="#beamCoreMajor" transform="rotate(0 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(7.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(15 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(22.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(30 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(37.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(45 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(52.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(60 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(67.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(75 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(82.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(90 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(97.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(105 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(112.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(120 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(127.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(135 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(142.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(150 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(157.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(165 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(172.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(180 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(187.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(195 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(202.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(210 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(217.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(225 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(232.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(240 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(247.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(255 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(262.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(270 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(277.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(285 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(292.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(300 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(307.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(315 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(322.5 512 432)" />
+      <use href="#beamCoreMajor" transform="rotate(330 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(337.5 512 432)" />
+      <use href="#beamCoreMinor" transform="rotate(345 512 432)" />
+      <use href="#beamCoreNeedle" transform="rotate(352.5 512 432)" />
+    </g>
+
+    <g id="beam-rays" mask="url(#beam-outer-mask)">
+      <use href="#beamMajor" transform="rotate(0 512 432)" />
+      <use href="#beamNeedle" transform="rotate(7.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(15 512 432)" />
+      <use href="#beamNeedle" transform="rotate(22.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(30 512 432)" />
+      <use href="#beamNeedle" transform="rotate(37.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(45 512 432)" />
+      <use href="#beamNeedle" transform="rotate(52.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(60 512 432)" />
+      <use href="#beamNeedle" transform="rotate(67.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(75 512 432)" />
+      <use href="#beamNeedle" transform="rotate(82.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(90 512 432)" />
+      <use href="#beamNeedle" transform="rotate(97.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(105 512 432)" />
+      <use href="#beamNeedle" transform="rotate(112.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(120 512 432)" />
+      <use href="#beamNeedle" transform="rotate(127.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(135 512 432)" />
+      <use href="#beamNeedle" transform="rotate(142.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(150 512 432)" />
+      <use href="#beamNeedle" transform="rotate(157.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(165 512 432)" />
+      <use href="#beamNeedle" transform="rotate(172.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(180 512 432)" />
+      <use href="#beamNeedle" transform="rotate(187.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(195 512 432)" />
+      <use href="#beamNeedle" transform="rotate(202.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(210 512 432)" />
+      <use href="#beamNeedle" transform="rotate(217.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(225 512 432)" />
+      <use href="#beamNeedle" transform="rotate(232.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(240 512 432)" />
+      <use href="#beamNeedle" transform="rotate(247.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(255 512 432)" />
+      <use href="#beamNeedle" transform="rotate(262.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(270 512 432)" />
+      <use href="#beamNeedle" transform="rotate(277.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(285 512 432)" />
+      <use href="#beamNeedle" transform="rotate(292.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(300 512 432)" />
+      <use href="#beamNeedle" transform="rotate(307.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(315 512 432)" />
+      <use href="#beamNeedle" transform="rotate(322.5 512 432)" />
+      <use href="#beamMajor" transform="rotate(330 512 432)" />
+      <use href="#beamNeedle" transform="rotate(337.5 512 432)" />
+      <use href="#beamMinor" transform="rotate(345 512 432)" />
+      <use href="#beamNeedle" transform="rotate(352.5 512 432)" />
+    </g>
+  </g>
+
+  <g id="neural-icon" filter="url(#tight-glow)" transform="translate(0 56) translate(512 432) scale(1.28) translate(-512 -432)">
+    <circle cx="512" cy="432" r="84" fill="#0a4e97" fill-opacity="0.82" />
+    <circle cx="512" cy="432" r="70" fill="#073472" fill-opacity="0.9" stroke="#ffe8ab" stroke-opacity="0.24" stroke-width="1.8" />
+
+    <g id="network-links" stroke="url(#link-stroke)" stroke-width="1.95" stroke-linecap="round">
+      <path d="M 512 370 L 548.44 381.84 L 570.97 412.84 L 570.97 451.16 L 548.44 482.16 L 512 494 L 475.56 482.16 L 453.03 451.16 L 453.03 412.84 L 475.56 381.84 Z" fill="none" />
+      <path d="M 512 401 L 541.48 422.42 L 530.22 457.08 L 493.78 457.08 L 482.52 422.42 Z" fill="none" />
+      <line x1="512" y1="432" x2="512" y2="401" />
+      <line x1="512" y1="432" x2="541.48" y2="422.42" />
+      <line x1="512" y1="432" x2="530.22" y2="457.08" />
+      <line x1="512" y1="432" x2="493.78" y2="457.08" />
+      <line x1="512" y1="432" x2="482.52" y2="422.42" />
+      <line x1="512" y1="401" x2="512" y2="370" />
+      <line x1="512" y1="401" x2="548.44" y2="381.84" />
+      <line x1="512" y1="401" x2="475.56" y2="381.84" />
+      <line x1="541.48" y1="422.42" x2="548.44" y2="381.84" />
+      <line x1="541.48" y1="422.42" x2="570.97" y2="412.84" />
+      <line x1="541.48" y1="422.42" x2="570.97" y2="451.16" />
+      <line x1="530.22" y1="457.08" x2="570.97" y2="451.16" />
+      <line x1="530.22" y1="457.08" x2="548.44" y2="482.16" />
+      <line x1="530.22" y1="457.08" x2="512" y2="494" />
+      <line x1="493.78" y1="457.08" x2="512" y2="494" />
+      <line x1="493.78" y1="457.08" x2="475.56" y2="482.16" />
+      <line x1="493.78" y1="457.08" x2="453.03" y2="451.16" />
+      <line x1="482.52" y1="422.42" x2="453.03" y2="451.16" />
+      <line x1="482.52" y1="422.42" x2="453.03" y2="412.84" />
+      <line x1="482.52" y1="422.42" x2="475.56" y2="381.84" />
+      <line x1="482.52" y1="422.42" x2="512" y2="370" />
+      <line x1="541.48" y1="422.42" x2="482.52" y2="422.42" />
+      <line x1="512" y1="401" x2="493.78" y2="457.08" />
+      <line x1="512" y1="401" x2="530.22" y2="457.08" />
+    </g>
+
+    <g id="network-nodes" fill="url(#node-fill)" stroke="#e3ffff" stroke-opacity="0.52" stroke-width="1.2">
+      <circle cx="512" cy="370" r="8.2" />
+      <circle cx="548.44" cy="381.84" r="7.5" />
+      <circle cx="570.97" cy="412.84" r="7.5" />
+      <circle cx="570.97" cy="451.16" r="7.5" />
+      <circle cx="548.44" cy="482.16" r="7.5" />
+      <circle cx="512" cy="494" r="7.5" />
+      <circle cx="475.56" cy="482.16" r="7.5" />
+      <circle cx="453.03" cy="451.16" r="7.5" />
+      <circle cx="453.03" cy="412.84" r="7.5" />
+      <circle cx="475.56" cy="381.84" r="7.5" />
+
+      <circle cx="512" cy="401" r="6.5" />
+      <circle cx="541.48" cy="422.42" r="6.5" />
+      <circle cx="530.22" cy="457.08" r="6.5" />
+      <circle cx="493.78" cy="457.08" r="6.5" />
+      <circle cx="482.52" cy="422.42" r="6.5" />
+
+      <circle cx="512" cy="432" r="12.2" />
+    </g>
+  </g>
+
+  <g id="staircase" transform="translate(0 -18) translate(512 702) scale(0.99 0.92) translate(-512 -702)">
+    <path d="M 428 918 L 512 530 L 596 918 Z" fill="url(#stair-glow)" opacity="0.94" />
+    <path d="M 444 908 L 512 546 L 580 908 Z" fill="#08265b" fill-opacity="0.76" />
+
+    <g id="stair-steps" filter="url(#tight-glow)" fill="url(#stair-fill)">
+      <path d="M 455 598 H 569 L 578 624 H 446 Z" />
+      <path d="M 439 648 H 585 L 594 675 H 430 Z" />
+      <path d="M 422 699 H 602 L 612 727 H 412 Z" />
+      <path d="M 404 752 H 620 L 631 781 H 393 Z" />
+      <path d="M 385 806 H 639 L 651 836 H 373 Z" />
+      <path d="M 364 861 H 660 L 674 894 H 350 Z" />
+    </g>
+  </g>
+
+  <g id="base-brackets" filter="url(#tight-glow)">
+    <path d="M 184 982 V 918 H 244 V 940 H 206 V 956 H 286 V 982 Z" fill="url(#bracket-fill)" stroke="#d8c08a" stroke-opacity="0.76" stroke-width="3.2" />
+    <path d="M 840 982 V 918 H 780 V 940 H 818 V 956 H 738 V 982 Z" fill="url(#bracket-fill)" stroke="#d8c08a" stroke-opacity="0.76" stroke-width="3.2" />
+  </g>
+
+  <g id="wordmark" filter="url(#tight-glow)">
+    <text
+      x="512"
+      y="950"
+      fill="url(#wordmark-fill)"
+      font-family="Montserrat, Gotham, Avenir Next, Century Gothic, Futura, Arial, Helvetica, sans-serif"
+      font-size="123"
+      font-weight="800"
+      letter-spacing="3.2"
+      text-anchor="middle"
+      lengthAdjust="spacingAndGlyphs"
+      textLength="506"
+    >
+      PHAROS
+    </text>
+  </g>
+
+</svg>

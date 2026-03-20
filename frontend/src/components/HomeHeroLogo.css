@@ -1,23 +1,23 @@
 .hero-mark-lockup {
   position: absolute;
-  inset: 36% 0 auto;
+  inset: 33% 0 auto;
   display: grid;
   place-items: center;
   gap: 0.18rem;
   text-align: center;
   pointer-events: none;
-  transform: translateY(-20%);
+  transform: translateY(-16%);
   z-index: 2;
 }
 
 .hero-mark-shell {
   --hero-focal-point-top: 19%;
-  --hero-emblem-size: clamp(9.75rem, 23vw, 16rem);
-  --hero-crest-height: calc(var(--hero-emblem-size) * 0.9);
+  --hero-emblem-size: clamp(9.3rem, 20.5vw, 14.1rem);
+  --hero-crest-height: var(--hero-emblem-size);
   position: relative;
   display: grid;
   justify-items: center;
-  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+  gap: clamp(0.3rem, 0.9vw, 0.75rem);
   min-height: auto;
   padding: 0 clamp(0.35rem, 1vw, 0.6rem);
   isolation: isolate;
@@ -35,9 +35,9 @@
   height: var(--hero-crest-height);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 44%, rgba(214, 244, 255, 0.28) 0%, rgba(135, 215, 255, 0.2) 22%, rgba(77, 166, 255, 0.12) 46%, rgba(31, 86, 220, 0.04) 66%, rgba(31, 86, 220, 0) 82%);
-  filter: blur(26px);
-  opacity: 0.8;
+    radial-gradient(circle at 50% 40%, rgba(255, 251, 243, 0.34) 0%, rgba(214, 244, 255, 0.28) 16%, rgba(216, 192, 138, 0.12) 28%, rgba(135, 215, 255, 0.2) 40%, rgba(77, 166, 255, 0.12) 56%, rgba(31, 86, 220, 0.04) 72%, rgba(31, 86, 220, 0) 86%);
+  filter: blur(28px);
+  opacity: 0.92;
   transform: translateY(-8%);
 }
 
@@ -54,6 +54,20 @@
   position: relative;
   width: var(--hero-emblem-size);
   height: var(--hero-crest-height);
+  isolation: isolate;
+}
+
+.hero-mark-crest::after {
+  content: '';
+  position: absolute;
+  inset: 12% 10% 10%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 247, 225, 0.34) 0%, rgba(214, 188, 111, 0.2) 14%, rgba(214, 188, 111, 0.1) 24%, rgba(118, 94, 224, 0.14) 42%, rgba(18, 24, 72, 0) 74%);
+  mix-blend-mode: screen;
+  opacity: 0.84;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .hero-emblem {
@@ -66,8 +80,20 @@
   z-index: 1;
   opacity: 0.96;
   filter:
-    drop-shadow(0 0 18px rgba(143, 215, 255, 0.24))
-    drop-shadow(0 0 40px rgba(35, 91, 232, 0.1));
+    saturate(0.9)
+    hue-rotate(8deg)
+    brightness(1.02)
+    contrast(1)
+    drop-shadow(0 0 14px rgba(255, 247, 225, 0.18))
+    drop-shadow(0 0 20px rgba(184, 141, 71, 0.12))
+    drop-shadow(0 0 36px rgba(132, 191, 255, 0.18))
+    drop-shadow(0 0 52px rgba(92, 72, 176, 0.12));
+}
+
+.hero-emblem-logo {
+  object-fit: contain;
+  overflow: visible;
+  mix-blend-mode: screen;
 }
 
 .hero-beam-origin {
@@ -86,28 +112,28 @@
 }
 
 .hero-word-halo {
-  width: clamp(10rem, 20vw, 14rem);
-  height: clamp(10rem, 20vw, 14rem);
+  width: clamp(8.2rem, 16.8vw, 11.4rem);
+  height: clamp(8.2rem, 16.8vw, 11.4rem);
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(244, 251, 255, 0.28) 0%, rgba(143, 215, 255, 0.18) 28%, rgba(92, 168, 255, 0.12) 48%, rgba(35, 91, 232, 0.06) 64%, rgba(35, 91, 232, 0) 82%);
+    radial-gradient(circle, rgba(244, 251, 255, 0.2) 0%, rgba(143, 215, 255, 0.12) 28%, rgba(92, 168, 255, 0.07) 48%, rgba(35, 91, 232, 0.03) 64%, rgba(35, 91, 232, 0) 82%);
   filter: blur(12px);
-  opacity: 0.78;
+  opacity: 0.58;
   animation: pharosQuantumHalo 6.4s ease-in-out infinite;
 }
 
 .hero-word-core {
-  width: clamp(5rem, 11vw, 7rem);
-  height: clamp(5rem, 11vw, 7rem);
+  width: clamp(4rem, 8.8vw, 5.6rem);
+  height: clamp(4rem, 8.8vw, 5.6rem);
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.9) 0 12%, rgba(198, 240, 255, 0.74) 22%, rgba(128, 214, 255, 0.42) 46%, rgba(72, 133, 255, 0.18) 68%, rgba(72, 133, 255, 0) 86%);
+    radial-gradient(circle, rgba(255, 255, 255, 0.68) 0 12%, rgba(198, 240, 255, 0.52) 22%, rgba(128, 214, 255, 0.26) 46%, rgba(72, 133, 255, 0.1) 68%, rgba(72, 133, 255, 0) 86%);
   box-shadow:
-    0 0 22px rgba(128, 214, 255, 0.28),
-    0 0 44px rgba(35, 91, 232, 0.14);
-  filter: blur(3px);
+    0 0 16px rgba(128, 214, 255, 0.18),
+    0 0 30px rgba(35, 91, 232, 0.08);
+  filter: blur(4px);
   animation: pharosQuantumCore 5.4s ease-in-out infinite;
 }
 
@@ -184,7 +210,7 @@
   z-index: 2;
   display: grid;
   gap: 0;
-  margin-top: 0.08rem;
+  margin-top: -0.15rem;
 }
 
 .hero-wordmark {
@@ -225,14 +251,15 @@
 
 @media (max-width: 760px) {
   .hero-mark-lockup {
-    inset: 38% 0 auto;
+    inset: 35% 0 auto;
     gap: 0.22rem;
-    transform: translateY(-18%);
+    transform: translateY(-14%);
   }
 
   .hero-mark-shell {
     --hero-focal-point-top: 19%;
-    --hero-emblem-size: clamp(7.75rem, 40vw, 11.5rem);
+    --hero-emblem-size: clamp(6.9rem, 33.3vw, 9.6rem);
+    --hero-crest-height: var(--hero-emblem-size);
     gap: clamp(0.48rem, 1.8vw, 0.82rem);
   }
 
@@ -242,13 +269,13 @@
   }
 
   .hero-word-halo {
-    width: clamp(8rem, 34vw, 11rem);
-    height: clamp(8rem, 34vw, 11rem);
+    width: clamp(6.6rem, 27.8vw, 9.2rem);
+    height: clamp(6.6rem, 27.8vw, 9.2rem);
   }
 
   .hero-word-core {
-    width: clamp(4.25rem, 20vw, 6rem);
-    height: clamp(4.25rem, 20vw, 6rem);
+    width: clamp(3.5rem, 16vw, 4.8rem);
+    height: clamp(3.5rem, 16vw, 4.8rem);
   }
 
   .hero-wordmark {
@@ -273,12 +300,12 @@
   0%,
   100% {
     transform: translate(-50%, -50%) scale(0.92);
-    opacity: 0.48;
+    opacity: 0.34;
   }
 
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.92;
+    transform: translate(-50%, -50%) scale(1.04);
+    opacity: 0.64;
   }
 }
 
@@ -289,7 +316,7 @@
   }
 
   42% {
-    transform: translate(-50%, -50%) scale(1.14);
+    transform: translate(-50%, -50%) scale(1.06);
   }
 
   68% {
