@@ -832,8 +832,6 @@
     0 14px 28px rgba(2, 12, 20, 0.16);
   opacity: 0.92;
   transform: perspective(1000px) rotateY(var(--ry)) rotateX(var(--rx)) translate3d(0, 0, 0) rotateZ(0deg);
-  animation: floatCard var(--duration, 8s) infinite ease-in-out alternate;
-  will-change: transform;
 }
 
 .floating-card-icon {
