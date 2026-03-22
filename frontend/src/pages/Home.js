@@ -11,9 +11,9 @@ import {
   Waypoints
 } from 'lucide-react';
 import '../components/HomeHeroLogo.css';
-import HeroRadiantEmblem from '../components/HeroRadiantEmblem';
 import MeridianField from '../components/MeridianField';
 import SignalStrip from '../components/SignalStrip';
+import heroLogo from '../assets/pharos-logo-hero.svg';
 import { useLanguage } from '../context/LanguageContext';
 
 const HOME_COPY = {
@@ -432,7 +432,7 @@ const Home = () => {
               <div className="hero-mark-lockup">
                 <div className="hero-mark-shell">
                   <div className="hero-mark-crest">
-                    <HeroRadiantEmblem className="hero-emblem" />
+                    <img className="hero-emblem hero-emblem-logo" src={heroLogo} alt="PHAROS logo" />
                     <div className="hero-beam-origin" aria-hidden="true">
                       <span className="hero-word-halo" />
                       <span className="hero-word-core" />
