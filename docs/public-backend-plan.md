@@ -2,6 +2,11 @@
 
 As of 2026-03-13, the PHAROS frontend is being normalized to `pharos-ai.ca`, while the FastAPI backend still runs locally on `127.0.0.1:9202`.
 
+Preview-only note:
+
+- The currently working interactive preview path is documented separately in [pharos-preview-backend-runbook.md](/home/cerebrhoe/repos/pharos-suite/docs/pharos-preview-backend-runbook.md).
+- That preview path uses `https://pharos-suite-review.pages.dev` with a preview-only backend host and should not be confused with the production-facing `api.pharos-ai.ca` bridge described below.
+
 ## Decision
 
 Use a dedicated API subdomain:

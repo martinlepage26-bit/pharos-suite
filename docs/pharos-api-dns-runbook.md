@@ -11,6 +11,11 @@ This is the concrete rollout for publishing the existing local FastAPI backend a
   - `https://www.govern-ai.ca` -> `https://pharos-ai.ca`
 - API: `https://api.pharos-ai.ca`
 
+Preview-only note:
+
+- The currently working interactive preview backend path is documented separately in [pharos-preview-backend-runbook.md](/home/cerebrhoe/repos/pharos-suite/docs/pharos-preview-backend-runbook.md).
+- This runbook remains production-facing for the `api.pharos-ai.ca` bridge and should not be used as the source of truth for preview-only backend values.
+
 ## 1. Cloudflare Pages hostnames
 
 In the Cloudflare Pages project that currently serves the PHAROS frontend:

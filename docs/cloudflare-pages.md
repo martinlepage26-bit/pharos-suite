@@ -23,6 +23,13 @@ Do not point `governai.ca` at this Pages project. That hostname belongs to Marti
 - Build command: `npm install --legacy-peer-deps && npm run build`
 - Output directory: `build`
 
+## Preview backend note
+
+- The currently working interactive preview frontend is `https://pharos-suite-review.pages.dev`.
+- The currently working preview backend hostname is `https://preview-api.pharos-ai.ca`.
+- Preview backend startup order, local dependencies, runtime-only values, and restart recovery are documented in [pharos-preview-backend-runbook.md](/home/cerebrhoe/repos/pharos-suite/docs/pharos-preview-backend-runbook.md).
+- Keep preview-only contact-email values, secret env vars, and tunnel credentials out of the repo.
+
 ## Redirect behavior to preserve
 
 - `https://pharos-ai.ca` should be the canonical public URL
