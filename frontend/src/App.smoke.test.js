@@ -2,47 +2,8 @@ import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-jest.mock('./lib/modulePortalApi', () => {
-  const actual = jest.requireActual('./lib/modulePortalApi');
-
-  return {
-    ...actual,
-    getModuleConfig: jest.fn((moduleKey) => ({
-      baseUrl: `http://127.0.0.1/${moduleKey}`,
-      token: ''
-    })),
-    requestModuleJson: jest.fn(async ({ path }) => {
-      if (path === '/api/idp/pipeline') return { pipeline_stages: [] };
-      if (path === '/api/stats') return { stats: [] };
-      if (path === '/api/categories') return { categories: [] };
-      if (path === '/api/stats/dashboard') {
-        return {
-          total_clients: 0,
-          total_systems: 0,
-          total_assessments: 0,
-          overdue_reviews: 0
-        };
-      }
-      if (path === '/api/clients') return [];
-      if (path === '/api/ai-systems') return [];
-      if (path === '/api/assessments') return [];
-      if (path.startsWith('/api/benchmarks/')) {
-        return {
-          sector: decodeURIComponent(path.split('/').pop() || 'Unknown'),
-          average_score: 0
-        };
-      }
-      if (path.includes('/deliverables')) {
-        return {
-          assessment_summary: null,
-          generated_at: null,
-          artifacts: []
-        };
-      }
-      return {};
-    })
-  };
-});
+let mockFetchHandler;
+const MODULE_STORAGE_PREFIX = 'pharos-ai-module-connection';
 
 const makeJsonResponse = (payload, ok = true, status = 200) => ({
   ok,
@@ -101,6 +62,100 @@ const waitForTestId = async (container, testId) => {
   }
 
   throw new Error(`Could not find data-testid="${testId}" after rendering.`);
+};
+
+const waitForButtonByText = async (container, text) => {
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    await flushEffects();
+    const button = Array.from(container.querySelectorAll('button')).find((element) => element.textContent.includes(text));
+    if (button) return button;
+  }
+
+  throw new Error(`Could not find button containing "${text}" after rendering.`);
+};
+
+const waitForText = async (container, text) => {
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    await flushEffects();
+    if (container.textContent.includes(text)) return;
+  }
+
+  throw new Error(`Could not find text "${text}" after rendering.`);
+};
+
+const setStoredModuleConfig = (moduleKey, config) => {
+  window.localStorage.setItem(`${MODULE_STORAGE_PREFIX}:${moduleKey}`, JSON.stringify(config));
+};
+
+const getInputByLabel = (container, labelText) => {
+  const label = Array.from(container.querySelectorAll('label')).find((element) => element.textContent.includes(labelText));
+  if (!label) {
+    throw new Error(`Could not find label containing "${labelText}".`);
+  }
+
+  const input = label.querySelector('input');
+  if (!input) {
+    throw new Error(`Could not find input for label containing "${labelText}".`);
+  }
+
+  return input;
+};
+
+const setInputValue = async (input, value) => {
+  await act(async () => {
+    const valueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+    valueSetter.call(input, value);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+};
+
+const clickElement = async (element) => {
+  await act(async () => {
+    element.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  });
+};
+
+const defaultFetchPayload = (requestUrl) => {
+  if (requestUrl.includes('/api/bookings/booked-slots')) return [];
+  if (requestUrl.includes('/api/services/active')) return [];
+  if (requestUrl.includes('/api/admin/login')) return { token: 'test-token' };
+  if (requestUrl.includes('/api/idp/pipeline')) return { pipeline: [] };
+  if (requestUrl.endsWith('/api/stats')) return { stats: [] };
+  if (requestUrl.includes('/api/categories')) return { categories: [] };
+  if (requestUrl.endsWith('/api/documents')) return [];
+  if (requestUrl.includes('/api/documents/')) {
+    return {
+      id: requestUrl.split('/').pop(),
+      original_filename: 'Document.pdf'
+    };
+  }
+  if (requestUrl.includes('/api/stats/dashboard')) {
+    return {
+      assessments_count: 0,
+      average_score: 0,
+      clients_count: 0,
+      systems_count: 0
+    };
+  }
+  if (requestUrl.endsWith('/api/clients')) return [];
+  if (requestUrl.endsWith('/api/ai-systems')) return [];
+  if (requestUrl.endsWith('/api/assessments')) return [];
+  if (requestUrl.includes('/api/scheduled-assessments')) return [];
+  if (requestUrl.includes('/api/benchmarks/')) {
+    return {
+      sector: decodeURIComponent(requestUrl.split('/').pop() || 'Unknown'),
+      average_score: 0
+    };
+  }
+  if (requestUrl.includes('/deliverables')) {
+    return {
+      assessment_summary: null,
+      generated_at: null,
+      artifacts: []
+    };
+  }
+  return {};
 };
 
 describe('PHAROS route smoke coverage', () => {
@@ -169,23 +224,11 @@ describe('PHAROS route smoke coverage', () => {
 
     localStorage.clear();
     sessionStorage.clear();
+    mockFetchHandler = defaultFetchPayload;
 
     global.fetch = jest.fn((url) => {
       const requestUrl = String(url);
-
-      if (requestUrl.includes('/api/bookings/booked-slots')) {
-        return Promise.resolve(makeJsonResponse([]));
-      }
-
-      if (requestUrl.includes('/api/services/active')) {
-        return Promise.resolve(makeJsonResponse([]));
-      }
-
-      if (requestUrl.includes('/api/admin/login')) {
-        return Promise.resolve(makeJsonResponse({ token: 'test-token' }));
-      }
-
-      return Promise.resolve(makeJsonResponse([]));
+      return Promise.resolve(makeJsonResponse(mockFetchHandler(requestUrl)));
     });
   });
 
@@ -219,5 +262,147 @@ describe('PHAROS route smoke coverage', () => {
     const element = await waitForTestId(container, 'portal-aurorai-page');
     expect(element).toBeTruthy();
     expect(window.location.pathname).toBe('/portal/compassai/aurora');
+  });
+
+  test('renders a bounded Aurora preview without live module requests when no module origin is configured', async () => {
+    setStoredModuleConfig('aurorai', {
+      baseUrl: '',
+      token: ''
+    });
+    global.fetch.mockClear();
+    window.history.pushState({}, '', '/portal/compassai/aurora');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const element = await waitForTestId(container, 'portal-aurorai-page');
+    expect(element).toBeTruthy();
+    expect(container.textContent).toContain('Preview unavailable');
+    expect(container.textContent).toContain('not publicly configured');
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/idp/pipeline'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/categories'))).toBe(false);
+  });
+
+  test('renders a bounded CompassAI preview without live module requests when no module origin is configured', async () => {
+    setStoredModuleConfig('compassai', {
+      baseUrl: '',
+      token: ''
+    });
+    global.fetch.mockClear();
+    window.history.pushState({}, '', '/portal/compassai');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const element = await waitForTestId(container, 'portal-compassai-page');
+    expect(element).toBeTruthy();
+    expect(container.textContent).toContain('Preview unavailable');
+    expect(container.textContent).toContain('not publicly configured');
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats/dashboard'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/clients'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/ai-systems'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/assessments'))).toBe(false);
+  });
+
+  test('Aurora still fetches live module data when a module origin is configured', async () => {
+    setStoredModuleConfig('aurorai', {
+      baseUrl: 'http://preview-aurora',
+      token: ''
+    });
+    global.fetch.mockClear();
+    window.history.pushState({}, '', '/portal/compassai/aurora');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const element = await waitForTestId(container, 'portal-aurorai-page');
+    await flushEffects(6);
+    expect(element).toBeTruthy();
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/idp/pipeline', expect.any(Object));
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/stats', expect.any(Object));
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/categories', expect.any(Object));
+  });
+
+  test('CompassAI still fetches live module data when a module origin is configured', async () => {
+    setStoredModuleConfig('compassai', {
+      baseUrl: 'http://preview-compassai',
+      token: ''
+    });
+    global.fetch.mockClear();
+    window.history.pushState({}, '', '/portal/compassai');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const element = await waitForTestId(container, 'portal-compassai-page');
+    await flushEffects(6);
+    expect(element).toBeTruthy();
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/stats/dashboard', expect.any(Object));
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/clients', expect.any(Object));
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/ai-systems', expect.any(Object));
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/assessments', expect.any(Object));
+  });
+
+  test('Aurora preserves the selected document across an unauthenticated save when the module origin stays configured', async () => {
+    setStoredModuleConfig('aurorai', {
+      baseUrl: 'http://preview-aurora',
+      token: 'secret'
+    });
+    mockFetchHandler = (requestUrl) => {
+      if (requestUrl === 'http://preview-aurora/api/documents') {
+        return [
+          { id: 'doc-1', original_filename: 'First.pdf', current_state: 'uploaded', page_count: 1 },
+          { id: 'doc-2', original_filename: 'Second.pdf', current_state: 'uploaded', page_count: 1 }
+        ];
+      }
+      if (requestUrl === 'http://preview-aurora/api/documents/doc-1') {
+        return { id: 'doc-1', original_filename: 'First.pdf', current_state: 'uploaded' };
+      }
+      if (requestUrl === 'http://preview-aurora/api/documents/doc-2') {
+        return { id: 'doc-2', original_filename: 'Second.pdf', current_state: 'uploaded' };
+      }
+      return defaultFetchPayload(requestUrl);
+    };
+
+    window.history.pushState({}, '', '/portal/compassai/aurora');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const element = await waitForTestId(container, 'portal-aurorai-page');
+    expect(element).toBeTruthy();
+
+    const secondDocumentButton = await waitForButtonByText(container, 'Second.pdf');
+    await clickElement(secondDocumentButton);
+    await flushEffects(6);
+    expect((await waitForButtonByText(container, 'Second.pdf')).className).toContain('active');
+
+    global.fetch.mockClear();
+
+    const tokenInput = getInputByLabel(container, 'Aurora API token');
+    const saveButton = Array.from(container.querySelectorAll('button')).find((button) => button.textContent.includes('Save connection'));
+    expect(saveButton).toBeTruthy();
+
+    await setInputValue(tokenInput, '');
+    await clickElement(saveButton);
+    await waitForText(container, 'Add an Aurora token above');
+
+    global.fetch.mockClear();
+
+    await setInputValue(tokenInput, 'secret');
+    await clickElement(saveButton);
+    await flushEffects(6);
+
+    expect((await waitForButtonByText(container, 'Second.pdf')).className).toContain('active');
+    expect((await waitForButtonByText(container, 'First.pdf')).className).not.toContain('active');
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/documents', expect.any(Object));
+    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/documents/doc-2', expect.any(Object));
+    expect(global.fetch).not.toHaveBeenCalledWith('http://preview-aurora/api/documents/doc-1', expect.any(Object));
   });
 });

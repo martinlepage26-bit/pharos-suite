@@ -58,6 +58,24 @@ const heroSignals = [
   }
 ];
 
+const previewHeroSignals = [
+  {
+    label: 'Route',
+    title: 'Aurora preview route',
+    description: 'This preview keeps the Aurora route visible without exposing a public module API.'
+  },
+  {
+    label: 'Preview boundary',
+    title: 'Module API not publicly configured',
+    description: 'No public Aurora module origin is configured for this PHAROS preview.'
+  },
+  {
+    label: 'Current state',
+    title: 'Live module data not exposed',
+    description: 'Pipeline, category, document, upload, and handoff calls stay off on this preview.'
+  }
+];
+
 const getSafeConfig = () => normalizeModuleConfig(MODULE_KEY, getModuleConfig(MODULE_KEY));
 
 const PortalAurorAI = () => {
@@ -83,7 +101,19 @@ const PortalAurorAI = () => {
   const [uploadForm, setUploadForm] = useState(defaultUploadForm);
   const [packageForm, setPackageForm] = useState(defaultPackageForm);
 
+  const moduleOriginConfigured = Boolean(config?.baseUrl);
   const authenticated = Boolean(config?.token);
+  const activeHeroSignals = moduleOriginConfigured ? heroSignals : previewHeroSignals;
+  const heroBody = moduleOriginConfigured
+    ? 'Process documents into classified, extractable, governance-ready evidence while keeping each stage legible inside the PHAROS shell.'
+    : 'Preview route only. The Aurora module API is not publicly configured, so live module data is not exposed here.';
+  const previewUnavailableMessage = 'Preview unavailable. The Aurora module API is not publicly configured for this PHAROS preview.';
+  const connectionBody = moduleOriginConfigured
+    ? 'Pipeline metadata and category stats are public. Upload, document actions, and handoff flows require the Aurora API token.'
+    : 'Preview unavailable. The Aurora module API is not publicly configured for this PHAROS preview.';
+  const connectionHelper = moduleOriginConfigured
+    ? 'Default local target is http://127.0.0.1:9206. The current backend only accepts PDF and TXT uploads; DOC/DOCX extraction and OCR still need implementation.'
+    : 'Live module data is not exposed on this preview until a public Aurora origin is configured.';
 
   const categoryBreakdown = useMemo(() => normalizeList(stats, 'stats'), [stats]);
 
@@ -94,6 +124,15 @@ const PortalAurorAI = () => {
   };
 
   const loadPublicData = async () => {
+    if (!config.baseUrl) {
+      setPipelineInfo(null);
+      setStats(null);
+      setCategories([]);
+      setLoading(false);
+      setLoadError('');
+      return;
+    }
+
     setLoading(true);
     setLoadError('');
 
@@ -115,6 +154,15 @@ const PortalAurorAI = () => {
   };
 
   const loadDocuments = async () => {
+    if (!config.baseUrl) {
+      setDocuments([]);
+      setSelectedDoc(null);
+      setSelectedDocId('');
+      setSecureLoading(false);
+      setSecureError('');
+      return;
+    }
+
     if (!authenticated) {
       setDocuments([]);
       setSelectedDoc(null);
@@ -146,7 +194,7 @@ const PortalAurorAI = () => {
   };
 
   const loadDocumentDetail = async () => {
-    if (!authenticated || !selectedDocId) {
+    if (!config.baseUrl || !authenticated || !selectedDocId) {
       setSelectedDoc(null);
       return;
     }
@@ -352,11 +400,11 @@ const PortalAurorAI = () => {
             <p className="eyebrow">PHAROS product</p>
             <h1>Aurora</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Process documents into classified, extractable, governance-ready evidence while keeping each stage legible inside the PHAROS shell.
+              {heroBody}
             </p>
           </div>
 
-          <SignalStrip items={heroSignals} className="signal-grid-page signal-grid-light" />
+          <SignalStrip items={activeHeroSignals} className="signal-grid-page signal-grid-light" />
         </div>
       </div>
 
@@ -364,14 +412,21 @@ const PortalAurorAI = () => {
         <div className="container portal-stack">
           <PortalConnectionPanel
             title="Aurora backend connection"
-            body="Pipeline metadata and category stats are public. Upload, document actions, and handoff flows require the Aurora API token."
+            body={connectionBody}
             draftConfig={draftConfig}
             onDraftChange={handleDraftChange}
             onSave={handleSaveConnection}
             onReset={handleResetConnection}
             tokenLabel="Aurora API token"
-            helper="Default local target is http://127.0.0.1:9206. The current backend only accepts PDF and TXT uploads; DOC/DOCX extraction and OCR still need implementation."
+            helper={connectionHelper}
           />
+
+          {!moduleOriginConfigured ? (
+            <div className="portal-status portal-status-warning">
+              <AlertTriangle size={16} />
+              <span>{previewUnavailableMessage}</span>
+            </div>
+          ) : null}
 
           {(actionMessage || actionError || loadError || secureError) ? (
             <div className={`portal-status portal-status-${actionError || loadError || secureError ? 'error' : 'success'}`}>
@@ -380,33 +435,130 @@ const PortalAurorAI = () => {
           ) : null}
 
           <div className="portal-metric-grid">
-            <div className="portal-metric-card">
-              <Layers3 />
-              <span className="portal-metric-label">Pipeline stages</span>
-              <strong>{safeArray(pipelineInfo?.pipeline).length || 0}</strong>
-              <span className="portal-metric-foot">Intake to evidence handoff</span>
-            </div>
-            <div className="portal-metric-card">
-              <FileSearch />
-              <span className="portal-metric-label">Documents</span>
-              <strong>{stats?.total_documents ?? 0}</strong>
-              <span className="portal-metric-foot">Indexed inside Aurora</span>
-            </div>
-            <div className="portal-metric-card">
-              <Bot />
-              <span className="portal-metric-label">Categories</span>
-              <strong>{categories.length}</strong>
-              <span className="portal-metric-foot">Predefined routing buckets</span>
-            </div>
-            <div className="portal-metric-card">
-              <ShieldCheck />
-              <span className="portal-metric-label">Secure actions</span>
-              <strong>{authenticated ? 'Enabled' : 'Locked'}</strong>
-              <span className="portal-metric-foot">Token gates upload and downstream actions</span>
-            </div>
+            {moduleOriginConfigured ? (
+              <>
+                <div className="portal-metric-card">
+                  <Layers3 />
+                  <span className="portal-metric-label">Pipeline stages</span>
+                  <strong>{safeArray(pipelineInfo?.pipeline).length || 0}</strong>
+                  <span className="portal-metric-foot">Intake to evidence handoff</span>
+                </div>
+                <div className="portal-metric-card">
+                  <FileSearch />
+                  <span className="portal-metric-label">Documents</span>
+                  <strong>{stats?.total_documents ?? 0}</strong>
+                  <span className="portal-metric-foot">Indexed inside Aurora</span>
+                </div>
+                <div className="portal-metric-card">
+                  <Bot />
+                  <span className="portal-metric-label">Categories</span>
+                  <strong>{categories.length}</strong>
+                  <span className="portal-metric-foot">Predefined routing buckets</span>
+                </div>
+                <div className="portal-metric-card">
+                  <ShieldCheck />
+                  <span className="portal-metric-label">Secure actions</span>
+                  <strong>{authenticated ? 'Enabled' : 'Locked'}</strong>
+                  <span className="portal-metric-foot">Token gates upload and downstream actions</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="portal-metric-card">
+                  <Layers3 />
+                  <span className="portal-metric-label">Module API</span>
+                  <strong>Unavailable</strong>
+                  <span className="portal-metric-foot">Not publicly configured for preview</span>
+                </div>
+                <div className="portal-metric-card">
+                  <FileSearch />
+                  <span className="portal-metric-label">Live data</span>
+                  <strong>Not exposed</strong>
+                  <span className="portal-metric-foot">No public Aurora reads on this route</span>
+                </div>
+                <div className="portal-metric-card">
+                  <Bot />
+                  <span className="portal-metric-label">Secure actions</span>
+                  <strong>Disabled</strong>
+                  <span className="portal-metric-foot">Upload and document actions stay off</span>
+                </div>
+                <div className="portal-metric-card">
+                  <ShieldCheck />
+                  <span className="portal-metric-label">Route</span>
+                  <strong>Available</strong>
+                  <span className="portal-metric-foot">Redirect and navigation remain in place</span>
+                </div>
+              </>
+            )}
           </div>
 
-          {loading ? (
+          {!moduleOriginConfigured ? (
+            <>
+              <div className="portal-grid portal-grid-halves">
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Preview boundary</p>
+                      <h2>Preview unavailable</h2>
+                    </div>
+                    <p className="body-sm">
+                      The Aurora module API is not publicly configured for this PHAROS preview. This route remains visible so navigation and redirect behavior can be checked.
+                    </p>
+                  </div>
+
+                  <div className="scope-note">
+                    <strong>What remains true</strong>
+                    <ul className="portal-inline-list">
+                      <li>`/portal/aurorai` still lands here.</li>
+                      <li>No public Aurora module origin is configured.</li>
+                      <li>Live module data is not exposed on this preview.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Disabled for preview</p>
+                      <h2>Live module data is not exposed</h2>
+                    </div>
+                    <p className="body-sm">
+                      When the module origin is unset, this route does not request Aurora module endpoints.
+                    </p>
+                  </div>
+
+                  <div className="scope-note">
+                    <strong>Disabled surfaces</strong>
+                    <ul className="portal-inline-list">
+                      <li>`/api/idp/pipeline`</li>
+                      <li>`/api/stats` and `/api/categories`</li>
+                      <li>`/api/documents` and upload/process actions</li>
+                      <li>CompassAI handoff from this preview route</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="editorial-panel-dark portal-card portal-module-next-step">
+                <div className="portal-section-head">
+                  <div>
+                    <p className="eyebrow">Preview boundary</p>
+                    <h2>Aurora stays in preview-only mode here</h2>
+                  </div>
+                  <p className="body-sm">
+                    This page stays preview-only until a public Aurora module origin is configured.
+                  </p>
+                </div>
+
+                <div className="portal-action-row">
+                  <Link to="/portal/compassai" className="btn-primary">
+                    Open CompassAI
+                    <ArrowRight />
+                  </Link>
+                </div>
+              </div>
+            </>
+          ) : loading ? (
             <div className="portal-empty">
               <LoaderCircle className="portal-spin" />
               <p>Loading Aurora pipeline metadata...</p>

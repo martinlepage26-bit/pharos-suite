@@ -88,6 +88,24 @@ const heroSignals = [
   }
 ];
 
+const previewHeroSignals = [
+  {
+    label: 'Route',
+    title: 'CompassAI preview route',
+    description: 'This preview keeps the CompassAI route visible without exposing a public module API.'
+  },
+  {
+    label: 'Preview boundary',
+    title: 'Module API not publicly configured',
+    description: 'No public CompassAI module origin is configured for this PHAROS preview.'
+  },
+  {
+    label: 'Current state',
+    title: 'Live module data not exposed',
+    description: 'Stats, client, system, assessment, benchmark, and schedule calls stay off on this preview.'
+  }
+];
+
 const safeArray = (value) => (Array.isArray(value) ? value : []);
 
 const statusTone = (error) => (error ? 'error' : 'success');
@@ -126,7 +144,19 @@ const PortalCompassAI = () => {
   const [scheduleForm, setScheduleForm] = useState(defaultScheduleForm);
   const [evidenceForm, setEvidenceForm] = useState(defaultEvidenceForm);
 
+  const moduleOriginConfigured = Boolean(config?.baseUrl);
   const authenticated = Boolean(config?.token);
+  const activeHeroSignals = moduleOriginConfigured ? heroSignals : previewHeroSignals;
+  const heroBody = moduleOriginConfigured
+    ? 'Govern client records, system inventories, evidence, risk assessments, deliverables, and review cadence from one PHAROS-hosted surface.'
+    : 'Preview route only. The CompassAI module API is not publicly configured, so live module data is not exposed here.';
+  const previewUnavailableMessage = 'Preview unavailable. The CompassAI module API is not publicly configured for this PHAROS preview.';
+  const connectionBody = moduleOriginConfigured
+    ? 'Public reads work immediately against the configured base URL. Create, update, schedule, and secure actions use the token field.'
+    : 'Preview unavailable. The CompassAI module API is not publicly configured for this PHAROS preview.';
+  const connectionHelper = moduleOriginConfigured
+    ? 'Default local target is http://127.0.0.1:9205. Keep the token empty if you only need dashboard reads, clients, systems, assessments, and deliverables.'
+    : 'Live module data is not exposed on this preview until a public CompassAI origin is configured.';
 
   const sectorOptions = Array.from(new Set([
     ...fallbackSectors,
@@ -139,6 +169,17 @@ const PortalCompassAI = () => {
   };
 
   const loadPublicData = async () => {
+    if (!config.baseUrl) {
+      setStats(null);
+      setClients([]);
+      setSystems([]);
+      setAssessments([]);
+      setSelectedAssessmentId('');
+      setLoading(false);
+      setLoadError('');
+      return;
+    }
+
     setLoading(true);
     setLoadError('');
 
@@ -191,9 +232,10 @@ const PortalCompassAI = () => {
   };
 
   const loadSecureData = async () => {
-    if (!authenticated) {
+    if (!config.baseUrl || !authenticated) {
       setScheduledAssessments([]);
       setDueAssessments([]);
+      setSecureLoading(false);
       setSecureError('');
       return;
     }
@@ -225,7 +267,7 @@ const PortalCompassAI = () => {
   };
 
   const loadBenchmark = async () => {
-    if (!selectedBenchmarkSector) {
+    if (!config.baseUrl || !selectedBenchmarkSector) {
       setBenchmark(null);
       return;
     }
@@ -242,7 +284,7 @@ const PortalCompassAI = () => {
   };
 
   const loadDeliverables = async () => {
-    if (!selectedAssessmentId) {
+    if (!config.baseUrl || !selectedAssessmentId) {
       setDeliverables(null);
       return;
     }
@@ -547,11 +589,11 @@ const PortalCompassAI = () => {
             <p className="eyebrow">PHAROS product</p>
             <h1>CompassAI</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Govern client records, system inventories, evidence, risk assessments, deliverables, and review cadence from one PHAROS-hosted surface.
+              {heroBody}
             </p>
           </div>
 
-          <SignalStrip items={heroSignals} className="signal-grid-page signal-grid-light" />
+          <SignalStrip items={activeHeroSignals} className="signal-grid-page signal-grid-light" />
         </div>
       </div>
 
@@ -559,14 +601,21 @@ const PortalCompassAI = () => {
         <div className="container portal-stack">
           <PortalConnectionPanel
             title="CompassAI backend connection"
-            body="Public reads work immediately against the configured base URL. Create, update, schedule, and secure actions use the token field."
+            body={connectionBody}
             draftConfig={draftConfig}
             onDraftChange={handleDraftChange}
             onSave={handleSaveConnection}
             onReset={handleResetConnection}
             tokenLabel="CompassAI bearer token"
-            helper="Default local target is http://127.0.0.1:9205. Keep the token empty if you only need dashboard reads, clients, systems, assessments, and deliverables."
+            helper={connectionHelper}
           />
+
+          {!moduleOriginConfigured ? (
+            <div className="portal-status portal-status-warning">
+              <ShieldCheck size={16} />
+              <span>{previewUnavailableMessage}</span>
+            </div>
+          ) : null}
 
           {(actionMessage || actionError || loadError || secureError) ? (
             <div className={`portal-status portal-status-${statusTone(actionError || loadError || secureError)}`}>
@@ -575,33 +624,130 @@ const PortalCompassAI = () => {
           ) : null}
 
           <div className="portal-metric-grid">
-            <div className="portal-metric-card">
-              <Gauge />
-              <span className="portal-metric-label">Assessments</span>
-              <strong>{stats?.assessments_count ?? assessments.length}</strong>
-              <span className="portal-metric-foot">Average score {stats?.average_score ?? 0}</span>
-            </div>
-            <div className="portal-metric-card">
-              <Landmark />
-              <span className="portal-metric-label">Clients</span>
-              <strong>{stats?.clients_count ?? clients.length}</strong>
-              <span className="portal-metric-foot">Records available for governance intake</span>
-            </div>
-            <div className="portal-metric-card">
-              <Network />
-              <span className="portal-metric-label">AI systems</span>
-              <strong>{stats?.systems_count ?? systems.length}</strong>
-              <span className="portal-metric-foot">Tracked under one evidence shell</span>
-            </div>
-            <div className="portal-metric-card">
-              <CalendarClock />
-              <span className="portal-metric-label">Scheduled reviews</span>
-              <strong>{authenticated ? scheduledAssessments.length : 0}</strong>
-              <span className="portal-metric-foot">{authenticated ? `${dueAssessments.length} currently due` : 'Token needed for secure schedules'}</span>
-            </div>
+            {moduleOriginConfigured ? (
+              <>
+                <div className="portal-metric-card">
+                  <Gauge />
+                  <span className="portal-metric-label">Assessments</span>
+                  <strong>{stats?.assessments_count ?? assessments.length}</strong>
+                  <span className="portal-metric-foot">Average score {stats?.average_score ?? 0}</span>
+                </div>
+                <div className="portal-metric-card">
+                  <Landmark />
+                  <span className="portal-metric-label">Clients</span>
+                  <strong>{stats?.clients_count ?? clients.length}</strong>
+                  <span className="portal-metric-foot">Records available for governance intake</span>
+                </div>
+                <div className="portal-metric-card">
+                  <Network />
+                  <span className="portal-metric-label">AI systems</span>
+                  <strong>{stats?.systems_count ?? systems.length}</strong>
+                  <span className="portal-metric-foot">Tracked under one evidence shell</span>
+                </div>
+                <div className="portal-metric-card">
+                  <CalendarClock />
+                  <span className="portal-metric-label">Scheduled reviews</span>
+                  <strong>{authenticated ? scheduledAssessments.length : 0}</strong>
+                  <span className="portal-metric-foot">{authenticated ? `${dueAssessments.length} currently due` : 'Token needed for secure schedules'}</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="portal-metric-card">
+                  <Gauge />
+                  <span className="portal-metric-label">Module API</span>
+                  <strong>Unavailable</strong>
+                  <span className="portal-metric-foot">Not publicly configured for preview</span>
+                </div>
+                <div className="portal-metric-card">
+                  <Landmark />
+                  <span className="portal-metric-label">Live data</span>
+                  <strong>Not exposed</strong>
+                  <span className="portal-metric-foot">No public CompassAI reads on this route</span>
+                </div>
+                <div className="portal-metric-card">
+                  <Network />
+                  <span className="portal-metric-label">Secure actions</span>
+                  <strong>Disabled</strong>
+                  <span className="portal-metric-foot">Schedules and uploads stay off</span>
+                </div>
+                <div className="portal-metric-card">
+                  <CalendarClock />
+                  <span className="portal-metric-label">Route</span>
+                  <strong>Available</strong>
+                  <span className="portal-metric-foot">Navigation remains in place</span>
+                </div>
+              </>
+            )}
           </div>
 
-          {loading ? (
+          {!moduleOriginConfigured ? (
+            <>
+              <div className="portal-grid portal-grid-halves">
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Preview boundary</p>
+                      <h2>Preview unavailable</h2>
+                    </div>
+                    <p className="body-sm">
+                      The CompassAI module API is not publicly configured for this PHAROS preview. This route remains visible so navigation can be checked.
+                    </p>
+                  </div>
+
+                  <div className="scope-note">
+                    <strong>What remains true</strong>
+                    <ul className="portal-inline-list">
+                      <li>The route remains available in preview navigation.</li>
+                      <li>No public CompassAI module origin is configured.</li>
+                      <li>Live module data is not exposed on this preview.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Disabled for preview</p>
+                      <h2>Live module data is not exposed</h2>
+                    </div>
+                    <p className="body-sm">
+                      When the module origin is unset, this route does not request CompassAI module endpoints.
+                    </p>
+                  </div>
+
+                  <div className="scope-note">
+                    <strong>Disabled surfaces</strong>
+                    <ul className="portal-inline-list">
+                      <li>`/api/stats/dashboard`, `/api/clients`, `/api/ai-systems`, and `/api/assessments`</li>
+                      <li>Sector benchmarks and assessment deliverables</li>
+                      <li>Scheduled review and evidence-upload actions</li>
+                      <li>Create, update, and delete flows tied to live CompassAI data</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="editorial-panel-dark portal-card portal-module-next-step">
+                <div className="portal-section-head">
+                  <div>
+                    <p className="eyebrow">Preview boundary</p>
+                    <h2>CompassAI stays in preview-only mode here</h2>
+                  </div>
+                  <p className="body-sm">
+                    This page stays preview-only until a public CompassAI module origin is configured.
+                  </p>
+                </div>
+
+                <div className="portal-action-row">
+                  <Link to="/portal/compassai/aurora" className="btn-primary">
+                    Open Aurora
+                    <ArrowRight />
+                  </Link>
+                </div>
+              </div>
+            </>
+          ) : loading ? (
             <div className="portal-empty">
               <LoaderCircle className="portal-spin" />
               <p>Loading CompassAI records and metrics...</p>
