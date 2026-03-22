@@ -1,0 +1,47 @@
+# Secrets
+**/.env
+**/.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+.venv/
+**/.venv/
+venv/
+**/venv/
+
+# Node / web build artifacts
+**/node_modules/
+**/dist/
+**/build/
+**/.next/
+**/out/
+**/output/
+**/.wrangler/
+
+# .NET
+**/bin/
+**/obj/
+
+# Runtime data
+**/uploads/
+**/test_reports/
+
+# Backup and package residue
+*.bak_*
+artifact.zip
+emergent-backup.zip

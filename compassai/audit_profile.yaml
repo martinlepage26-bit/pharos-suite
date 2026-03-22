@@ -1,0 +1,182 @@
+name: compassai-governance-engine
+version: 1
+
+entrypoint_names:
+  - server.py
+  - main.py
+  - app.py
+  - package.json
+  - requirements.txt
+  - governance_program.py
+
+surface_rules:
+  docs:
+    - docs
+    - README.md
+    - CHANGELOG.md
+    - governance-program
+  backend:
+    - backend
+    - backend/server.py
+    - backend/routers
+    - backend/models
+    - backend/services
+    - backend/scripts
+    - backend/storage
+  frontend:
+    - frontend
+    - frontend/src
+    - frontend/package.json
+    - governanceProgram
+    - components.json
+  tests:
+    - tests
+    - backend/tests
+    - test_reports
+    - auth_backend_test.py
+    - backend_test.py
+  scripts:
+    - backend/scripts
+  memory:
+    - memory
+    - PRD.md
+  governance:
+    - governance_program
+    - governance_catalog.py
+    - governance-program
+    - review
+    - deliverables
+  observability:
+    - test_reports
+    - pytest
+    - iteration_
+  ci_cd:
+    - .github
+    - Dockerfile
+    - docker-compose.yml
+
+artifact_specs:
+  - path: README.md
+    family: docs
+    kind: file
+  - path: CHANGELOG.md
+    family: docs
+    kind: file
+  - path: docs/backend-consolidation-plan.md
+    family: docs
+    kind: file
+  - path: docs/governance-program-migration-guide.md
+    family: docs
+    kind: file
+  - path: docs/governance-program-openapi.yaml
+    family: docs
+    kind: file
+  - path: docs/governance-program-roadmap.md
+    family: docs
+    kind: file
+  - path: backend/server.py
+    family: backend_runtime
+    kind: file
+  - path: backend/requirements.txt
+    family: backend_runtime
+    kind: file
+  - path: backend/routers
+    family: backend_routes
+    kind: dir
+  - path: backend/routers/governance_program.py
+    family: governance_backend
+    kind: file
+  - path: backend/models
+    family: backend_models
+    kind: dir
+  - path: backend/models/__init__.py
+    family: backend_models
+    kind: file
+  - path: backend/scripts
+    family: backend_scripts
+    kind: dir
+  - path: backend/scripts/import_governance_deliverables.py
+    family: backend_scripts
+    kind: file
+  - path: backend/scripts/link_governance_context.py
+    family: backend_scripts
+    kind: file
+  - path: backend/services
+    family: service_layer
+    kind: dir
+  - path: backend/services/governance_program.py
+    family: service_layer
+    kind: file
+  - path: backend/storage
+    family: backend_storage
+    kind: dir
+  - path: backend/tests
+    family: backend_tests
+    kind: dir
+  - path: backend/governance_catalog.py
+    family: governance_backend
+    kind: file
+  - path: backend/routers/assessments.py
+    family: backend_routes
+    kind: file
+  - path: backend/routers/evidence.py
+    family: backend_routes
+    kind: file
+  - path: backend/routers/deliverables.py
+    family: backend_routes
+    kind: file
+  - path: frontend/src/features/governanceProgram
+    family: frontend_workbench
+    kind: dir
+  - path: frontend/package.json
+    family: frontend_runtime
+    kind: file
+  - path: frontend/README.md
+    family: frontend_docs
+    kind: file
+  - path: frontend/components.json
+    family: frontend_config
+    kind: file
+  - path: memory/PRD.md
+    family: memory
+    kind: file
+  - path: test_reports
+    family: observability
+    kind: dir
+  - path: auth_backend_test.py
+    family: tests
+    kind: file
+  - path: backend_test.py
+    family: tests
+    kind: file
+
+top_spine:
+  - README.md
+  - docs/backend-consolidation-plan.md
+  - docs/governance-program-migration-guide.md
+  - backend/server.py
+  - backend/routers/governance_program.py
+  - backend/services
+  - backend/services/governance_program.py
+  - backend/models
+  - backend/scripts
+  - frontend/src/features/governanceProgram
+  - frontend/package.json
+  - backend/tests
+  - test_reports
+
+control_plane_families:
+  - backend_runtime
+  - backend_routes
+  - governance_backend
+  - backend_models
+  - service_layer
+  - backend_scripts
+  - backend_tests
+  - observability
+
+status_weight:
+  missing: 0.0
+  described_not_implemented: 0.25
+  partial: 0.6
+  present: 1.0

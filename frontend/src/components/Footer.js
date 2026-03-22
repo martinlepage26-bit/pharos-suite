@@ -1,0 +1,93 @@
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
+import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
+
+const Footer = () => {
+  const { language } = useLanguage();
+  const contactHref = `mailto:${PUBLIC_ASSURANCE_META.contactEmail}`;
+
+  const copy = language === 'fr'
+    ? {
+        founderLine: 'Dirigé par Martin Lepage, PhD',
+        tagline: 'Un observatoire decentralise pour la gouvernance de l IA.',
+        proofLine: 'Observer, structurer et evaluer la gouvernance a travers les modeles, les institutions, les normes et les revendications.',
+        navigation: 'Navigation',
+        home: 'Accueil',
+        about: 'A propos',
+        observatory: 'Observatoire',
+        governance: 'Gouvernance',
+        methods: 'Methodes',
+        assurance: 'Assurance',
+        connect: 'Contact',
+        book: 'Demandes de recherche et de collaboration',
+        record: 'Registre de transparence',
+        reviewed: `Derniere revue ${PUBLIC_ASSURANCE_META.reviewedOnLabelFr}`,
+        location: 'Montreal, Quebec, Canada'
+      }
+    : {
+        founderLine: 'Led by Martin Lepage, PhD',
+        tagline: 'A decentralized observatory for AI governance.',
+        proofLine: 'Observing, structuring, and evaluating governance across models, institutions, standards, and claims.',
+        navigation: 'Navigation',
+        home: 'Home',
+        about: 'About',
+        observatory: 'Observatory',
+        governance: 'Governance',
+        methods: 'Methods',
+        assurance: 'Assurance',
+        connect: 'Contact',
+        book: 'Research and collaboration inquiries',
+        record: 'Transparency record',
+        reviewed: `Last reviewed ${PUBLIC_ASSURANCE_META.reviewedOnLabelEn}`,
+        location: 'Montreal, Quebec, Canada'
+      };
+
+  return (
+    <footer className="footer" data-testid="footer">
+      <div className="container">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <div className="footer-lockup">
+              <span className="footer-wordmark">
+                PHAROS
+              </span>
+            </div>
+            <p className="footer-founder">{copy.founderLine}</p>
+            <p>{copy.tagline}</p>
+            <p className="footer-proof">{copy.proofLine}</p>
+          </div>
+
+          <div className="footer-col">
+            <h4>{copy.navigation}</h4>
+            <Link to="/">{copy.home}</Link>
+            <Link to="/about">{copy.about}</Link>
+            <Link to="/observatory">{copy.observatory}</Link>
+            <Link to="/governance">{copy.governance}</Link>
+            <Link to="/methods">{copy.methods}</Link>
+            <Link to="/assurance">{copy.assurance}</Link>
+          </div>
+
+          <div className="footer-col">
+            <h4>{copy.connect}</h4>
+            <Link to="/contact">{copy.book}</Link>
+            <a href={contactHref}>{PUBLIC_ASSURANCE_META.contactEmail}</a>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span>&copy; 2026 PHAROS AI Governance</span>
+          <div className="footer-bottom-links">
+            <Link to="/assurance">{copy.assurance}</Link>
+            <a href={PUBLIC_ASSURANCE_META.transparencyRecordPath} target="_blank" rel="noreferrer">
+              {copy.record}
+            </a>
+            <span>{copy.reviewed}</span>
+            <span>{copy.location}</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

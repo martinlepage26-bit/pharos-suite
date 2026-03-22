@@ -1,0 +1,87 @@
+/* Source stylesheet for Tailwind CLI. Generates src/tailwind.generated.css. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-bg: 11 31 46;
+  --brand-surface: 15 59 62;
+  --brand-surface-muted: 17 52 63;
+  --brand-heading: 240 237 230;
+  --brand-body: 240 237 230;
+  --brand-muted: 122 155 173;
+  --brand-primary: 61 214 200;
+  --brand-accent: 184 155 94;
+  --brand-border: 214 204 187;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: rgb(var(--brand-bg));
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: rgb(var(--brand-bg));
+  color: rgb(var(--brand-body));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+a {
+  color: inherit;
+}
+
+@layer base {
+  :root {
+    --background: var(--brand-bg);
+    --foreground: var(--brand-body);
+    --card: var(--brand-surface);
+    --card-foreground: var(--brand-body);
+    --popover: var(--brand-surface);
+    --popover-foreground: var(--brand-body);
+    --primary: var(--brand-primary);
+    --primary-foreground: 255 253 248;
+    --secondary: var(--brand-surface-muted);
+    --secondary-foreground: var(--brand-body);
+    --muted: var(--brand-surface-muted);
+    --muted-foreground: var(--brand-muted);
+    --accent: var(--brand-accent);
+    --accent-foreground: var(--brand-heading);
+    --destructive: 185 72 57;
+    --destructive-foreground: 255 255 255;
+    --border: var(--brand-border);
+    --input: var(--brand-border);
+    --ring: var(--brand-accent);
+    --radius: 1.125rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

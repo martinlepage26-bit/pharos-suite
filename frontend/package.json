@@ -1,0 +1,65 @@
+{
+    "name": "pharos-ai-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@craco/craco": "^7.1.0",
+        "@radix-ui/react-dialog": "1.1.15",
+        "@radix-ui/react-dropdown-menu": "2.1.16",
+        "@radix-ui/react-label": "2.1.8",
+        "@radix-ui/react-select": "2.2.6",
+        "@radix-ui/react-slot": "1.2.4",
+        "@radix-ui/react-toast": "1.2.15",
+        "@radix-ui/react-tooltip": "1.2.8",
+        "class-variance-authority": "0.7.1",
+        "clsx": "2.1.1",
+        "eslint-webpack-plugin": "5.0.3",
+        "lucide-react": "0.576.0",
+        "react": "^18.2.0",
+        "react-day-picker": "9.14.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.8.0",
+        "react-scripts": "5.0.1",
+        "tailwind-merge": "3.5.0"
+    },
+    "scripts": {
+        "start": "concurrently -k \"npm:tailwind:watch\" \"npm:react:start\"",
+        "react:start": "craco start",
+        "build": "npm run tailwind:build && craco build && node scripts/generate-static-route-pages.cjs",
+        "validate:boundaries": "node scripts/validate-product-boundaries.cjs",
+        "tailwind:build": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --minify",
+        "tailwind:watch": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --watch",
+        "cf:deploy": "wrangler pages deploy build --project-name govern-ai --branch main --commit-dirty=true",
+        "cf:preview": "wrangler pages deploy build --project-name govern-ai --branch preview",
+        "test": "craco test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "ajv": "6.12.6",
+        "ajv-keywords": "3.5.2",
+        "autoprefixer": "10.4.27",
+        "concurrently": "9.2.1",
+        "postcss": "8.5.8",
+        "schema-utils": "3.3.0",
+        "tailwindcss": "3.4.19",
+        "tailwindcss-animate": "1.0.7",
+        "wrangler": "4.71.0"
+    }
+}

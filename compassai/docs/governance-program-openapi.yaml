@@ -1,0 +1,840 @@
+openapi: 3.1.0
+info:
+  title: CompassAI Governance Program API
+  version: 1.0.0
+  description: >
+    OpenAPI overlay for the governance-program integration added to CompassAI.
+    This specification covers the new governance-package endpoints plus the
+    modified assessment governance-context surface.
+servers:
+  - url: /api
+tags:
+  - name: Governance Program
+paths:
+  /governance/artifacts/import:
+    post:
+      tags: [Governance Program]
+      summary: Import the markdown governance deliverables bundle
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GovernanceArtifactImportRequest'
+      responses:
+        '200':
+          description: Imported artifact summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imported:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ImportedArtifact'
+                  count:
+                    type: integer
+  /governance/artifacts:
+    get:
+      tags: [Governance Program]
+      summary: List imported governance artifacts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Governance artifact records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GovernanceArtifactRecord'
+  /governance/artifacts/{artifact_id}/download:
+    get:
+      tags: [Governance Program]
+      summary: Download the raw markdown for an imported governance artifact
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: artifact_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Markdown file download
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /governance/policies:
+    get:
+      tags: [Governance Program]
+      summary: List governance policies
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Governance policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GovernancePolicy'
+    post:
+      tags: [Governance Program]
+      summary: Create a governance policy record
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GovernancePolicyCreate'
+      responses:
+        '200':
+          description: Created policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernancePolicy'
+  /governance/training:
+    get:
+      tags: [Governance Program]
+      summary: List training modules
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Training modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrainingModule'
+    post:
+      tags: [Governance Program]
+      summary: Create a training module
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainingModuleCreate'
+      responses:
+        '200':
+          description: Created training module
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingModule'
+  /governance/training/recommendations/{assessment_id}:
+    post:
+      tags: [Governance Program]
+      summary: Generate training recommendations from assessment results
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: assessment_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recommendation list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assessment_id:
+                    type: string
+                  recommendations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrainingRecommendation'
+  /assessments/{assessment_id}/governance-context:
+    get:
+      tags: [Governance Program]
+      summary: Retrieve governance context attached to an assessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: assessment_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Assessment governance context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentGovernanceContext'
+    put:
+      tags: [Governance Program]
+      summary: Update governance context for an assessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: assessment_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GovernanceContextUpdate'
+      responses:
+        '200':
+          description: Updated governance context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentGovernanceContext'
+  /assessments/{assessment_id}/artifact-attachments:
+    get:
+      tags: [Governance Program]
+      summary: Resolve attached governance artifacts for an assessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: assessment_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Assessment artifact attachments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assessment_id:
+                    type: string
+                  artifacts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GovernanceArtifactRecord'
+  /governance/committees:
+    get:
+      tags: [Governance Program]
+      summary: List governance committees
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Governance committees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GovernanceCommittee'
+    post:
+      tags: [Governance Program]
+      summary: Create a governance committee
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GovernanceCommitteeCreate'
+      responses:
+        '200':
+          description: Created committee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceCommittee'
+  /governance/committees/{committee_id}/meetings:
+    get:
+      tags: [Governance Program]
+      summary: List committee meetings
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: committee_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Committee meetings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GovernanceCommitteeMeeting'
+    post:
+      tags: [Governance Program]
+      summary: Schedule a committee meeting
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: committee_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GovernanceCommitteeMeetingCreate'
+      responses:
+        '200':
+          description: Created meeting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceCommitteeMeeting'
+  /governance/committees/{committee_id}/decisions:
+    post:
+      tags: [Governance Program]
+      summary: Record a governance committee decision
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: committee_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GovernanceCommitteeDecisionCreate'
+      responses:
+        '200':
+          description: Created decision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceCommitteeDecision'
+  /governance/committees/{committee_id}/report:
+    get:
+      tags: [Governance Program]
+      summary: Aggregate committee activity and linked assessment outcomes
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: committee_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Committee report payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  committee:
+                    $ref: '#/components/schemas/GovernanceCommittee'
+                  summary:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  risk_distribution:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  readiness_distribution:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  decisions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GovernanceCommitteeDecision'
+                  meetings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GovernanceCommitteeMeeting'
+  /governance/executive-dashboard:
+    get:
+      tags: [Governance Program]
+      summary: Aggregate governance metrics for executive briefing views
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Executive dashboard summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  summary:
+                    type: object
+                    additionalProperties: true
+                  risk_distribution:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  readiness_distribution:
+                    type: object
+                    additionalProperties:
+                      type: integer
+  /governance/policies/bootstrap:
+    post:
+      tags: [Governance Program]
+      summary: Bootstrap policy records from imported artifacts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Policy bootstrap summary
+  /governance/training/bootstrap:
+    post:
+      tags: [Governance Program]
+      summary: Bootstrap training records from imported artifacts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Training bootstrap summary
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    GovernanceArtifactImportRequest:
+      type: object
+      properties:
+        bundle_dir:
+          type: string
+          nullable: true
+        upsert:
+          type: boolean
+          default: true
+    ImportedArtifact:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        title:
+          type: string
+          nullable: true
+      required: [name, email]
+    GovernanceArtifactReference:
+      type: object
+      properties:
+        artifact_id:
+          type: string
+        artifact_type:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        required:
+          type: boolean
+        linked_control_ids:
+          type: array
+          items:
+            type: string
+        taxonomy:
+          $ref: '#/components/schemas/ArtifactTaxonomy'
+      required: [artifact_id, artifact_type, title]
+    ArtifactTaxonomy:
+      type: object
+      properties:
+        domain:
+          type: string
+        control_function:
+          type: string
+        artifact_class:
+          type: string
+        subject_object:
+          type: string
+        lifecycle_stage:
+          type: string
+        evidence_status:
+          type: string
+        formality:
+          type: string
+        file_format:
+          type: string
+      required:
+        - domain
+        - control_function
+        - artifact_class
+        - subject_object
+        - lifecycle_stage
+        - evidence_status
+        - formality
+        - file_format
+    GovernanceArtifactRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        filename:
+          type: string
+        title:
+          type: string
+        artifact_type:
+          type: string
+        summary:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        policy_domain:
+          type: string
+          nullable: true
+        competencies:
+          type: array
+          items:
+            type: string
+        linked_control_ids:
+          type: array
+          items:
+            type: string
+        content_markdown:
+          type: string
+        content_hash:
+          type: string
+          nullable: true
+        taxonomy:
+          $ref: '#/components/schemas/ArtifactTaxonomy'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AssessmentCriteria:
+      type: object
+      properties:
+        assessment_owner:
+          type: string
+          nullable: true
+        review_window_days:
+          type: integer
+        review_frequency:
+          type: string
+          nullable: true
+        approval_threshold:
+          type: string
+          nullable: true
+        applicable_policy_ids:
+          type: array
+          items:
+            type: string
+        applicable_standard_refs:
+          type: array
+          items:
+            type: string
+        linked_control_ids:
+          type: array
+          items:
+            type: string
+        committee_required:
+          type: boolean
+        executive_visibility_required:
+          type: boolean
+    AssessmentWorkflow:
+      type: object
+      properties:
+        current_stage:
+          type: string
+        allowed_next_stages:
+          type: array
+          items:
+            type: string
+        approvals_required:
+          type: array
+          items:
+            type: string
+        approvals_received:
+          type: array
+          items:
+            type: string
+        committee_decision_ids:
+          type: array
+          items:
+            type: string
+        latest_decision_summary:
+          type: string
+          nullable: true
+    GovernanceContextUpdate:
+      type: object
+      properties:
+        criteria:
+          $ref: '#/components/schemas/AssessmentCriteria'
+        workflow:
+          $ref: '#/components/schemas/AssessmentWorkflow'
+        governance_artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceArtifactReference'
+        training_recommendation_ids:
+          type: array
+          items:
+            type: string
+    AssessmentGovernanceContext:
+      type: object
+      properties:
+        assessment_id:
+          type: string
+        criteria:
+          $ref: '#/components/schemas/AssessmentCriteria'
+        workflow:
+          $ref: '#/components/schemas/AssessmentWorkflow'
+        governance_artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceArtifactReference'
+        training_recommendation_ids:
+          type: array
+          items:
+            type: string
+        artifact_attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceArtifactRecord'
+    GovernancePolicyCreate:
+      type: object
+      properties:
+        slug:
+          type: string
+        title:
+          type: string
+        artifact_id:
+          type: string
+          nullable: true
+        policy_domain:
+          type: string
+        summary:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        linked_control_ids:
+          type: array
+          items:
+            type: string
+        linked_system_ids:
+          type: array
+          items:
+            type: string
+      required: [slug, title, policy_domain]
+    GovernancePolicy:
+      allOf:
+        - $ref: '#/components/schemas/GovernancePolicyCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+    TrainingModuleCreate:
+      type: object
+      properties:
+        slug:
+          type: string
+        title:
+          type: string
+        artifact_id:
+          type: string
+          nullable: true
+        summary:
+          type: string
+        competencies:
+          type: array
+          items:
+            type: string
+        linked_control_ids:
+          type: array
+          items:
+            type: string
+        linked_risk_tiers:
+          type: array
+          items:
+            type: string
+        recommended_for_roles:
+          type: array
+          items:
+            type: string
+        duration_minutes:
+          type: integer
+          nullable: true
+      required: [slug, title]
+    TrainingModule:
+      allOf:
+        - $ref: '#/components/schemas/TrainingModuleCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+    TrainingRecommendation:
+      type: object
+      properties:
+        training_module_id:
+          type: string
+        title:
+          type: string
+        score:
+          type: integer
+        reasons:
+          type: array
+          items:
+            type: string
+    GovernanceCommitteeCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        charter_artifact_id:
+          type: string
+          nullable: true
+        purpose:
+          type: string
+        responsibilities:
+          type: array
+          items:
+            type: string
+        meeting_cadence:
+          type: string
+          nullable: true
+        chair_name:
+          type: string
+          nullable: true
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        decision_rules:
+          type: array
+          items:
+            type: string
+      required: [name]
+    GovernanceCommittee:
+      allOf:
+        - $ref: '#/components/schemas/GovernanceCommitteeCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+    GovernanceCommitteeMeetingCreate:
+      type: object
+      properties:
+        title:
+          type: string
+        scheduled_for:
+          type: string
+          format: date-time
+        agenda_items:
+          type: array
+          items:
+            type: string
+        related_assessment_ids:
+          type: array
+          items:
+            type: string
+      required: [title, scheduled_for]
+    GovernanceCommitteeMeeting:
+      allOf:
+        - $ref: '#/components/schemas/GovernanceCommitteeMeetingCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+            committee_id:
+              type: string
+            status:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+    GovernanceCommitteeDecisionCreate:
+      type: object
+      properties:
+        meeting_id:
+          type: string
+        title:
+          type: string
+        decision:
+          type: string
+        rationale:
+          type: string
+        owner:
+          type: string
+          nullable: true
+        due_date:
+          type: string
+          format: date-time
+          nullable: true
+        votes_for:
+          type: integer
+        votes_against:
+          type: integer
+        abstentions:
+          type: integer
+      required: [meeting_id, title, decision]
+    GovernanceCommitteeDecision:
+      allOf:
+        - $ref: '#/components/schemas/GovernanceCommitteeDecisionCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+            created_at:
+              type: string
+              format: date-time
