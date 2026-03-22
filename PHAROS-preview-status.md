@@ -58,6 +58,8 @@ Patch file scope, previously verified:
 
 ## Recovery / redeploy command
 
+Preferred repeatable path: `scripts/deploy_pharos_preview_frontend.sh --yes`
+
 ```bash
 cd /home/cerebrhoe/repos/pharos-suite/frontend
 npx wrangler pages deploy build --project-name pharos-suite-review --branch preview/pharos-shell-check --commit-hash f583584e33c9d575accb5a528676f9e06f31482f --commit-message "Bound PHAROS portal previews when module origins are unset"
