@@ -443,7 +443,6 @@ const Home = () => {
                       <span className="hero-quantum-beam hero-quantum-beam-up" />
                     </div>
                   </div>
-                  <span className="hero-wordmark hero-wordmark-core">PHAROS</span>
                 </div>
                 <div className="hero-wordmark-wrap">
                   <span className="hero-wordmark-subtitle">
