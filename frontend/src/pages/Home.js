@@ -11,6 +11,7 @@ import {
   Waypoints
 } from 'lucide-react';
 import '../components/HomeHeroLogo.css';
+import HeroRadiantEmblem from '../components/HeroRadiantEmblem';
 import MeridianField from '../components/MeridianField';
 import SignalStrip from '../components/SignalStrip';
 import { useLanguage } from '../context/LanguageContext';
@@ -393,6 +394,9 @@ const Home = () => {
   const subtitleParts = copy.wordmarkSubtitle.split(subtitleBreakToken);
   const subtitleLead = subtitleParts[0] || copy.wordmarkSubtitle;
   const subtitleTail = subtitleParts.slice(1).join(subtitleBreakToken).trim();
+  const heroTitleLines = language === 'fr'
+    ? ['Gouvernance IA deterministe', 'sous pression']
+    : ['Deterministic AI governance', 'under pressure'];
 
   return (
     <div data-testid="home-page">
@@ -427,14 +431,17 @@ const Home = () => {
               </div>
               <div className="hero-mark-lockup">
                 <div className="hero-mark-shell">
-                  <div className="hero-beam-origin" aria-hidden="true">
-                    <span className="hero-word-halo" />
-                    <span className="hero-word-core" />
-                    <span className="hero-quantum-beam hero-quantum-beam-right" />
-                    <span className="hero-quantum-beam hero-quantum-beam-left" />
-                    <span className="hero-quantum-beam hero-quantum-beam-down-right" />
-                    <span className="hero-quantum-beam hero-quantum-beam-down-left" />
-                    <span className="hero-quantum-beam hero-quantum-beam-up" />
+                  <div className="hero-mark-crest">
+                    <HeroRadiantEmblem className="hero-emblem" />
+                    <div className="hero-beam-origin" aria-hidden="true">
+                      <span className="hero-word-halo" />
+                      <span className="hero-word-core" />
+                      <span className="hero-quantum-beam hero-quantum-beam-right" />
+                      <span className="hero-quantum-beam hero-quantum-beam-left" />
+                      <span className="hero-quantum-beam hero-quantum-beam-down-right" />
+                      <span className="hero-quantum-beam hero-quantum-beam-down-left" />
+                      <span className="hero-quantum-beam hero-quantum-beam-up" />
+                    </div>
                   </div>
                   <span className="hero-wordmark hero-wordmark-core">PHAROS</span>
                 </div>
@@ -448,11 +455,12 @@ const Home = () => {
             </div>
 
             <div className="hero-content hero-copy-panel glass-panel">
-              <div className="brand-kicker">
-                <span>{copy.brandKicker}</span>
-              </div>
               <div className="hero-copy-header">
-                <h1>{copy.heroTitle}</h1>
+                <h1>
+                  {heroTitleLines[0]}
+                  <br />
+                  {heroTitleLines[1]}
+                </h1>
                 <p className="hero-subheadline">{copy.heroSubheadline}</p>
               </div>
               <div className="grid-4 hero-field-grid hero-field-grid-mobile">
