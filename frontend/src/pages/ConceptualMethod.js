@@ -280,6 +280,18 @@ function ConceptualMethod() {
               </div>
             ))}
           </div>
+
+          <div className="section-header reveal" style={{ marginTop: '28px', marginBottom: 0 }}>
+            <a
+              href="https://pharos-ai.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="body-sm"
+              style={{ fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', textDecoration: 'underline' }}
+            >
+              SEE NORMALIZED RESULTS
+            </a>
+          </div>
         </div>
       </section>
     </div>
