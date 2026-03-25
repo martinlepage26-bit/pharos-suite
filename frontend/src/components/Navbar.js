@@ -130,6 +130,7 @@ const Navbar = () => {
                 className={`nav-sitemap-toggle${sitemapOpen ? ' open' : ''}`}
                 aria-label={sitemapOpen ? (language === 'fr' ? 'Fermer le plan du site' : 'Close site map') : (language === 'fr' ? 'Ouvrir le plan du site' : 'Open site map')}
                 aria-expanded={sitemapOpen}
+                aria-controls="site-map-panel"
                 type="button"
                 onClick={() => setSitemapOpen((open) => !open)}
               >
@@ -189,10 +190,17 @@ const Navbar = () => {
         type="button"
         className={`sitemap-backdrop${sitemapOpen ? ' open' : ''}`}
         aria-label={language === 'fr' ? 'Fermer le plan du site' : 'Close site map'}
+        aria-hidden={!sitemapOpen}
+        tabIndex={sitemapOpen ? 0 : -1}
         onClick={() => setSitemapOpen(false)}
       />
 
-      <aside className={`sitemap-panel${sitemapOpen ? ' open' : ''}`} aria-hidden={!sitemapOpen}>
+      <aside
+        id="site-map-panel"
+        className={`sitemap-panel${sitemapOpen ? ' open' : ''}`}
+        aria-hidden={!sitemapOpen}
+        aria-label={copy.sitemapLabel}
+      >
         <div className="sitemap-panel-inner">
           <div className="sitemap-links sitemap-links-compact">
             {copy.sitemapLinks.map((item) => {
@@ -202,6 +210,7 @@ const Navbar = () => {
                   key={item.path}
                   to={item.path}
                   className={`sitemap-link compact${isActive ? ' active' : ''}`}
+                  tabIndex={sitemapOpen ? 0 : -1}
                   onClick={() => setSitemapOpen(false)}
                 >
                   {item.label}
@@ -214,6 +223,7 @@ const Navbar = () => {
             <button
               type="button"
               className="nav-lang mobile-lang-toggle"
+              tabIndex={sitemapOpen ? 0 : -1}
               onClick={() => {
                 toggleLanguage();
                 setSitemapOpen(false);

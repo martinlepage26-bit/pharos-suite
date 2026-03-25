@@ -154,8 +154,8 @@ const ROUTE_PAGES = [
     ],
     primaryHref: '/about/conceptual-method',
     primaryLabel: 'Open the conceptual method',
-    secondaryHref: '/contact',
-    secondaryLabel: 'Discuss your review condition'
+    secondaryHref: '/normalized-results',
+    secondaryLabel: 'See normalized results'
   },
   {
     path: '/about/conceptual-method',
@@ -408,9 +408,45 @@ function getCanonicalUrl(routePath) {
   return `https://pharos-ai.ca${routePath}`;
 }
 
+function normalizeContactEmail(candidate) {
+  if (typeof candidate !== 'string') return null;
+  const trimmed = candidate.trim();
+
+  if (!trimmed || trimmed.includes('%') || trimmed.includes('{{') || trimmed.includes('}}')) {
+    return null;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+    return null;
+  }
+
+  return trimmed;
+}
+
 function extractContactEmail(html) {
-  const match = html.match(/mailto:([^"'<\s]+)/i);
-  return match?.[1] || 'pharos@pharos-ai.ca';
+  const candidates = [];
+  const envEmail = process.env.REACT_APP_PUBLIC_CONTACT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL;
+
+  if (envEmail) {
+    candidates.push(envEmail);
+  }
+
+  const mailtoMatches = html.matchAll(/mailto:([^"'<\s]+)/gi);
+  for (const match of mailtoMatches) {
+    candidates.push(match[1]);
+  }
+
+  const jsonEmailMatch = html.match(/"email"\s*:\s*"([^"]+)"/i);
+  if (jsonEmailMatch?.[1]) {
+    candidates.push(jsonEmailMatch[1]);
+  }
+
+  for (const candidate of candidates) {
+    const normalized = normalizeContactEmail(candidate);
+    if (normalized) return normalized;
+  }
+
+  return 'pharos@pharos-ai.ca';
 }
 
 function renderNoScript(page, contactEmail) {
