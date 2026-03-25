@@ -1,314 +1,176 @@
-import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, FileCheck2, Target } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Shield, Waypoints } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import SignalStrip from '../components/SignalStrip';
 
-const RESEARCH_COPY = {
+const COPY = {
   en: {
     eyebrow: 'Research',
-    heroTitle: 'Briefings for scrutiny, review, and control design',
-    heroBody: 'Each briefing starts from a real signal, names the governance pressure it creates, and turns it into control logic, claim boundaries, and evidence questions teams can use.',
-    method: 'Method',
-    methodTitle: 'Start with the pressure, end with a reviewable control response',
-    methodBody: 'The aim is not commentary alone. The aim is a control response a reviewer can follow.',
-    briefingsLabel: 'Briefings',
-    briefingsTitle: 'Browse by context',
-    briefingsBody: 'Filter by the operating context behind the review demand.',
-    briefingTag: 'Briefing',
-    ctaTitle: 'Facing a similar challenge?',
-    ctaBody: 'A debrief can help translate the signal into control logic, evidence needs, and a proportionate next step.',
-    bookDebrief: 'Book a debrief',
-    summary: [
+    title: 'An observatory for governance signals that shape AI review decisions',
+    body:
+      'This page tracks standards, policy pressure, and workflow-level governance patterns relevant to procurement, audit, and executive oversight.',
+    streams: [
       {
-        label: 'Starts from',
-        title: 'A real governance signal',
-        description: 'Each briefing begins with an incident, enforcement pattern, or institutional constraint rather than a generic principle list.'
+        icon: Shield,
+        title: 'Regulatory and standards movement',
+        body: 'Track changes in frameworks and obligations that alter evidence burden and review expectations.'
       },
       {
-        label: 'Produces',
-        title: 'Control logic, claim boundaries, and evidence questions',
-        description: 'The output is meant to sharpen what should be controlled, what can be claimed, and what still needs proof.'
-      },
-      {
-        label: 'Useful for',
-        title: 'Teams shaping review posture',
-        description: 'Procurement, audit, policy, and oversight teams can use the briefings to make scrutiny more concrete.'
-      }
-    ],
-    filters: [
-      { key: 'all', label: 'All' },
-      { key: 'regulated', label: 'Regulated Systems' },
-      { key: 'enterprise', label: 'Enterprise SaaS' },
-      { key: 'procurement', label: 'Procurement & Vendor Risk' },
-      { key: 'public', label: 'Public Sector' },
-      { key: 'financial', label: 'Financial Systems' }
-    ],
-    methods: [
-      {
-        icon: Target,
-        title: 'Spot the signal',
-        description: 'Identify the incident, risk, or institutional constraint that requires a governance response.'
-      },
-      {
-        icon: FileCheck2,
-        title: 'Translate to a control',
-        description: 'Turn the problem into a review expectation, threshold, evidence need, or documentation requirement.'
+        icon: Waypoints,
+        title: 'Operational governance patterns',
+        body: 'Monitor recurring failure patterns in threshold design, escalation ownership, and documentation quality.'
       },
       {
         icon: BookOpen,
-        title: 'Make it legible',
-        description: 'Produce something a customer, auditor, or committee can follow, including what remains uncertain.'
+        title: 'Method and interpretation layer',
+        body: 'Maintain conceptual clarity so governance language maps to real controls instead of generic assurance claims.'
       }
     ],
-    briefings: [
+    referencesTitle: 'Core external references',
+    references: [
       {
-        context: 'regulated',
-        date: 'Nov 14, 2024',
-        title: 'Hiring Automation as Gatekeeping Infrastructure',
-        description: 'An AI system that filters candidates is not a productivity feature. It is gatekeeping infrastructure that allocates opportunity and produces institutional liability.'
+        label: 'NIST AI RMF',
+        href: 'https://www.nist.gov/itl/ai-risk-management-framework',
+        desc: 'Risk and governance scaffolding used for control mapping and review structure.'
       },
       {
-        context: 'procurement',
-        date: 'Oct 27, 2024',
-        title: 'Training Data as Legal Act: The Clearview Problem',
-        description: 'Training data provenance is not a technical footnote. It is a legal act with institutional consequences and cross-jurisdiction enforcement risk.'
+        label: 'ISO/IEC 42001',
+        href: 'https://www.iso.org/standard/81230.html',
+        desc: 'AI management-system standard for governance process and accountability design.'
       },
       {
-        context: 'financial',
-        date: 'Oct 11, 2024',
-        title: 'Zillow and the $500M Lesson in Model Risk',
-        description: 'Model failure is not the scandal. The scandal is letting model failure become balance-sheet failure.'
+        label: 'EU AI Act',
+        href: 'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai',
+        desc: 'Binding risk-based regulatory architecture shaping global vendor and procurement expectations.'
       },
       {
-        context: 'public',
-        date: 'Sep 24, 2024',
-        title: 'The Dutch Scandal: Algorithmic Suspicion and State Collapse',
-        description: 'The archetype of what happens when the state operationalizes suspicion through opaque scoring.'
-      },
-      {
-        context: 'regulated',
-        date: 'Sep 7, 2024',
-        title: 'COMPAS and the Black Box Defense',
-        description: 'If a score shapes sentencing outcomes, transparency is not a bonus feature. It is a legitimacy requirement.'
-      },
-      {
-        context: 'enterprise',
-        date: 'Aug 21, 2024',
-        title: 'Samsung, ChatGPT, and the Prompt as Leak Vector',
-        description: 'Shadow AI risk is what happens when institutional policy lags institutional behavior.'
-      },
-      {
-        context: 'enterprise',
-        date: 'Aug 4, 2024',
-        title: 'Air Canada and the Chatbot That Became Policy',
-        description: 'Customer-facing AI does not dilute accountability. It concentrates it.'
+        label: 'OECD AI Principles',
+        href: 'https://oecd.ai/en/ai-principles',
+        desc: 'Intergovernmental principles used for policy framing and governance language alignment.'
       }
-    ]
+    ],
+    noteTitle: 'How PHAROS uses this layer',
+    noteBody:
+      'Research signals are converted into review-facing controls, not treated as abstract content. The output is a tighter decision pathway under pressure.',
+    ctaPrimary: 'Open full library',
+    ctaSecondary: 'Book review'
   },
   fr: {
     eyebrow: 'Recherche',
-    heroTitle: 'Notes de revue',
-    heroBody: 'Chaque note part d’un signal réel, nomme la pression de gouvernance qu’il crée, puis le traduit en logique de contrôle, en limites de revendication et en questions probantes utiles aux équipes.',
-    method: 'Méthode',
-    methodTitle: 'Partir de la pression, finir avec une réponse de contrôle révisable',
-    methodBody: 'L’objectif n’est pas seulement le commentaire. L’objectif est une réponse de contrôle qu’un examinateur peut suivre.',
-    briefingsLabel: 'Notes d’analyse',
-    briefingsTitle: 'Parcourir par contexte',
-    briefingsBody: 'Filtrer selon le contexte opérationnel qui génère la demande d’examen.',
-    briefingTag: 'Note',
-    ctaTitle: 'Vous faites face à un défi semblable ?',
-    ctaBody: 'Un échange peut aider à traduire le signal en logique de contrôle, en besoins probants et en prochaine étape proportionnée.',
-    bookDebrief: 'Réserver un échange',
-    summary: [
+    title: 'Un observatoire des signaux qui structurent la revue IA',
+    body:
+      'Cette page suit les standards, les pressions reglementaires et les patterns de gouvernance pertinents pour l approvisionnement, l audit et la supervision executive.',
+    streams: [
       {
-        label: 'Point de depart',
-        title: 'Un vrai signal de gouvernance',
-        description: 'Chaque note part d un incident, d un motif d application ou d une contrainte institutionnelle plutot que d une liste abstraite de principes.'
+        icon: Shield,
+        title: 'Mouvements reglementaires et standards',
+        body: 'Suivre les changements qui modifient la charge de preuve et les attentes de revue.'
       },
       {
-        label: 'Ce que cela produit',
-        title: 'Logique de controle, limites de revendication et questions probantes',
-        description: 'La sortie sert a preciser ce qui doit etre controle, ce qui peut etre affirme et ce qui demande encore de la preuve.'
-      },
-      {
-        label: 'Utile pour',
-        title: 'Les equipes qui preparent la revue',
-        description: 'Les equipes d approvisionnement, d audit, de politique et d oversight peuvent s en servir pour rendre l examen plus concret.'
-      }
-    ],
-    filters: [
-      { key: 'all', label: 'Tous' },
-      { key: 'regulated', label: 'Systèmes réglementés' },
-      { key: 'enterprise', label: 'SaaS d’entreprise' },
-      { key: 'procurement', label: 'Approvisionnement et risque fournisseur' },
-      { key: 'public', label: 'Secteur public' },
-      { key: 'financial', label: 'Systèmes financiers' }
-    ],
-    methods: [
-      {
-        icon: Target,
-        title: 'Repérer le signal',
-        description: 'Identifier l’incident, le risque ou la contrainte institutionnelle qui exige une réponse de gouvernance.'
-      },
-      {
-        icon: FileCheck2,
-        title: 'Le traduire en contrôle',
-        description: 'Transformer le problème en attente de revue, en seuil, en besoin probant ou en exigence documentaire.'
+        icon: Waypoints,
+        title: 'Patterns operationnels',
+        body: 'Observer les echecs recurrents dans les seuils, l escalation et la documentation.'
       },
       {
         icon: BookOpen,
-        title: 'Le rendre lisible',
-        description: 'Produire quelque chose qu’un client, un auditeur ou un comité peut suivre, y compris ce qui demeure incertain.'
+        title: 'Couche methode et interpretation',
+        body: 'Garder une clarte conceptuelle entre langage de gouvernance et controles reels.'
       }
     ],
-    briefings: [
+    referencesTitle: 'References externes de base',
+    references: [
       {
-        context: 'regulated',
-        date: '14 nov. 2024',
-        title: 'Automatisation de l’embauche comme infrastructure de filtrage',
-        description: 'Un système d’IA qui filtre les candidatures n’est pas un simple outil de productivité. C’est une infrastructure de tri qui répartit les possibilités et crée une responsabilité institutionnelle.'
+        label: 'NIST AI RMF',
+        href: 'https://www.nist.gov/itl/ai-risk-management-framework',
+        desc: 'Cadre de risque et de gouvernance pour cartographier les controles.'
       },
       {
-        context: 'procurement',
-        date: '27 oct. 2024',
-        title: 'Les données d’entraînement comme acte juridique : le problème Clearview',
-        description: 'La provenance des données d’entraînement n’est pas une note de bas de page technique. C’est un acte juridique avec des conséquences institutionnelles et un risque d’application transfrontalière.'
+        label: 'ISO/IEC 42001',
+        href: 'https://www.iso.org/standard/81230.html',
+        desc: 'Standard de systeme de management IA pour processus et responsabilite.'
       },
       {
-        context: 'financial',
-        date: '11 oct. 2024',
-        title: 'Zillow et la leçon de 500 M$ sur le risque de modèle',
-        description: 'La défaillance du modèle n’est pas le scandale. Le scandale, c’est de laisser une défaillance de modèle devenir une défaillance de bilan.'
+        label: 'EU AI Act',
+        href: 'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai',
+        desc: 'Architecture reglementaire contraignante qui influence les revues fournisseurs.'
       },
       {
-        context: 'public',
-        date: '24 sept. 2024',
-        title: 'Le scandale néerlandais : suspicion algorithmique et effondrement de l’État',
-        description: 'L’archétype de ce qui arrive quand l’État opérationnalise la suspicion à l’aide d’un pointage opaque.'
-      },
-      {
-        context: 'regulated',
-        date: '7 sept. 2024',
-        title: 'COMPAS et la défense de la boîte noire',
-        description: 'Si un score influence les peines, la transparence n’est pas un bonus. C’est une condition de légitimité.'
-      },
-      {
-        context: 'enterprise',
-        date: '21 août 2024',
-        title: 'Samsung, ChatGPT et l’invite comme vecteur de fuite',
-        description: 'Le risque d’IA fantôme apparaît lorsque la politique institutionnelle prend du retard sur les comportements institutionnels.'
-      },
-      {
-        context: 'enterprise',
-        date: '4 août 2024',
-        title: 'Air Canada et le clavardeur devenu politique',
-        description: 'L’IA en contact avec la clientèle ne dilue pas la responsabilité. Elle la concentre.'
+        label: 'OECD AI Principles',
+        href: 'https://oecd.ai/en/ai-principles',
+        desc: 'Principes intergouvernementaux utilises pour le cadrage politique.'
       }
-    ]
+    ],
+    noteTitle: 'Usage PHAROS',
+    noteBody:
+      'Les signaux de recherche sont convertis en controles orientés revue. Le resultat est un parcours decisionnel plus solide sous pression.',
+    ctaPrimary: 'Ouvrir la bibliotheque',
+    ctaSecondary: 'Reserver'
   }
 };
 
 const Research = () => {
   const { language } = useLanguage();
-  const [activeFilter, setActiveFilter] = useState('all');
-  const copy = useMemo(() => RESEARCH_COPY[language], [language]);
-  const filterLabels = useMemo(
-    () => Object.fromEntries(copy.filters.filter((item) => item.key !== 'all').map((item) => [item.key, item.label])),
-    [copy.filters]
-  );
-
-  const visibleBriefings = useMemo(() => {
-    if (activeFilter === 'all') return copy.briefings;
-    return copy.briefings.filter((item) => item.context === activeFilter);
-  }, [activeFilter, copy.briefings]);
+  const copy = COPY[language];
 
   return (
     <div data-testid="research-page">
-      <div className="page-hero">
-        <div className="container">
-          <div className="section-header">
-            <p className="eyebrow">{copy.eyebrow}</p>
-            <h1>{copy.heroTitle}</h1>
-            <p className="body-lg" style={{ marginTop: '16px' }}>
-              {copy.heroBody}
-            </p>
-            <SignalStrip items={copy.summary} className="signal-grid-page" />
-          </div>
-        </div>
-      </div>
-
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <div className="section-header reveal">
-            <p className="eyebrow">{copy.method}</p>
-            <h2>{copy.methodTitle}</h2>
-            <p className="body-sm">{copy.methodBody}</p>
-          </div>
-
-          <div className="grid-3 stagger">
-            {copy.methods.map((item) => (
-              <div key={item.title} className="card reveal">
-                <div className="card-icon">
-                  <item.icon />
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
-        <div className="container">
-          <div className="section-header reveal">
-            <p className="eyebrow">{copy.briefingsLabel}</p>
-            <h2>{copy.briefingsTitle}</h2>
-            <p className="body-sm">{copy.briefingsBody}</p>
-          </div>
-
-          <div className="filters reveal">
-            {copy.filters.map((item) => (
-              <button
-                key={item.key}
-                type="button"
-                className={`filter-pill${activeFilter === item.key ? ' active' : ''}`}
-                onClick={() => setActiveFilter(item.key)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid-2 stagger">
-            {visibleBriefings.map((item) => (
-              <article key={item.title} className="research-card reveal visible">
-                <div className="research-meta">
-                  <span className="research-tag">{copy.briefingTag}</span>
-                  <span className="research-context">{filterLabels[item.context]}</span>
-                  <span className="research-date">{item.date}</span>
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="section">
-        <div className="container">
-          <div className="cta-banner reveal">
-            <h2>{copy.ctaTitle}</h2>
-            <p className="body-sm">{copy.ctaBody}</p>
-            <div className="btn-row">
-              <Link to="/connect" className="btn-primary">
-                {copy.bookDebrief}
-                <ArrowRight />
+        <div className="container section-shell reveal-up">
+          <p className="kicker">{copy.eyebrow}</p>
+          <h1 style={{ marginTop: '0.7rem' }}>{copy.title}</h1>
+          <p className="body-lead" style={{ marginTop: '0.8rem' }}>{copy.body}</p>
+        </div>
+      </section>
+
+      <section className="section section-tight">
+        <div className="container grid-3">
+          {copy.streams.map((stream, index) => (
+            <article className={`surface reveal-up delay-${Math.min(index, 3)}`} key={stream.title}>
+              <span className="icon-pill" aria-hidden="true">
+                <stream.icon size={16} />
+              </span>
+              <h2 style={{ fontSize: '1.3rem', marginTop: '0.7rem' }}>{stream.title}</h2>
+              <p style={{ marginTop: '0.5rem' }}>{stream.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section-tight">
+        <div className="container grid-2" style={{ alignItems: 'start' }}>
+          <article className="surface reveal-up">
+            <h2>{copy.referencesTitle}</h2>
+            <div style={{ marginTop: '0.85rem', display: 'grid', gap: '0.65rem' }}>
+              {copy.references.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="surface"
+                  style={{ display: 'block', padding: '0.85rem', borderRadius: '0.95rem' }}
+                >
+                  <span className="kicker" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                    {item.label}
+                    <ArrowUpRight size={12} />
+                  </span>
+                  <p style={{ marginTop: '0.45rem' }}>{item.desc}</p>
+                </a>
+              ))}
+            </div>
+          </article>
+
+          <article className="final-cta reveal-up delay-1">
+            <h2>{copy.noteTitle}</h2>
+            <p className="body-lead" style={{ marginTop: '0.7rem' }}>{copy.noteBody}</p>
+            <div className="btn-row" style={{ marginTop: '0.95rem' }}>
+              <Link className="btn-primary" to="/library">
+                {copy.ctaPrimary}
+              </Link>
+              <Link className="btn-secondary" to="/contact">
+                {copy.ctaSecondary}
               </Link>
             </div>
-          </div>
+          </article>
         </div>
       </section>
     </div>

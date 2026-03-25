@@ -38,7 +38,7 @@ This is the smallest safe recovery sequence for the current PHAROS public-domain
 
 4. Trigger a fresh production deploy only after the domain wiring is healthy.
    - The live Pages HTML currently lags the working tree and still advertises `https://www.pharos-ai.ca` in canonical metadata.
-   - Prefer the existing GitHub production deploy path for `main`.
+   - Prefer the existing primary-branch production deploy path from local VCS/CI controls.
    - If you intentionally do a local Pages deploy, be aware that this repo has unrelated in-progress changes. Do not publish from a dirty tree unless you explicitly want all current frontend changes to go live together.
 
 5. Run the repo-local verification check.

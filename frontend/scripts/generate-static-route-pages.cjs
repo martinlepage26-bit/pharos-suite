@@ -253,6 +253,44 @@ const ROUTE_PAGES = [
     secondaryLabel: 'Escalate to a human review'
   },
   {
+    path: '/privacy',
+    title: 'PHAROS Privacy — Public Website Data and Contact Handling',
+    description:
+      'Read how the PHAROS public website handles analytics telemetry, contact submissions, and privacy-related requests.',
+    eyebrow: 'Privacy',
+    heading: 'Privacy posture for the PHAROS public website',
+    body:
+      'This route explains what data can be collected on public routes, how intake details are used for follow-up, and where to request correction or deletion.',
+    bullets: [
+      'Analytics telemetry may be used for website reliability and clarity improvements.',
+      'Contact details submitted through forms are used for response and review scheduling.',
+      'Public forms should not be used for sensitive regulated or confidential third-party data.'
+    ],
+    primaryHref: '/contact',
+    primaryLabel: 'Contact PHAROS',
+    secondaryHref: '/terms',
+    secondaryLabel: 'Read terms'
+  },
+  {
+    path: '/terms',
+    title: 'PHAROS Terms — Public Website Use and Claim Boundaries',
+    description:
+      'Read the PHAROS public website terms, including use conditions, non-claims, and boundaries for readiness and assurance content.',
+    eyebrow: 'Terms',
+    heading: 'Terms for using the PHAROS public website',
+    body:
+      'These terms define what public website content supports, where non-claims apply, and when deployment-specific evidence requires scoped human review.',
+    bullets: [
+      'Website content is informational and does not replace legal or audit determinations.',
+      'Readiness outputs are calibration aids, not certification verdicts.',
+      'Deployment-specific assurance requires scoped human review and evidence evaluation.'
+    ],
+    primaryHref: '/contact',
+    primaryLabel: 'Request scoped review',
+    secondaryHref: '/assurance',
+    secondaryLabel: 'Review assurance'
+  },
+  {
     path: '/faq',
     title: 'PHAROS FAQ — Scope, Engagements, and Claim Boundaries',
     description:

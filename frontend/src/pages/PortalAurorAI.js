@@ -705,16 +705,24 @@ const PortalAurorAI = () => {
                             </div>
                             <div className="portal-record-actions">
                               <span className="portal-pill">{document.page_count || 0} page(s)</span>
-                              <button
-                                type="button"
+                              <span
+                                role="button"
+                                tabIndex={0}
                                 className="portal-icon-button"
                                 onClick={(event) => {
                                   event.stopPropagation();
                                   deleteDocument(document.id);
                                 }}
+                                onKeyDown={(event) => {
+                                  if (event.key === 'Enter' || event.key === ' ') {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                    deleteDocument(document.id);
+                                  }
+                                }}
                               >
                                 <Trash2 size={16} />
-                              </button>
+                              </span>
                             </div>
                           </div>
                         </button>

@@ -28,6 +28,8 @@ const routeCases = [
   ['/trust', 'assurance-page'],
   ['/auditability', 'assurance-page'],
   ['/faq', 'faq-page'],
+  ['/privacy', 'privacy-page'],
+  ['/terms', 'terms-page'],
   ['/research', 'research-page'],
   ['/observatory', 'research-page'],
   ['/cases', 'cases-page'],

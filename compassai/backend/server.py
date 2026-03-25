@@ -20,7 +20,10 @@ from io import BytesIO
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 import resend
+from ledger_db import init_ledger_db
 from routers.governance_program import router as governance_program_router
+from routers.ledger import router as ledger_router
+from routers.pharos_method import router as pharos_method_router
 
 ROOT_DIR = Path(__file__).parent
 UPLOAD_DIR = ROOT_DIR / "uploads"
@@ -4166,6 +4169,8 @@ async def bulk_upload_evidence_zip(
 
 # Include router and middleware
 api_router.include_router(governance_program_router)
+api_router.include_router(ledger_router)
+api_router.include_router(pharos_method_router)
 app.include_router(api_router)
 
 app.add_middleware(
@@ -4175,6 +4180,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.on_event("startup")
+async def startup_init_ledgers():
+    init_ledger_db()
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

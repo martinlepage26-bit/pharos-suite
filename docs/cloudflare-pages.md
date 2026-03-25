@@ -18,7 +18,7 @@ Do not point `governai.ca` at this Pages project. That hostname belongs to Marti
 
 ## Deployment flow
 
-- Production deploys are currently driven from GitHub on the `main` branch
+- Production deploys are currently driven from the primary local release branch and local CI/CD controls
 - Frontend root directory in Cloudflare Pages: `frontend`
 - Build command: `npm install --legacy-peer-deps && npm run build`
 - Output directory: `build`

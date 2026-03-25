@@ -1,5 +1,4 @@
 import './App.css';
-import './site.css';
 import './game.css';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
@@ -7,7 +6,6 @@ import { LanguageProvider } from './context/LanguageContext';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
-import TypographyPolish from './components/TypographyPolish';
 
 import About from './pages/About';
 import Admin from './pages/Admin';
@@ -21,18 +19,19 @@ import Home from './pages/Home';
 import Library from './pages/Library';
 import PortalAurorAI from './pages/PortalAurorAI';
 import PortalCompassAI from './pages/PortalCompassAI';
+import Privacy from './pages/Privacy';
 import Research from './pages/Research';
 import SealedCard from './pages/SealedCard';
 import ServiceMenu from './pages/ServiceMenu';
 import Services from './pages/Services';
 import SurfaceBoundary from './pages/SurfaceBoundary';
+import Terms from './pages/Terms';
 import Tool from './pages/Tool';
 
 function AppRoutes() {
   return (
     <>
       <ScrollToTop />
-      <TypographyPolish />
       <Navbar />
       <main className="site-main">
         <Routes>
@@ -45,6 +44,8 @@ function AppRoutes() {
           <Route path="/assurance" element={<Assurance />} />
           <Route path="/transparency" element={<Assurance />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/research" element={<Research />} />
           <Route path="/observatory" element={<Research />} />
           <Route path="/cases" element={<Cases />} />
@@ -91,7 +92,7 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
-      <div className="App min-h-screen">
+      <div className="app-shell">
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <AppRoutes />
         </BrowserRouter>
