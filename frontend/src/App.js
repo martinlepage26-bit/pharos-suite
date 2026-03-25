@@ -1,4 +1,5 @@
 import './App.css';
+import './site.css';
 import './game.css';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
@@ -6,6 +7,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
+import TypographyPolish from './components/TypographyPolish';
 
 import About from './pages/About';
 import Admin from './pages/Admin';
@@ -32,6 +34,7 @@ function AppRoutes() {
   return (
     <>
       <ScrollToTop />
+      <TypographyPolish />
       <Navbar />
       <main className="site-main">
         <Routes>
@@ -92,7 +95,7 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
-      <div className="app-shell">
+      <div className="App min-h-screen">
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <AppRoutes />
         </BrowserRouter>

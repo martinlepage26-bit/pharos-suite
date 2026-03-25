@@ -1,533 +1,621 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Compass, FileCheck2, Radar, ShieldCheck, Waypoints } from 'lucide-react';
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  Building2,
+  FileCheck2,
+  FolderSearch,
+  Radar,
+  Scale,
+  ShieldCheck,
+  Waypoints
+} from 'lucide-react';
+import '../components/HomeHeroLogo.css';
+import MeridianField from '../components/MeridianField';
+import SignalStrip from '../components/SignalStrip';
+import heroLogo from '../assets/pharos-logo-hero.svg';
 import { useLanguage } from '../context/LanguageContext';
 
-const COPY = {
+const HOME_COPY = {
   en: {
-    heroLabel: 'Legible AI Governance',
+    monitorUrl: 'PHAROS-AI.CA',
+    wordmarkSubtitle: 'Legible AI governance by Martin Lepage, PhD',
+    brandKicker: 'PHAROS AI GOVERNANCE',
     heroTitle: 'Deterministic AI governance under pressure',
+    heroSubheadline: 'Turning AI risk into inspectable workflow controls.',
     heroBody:
-      'When procurement, audit, vendor diligence, or executive scrutiny asks for proof, PHAROS helps teams answer with explicit thresholds, named decisions, and review-ready evidence.',
-    heroPrimary: 'Book a review',
-    heroSecondary: 'See methods',
-    heroStandards: ['NIST AI RMF', 'ISO/IEC 42001', 'EU AI Act'],
-    aboutLabel: 'About PHAROS',
-    aboutTitle: 'Evidence before rhetoric',
-    aboutBodyOne:
-      'PHAROS is an AI governance practice led by Martin Lepage, PhD. It is built for organizations facing live review pressure where vague governance language no longer works.',
-    aboutBodyTwo:
-      'The operating goal is simple: make governance inspectable. The result is a decision and evidence structure that reviewers can follow without rebuilding your logic from scratch.',
-    aboutQuote:
-      '"Trust does not come from tone alone. It comes from explicit thresholds, named decisions, and evidence that can be inspected."',
-    aboutStats: [
-      { label: 'Sectors', value: 'Financial services, healthcare, enterprise technology, public sector' },
-      { label: 'Focus', value: 'Procurement, audit, vendor review, executive oversight' }
-    ],
-    governanceLabel: 'PHAROS Standard',
-    governanceTitle: 'A governance posture that stays legible when scrutiny arrives',
-    governanceBody:
-      'PHAROS turns ambiguous governance pressure into deterministic operational structure with clear accountability.',
-    governancePillars: [
-      {
-        id: '01',
-        title: 'Deterministic decision rights',
-        body: 'Document who decides, who escalates, and what cannot proceed without more proof.'
-      },
-      {
-        id: '02',
-        title: 'Explicit thresholds',
-        body: 'Define trigger points for review and escalation before pressure forces improvised rules.'
-      },
-      {
-        id: '03',
-        title: 'Review-ready evidence',
-        body: 'Build packet structures a buyer, auditor, or committee can inspect quickly.'
-      },
-      {
-        id: '04',
-        title: 'Reconstructible governance',
-        body: 'Keep a record that explains what happened, why, and what changes next.'
-      }
-    ],
+      'When procurement, audit, or executive review asks how AI is governed, PHAROS helps teams answer with evidence, deterministic decision rights, explicit thresholds, and review-ready documentation.',
+    heroFounderLine: 'Built for procurement, audit, vendor review, and executive oversight.',
+    heroProofLine:
+      'Mechanism in practice: a PHAROS packet can include a decision matrix, threshold map, and evidence path cross-walked to NIST AI RMF, ISO/IEC 42001, or EU AI Act review duties when the review requires it.',
+    heroTrustLine:
+      'Representative dossiers span financial services, healthcare, enterprise technology, and public sector review conditions.',
+    primaryCta: 'Book a review',
+    secondaryCta: 'See how it works',
+    secondaryHref: '#method',
+    reviewBodyTitle: 'What Review Bodies Need To See',
+    reviewBodyHeading: 'A governance posture that stays legible when scrutiny arrives',
+    reviewBodyText:
+      'Trust here does not come from tone alone. It comes from explicit thresholds, named decisions, and a body of evidence that can actually be inspected.',
+    standardLabel: 'PHAROS Standard',
+    standardTitle: 'Evidence before rhetoric',
     pressureLabel: 'Pressure Points',
-    pressureTitle: 'Governance work starts where review pressure exposes ambiguity',
-    pressureItems: [
+    pressureHeading: 'Governance work starts where live review pressure exposes ambiguity',
+    pressureText:
+      'PHAROS does not begin with abstract governance theater. It begins where a buyer, auditor, vendor, or executive request makes the missing logic visible.',
+    methodLabel: 'Method In Four Steps',
+    methodHeading: 'Read the pressure, set the thresholds, assign the decisions, keep it reconstructible',
+    methodText:
+      'The method matters because it produces inspectable controls rather than vague ethical positioning or generic compliance prose.',
+    artifactsLabel: 'Artifacts',
+    artifactsHeading: 'Deliverables that make governance credible',
+    artifactsText:
+      'The output is not only a posture. It is a usable set of materials that makes thresholds, decisions, and evidence easy to follow later.',
+    routesLabel: 'Service Routes',
+    routesHeading: 'Choose the route by pressure source, not vocabulary',
+    routesText:
+      'The right entry point depends on whether the organization needs a baseline, a pre-mortem before exposure, or a post-mortem after failure or drift.',
+    routeCta: 'View service',
+    ctaHeading: 'Start with a short review, not a vague governance program',
+    ctaText:
+      'A 30-minute review is enough to identify the pressure source, set the route, and define the first deliverables without overstating current readiness.',
+    heroPressureCards: [
       {
-        icon: Compass,
+        icon: BriefcaseBusiness,
         title: 'Procurement',
-        body: 'Governance must survive customer and buyer diligence without ad hoc explanations.'
-      },
-      {
-        icon: FileCheck2,
-        title: 'Audit',
-        body: 'Thresholds, roles, and evidence trails must be explicit enough to review quickly.'
-      },
-      {
-        icon: ShieldCheck,
-        title: 'Vendor review',
-        body: 'Model and supplier dependencies need structured governance, not last-minute prose.'
+        description: 'Customer questionnaires and buyer requests that force governance claims into the open.'
       },
       {
         icon: Radar,
-        title: 'Executive oversight',
-        body: 'Leadership needs bounded claims and clear mechanism-level accountability.'
+        title: 'Audit',
+        description: 'Review conditions that ask who decided, what evidence exists, and what can be reconstructed.'
+      },
+      {
+        icon: ShieldCheck,
+        title: 'Vendor Review',
+        description: 'Third-party diligence that exposes weak thresholds, unclear ownership, or missing proof.'
+      },
+      {
+        icon: Building2,
+        title: 'Oversight',
+        description: 'Executive and committee scrutiny that needs governance logic leadership can actually defend.'
       }
     ],
-    methodLabel: 'Method in Four Steps',
-    methodTitle: 'Read pressure. Set thresholds. Assign decisions. Preserve the evidence path.',
-    methodBody:
-      'The method is designed to produce controls that hold under real review, not only internal policy language.',
+    heroSignals: [
+      {
+        label: 'Best for',
+        title: 'Teams facing live review pressure',
+        description: 'Use PHAROS when procurement, audit, vendor diligence, or oversight is already shaping the work.'
+      },
+      {
+        label: 'What PHAROS does',
+        title: 'Turns pressure into control logic',
+        description: 'The output is explicit thresholds, decision rights, escalation logic, and review-ready documentation.'
+      },
+      {
+        label: 'Start with',
+        title: 'A short review',
+        description: 'A 30-minute review is enough to scope the route into deterministic governance, pre-mortem, or post-mortem work.'
+      }
+    ],
+    reviewNeeds: [
+      {
+        title: 'Deterministic decision rights',
+        description: 'Clear approval logic, escalation paths, and named owners that do not shift by reviewer.'
+      },
+      {
+        title: 'Explicit thresholds',
+        description: 'Thresholds that show when a system escalates, why it escalates, and what evidence is required next.'
+      },
+      {
+        title: 'Review-ready evidence',
+        description: 'A document set a buyer, auditor, or committee can follow without rebuilding the logic from scratch.'
+      },
+      {
+        title: 'Reconstructible governance',
+        description: 'A posture that still holds when later scrutiny asks what happened, why, and what changes next.'
+      }
+    ],
+    pressurePoints: [
+      {
+        icon: BriefcaseBusiness,
+        title: 'Procurement pressure',
+        description: 'The question stops being whether a system is useful and becomes whether governance can survive a customer review.'
+      },
+      {
+        icon: Radar,
+        title: 'Audit pressure',
+        description: 'Audit exposes where thresholds are implied rather than stated and where evidence trails are too thin to trust.'
+      },
+      {
+        icon: ShieldCheck,
+        title: 'Vendor pressure',
+        description: 'Partner and model dependencies need structured review, not improvised answers when a diligence request arrives.'
+      },
+      {
+        icon: Building2,
+        title: 'Oversight pressure',
+        description: 'Leadership and committees need a governance answer that stays legible under scrutiny instead of collapsing into abstractions.'
+      }
+    ],
     methodSteps: [
       {
-        id: '01',
+        step: '01',
         title: 'Read the pressure source',
-        body: 'Start with the real trigger: procurement, audit, vendor diligence, launch, incident response, or oversight.'
+        description: 'Start with the actual review condition: procurement, audit, vendor diligence, launch, incident response, or executive oversight.'
       },
       {
-        id: '02',
+        step: '02',
         title: 'Set deterministic thresholds',
-        body: 'Make review triggers and approval conditions explicit enough to avoid reviewer drift.'
+        description: 'Make review triggers, risk boundaries, and approval conditions explicit enough that different reviewers reach the same logic.'
       },
       {
-        id: '03',
+        step: '03',
         title: 'Assign decision rights',
-        body: 'Name who decides, who escalates, and what evidence must exist at each decision point.'
+        description: 'Name who decides, who escalates, what must be documented, and what cannot proceed without additional proof.'
       },
       {
-        id: '04',
+        step: '04',
         title: 'Build the evidence path',
-        body: 'Maintain reconstructible artifacts and cadence so governance survives later scrutiny.'
+        description: 'Keep the resulting posture reconstructible through review packets, thresholds, decision logs, and follow-through cadence.'
       }
     ],
-    artifactsLabel: 'Artifacts',
-    artifactsTitle: 'Deliverables that make governance credible',
-    artifacts: [
-      'Decision matrix',
-      'Threshold map',
-      'Review packet',
-      'Post-mortem record'
-    ],
-    servicesLabel: 'Service Routes',
-    servicesTitle: 'Choose the route by pressure source, not vocabulary',
-    servicesBody:
-      'The right route depends on whether you need a baseline, a pre-mortem, or a post-mortem correction cycle.',
-    services: [
-      {
-        tag: 'Baseline',
-        title: 'Deterministic Governance',
-        body: 'Establish explicit thresholds and decision rights before scrutiny compounds ambiguity.',
-        href: '/services#deterministic-governance'
-      },
-      {
-        tag: 'Pre-launch',
-        title: 'Pre-mortem Review',
-        body: 'Pressure-test governance before launch, onboarding, or major expansion raises stakes.',
-        href: '/services#pre-mortem-review',
-        featured: true
-      },
-      {
-        tag: 'Post-incident',
-        title: 'Post-mortem Review',
-        body: 'Reconstruct incidents and governance drift, then convert findings into stronger controls.',
-        href: '/services#post-mortem-review'
-      }
-    ],
-    faqLabel: 'FAQ',
-    faqTitle: 'Common questions before engagement',
-    faq: [
-      {
-        q: 'When should we engage PHAROS?',
-        a: 'Use PHAROS when procurement, audit, vendor, or executive review is active, or when you know that pressure is imminent.'
-      },
-      {
-        q: 'What does a 30-minute review produce?',
-        a: 'A scoped route, a pressure-source read, and the first bounded deliverables required for credible follow-through.'
-      },
-      {
-        q: 'How is this different from a checklist?',
-        a: 'A checklist reports status. PHAROS defines thresholds, decision rights, and evidence pathways reviewers can inspect.'
-      },
-      {
-        q: 'Does PHAROS replace legal counsel or audit?',
-        a: 'No. PHAROS structures governance mechanisms and documentation; legal and audit functions remain independent authorities.'
-      }
-    ],
-    contactLabel: 'Contact',
-    contactTitle: 'Book a 30-minute review',
-    contactBody:
-      'Start with one bounded conversation. We identify the pressure source, choose the right route, and define the first governance deliverables.',
-    contactPrimary: 'Open contact intake',
-    contactSecondary: 'Read assurance',
-    emailLabel: 'Direct email',
-    emailValue: 'pharos@pharos-ai.ca',
-    ctaBanner: 'Start with a scoped review, not a vague governance program.'
-  },
-  fr: {
-    heroLabel: 'Gouvernance IA lisible',
-    heroTitle: 'Gouvernance IA deterministe sous pression',
-    heroBody:
-      'Quand l approvisionnement, l audit, la diligence fournisseur ou la supervision demande des preuves, PHAROS aide les equipes a repondre avec des seuils explicites, des decisions nommees et des artefacts prets pour revue.',
-    heroPrimary: 'Reserver une revue',
-    heroSecondary: 'Voir la methode',
-    heroStandards: ['NIST AI RMF', 'ISO/IEC 42001', 'EU AI Act'],
-    aboutLabel: 'A propos de PHAROS',
-    aboutTitle: 'La preuve avant la rhetorique',
-    aboutBodyOne:
-      'PHAROS est une pratique de gouvernance IA dirigee par Martin Lepage, PhD, pour les organisations sous pression de revue concrete.',
-    aboutBodyTwo:
-      'L objectif est simple: rendre la gouvernance inspectable. Le resultat est une structure de decision et de preuve que les reviseurs peuvent suivre rapidement.',
-    aboutQuote:
-      '"La confiance ne vient pas du ton seul. Elle vient de seuils explicites, de decisions nommees et d une preuve inspectable."',
-    aboutStats: [
-      { label: 'Secteurs', value: 'Services financiers, sante, technologie enterprise, secteur public' },
-      { label: 'Focus', value: 'Approvisionnement, audit, revue fournisseur, supervision executive' }
-    ],
-    governanceLabel: 'Standard PHAROS',
-    governanceTitle: 'Une posture qui reste lisible quand la revue arrive',
-    governanceBody:
-      'PHAROS transforme une pression ambiguë en structure operationnelle deterministe avec responsabilites claires.',
-    governancePillars: [
-      {
-        id: '01',
-        title: 'Droits de decision deterministes',
-        body: 'Documenter qui decide, qui escalade, et ce qui ne peut pas avancer sans preuve.'
-      },
-      {
-        id: '02',
-        title: 'Seuils explicites',
-        body: 'Definir les declencheurs de revue et d escalation avant l improvisation.'
-      },
-      {
-        id: '03',
-        title: 'Preuve prete pour revue',
-        body: 'Construire des paquets que l acheteur, l auditeur ou le comite peut inspecter rapidement.'
-      },
-      {
-        id: '04',
-        title: 'Gouvernance reconstructible',
-        body: 'Garder un dossier qui explique ce qui s est passe, pourquoi, et ce qui change.'
-      }
-    ],
-    pressureLabel: 'Points de pression',
-    pressureTitle: 'Le travail de gouvernance commence quand la pression expose l ambiguite',
-    pressureItems: [
-      {
-        icon: Compass,
-        title: 'Approvisionnement',
-        body: 'La gouvernance doit tenir en diligence client sans reponses improvisées.'
-      },
+    artifactCards: [
       {
         icon: FileCheck2,
+        title: 'Decision matrix',
+        description: 'Shows who approves, who escalates, and what gets recorded.'
+      },
+      {
+        icon: Scale,
+        title: 'Threshold map',
+        description: 'Defines which systems require deeper review, when they escalate, and what evidence burden follows.'
+      },
+      {
+        icon: FolderSearch,
+        title: 'Review packet',
+        description: 'Assembles the materials a buyer, auditor, or committee can actually follow.'
+      },
+      {
+        icon: Waypoints,
+        title: 'Post-mortem record',
+        description: 'Reconstructs failure, exposes control gaps, and narrows what should change next.'
+      }
+    ],
+    serviceRoutes: [
+      {
+        title: 'Deterministic Governance',
+        description: 'Establish explicit thresholds, decision rights, and a stable governance baseline before scrutiny compounds ambiguity.',
+        to: '/governance#deterministic-governance'
+      },
+      {
+        title: 'Pre-mortem Review',
+        description: 'Pressure-test an AI system before launch, procurement, onboarding, or major expansion changes the stakes.',
+        to: '/governance#pre-mortem-review'
+      },
+      {
+        title: 'Post-mortem Review',
+        description: 'Reconstruct incidents, failed reviews, or governance drift and turn the findings into a stronger control posture.',
+        to: '/governance#post-mortem-review'
+      }
+    ]
+  },
+  fr: {
+    monitorUrl: 'PHAROS-AI.CA',
+    wordmarkSubtitle: 'Gouvernance IA lisible par Martin Lepage, PhD',
+    brandKicker: 'PHAROS GOUVERNANCE IA',
+    heroTitle: 'Gouvernance IA deterministe sous pression',
+    heroSubheadline: 'Transformer le risque IA en controles de workflow verifiables.',
+    heroBody:
+      'Lorsque l approvisionnement, l audit ou une revue executive demande comment l IA est gouvernee, PHAROS aide les equipes a repondre avec de la preuve, des droits de decision deterministes, des seuils explicites et une documentation prete pour examen.',
+    heroFounderLine: 'Concu pour l approvisionnement, l audit, la revue fournisseur et la supervision executive.',
+    heroProofLine:
+      'Mecanisme concret : un dossier PHAROS peut inclure une matrice de decision, une carte des seuils et un parcours de preuve relies au NIST AI RMF, a l ISO/IEC 42001 ou aux obligations de revue de l EU AI Act lorsque la revue l exige.',
+    heroTrustLine:
+      'Des dossiers representatifs couvrent les services financiers, la sante, la technologie d entreprise et les conditions de revue du secteur public.',
+    primaryCta: 'Reserver une revue',
+    secondaryCta: 'Voir le fonctionnement',
+    secondaryHref: '#method',
+    reviewBodyTitle: 'Ce Que Les Instances De Revue Doivent Voir',
+    reviewBodyHeading: 'Une posture de gouvernance qui reste lisible lorsque l examen arrive',
+    reviewBodyText:
+      'La confiance ici ne vient pas seulement du ton. Elle vient de seuils explicites, de decisions nommees et d un corpus de preuve qui peut vraiment etre inspecte.',
+    standardLabel: 'Standard PHAROS',
+    standardTitle: 'La preuve avant la rhetorique',
+    pressureLabel: 'Points De Pression',
+    pressureHeading: 'Le travail de gouvernance commence la ou la pression de revue revele l ambiguite',
+    pressureText:
+      'PHAROS ne commence pas par du theatre abstrait de gouvernance. Il commence la ou une demande d acheteur, d auditeur, de fournisseur ou de direction rend la logique manquante visible.',
+    methodLabel: 'Methode En Quatre Etapes',
+    methodHeading: 'Lire la pression, fixer les seuils, attribuer les decisions, garder le tout reconstructible',
+    methodText:
+      'La methode compte parce qu elle produit des controles inspectables plutot qu un positionnement ethique vague ou une prose generique de conformite.',
+    artifactsLabel: 'Livrables',
+    artifactsHeading: 'Des livrables qui rendent la gouvernance credible',
+    artifactsText:
+      'Le resultat n est pas seulement une posture. C est un ensemble de materiaux utiles qui rend les seuils, les decisions et la preuve faciles a suivre par la suite.',
+    routesLabel: 'Parcours De Service',
+    routesHeading: 'Choisir le parcours selon la source de pression, pas selon le vocabulaire',
+    routesText:
+      'Le bon point d entree depend de savoir si l organisation a besoin d une base, d une revue pre-mortem avant exposition ou d une revue post-mortem apres un echec ou une derive.',
+    routeCta: 'Voir le service',
+    ctaHeading: 'Commencez par une courte revue, pas par un programme de gouvernance vague',
+    ctaText:
+      'Une revue de 30 minutes suffit pour identifier la source de pression, choisir le parcours et definir les premiers livrables sans surevaluer l etat actuel de preparation.',
+    heroPressureCards: [
+      {
+        icon: BriefcaseBusiness,
+        title: 'Approvisionnement',
+        description: 'Questionnaires clients et demandes d acheteurs qui obligent les affirmations de gouvernance a devenir visibles.'
+      },
+      {
+        icon: Radar,
         title: 'Audit',
-        body: 'Seuils, roles et traces de preuve doivent etre explicites et rapides a revoir.'
+        description: 'Conditions de revue qui demandent qui a decide, quelle preuve existe et ce qui peut etre reconstruit.'
       },
       {
         icon: ShieldCheck,
         title: 'Revue fournisseur',
-        body: 'Les dependances modeles et fournisseurs exigent une structure de gouvernance claire.'
+        description: 'Diligence tierce partie qui expose des seuils faibles, une responsabilite floue ou une preuve manquante.'
+      },
+      {
+        icon: Building2,
+        title: 'Supervision',
+        description: 'Scrutin de direction et de comite qui exige une logique de gouvernance que le leadership peut reellement defendre.'
+      }
+    ],
+    heroSignals: [
+      {
+        label: 'Ideal pour',
+        title: 'Equipes deja sous pression de revue',
+        description: 'Utilisez PHAROS lorsque l approvisionnement, l audit, la diligence fournisseur ou la supervision structurent deja le travail.'
+      },
+      {
+        label: 'Ce que fait PHAROS',
+        title: 'Transformer la pression en logique de controle',
+        description: 'Le resultat est un ensemble explicite de seuils, de droits de decision, de logique d escalation et de documentation prete pour examen.'
+      },
+      {
+        label: 'Commencer par',
+        title: 'Une courte revue',
+        description: 'Une revue de 30 minutes suffit pour cadrer le parcours vers une gouvernance deterministe, un pre-mortem ou un post-mortem.'
+      }
+    ],
+    reviewNeeds: [
+      {
+        title: 'Droits de decision deterministes',
+        description: 'Une logique d approbation claire, des parcours d escalation et des responsables nommes qui ne changent pas selon le reviseur.'
+      },
+      {
+        title: 'Seuils explicites',
+        description: 'Des seuils qui montrent quand un systeme escalade, pourquoi il escalade et quelle preuve est requise ensuite.'
+      },
+      {
+        title: 'Preuve prete pour revue',
+        description: 'Un ensemble documentaire qu un acheteur, un auditeur ou un comite peut suivre sans devoir reconstruire la logique.'
+      },
+      {
+        title: 'Gouvernance reconstructible',
+        description: 'Une posture qui tient encore lorsque l examen ulterieur demande ce qui s est passe, pourquoi et ce qui change ensuite.'
+      }
+    ],
+    pressurePoints: [
+      {
+        icon: BriefcaseBusiness,
+        title: 'Pression d approvisionnement',
+        description: 'La question cesse d etre de savoir si un systeme est utile et devient celle de savoir si la gouvernance survit a une revue client.'
       },
       {
         icon: Radar,
-        title: 'Supervision executive',
-        body: 'La direction exige des revendications bornees et une responsabilite mecanique explicite.'
+        title: 'Pression d audit',
+        description: 'L audit expose les endroits ou les seuils sont implicites plutot qu exprimes et ou les traces de preuve sont trop minces pour inspirer confiance.'
+      },
+      {
+        icon: ShieldCheck,
+        title: 'Pression fournisseur',
+        description: 'Les dependances partenaires et modeles exigent une revue structuree, pas des reponses improvisees lorsqu une demande de diligence arrive.'
+      },
+      {
+        icon: Building2,
+        title: 'Pression de supervision',
+        description: 'La direction et les comites ont besoin d une reponse de gouvernance qui reste lisible sous examen au lieu de s effondrer en abstractions.'
       }
     ],
-    methodLabel: 'Methode en quatre etapes',
-    methodTitle: 'Lire la pression. Fixer les seuils. Nommer les decisions. Preserver la preuve.',
-    methodBody:
-      'La methode est concue pour produire des controles solides en revue reelle, pas seulement du langage de politique.',
     methodSteps: [
       {
-        id: '01',
+        step: '01',
         title: 'Lire la source de pression',
-        body: 'Commencer par le declencheur reel: approvisionnement, audit, diligence, lancement, incident ou supervision.'
+        description: 'Commencer par la condition de revue reelle : approvisionnement, audit, diligence fournisseur, lancement, reponse a incident ou supervision executive.'
       },
       {
-        id: '02',
+        step: '02',
         title: 'Fixer des seuils deterministes',
-        body: 'Rendre les declencheurs et conditions d approbation explicites pour eviter la derive de revue.'
+        description: 'Rendre les declencheurs de revue, les limites de risque et les conditions d approbation assez explicites pour que differents reviseurs atteignent la meme logique.'
       },
       {
-        id: '03',
+        step: '03',
         title: 'Attribuer les droits de decision',
-        body: 'Nommer qui decide, qui escalade, et quelle preuve doit exister a chaque point.'
+        description: 'Nommer qui decide, qui escalade, ce qui doit etre documente et ce qui ne peut pas avancer sans preuve supplementaire.'
       },
       {
-        id: '04',
+        step: '04',
         title: 'Construire le parcours de preuve',
-        body: 'Maintenir des artefacts reconstructibles et une cadence de suivi defendable.'
+        description: 'Garder la posture resultante reconstructible grace aux dossiers de revue, aux seuils, aux journaux de decision et au suivi dans le temps.'
       }
     ],
-    artifactsLabel: 'Artefacts',
-    artifactsTitle: 'Des livrables qui rendent la gouvernance credible',
-    artifacts: [
-      'Matrice de decision',
-      'Carte des seuils',
-      'Paquet de revue',
-      'Registre post-mortem'
-    ],
-    servicesLabel: 'Parcours de service',
-    servicesTitle: 'Choisir le parcours selon la pression, pas le vocabulaire',
-    servicesBody:
-      'Le bon parcours depend de votre besoin: base solide, pre-mortem avant exposition, ou post-mortem correctif.',
-    services: [
+    artifactCards: [
       {
-        tag: 'Base',
+        icon: FileCheck2,
+        title: 'Matrice de decision',
+        description: 'Montre qui approuve, qui escalade et ce qui doit etre consigne.'
+      },
+      {
+        icon: Scale,
+        title: 'Carte des seuils',
+        description: 'Definit quels systemes exigent une revue plus profonde, quand ils escaladent et quelle charge de preuve suit.'
+      },
+      {
+        icon: FolderSearch,
+        title: 'Dossier de revue',
+        description: 'Assemble les materiaux qu un acheteur, un auditeur ou un comite peut reellement suivre.'
+      },
+      {
+        icon: Waypoints,
+        title: 'Dossier post-mortem',
+        description: 'Reconstruit l echec, expose les ecarts de controle et resserre ce qui doit changer ensuite.'
+      }
+    ],
+    serviceRoutes: [
+      {
         title: 'Gouvernance deterministe',
-        body: 'Etablir des seuils explicites et des droits de decision avant que la pression augmente.',
-        href: '/services#deterministic-governance'
+        description: 'Etablir des seuils explicites, des droits de decision et une base stable de gouvernance avant que l examen n amplifie l ambiguite.',
+        to: '/governance#deterministic-governance'
       },
       {
-        tag: 'Pre-lancement',
         title: 'Revue pre-mortem',
-        body: 'Tester la gouvernance avant lancement, integration ou expansion critique.',
-        href: '/services#pre-mortem-review',
-        featured: true
+        description: 'Mettre un systeme IA a l epreuve avant le lancement, l approvisionnement, l integration ou un changement majeur des enjeux.',
+        to: '/governance#pre-mortem-review'
       },
       {
-        tag: 'Post-incident',
         title: 'Revue post-mortem',
-        body: 'Reconstruire les incidents et la derive pour renforcer les controles.',
-        href: '/services#post-mortem-review'
+        description: 'Reconstruire les incidents, les revues echouees ou la derive de gouvernance et transformer les constats en posture de controle plus solide.',
+        to: '/governance#post-mortem-review'
       }
-    ],
-    faqLabel: 'FAQ',
-    faqTitle: 'Questions frequentes avant engagement',
-    faq: [
-      {
-        q: 'Quand engager PHAROS?',
-        a: 'Quand la pression d approvisionnement, d audit, de revue fournisseur ou de supervision est active ou imminente.'
-      },
-      {
-        q: 'Que produit une revue de 30 minutes?',
-        a: 'Un parcours cadre, une lecture de la source de pression, et les premiers livrables bornes.'
-      },
-      {
-        q: 'Difference avec une checklist?',
-        a: 'Une checklist montre un statut. PHAROS definit seuils, droits de decision et parcours de preuve inspectables.'
-      },
-      {
-        q: 'PHAROS remplace-t-il les juristes ou auditeurs?',
-        a: 'Non. PHAROS structure les mecanismes de gouvernance; les fonctions juridiques et audit restent autorites independantes.'
-      }
-    ],
-    contactLabel: 'Contact',
-    contactTitle: 'Reserver une revue de 30 minutes',
-    contactBody:
-      'Commencez par une conversation bornee. Nous identifions la pression, choisissons le bon parcours et fixons les premiers livrables.',
-    contactPrimary: 'Ouvrir intake contact',
-    contactSecondary: 'Lire assurance',
-    emailLabel: 'Courriel direct',
-    emailValue: 'pharos@pharos-ai.ca',
-    ctaBanner: 'Commencer par une revue cadree, pas un programme vague.'
+    ]
   }
 };
 
+const floatingCardClasses = ['card-left-1', 'card-left-2', 'card-right-1', 'card-right-2'];
+
 const Home = () => {
   const { language } = useLanguage();
-  const copy = COPY[language] || COPY.en;
+  const copy = HOME_COPY[language] || HOME_COPY.en;
+  const subtitleBreakToken = language === 'fr' ? ' par ' : ' by ';
+  const subtitleParts = copy.wordmarkSubtitle.split(subtitleBreakToken);
+  const subtitleLead = subtitleParts[0] || copy.wordmarkSubtitle;
+  const subtitleTail = subtitleParts.slice(1).join(subtitleBreakToken).trim();
+  const heroTitleLines = language === 'fr'
+    ? ['Gouvernance IA deterministe', 'sous pression']
+    : ['Deterministic AI governance', 'under pressure'];
 
   return (
-    <div data-testid="home-page" className="phn-home">
-      <section className="phn-hero">
-        <div className="container phn-hero-grid">
-          <div className="phn-hero-content reveal-up">
-            <p className="phn-label">{copy.heroLabel}</p>
-            <h1 className="phn-display" style={{ marginTop: '0.95rem' }}>{copy.heroTitle}</h1>
-            <p className="phn-lead" style={{ marginTop: '1rem' }}>{copy.heroBody}</p>
-            <div className="btn-row" style={{ marginTop: '1.25rem' }}>
-              <Link className="phn-btn-gold" to="/contact">
-                {copy.heroPrimary}
-                <ArrowRight size={14} />
-              </Link>
-              <Link className="phn-btn-outline" to="/methods">
-                {copy.heroSecondary}
-              </Link>
-            </div>
-            <div className="phn-chip-row" style={{ marginTop: '1.4rem' }}>
-              {copy.heroStandards.map((item) => (
-                <span key={item} className="phn-chip">{item}</span>
-              ))}
-            </div>
-          </div>
-
-          <aside className="phn-hero-panel reveal-up delay-1" aria-label={copy.pressureTitle}>
-            <p className="phn-label">{copy.pressureLabel}</p>
-            <h2 className="phn-title-sm" style={{ marginTop: '0.72rem' }}>{copy.pressureTitle}</h2>
-            <div className="phn-card-list" style={{ marginTop: '1rem' }}>
-              {copy.pressureItems.map((item) => (
-                <article className="phn-mini-card" key={item.title}>
-                  <item.icon size={16} />
-                  <div>
+    <div data-testid="home-page">
+      <div className="home-page-meridians" aria-hidden="true" />
+      <section className="hero hero-pharos">
+        <div className="container">
+          <div className="hero-shell">
+            <div className="hero-stage glass-panel">
+              <div className="hero-monitor-chrome" aria-hidden="true">
+                <div className="hero-monitor-controls">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="hero-monitor-url">
+                  <span className="hero-monitor-lock" />
+                  <span>{copy.monitorUrl}</span>
+                </div>
+                <div className="hero-monitor-profile" />
+              </div>
+              <MeridianField className="hero-meridian-constellation" variant="hero" />
+              <div className="floating-cards-container">
+                {copy.heroPressureCards.map((item, index) => (
+                  <article key={item.title} className={`floating-card ${floatingCardClasses[index]}`}>
+                    <div className="floating-card-icon">
+                      <item.icon />
+                    </div>
                     <h3>{item.title}</h3>
-                    <p>{item.body}</p>
+                    <p>{item.description}</p>
+                  </article>
+                ))}
+              </div>
+              <div className="hero-mark-lockup">
+                <div className="hero-mark-shell">
+                  <div className="hero-mark-crest">
+                    <img className="hero-emblem hero-emblem-logo" src={heroLogo} alt="PHAROS logo" />
+                    <div className="hero-beam-origin" aria-hidden="true">
+                      <span className="hero-word-halo" />
+                      <span className="hero-word-core" />
+                      <span className="hero-quantum-beam hero-quantum-beam-right" />
+                      <span className="hero-quantum-beam hero-quantum-beam-left" />
+                      <span className="hero-quantum-beam hero-quantum-beam-down-right" />
+                      <span className="hero-quantum-beam hero-quantum-beam-down-left" />
+                      <span className="hero-quantum-beam hero-quantum-beam-up" />
+                    </div>
                   </div>
-                </article>
-              ))}
+                </div>
+                <div className="hero-wordmark-wrap">
+                  <span className="hero-wordmark-subtitle">
+                    <span>{subtitleLead}</span>
+                    {subtitleTail ? <><br /><span>{language === 'fr' ? `par ${subtitleTail}` : `by ${subtitleTail}`}</span></> : null}
+                  </span>
+                </div>
+              </div>
             </div>
-          </aside>
-        </div>
-      </section>
 
-      <section className="phn-section phn-section-light">
-        <div className="container phn-two-col">
-          <article className="reveal-up">
-            <p className="phn-label">{copy.aboutLabel}</p>
-            <span className="phn-gold-line" />
-            <h2 className="phn-title">{copy.aboutTitle}</h2>
-            <p className="phn-body" style={{ marginTop: '0.9rem' }}>{copy.aboutBodyOne}</p>
-            <p className="phn-body" style={{ marginTop: '0.85rem' }}>{copy.aboutBodyTwo}</p>
-            <blockquote className="phn-quote">{copy.aboutQuote}</blockquote>
-            <div className="phn-stat-grid">
-              {copy.aboutStats.map((item) => (
-                <article key={item.label} className="phn-stat-card">
-                  <p className="phn-meta">{item.label}</p>
-                  <p>{item.value}</p>
-                </article>
-              ))}
-            </div>
-          </article>
-
-          <aside className="phn-surface reveal-up delay-1">
-            <p className="phn-meta">PHAROS</p>
-            <h3 style={{ marginTop: '0.55rem' }}>Governance that survives scrutiny</h3>
-            <ul className="phn-check-list" style={{ marginTop: '0.9rem' }}>
-              <li>Mechanism-first governance design</li>
-              <li>Bounded claims and explicit thresholds</li>
-              <li>Evidence paths fit for review conditions</li>
-              <li>Human-accountable publication and review posture</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-      <section className="phn-section phn-section-dark">
-        <div className="container">
-          <div className="phn-head reveal-up">
-            <p className="phn-label">{copy.governanceLabel}</p>
-            <span className="phn-gold-line" />
-            <h2 className="phn-title">{copy.governanceTitle}</h2>
-            <p className="phn-body" style={{ color: 'rgba(250, 250, 248, 0.72)', marginTop: '0.85rem' }}>{copy.governanceBody}</p>
-          </div>
-          <div className="phn-pillar-grid">
-            {copy.governancePillars.map((pillar, index) => (
-              <article className={`phn-pillar-card reveal-up delay-${Math.min(index, 3)}`} key={pillar.id}>
-                <span className="phn-pillar-id">{pillar.id}</span>
-                <h3>{pillar.title}</h3>
-                <p>{pillar.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="phn-section phn-section-light">
-        <div className="container phn-two-col">
-          <div>
-            <div className="phn-head reveal-up">
-              <p className="phn-label">{copy.methodLabel}</p>
-              <span className="phn-gold-line" />
-              <h2 className="phn-title">{copy.methodTitle}</h2>
-              <p className="phn-body" style={{ marginTop: '0.85rem' }}>{copy.methodBody}</p>
-            </div>
-            <div className="phn-step-list">
-              {copy.methodSteps.map((step, index) => (
-                <article className={`phn-step-item reveal-up delay-${Math.min(index, 3)}`} key={step.id}>
-                  <span className="phn-step-id">{step.id}</span>
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.body}</p>
+            <div className="hero-content hero-copy-panel glass-panel">
+              <div className="hero-copy-header">
+                <h1>
+                  {heroTitleLines[0]}
+                  <br />
+                  {heroTitleLines[1]}
+                </h1>
+                <p className="hero-subheadline">{copy.heroSubheadline}</p>
+              </div>
+              <div className="grid-4 hero-field-grid hero-field-grid-mobile">
+                {copy.heroPressureCards.map((item) => (
+                  <div key={item.title} className="card hero-field-card">
+                    <div className="card-icon">
+                      <item.icon />
+                    </div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
                   </div>
-                </article>
-              ))}
-            </div>
-          </div>
-          <aside className="phn-surface phn-surface-dark reveal-up delay-1">
-            <p className="phn-label">{copy.artifactsLabel}</p>
-            <h3 style={{ marginTop: '0.7rem', color: '#f7f4ed' }}>{copy.artifactsTitle}</h3>
-            <ul className="phn-check-list phn-check-list-dark" style={{ marginTop: '0.95rem' }}>
-              {copy.artifacts.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <Link className="phn-btn-outline" style={{ marginTop: '1.15rem' }} to="/methods">
-              Open methods
-            </Link>
-          </aside>
-        </div>
-      </section>
-
-      <section className="phn-section phn-section-light">
-        <div className="container">
-          <div className="phn-head reveal-up">
-            <p className="phn-label">{copy.servicesLabel}</p>
-            <span className="phn-gold-line" />
-            <h2 className="phn-title">{copy.servicesTitle}</h2>
-            <p className="phn-body" style={{ marginTop: '0.85rem' }}>{copy.servicesBody}</p>
-          </div>
-          <div className="phn-service-grid">
-            {copy.services.map((service, index) => (
-              <article
-                className={`phn-service-card${service.featured ? ' is-featured' : ''} reveal-up delay-${Math.min(index, 3)}`}
-                key={service.title}
-              >
-                <p className="phn-service-tag">{service.tag}</p>
-                <h3>{service.title}</h3>
-                <p>{service.body}</p>
-                <Link className="phn-service-link" to={service.href}>
-                  Open service
-                  <ArrowRight size={13} />
+                ))}
+              </div>
+              <p className="body-lg page-hero-copy">{copy.heroBody}</p>
+              <p className="hero-founder-line">{copy.heroFounderLine}</p>
+              <p className="body-sm page-inline-note">{copy.heroProofLine}</p>
+              <p className="body-sm page-inline-note">{copy.heroTrustLine}</p>
+              <div className="hero-cta-row">
+                <Link to="/contact" className="btn-primary">
+                  {copy.primaryCta}
+                  <ArrowRight />
                 </Link>
-              </article>
-            ))}
-          </div>
-          <div className="phn-banner reveal-up">
-            <p>{copy.ctaBanner}</p>
-            <Link className="phn-btn-gold" to="/contact">
-              {copy.heroPrimary}
-            </Link>
+                <a href={copy.secondaryHref} className="btn-secondary">{copy.secondaryCta}</a>
+              </div>
+              <SignalStrip items={copy.heroSignals} className="signal-grid-hero" />
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="phn-section phn-section-light" id="faq">
-        <div className="container phn-two-col">
-          <div className="reveal-up">
-            <p className="phn-label">{copy.faqLabel}</p>
-            <span className="phn-gold-line" />
-            <h2 className="phn-title">{copy.faqTitle}</h2>
+      <section className="section anchor-offset" id="review-needs">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.reviewBodyTitle}</p>
+            <h2>{copy.reviewBodyHeading}</h2>
+            <p className="body-sm">{copy.reviewBodyText}</p>
           </div>
-          <div className="phn-faq-list reveal-up delay-1">
-            {copy.faq.map((item, index) => (
-              <details className="phn-faq-item" key={item.q} open={index === 0}>
-                <summary>{item.q}</summary>
-                <p>{item.a}</p>
-              </details>
+
+          <div className="editorial-panel reveal">
+            <div className="feature-lockup">
+              <div>
+                <p className="eyebrow">{copy.standardLabel}</p>
+                <h3>{copy.standardTitle}</h3>
+              </div>
+            </div>
+            <div className="grid-2">
+              {copy.reviewNeeds.map((item) => (
+                <div key={item.title} className="scope-note">
+                  <strong>{item.title}</strong>
+                  <p>{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-muted anchor-offset" id="pressure-points">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.pressureLabel}</p>
+            <h2>{copy.pressureHeading}</h2>
+            <p className="body-sm">{copy.pressureText}</p>
+          </div>
+
+          <div className="grid-4 stagger">
+            {copy.pressurePoints.map((item) => (
+              <div key={item.title} className="card reveal">
+                <div className="card-icon">
+                  <item.icon />
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="phn-section phn-section-dark">
-        <div className="container phn-contact-shell reveal-up">
-          <div>
-            <p className="phn-label">{copy.contactLabel}</p>
-            <span className="phn-gold-line" />
-            <h2 className="phn-title">{copy.contactTitle}</h2>
-            <p className="phn-body" style={{ color: 'rgba(250, 250, 248, 0.72)', marginTop: '0.9rem' }}>
-              {copy.contactBody}
-            </p>
-            <p className="phn-meta" style={{ marginTop: '1rem' }}>{copy.emailLabel}</p>
-            <a className="phn-email" href={`mailto:${copy.emailValue}`}>{copy.emailValue}</a>
+      <section className="section anchor-offset" id="method">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.methodLabel}</p>
+            <h2>{copy.methodHeading}</h2>
+            <p className="body-sm">{copy.methodText}</p>
           </div>
-          <div className="btn-row" style={{ justifyContent: 'flex-start' }}>
-            <Link className="phn-btn-gold" to="/contact">
-              {copy.contactPrimary}
-              <ArrowRight size={14} />
-            </Link>
-            <Link className="phn-btn-outline" to="/assurance">
-              {copy.contactSecondary}
-            </Link>
+
+          <div className="steps stagger">
+            {copy.methodSteps.map((item) => (
+              <div key={item.step} className="step reveal">
+                <div className="step-number">{item.step}</div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-muted anchor-offset" id="artifacts">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.artifactsLabel}</p>
+            <h2>{copy.artifactsHeading}</h2>
+            <p className="body-sm">{copy.artifactsText}</p>
+          </div>
+
+          <div className="grid-4 stagger">
+            {copy.artifactCards.map((item) => (
+              <div key={item.title} className="card reveal">
+                <div className="card-icon">
+                  <item.icon />
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section anchor-offset" id="service-routes">
+        <div className="container">
+          <div className="section-header reveal">
+            <p className="eyebrow">{copy.routesLabel}</p>
+            <h2>{copy.routesHeading}</h2>
+            <p className="body-sm">{copy.routesText}</p>
+          </div>
+
+          <div className="grid-3 stagger">
+            {copy.serviceRoutes.map((item) => (
+              <Link key={item.to} to={item.to} className="card reveal link-slab">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <div className="card-link-row">
+                  {copy.routeCta}
+                  <ArrowRight size={14} />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="cta-banner reveal">
+            <h2>{copy.ctaHeading}</h2>
+            <p className="body-sm">{copy.ctaText}</p>
+            <div className="btn-row">
+              <Link to="/contact" className="btn-primary">
+                {copy.primaryCta}
+                <ArrowRight />
+              </Link>
+              <a href={copy.secondaryHref} className="btn-secondary">{copy.secondaryCta}</a>
+            </div>
           </div>
         </div>
       </section>
