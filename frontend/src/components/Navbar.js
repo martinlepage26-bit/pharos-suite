@@ -1,117 +1,241 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-const NAV = {
+const NAV_COPY = {
   en: {
-    links: [
-      { to: '/', label: 'Home', match: ['/'] },
-      { to: '/services', label: 'Services', match: ['/services', '/governance', '/services/menu'] },
-      { to: '/methods', label: 'Method', match: ['/methods', '/about/conceptual-method'] },
-      { to: '/research', label: 'Research', match: ['/research', '/observatory', '/library', '/cases'] },
-      { to: '/about', label: 'About', match: ['/about'] }
+    navItems: [
+      { path: '/', label: 'HOME', matchPaths: ['/'] },
+      { path: '/about', label: 'ABOUT', matchPaths: ['/about'] },
+      {
+        path: '/governance',
+        label: 'GOVERNANCE',
+        matchPaths: ['/governance', '/services', '/observatory', '/research', '/methods', '/about/conceptual-method'],
+        children: [
+          { path: '/observatory', label: 'OBSERVATORY', matchPaths: ['/observatory', '/research'] },
+          { path: '/methods', label: 'METHODS', matchPaths: ['/methods', '/about/conceptual-method'] }
+        ]
+      },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
     ],
-    book: 'Book Review',
-    brandSub: 'Legible AI governance'
+    sitemapLabel: 'Site map',
+    sitemapLinks: [
+      { path: '/', label: 'HOME', matchPaths: ['/'] },
+      { path: '/about', label: 'ABOUT', matchPaths: ['/about'] },
+      { path: '/governance', label: 'GOVERNANCE', matchPaths: ['/governance', '/services'] },
+      { path: '/observatory', label: 'OBSERVATORY', matchPaths: ['/observatory', '/research'] },
+      { path: '/methods', label: 'METHODS', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
+      { path: '/tool', label: 'TOOL', matchPaths: ['/tool'] },
+      { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
+      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] },
+      { path: '/library', label: 'LIBRARY', matchPaths: ['/library'] },
+      { path: '/cases', label: 'CASES', matchPaths: ['/cases'] }
+    ],
+    bookReview: 'BOOK A REVIEW'
   },
   fr: {
-    links: [
-      { to: '/', label: 'Accueil', match: ['/'] },
-      { to: '/services', label: 'Services', match: ['/services', '/governance', '/services/menu'] },
-      { to: '/methods', label: 'Methode', match: ['/methods', '/about/conceptual-method'] },
-      { to: '/research', label: 'Recherche', match: ['/research', '/observatory', '/library', '/cases'] },
-      { to: '/about', label: 'A propos', match: ['/about'] }
+    navItems: [
+      { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
+      { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
+      {
+        path: '/governance',
+        label: 'GOUVERNANCE',
+        matchPaths: ['/governance', '/services', '/observatory', '/research', '/methods', '/about/conceptual-method'],
+        children: [
+          { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
+          { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] }
+        ]
+      },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
     ],
-    book: 'Reserver',
-    brandSub: 'Gouvernance IA lisible'
+    sitemapLabel: 'Plan du site',
+    sitemapLinks: [
+      { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
+      { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
+      { path: '/governance', label: 'GOUVERNANCE', matchPaths: ['/governance', '/services'] },
+      { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
+      { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
+      { path: '/tool', label: 'OUTIL', matchPaths: ['/tool'] },
+      { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
+      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] },
+      { path: '/library', label: 'BIBLIOTHEQUE', matchPaths: ['/library'] },
+      { path: '/cases', label: 'CAS', matchPaths: ['/cases'] }
+    ],
+    bookReview: 'RESERVER UNE REVUE'
   }
 };
 
-const isActive = (pathname, matches) => matches.some((path) => {
-  if (path === '/') {
-    return pathname === '/';
-  }
-
-  return pathname === path || pathname.startsWith(`${path}/`);
-});
-
 const Navbar = () => {
   const { language, toggleLanguage } = useLanguage();
-  const { pathname } = useLocation();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const copy = NAV[language];
+  const location = useLocation();
+  const [sitemapOpen, setSitemapOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const copy = NAV_COPY[language];
+  const languageButtonLabel = language === 'fr' ? 'EN' : 'FR';
+  const languageButtonTitle = language === 'fr'
+    ? 'Switch to English'
+    : 'Passer en français';
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
+    const update = () => setScrolled(window.scrollY > 20);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+
+  useEffect(() => {
+    setSitemapOpen(false);
+    document.body.style.overflow = '';
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const lockBody = sitemapOpen && window.matchMedia('(max-width: 767px)').matches;
+    document.body.style.overflow = lockBody ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [sitemapOpen]);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setSitemapOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  const homeHeroVisible = location.pathname === '/' && !scrolled;
+  const navClass = ['nav', scrolled ? 'scrolled' : '', homeHeroVisible ? 'hero-visible' : '']
+    .filter(Boolean)
+    .join(' ');
+  const isPathActive = (matchPaths) => matchPaths.some((path) => (
+    path === '/'
+      ? location.pathname === '/'
+      : location.pathname === path || location.pathname.startsWith(`${path}/`)
+  ));
 
   return (
-    <header className="site-header">
-      <div className="container topbar">
-        <Link to="/" className="brand-link" aria-label="PHAROS home">
-          <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-text">
-            <span className="brand-name">PHAROS</span>
-            <span className="brand-sub">{copy.brandSub}</span>
-          </span>
-        </Link>
-
-        <div className="nav-actions">
-          <nav className="nav-links" aria-label={language === 'fr' ? 'Navigation principale' : 'Primary navigation'}>
-            {copy.links.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`nav-link${isActive(pathname, item.match) ? ' active' : ''}`}
+    <>
+      <header className="site-header">
+        <nav className={navClass} data-testid="navbar" aria-label={language === 'fr' ? 'Navigation principale' : 'Primary navigation'}>
+          <div className="nav-inner">
+            <div className="nav-left">
+              <button
+                className={`nav-sitemap-toggle${sitemapOpen ? ' open' : ''}`}
+                aria-label={sitemapOpen ? (language === 'fr' ? 'Fermer le plan du site' : 'Close site map') : (language === 'fr' ? 'Ouvrir le plan du site' : 'Open site map')}
+                aria-expanded={sitemapOpen}
+                aria-controls="site-map-panel"
+                type="button"
+                onClick={() => setSitemapOpen((open) => !open)}
               >
-                {item.label}
+                <span className="nav-sitemap-lines" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </button>
+
+              <Link to="/contact" className="nav-book-review">
+                {copy.bookReview}
               </Link>
-            ))}
-          </nav>
+            </div>
 
-          <Link to="/contact" className="btn-primary" style={{ paddingInline: '0.82rem' }}>
-            {copy.book}
-          </Link>
+            <div className="nav-right">
+              <div className="nav-links">
+                {copy.navItems.map((item) => {
+                  const isActive = isPathActive(item.matchPaths);
 
-          <button
-            type="button"
-            className="lang-toggle"
-            onClick={toggleLanguage}
-            title={language === 'fr' ? 'Switch to English' : 'Passer en francais'}
-          >
-            {language === 'fr' ? 'EN' : 'FR'}
-          </button>
+                  if (item.children) {
+                    return (
+                      <div key={item.path} className={`nav-item nav-item-has-children${isActive ? ' active' : ''}`}>
+                        <Link to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                          {item.label}
+                        </Link>
+                        <div className="nav-dropdown" aria-label={item.label}>
+                          {item.children.map((child) => {
+                            const childActive = isPathActive(child.matchPaths);
+                            return (
+                              <Link key={child.path} to={child.path} className={`nav-dropdown-link${childActive ? ' active' : ''}`}>
+                                {child.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  }
 
-          <button
-            type="button"
-            className="menu-toggle"
-            onClick={() => setMobileOpen((open) => !open)}
-            aria-expanded={mobileOpen}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          >
-            {mobileOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-
-        {mobileOpen ? (
-          <div className="mobile-menu" role="dialog" aria-label="Site menu">
-            {copy.links.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`mobile-link${isActive(pathname, item.match) ? ' active' : ''}`}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link to="/contact" className="mobile-link">
-              {copy.book}
-            </Link>
+                  return (
+                    <Link key={item.path} to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                      {item.label}
+                    </Link>
+                  );
+                })}
+                <button className="nav-lang" type="button" onClick={toggleLanguage} title={languageButtonTitle}>
+                  {languageButtonLabel}
+                </button>
+              </div>
+            </div>
           </div>
-        ) : null}
-      </div>
-    </header>
+        </nav>
+      </header>
+
+      <button
+        type="button"
+        className={`sitemap-backdrop${sitemapOpen ? ' open' : ''}`}
+        aria-label={language === 'fr' ? 'Fermer le plan du site' : 'Close site map'}
+        aria-hidden={!sitemapOpen}
+        tabIndex={sitemapOpen ? 0 : -1}
+        onClick={() => setSitemapOpen(false)}
+      />
+
+      <aside
+        id="site-map-panel"
+        className={`sitemap-panel${sitemapOpen ? ' open' : ''}`}
+        aria-hidden={!sitemapOpen}
+        aria-label={copy.sitemapLabel}
+      >
+        <div className="sitemap-panel-inner">
+          <div className="sitemap-links sitemap-links-compact">
+            {copy.sitemapLinks.map((item) => {
+              const isActive = isPathActive(item.matchPaths);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`sitemap-link compact${isActive ? ' active' : ''}`}
+                  tabIndex={sitemapOpen ? 0 : -1}
+                  onClick={() => setSitemapOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="sitemap-actions">
+            <button
+              type="button"
+              className="nav-lang mobile-lang-toggle"
+              tabIndex={sitemapOpen ? 0 : -1}
+              onClick={() => {
+                toggleLanguage();
+                setSitemapOpen(false);
+              }}
+              title={languageButtonTitle}
+            >
+              {languageButtonLabel}
+            </button>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 };
 
