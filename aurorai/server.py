@@ -563,7 +563,7 @@ def heuristic_extract_fields(text: str) -> Dict[str, Any]:
         "fields": fields,
         "missing_or_ambiguous": [] if fields else ["No structured fields were identified heuristically"],
         "recommended_next_actions": (
-            ["Run HITL validation", "Configure EMERGENT_LLM_KEY for richer extraction"]
+            ["Run HITL validation", "Configure PHAROS_LLM_KEY for richer extraction"]
             if fields
             else ["Run HITL validation", "Provide a more structured source document"]
         ),
@@ -702,9 +702,9 @@ def extract_citations_from_text(text: str) -> List[str]:
     
     return list(set(citations))[:50]  # Return unique citations, max 50
 
-# AI Integration using Emergent
+# AI Integration using Pharos
 def get_llm_api_key() -> str:
-    return os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY") or ""
+    return os.environ.get("OPENAI_API_KEY") or os.environ.get("PHAROS_LLM_KEY") or ""
 
 
 def get_llm_base_url() -> Optional[str]:
@@ -724,7 +724,7 @@ def infer_category_from_document_type(document_type: str) -> str:
 
 
 async def run_llm_prompt(system_message: str, prompt: str, model: str = "gpt-4o-mini") -> str:
-    from emergentintegrations.llm.chat import LlmChat, SystemMessage, UserMessage
+    from pharos_integrations.llm.chat import LlmChat, SystemMessage, UserMessage
 
     api_key = get_llm_api_key()
     if not api_key:

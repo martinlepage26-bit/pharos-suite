@@ -1,6 +1,13 @@
 {
-    "name": "pharos-ai-frontend",
+    "name": "pharos-suite",
     "version": "0.1.0",
+    "description": "Pharos Suite public shell and governance portal frontend.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/martinlepage26-bit/pharos-suite.git"
+    },
+    "author": "Martin Lepage",
+    "homepage": "https://github.com/martinlepage26-bit/pharos-suite",
     "private": true,
     "dependencies": {
         "@craco/craco": "^7.1.0",
@@ -29,8 +36,8 @@
         "validate:boundaries": "node scripts/validate-product-boundaries.cjs",
         "tailwind:build": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --minify",
         "tailwind:watch": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --watch",
-        "cf:deploy": "wrangler pages deploy build --project-name govern-ai --branch main --commit-dirty=true",
-        "cf:preview": "wrangler pages deploy build --project-name govern-ai --branch preview",
+        "cf:deploy": "wrangler pages deploy build --project-name pharos-suite --branch main --commit-dirty=true",
+        "cf:preview": "wrangler pages deploy build --project-name pharos-suite --branch preview",
         "test": "craco test",
         "eject": "react-scripts eject"
     },

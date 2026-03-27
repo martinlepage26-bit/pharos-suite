@@ -5,16 +5,16 @@
 - Canonical PHAROS hostname target: `https://pharos-ai.ca`
 - Redirect hostnames to preserve:
   - `https://www.pharos-ai.ca`
-  - `https://govern-ai.ca`
-  - `https://www.govern-ai.ca`
-- Current Pages host that still exists in deployment references: `https://govern-ai.pages.dev`
-- Current Pages project name that still exists in deployment references: `govern-ai`
+  - `https://pharos-suite.ca`
+  - `https://www.pharos-suite.ca`
+- Current Pages host that still exists in deployment references: `https://pharos-suite.pages.dev`
+- Current Pages project name that still exists in deployment references: `pharos-suite`
 
 ## Important boundary note
 
 Repo-side changes now treat `pharos-ai.ca` as the PHAROS surface only.
 
-Do not point `governai.ca` at this Pages project. That hostname belongs to Martin Lepage's personal and professional surface, not to PHAROS.
+Do not point `pharossuite.ca` at this Pages project. That hostname belongs to Martin Lepage's personal and professional surface, not to PHAROS.
 
 ## Deployment flow
 
@@ -34,8 +34,8 @@ Do not point `governai.ca` at this Pages project. That hostname belongs to Marti
 
 - `https://pharos-ai.ca` should be the canonical public URL
 - `https://www.pharos-ai.ca` should redirect to `https://pharos-ai.ca`
-- `https://govern-ai.ca` should redirect to `https://pharos-ai.ca`
-- `https://www.govern-ai.ca` should redirect to `https://pharos-ai.ca`
+- `https://pharos-suite.ca` should redirect to `https://pharos-ai.ca`
+- `https://www.pharos-suite.ca` should redirect to `https://pharos-ai.ca`
 
 ## What the repo can change safely
 
@@ -46,7 +46,7 @@ Do not point `governai.ca` at this Pages project. That hostname belongs to Marti
 
 ## What still needs manual Cloudflare follow-up
 
-- rename or replace the Cloudflare Pages project if you want the external project name to stop saying `govern-ai`
+- rename or replace the Cloudflare Pages project if you want the external project name to stop saying `pharos-suite`
 - attach or verify the apex and redirect hostnames in Cloudflare
 - update any zone-level rules that still point legacy PHAROS traffic somewhere else
 

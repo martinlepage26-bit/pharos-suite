@@ -476,7 +476,7 @@ What this would feel like in practice:
 
 - AurorAI still processes documents
 - CompassAI still assesses governance
-- Govern AI still presents the work
+- Pharos Suite still presents the work
 - but the system stores files in `R2`, state in `D1`, and recursion in explicit linked rows
 - and if a state cannot be supported by those linked rows, the product stays narrow in what it claims
 

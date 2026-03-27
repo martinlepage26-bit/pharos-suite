@@ -44,4 +44,4 @@ venv/
 # Backup and package residue
 *.bak_*
 artifact.zip
-emergent-backup.zip
+pharos-backup.zip

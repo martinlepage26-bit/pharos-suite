@@ -15,10 +15,10 @@ from pathlib import Path
 
 load_dotenv(Path(__file__).parent / '.env')
 
-from emergentintegrations.llm.chat import LlmChat, SystemMessage, UserMessage
+from pharos_integrations.llm.chat import LlmChat, SystemMessage, UserMessage
 
 # Get API key
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
+PHAROS_LLM_KEY = os.environ.get('PHAROS_LLM_KEY', '')
 
 # Available models configuration
 MODELS = {
@@ -33,7 +33,7 @@ class AIService:
     
     def __init__(self, model_key: str = "gpt-5.2"):
         self.model_config = MODELS.get(model_key, MODELS["gpt-5.2"])
-        self.api_key = os.environ.get("OPENAI_API_KEY") or EMERGENT_LLM_KEY
+        self.api_key = os.environ.get("OPENAI_API_KEY") or PHAROS_LLM_KEY
         self.base_url = os.environ.get("OPENAI_BASE_URL")
     
     def _create_chat(self) -> LlmChat:

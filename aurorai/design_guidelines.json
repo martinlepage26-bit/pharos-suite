@@ -29,7 +29,7 @@
         "name": "JetBrains Mono",
         "url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap",
         "class": "font-mono",
-        "usage": "Citations, IDs, Code snippets, AI emergent keys."
+        "usage": "Citations, IDs, Code snippets, AI pharos keys."
       }
     },
     "rules": {

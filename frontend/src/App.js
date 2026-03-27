@@ -67,7 +67,7 @@ function AppRoutes() {
               <SurfaceBoundary
                 eyebrow="Boundary update"
                 title="Portfolio material has moved off the PHAROS surface."
-                body="Martin Lepage profile, resume, portfolio, and other non-PHAROS work belong on governai.ca, not on pharos-ai.ca. This route remains out of the PHAROS public shell during the migration."
+                body="Martin Lepage profile, resume, portfolio, and other non-PHAROS work belong on pharossuite.ca, not on pharos-ai.ca. This route remains out of the PHAROS public shell during the migration."
               />
             )}
           />
@@ -81,7 +81,7 @@ function AppRoutes() {
               <SurfaceBoundary
                 eyebrow="Boundary update"
                 title="Publication routes are outside the PHAROS site boundary."
-                body="This repo no longer treats publication pages as part of the PHAROS public surface. Editorial and Martin-centered publication work should live on governai.ca instead."
+                body="This repo no longer treats publication pages as part of the PHAROS public surface. Editorial and Martin-centered publication work should live on pharossuite.ca instead."
               />
             )}
           />

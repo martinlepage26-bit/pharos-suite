@@ -1,13 +1,13 @@
 # AurorAI + ComPassAI — Specification Sheets (InfraFabric-Implemented, Bible-Compliant)
 
-Martin Lepage | pharos@pharos-ai.ca | Govern AI — AI Governance Practice and Research | 2026-03-06
+Martin Lepage | pharos@pharos-ai.ca | Pharos Suite — AI Governance Practice and Research | 2026-03-06
 
 **Status:** `review`
 **Last review date:** 2026-03-06
 **Next checkpoint date:** 2026-04-06
 **Accountable and responsible approver:** Martin Lepage | pharos@pharos-ai.ca
 **InfraFabric framework contributor and designated reviewer:** Danny Stocker | ds@infrafabric.io | InfraFabric Research
-**Provenance note:** AurorAI and ComPassAI are original products of Martin Lepage, developed under GovernAI. Their governance architecture and claim-boundary discipline are built on InfraFabric's structural framework with explicit permission from Danny Stocker, owner of InfraFabric.
+**Provenance note:** AurorAI and ComPassAI are original products of Martin Lepage, developed under PharosSuite. Their governance architecture and claim-boundary discipline are built on InfraFabric's structural framework with explicit permission from Danny Stocker, owner of InfraFabric.
 **Backup reviewer/operator:** TBD — open continuity risk; must be named before next checkpoint or this risk remains explicitly unresolved.
 **LLM-assist disclosure:** Synthesized and revised with Claude Sonnet assistance on 2026-03-06; accountable human author remains Martin Lepage.
 **Alignment basis:** InfraFabric module registry `if.registry.json` rechecked live on `2026-03-06`, supplemented by module-specific explainers in the local InfraFabric source corpus (`C:\Users\softinfo\Documents\InfraFabric`) and blackboard-confirmed posture from `2026-03-06T08:04:14Z` (IF-2348 evidence bundle).
@@ -20,13 +20,13 @@ Martin Lepage | pharos@pharos-ai.ca | Govern AI — AI Governance Practice and R
 
 AurorAI and ComPassAI are built on a single constraint: governance documentation is only as credible as the evidence it derives from, and no capability claim in either product exceeds what the underlying infrastructure currently supports.
 
-Both products are original creations of Martin Lepage, developed under GovernAI. Their technical architecture and claim-boundary discipline are built on InfraFabric's governance framework, used with permission from Danny Stocker, InfraFabric's owner.
+Both products are original creations of Martin Lepage, developed under PharosSuite. Their technical architecture and claim-boundary discipline are built on InfraFabric's governance framework, used with permission from Danny Stocker, InfraFabric's owner.
 
 InfraFabric's framework does specific structural work here. It supplies the registry-pinned module status system that prevents capability claims from outrunning deployment reality, the evidence hierarchy that distinguishes what is publicly verifiable from what requires operator configuration, and the fail-closed posture that treats uncertainty as a reason to downgrade claims rather than smooth them over.
 
 Where InfraFabric modules are integrated into AurorAI or ComPassAI, each is described at its actual registry status: `shipped`, `preview`, or `roadmap`. That status is the floor of what can be claimed, not a starting point for negotiation.
 
-The implication is deliberate and non-optional: an AI governance platform that overstates its own capabilities cannot credibly govern the AI systems of others. GovernAI therefore holds itself to the same evidentiary standard it asks of every system it governs.
+The implication is deliberate and non-optional: an AI governance platform that overstates its own capabilities cannot credibly govern the AI systems of others. PharosSuite therefore holds itself to the same evidentiary standard it asks of every system it governs.
 
 This is not an incidental design preference. It reflects a shared conviction: AI governance platforms must hold themselves to the same standard of honesty, auditability, and claim discipline that they ask of the systems they govern.
 

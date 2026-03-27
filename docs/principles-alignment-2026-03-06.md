@@ -1,12 +1,12 @@
-# Govern AI Principles Alignment
+# Pharos Suite Principles Alignment
 
 Date: 2026-03-06
 
-This note records the principle-level alignment between the public Govern AI site and the deeper COM-AUR / InfraFabric architecture work.
+This note records the principle-level alignment between the public Pharos Suite site and the deeper COM-AUR / InfraFabric architecture work.
 
 ## Core principle
 
-Govern AI should not present a stronger public posture than the evidence architecture beneath it can support.
+Pharos Suite should not present a stronger public posture than the evidence architecture beneath it can support.
 
 That means the site should consistently communicate five things:
 

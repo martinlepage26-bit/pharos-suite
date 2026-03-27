@@ -1,5 +1,5 @@
 const STORAGE_PREFIX = 'pharos-ai-module-connection';
-const LEGACY_STORAGE_PREFIX = 'govern-ai-module-connection';
+const LEGACY_STORAGE_PREFIX = 'pharos-suite-module-connection';
 
 const DEFAULTS = {
   compassai: {

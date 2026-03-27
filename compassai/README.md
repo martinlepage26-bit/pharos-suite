@@ -13,8 +13,8 @@ Canonical CompassAI governance application repository.
 * `CHANGELOG.md` records the verified local backend target as `http://127.0.0.1:9205/api/`.
 * `docs/backend-consolidation-plan.md` shows the backend is still in a mixed monolith-plus-router shape.
 * `docs/governance-program-migration-guide.md` explicitly says to treat the backend as live and the frontend as incomplete.
-* Some runtime or environment residue still uses legacy `govern-ai` naming. Treat that as compatibility debt, not as a blind rename target.
-* A bounded local `TestClient` harness confirmed `GET /api/` returns HTTP 200 when the backend is imported with placeholder Mongo env values and the in-scope `pharos-ai/emergentintegrations` package path is exposed.
+* Some runtime or environment residue still uses legacy `pharos-suite` naming. Treat that as compatibility debt, not as a blind rename target.
+* A bounded local `TestClient` harness confirmed `GET /api/` returns HTTP 200 when the backend is imported with placeholder Mongo env values and the in-scope `pharos-ai/pharos_integrations` package path is exposed.
 * That makes the backend runtime real in the reviewed local scope, but with a local dependency-path caveat that should not be hidden in docs.
 
 ## Boundary notes

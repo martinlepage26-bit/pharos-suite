@@ -1,6 +1,6 @@
 {
   "$schema": "../../frontend/node_modules/wrangler/config-schema.json",
-  "name": "govern-ai-live-proxy",
+  "name": "pharos-suite-live-proxy",
   "main": "src/index.js",
   "compatibility_date": "2026-03-09",
   "workers_dev": false,

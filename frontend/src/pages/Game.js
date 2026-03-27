@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 const BEST_SCORE_KEY = 'pharos-ai-game-best-score';
-const LEGACY_BEST_SCORE_KEY = 'govern-ai-game-best-score';
+const LEGACY_BEST_SCORE_KEY = 'pharos-suite-game-best-score';
 const ROUND_SECONDS = 45;
 const START_INTEGRITY = 3;
 const MAX_INTEGRITY = 5;

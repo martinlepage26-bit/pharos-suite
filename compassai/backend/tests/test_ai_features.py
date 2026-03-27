@@ -14,7 +14,7 @@ import os
 import time
 import uuid
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://admin-features-test-3.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'http://127.0.0.1:9205').rstrip('/')
 
 # Sample test data
 SAMPLE_POLICY_TEXT = """

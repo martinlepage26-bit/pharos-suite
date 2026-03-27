@@ -16,7 +16,7 @@ The governance failure is not "bias exists." The governance failure is that bias
 
 In hiring, you rarely get one clean "protected attribute" column. Discrimination enters through proxies: school names, club membership, gaps in employment, zip codes, even stylistic markers that correlate with gender, class, or race. If governance does not force the team to name proxy risk early, the model will discover proxies on its own, because proxies often improve predictive performance on the target label.
 
-A defensible control baseline for hiring AI is a sequence of enforceable gates. First, risk-tier the use case as high impact. Second, run bias and performance evaluation across relevant groups. Third, audit features and proxies with structured review. Fourth, document decision rights: who can approve launch, who can pause the system, who owns monitoring. Fifth, implement post-launch monitoring that looks for disparate impact and emergent proxy behavior.
+A defensible control baseline for hiring AI is a sequence of enforceable gates. First, risk-tier the use case as high impact. Second, run bias and performance evaluation across relevant groups. Third, audit features and proxies with structured review. Fourth, document decision rights: who can approve launch, who can pause the system, who owns monitoring. Fifth, implement post-launch monitoring that looks for disparate impact and pharos proxy behavior.
 
 If your organization ever needs to defend hiring automation under scrutiny, you do not win with intentions. You win with evidence.`
   },

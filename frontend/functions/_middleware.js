@@ -1,8 +1,8 @@
 const CANONICAL_HOSTNAME = "pharos-ai.ca";
 const REDIRECT_HOSTNAMES = new Set([
   "www.pharos-ai.ca",
-  "govern-ai.ca",
-  "www.govern-ai.ca",
+  "pharos-suite.ca",
+  "www.pharos-suite.ca",
 ]);
 const PROTECTED_PATHS = new Set([
   "/normalized-results",

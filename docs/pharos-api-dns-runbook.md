@@ -7,8 +7,8 @@ This is the concrete rollout for publishing the existing local FastAPI backend a
 - frontend: `https://pharos-ai.ca`
 - redirects:
   - `https://www.pharos-ai.ca` -> `https://pharos-ai.ca`
-  - `https://govern-ai.ca` -> `https://pharos-ai.ca`
-  - `https://www.govern-ai.ca` -> `https://pharos-ai.ca`
+  - `https://pharos-suite.ca` -> `https://pharos-ai.ca`
+  - `https://www.pharos-suite.ca` -> `https://pharos-ai.ca`
 - API: `https://api.pharos-ai.ca`
 
 Preview-only note:
@@ -22,8 +22,8 @@ In the Cloudflare Pages project that currently serves the PHAROS frontend:
 
 - attach `pharos-ai.ca` as the canonical public hostname
 - attach `www.pharos-ai.ca` and redirect it to `https://pharos-ai.ca`
-- attach `govern-ai.ca` and `www.govern-ai.ca` only if you intend to preserve legacy PHAROS traffic with redirects
-- do not attach `governai.ca` to this project
+- attach `pharos-suite.ca` and `www.pharos-suite.ca` only if you intend to preserve legacy PHAROS traffic with redirects
+- do not attach `pharossuite.ca` to this project
 
 ## 2. Install `cloudflared` on the backend machine
 
@@ -71,7 +71,7 @@ cloudflared tunnel run pharos-api
 Set:
 
 ```bash
-export CORS_ORIGINS="https://pharos-ai.ca,https://www.pharos-ai.ca,https://govern-ai.ca,https://www.govern-ai.ca,https://govern-ai.pages.dev"
+export CORS_ORIGINS="https://pharos-ai.ca,https://www.pharos-ai.ca,https://pharos-suite.ca,https://www.pharos-suite.ca,https://pharos-suite.pages.dev"
 export SENDER_EMAIL="pharos@pharos-ai.ca"
 ```
 

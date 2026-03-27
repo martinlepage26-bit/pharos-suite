@@ -13,7 +13,7 @@ Use a dedicated API subdomain:
 
 - Public API: `https://api.pharos-ai.ca`
 - Public frontend: `https://pharos-ai.ca`
-- Redirect hosts: `https://www.pharos-ai.ca`, `https://govern-ai.ca`, `https://www.govern-ai.ca`
+- Redirect hosts: `https://www.pharos-ai.ca`, `https://pharos-suite.ca`, `https://www.pharos-suite.ca`
 
 Do not use a same-origin `/api/*` path on the apex yet.
 
@@ -61,7 +61,7 @@ Then trigger a production rebuild so:
 Set backend CORS explicitly instead of using `*`:
 
 ```txt
-CORS_ORIGINS=https://pharos-ai.ca,https://www.pharos-ai.ca,https://govern-ai.ca,https://www.govern-ai.ca,https://govern-ai.pages.dev
+CORS_ORIGINS=https://pharos-ai.ca,https://www.pharos-ai.ca,https://pharos-suite.ca,https://www.pharos-suite.ca,https://pharos-suite.pages.dev
 ```
 
 Keep these backend requirements in place:

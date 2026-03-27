@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pharos-suite"
+version = "0.1.0"
+description = "Local OpenAI-compatible integration shim for the Pharos Suite monorepo."
+authors = [{ name = "Martin Lepage" }]
+urls = { Homepage = "https://github.com/martinlepage26-bit/pharos-suite" }
+requires-python = ">=3.9"
+dependencies = ["requests>=2.31.0"]

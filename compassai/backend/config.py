@@ -26,4 +26,4 @@ RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'pharos@pharos-ai.ca')
 
 # LLM configuration  
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
+PHAROS_LLM_KEY = os.environ.get('PHAROS_LLM_KEY', '')

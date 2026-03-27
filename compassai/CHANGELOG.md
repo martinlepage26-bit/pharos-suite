@@ -12,7 +12,7 @@
 ### Changed
 - Removed write-on-read benchmark seeding behavior from the read path
 - Updated AI service client code to match the actual local LLM client shape
-- Stabilized governance intake and evidence-handling flow for linkage with govern-ai
+- Stabilized governance intake and evidence-handling flow for linkage with pharos-suite
 
 ### Verified
 - Local API works at `http://127.0.0.1:9205/api/`
@@ -21,5 +21,5 @@
 - Assessment works and returned `T2` with one ingested evidence item in the current verification pass
 
 ### Notes
-- This repo is positioned as the governance engine behind govern-ai
+- This repo is positioned as the governance engine behind pharos-suite
 - Richer LLM-backed generation still depends on a valid OpenAI-compatible credential path

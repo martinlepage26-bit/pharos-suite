@@ -1,45 +1,46 @@
 # pharos-suite
 
-Monorepo for the PHAROS public shell and the PHAROS product layers.
+Pharos Suite monorepo for the PHAROS shell and module stack:
+`pharos-ai.ca` + AurorAI + CompassAI.
 
-## What lives here
+## Repository
 
-- `frontend/`, `backend/`, `docs/`, `infra/`, `scripts/`, and `emergentintegrations/` are the current PHAROS public-surface stack for `pharos-ai.ca`.
-- `compassai/` is the canonical CompassAI governance application codebase.
-- `aurorai/` is the current on-disk service directory for Aurora, the intake and document-processing workflow inside CompassAI.
+- Canonical URL: `https://github.com/martinlepage26-bit/pharos-suite`
+- Default branch: `main`
 
-## Production truth
+## Layout
 
-- The proven public/browser surface today is the PHAROS shell in `frontend/`.
-- The current CompassAI browser surface and Aurora intake surface exposed to users still live inside that shell at `/portal/compassai` and `/portal/compassai/aurora`, with `/portal/aurorai` retained as a compatibility route.
-- The standalone `compassai/frontend/` and `aurorai/frontend/` directories are staged work, not yet verified standalone production apps.
-- The canonical CompassAI backend lives in `compassai/backend/`. The Aurora service currently lives in `aurorai/`; that directory name is compatibility debt, not a statement that Aurora is a sibling product to CompassAI.
+- `frontend/` - PHAROS public shell and portal frontend
+- `backend/` - PHAROS API for bookings, services, and platform status
+- `compassai/` - CompassAI governance application services and tests
+- `aurorai/` - AurorAI intake and document processing service
+- `pharos_integrations/` - local OpenAI-compatible integration shim
+- `docs/`, `infra/`, `scripts/` - operations, deployment, and tooling
 
-## Migration stance
+## Quick Start
 
-This repository consolidates the working trees that previously lived in:
+```bash
+git clone https://github.com/martinlepage26-bit/pharos-suite.git
+cd pharos-suite
+```
 
-- `/home/cerebrhoe/repos/pharos-ai`
-- `/home/cerebrhoe/repos/CompassAI`
-- `/home/cerebrhoe/repos/AurorAI`
+Frontend:
 
-The migration intentionally excludes secrets, local `.env` files, uploads, caches, node modules, build output, and backup artifacts.
+```bash
+cd frontend
+npm install
+npm run start
+```
 
-## High-level layout
+Backend (example):
 
-- `frontend/`: PHAROS public site and module portal routes
-- `backend/`: PHAROS public-shell backend for bookings, admin, services, and status
-- `compassai/backend/`: CompassAI governance backend
-- `compassai/frontend/`: staged CompassAI frontend work
-- `aurorai/server.py`: Aurora intake backend in the compatibility `aurorai/` directory
-- `aurorai/frontend/`: staged Aurora frontend scaffold in the compatibility `aurorai/` directory
+```bash
+cd backend
+uv pip install -r requirements.txt
+uv run uvicorn server:app --host 127.0.0.1 --port 9202
+```
 
-## Boundary note
+## Notes
 
-See `docs/pharos-product-boundaries.md` for the current naming and claim boundary source of truth.
-
-Do not claim that CompassAI or Aurora have standalone production web frontends unless that is separately validated. Right now the safe claim is:
-
-- standalone backends: yes
-- standalone browser surfaces: not yet proven
-- PHAROS-hosted portal surfaces: yes
+- Keep secrets in local `.env` files only; never commit credentials.
+- See `docs/pharos-product-boundaries.md` for naming and claim-boundary rules.

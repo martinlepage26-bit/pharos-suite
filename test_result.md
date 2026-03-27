@@ -179,7 +179,7 @@ frontend:
         comment: "Starting repo-side rename pass focused on `pharos-ai.ca` contact surfaces, redirect logic, and related hostname docs/config."
       - working: true
         agent: "main"
-        comment: "Repo-side rename pass completed for the frontend, middleware, and planning docs. Remaining legacy references support the unchanged `govern-ai.pages.dev` Pages project host."
+        comment: "Repo-side rename pass completed for the frontend, middleware, and planning docs. Remaining legacy references support the unchanged `pharos-suite.pages.dev` Pages project host."
   - task: "PHAROS postmodern accent validation"
     implemented: true
     working: true

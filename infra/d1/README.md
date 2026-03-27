@@ -2,7 +2,7 @@
 
 This directory holds implementation-ready D1 SQL for the simplified `govern_suite` storage model.
 
-The schema is designed to preserve the InfraFabric processing logic and the same claim-boundary discipline used across Govern AI, CompassAI, and Aurora.
+The schema is designed to preserve the InfraFabric processing logic and the same claim-boundary discipline used across Pharos Suite, CompassAI, and Aurora.
 
 ## Current files
 

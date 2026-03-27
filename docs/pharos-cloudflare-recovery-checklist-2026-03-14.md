@@ -8,16 +8,16 @@ This is the smallest safe recovery sequence for the current PHAROS public-domain
 
 - `https://pharos-ai.ca` is intended to be the canonical public PHAROS hostname.
 - The current working tree already points canonical and Open Graph metadata to the apex hostname in `frontend/public/index.html`.
-- Cloudflare Pages currently lists the `govern-ai` project with:
-  - `govern-ai.pages.dev`
-  - `govern-ai.ca`
+- Cloudflare Pages currently lists the `pharos-suite` project with:
+  - `pharos-suite.pages.dev`
+  - `pharos-suite.ca`
   - `pharos-ai.ca`
 - `www.pharos-ai.ca` is not currently listed there.
 - Public checks from this machine show:
   - `pharos-ai.ca`: no public A answer and browser-level name resolution failure
   - `www.pharos-ai.ca`: resolves but returns `522`
-  - `govern-ai.ca`: serves the PHAROS frontend
-  - `govern-ai.pages.dev`: serves the PHAROS frontend
+  - `pharos-suite.ca`: serves the PHAROS frontend
+  - `pharos-suite.pages.dev`: serves the PHAROS frontend
 
 ## Recovery order
 
@@ -32,9 +32,9 @@ This is the smallest safe recovery sequence for the current PHAROS public-domain
    - Remove or replace any stale zone-level DNS or proxy path that still points `www.pharos-ai.ca` at an origin capable of returning `522`.
    - The goal is not for `www` to serve its own copy of the site; the goal is a clean redirect to the apex.
 
-3. Leave `govern-ai.ca` decision-bound.
-   - If you still want legacy PHAROS traffic preserved, keep `govern-ai.ca` redirecting into the apex PHAROS hostname.
-   - If that redirect is not yet configured, do not treat the current `200` on `govern-ai.ca` as the finished public state.
+3. Leave `pharos-suite.ca` decision-bound.
+   - If you still want legacy PHAROS traffic preserved, keep `pharos-suite.ca` redirecting into the apex PHAROS hostname.
+   - If that redirect is not yet configured, do not treat the current `200` on `pharos-suite.ca` as the finished public state.
 
 4. Trigger a fresh production deploy only after the domain wiring is healthy.
    - The live Pages HTML currently lags the working tree and still advertises `https://www.pharos-ai.ca` in canonical metadata.

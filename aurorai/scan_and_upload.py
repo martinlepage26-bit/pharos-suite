@@ -18,7 +18,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # ============================================
 # CONFIGURATION - Update this URL if needed
 # ============================================
-DOCSORT_API = "https://paper-organizer-2.preview.emergentagent.com/api"
+DOCSORT_API = "http://127.0.0.1:9206/api"
 
 # File types to scan
 EXTENSIONS = {'.pdf', '.doc', '.docx', '.txt'}

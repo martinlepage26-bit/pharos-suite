@@ -20,5 +20,5 @@
 - Evidence handoff into CompassAI succeeds in the current local stack
 
 ### Notes
-- `EMERGENT_LLM_KEY` is loaded into the live process
-- Richer remote extraction still needs a valid `OPENAI_API_KEY` or the correct `OPENAI_BASE_URL` for the Emergent-compatible endpoint
+- `PHAROS_LLM_KEY` is loaded into the live process
+- Richer remote extraction still needs a valid `OPENAI_API_KEY` or the correct `OPENAI_BASE_URL` for the Pharos-compatible endpoint

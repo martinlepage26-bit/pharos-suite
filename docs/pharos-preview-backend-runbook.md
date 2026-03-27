@@ -9,7 +9,7 @@ It is preview-only.
 It does not change:
 
 - `api.pharos-ai.ca`
-- the live `govern-ai` Pages project
+- the live `pharos-suite` Pages project
 - frontend routes or branding
 
 ## Current preview architecture

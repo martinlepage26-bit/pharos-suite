@@ -1,15 +1,15 @@
-# govern-ai Module Map
+# pharos-suite Module Map
 
 Version: 0.1  
 Date: 2026-03-06
 
 ## Purpose
 
-This module map defines the first practical integration shape for `govern-ai`, `AurorAI`, and `CompassAI`.
+This module map defines the first practical integration shape for `pharos-suite`, `AurorAI`, and `CompassAI`.
 
 The design goal is simple:
 
-- `govern-ai` is the institutional shell and client-facing experience
+- `pharos-suite` is the institutional shell and client-facing experience
 - `AurorAI` is the document execution and evidence-packaging engine
 - `CompassAI` is the governance workbench that consumes evidence and produces tiered governance outputs
 
@@ -19,7 +19,7 @@ This keeps the system legible and prevents three separate products from drifting
 
 User-facing product names:
 
-- `govern-ai`
+- `pharos-suite`
 - `AurorAI`
 - `CompassAI`
 
@@ -33,7 +33,7 @@ In code and URLs, `CompassAI` remains the stable public name. `ComPassAI` is tre
 ## Operating Model
 
 ```text
-govern-ai shell
+pharos-suite shell
   -> client portal entry
     -> AurorAI module
       -> evidence package
@@ -46,7 +46,7 @@ govern-ai shell
 
 ## Responsibility Split
 
-### govern-ai
+### pharos-suite
 
 Owns:
 
@@ -98,7 +98,7 @@ Does not own:
 
 ## Frontend Route Map
 
-### govern-ai public shell
+### pharos-suite public shell
 
 - `/`
 - `/services`
@@ -113,7 +113,7 @@ Does not own:
 - `/portfolio`
 - `/sealed-card`
 
-### govern-ai client portal entry
+### pharos-suite client portal entry
 
 - `/client-portal/aurorai`
 - `/client-portal/compassai`
@@ -186,7 +186,7 @@ What they do:
 
 ### Step 1
 
-A client enters through `govern-ai` and is routed toward the relevant module surface.
+A client enters through `pharos-suite` and is routed toward the relevant module surface.
 
 ### Step 2
 
@@ -216,7 +216,7 @@ The resulting evidence package is sent to `CompassAI` through:
 
 ### Step 5
 
-`govern-ai` becomes the place where those module outputs are surfaced coherently for clients.
+`pharos-suite` becomes the place where those module outputs are surfaced coherently for clients.
 
 ## Key Shared Objects
 
@@ -297,7 +297,7 @@ To avoid going off rails, the following are still out of scope in this pass:
 - full policy versioning engine
 - real deliverable document generation
 - approval signatures and deployment gate enforcement
-- shared embedded frontend workbench inside `govern-ai`
+- shared embedded frontend workbench inside `pharos-suite`
 - multi-tenant tenancy model
 
 ## Immediate Next Build Steps
@@ -312,7 +312,7 @@ Stabilize the contracts.
 
 ### Phase B
 
-Expose module outputs inside `govern-ai`.
+Expose module outputs inside `pharos-suite`.
 
 - show use-case status
 - show latest evidence package state
@@ -322,7 +322,7 @@ Expose module outputs inside `govern-ai`.
 
 Unify auth and navigation.
 
-- shared login shell in `govern-ai`
+- shared login shell in `pharos-suite`
 - module-aware navigation and permissions
 - client-specific portal experiences
 
@@ -330,6 +330,6 @@ Unify auth and navigation.
 
 If a capability belongs to extraction, it stays in `AurorAI`.
 If a capability belongs to governance judgment, it lives in `CompassAI`.
-If a capability belongs to trust, presentation, and client navigation, it belongs in `govern-ai`.
+If a capability belongs to trust, presentation, and client navigation, it belongs in `pharos-suite`.
 
 That split is the simplest shape that can scale without making later consolidation harder.

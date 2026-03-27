@@ -32,9 +32,9 @@ DEFAULT_CORS_ORIGINS = [
     "http://127.0.0.1:9201",
     "https://pharos-ai.ca",
     "https://www.pharos-ai.ca",
-    "https://govern-ai.ca",
-    "https://www.govern-ai.ca",
-    "https://govern-ai.pages.dev",
+    "https://pharos-suite.ca",
+    "https://www.pharos-suite.ca",
+    "https://pharos-suite.pages.dev",
 ]
 
 mongo_url = os.environ.get('MONGO_URL')
@@ -370,10 +370,10 @@ async def admin_login(input: AdminLoginInput):
 
 @api_router.get("/admin/platform-status")
 async def get_platform_status(admin_ok: None = Depends(require_admin)):
-    compassai_emergent_key = load_env_value(COMPASSAI_ENV_FILE, "EMERGENT_LLM_KEY")
+    compassai_pharos_key = load_env_value(COMPASSAI_ENV_FILE, "PHAROS_LLM_KEY")
     compassai_resend_key = load_env_value(COMPASSAI_ENV_FILE, "RESEND_API_KEY")
 
-    govern_ai_probe, compassai_probe, aurorai_probe = await asyncio.gather(
+    pharos_suite_probe, compassai_probe, aurorai_probe = await asyncio.gather(
         probe_http("http://127.0.0.1:9202/health"),
         probe_http("http://127.0.0.1:9205/api/"),
         probe_http("http://127.0.0.1:9206/api/categories"),
@@ -387,7 +387,7 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
             "name": "PHAROS backend",
             "key": "pharos-ai",
             "url": "http://127.0.0.1:9202/health",
-            **govern_ai_probe,
+            **pharos_suite_probe,
         },
         {
             "name": "CompassAI backend",
@@ -404,14 +404,14 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
     ]
 
     llm = {
-        "emergent_configured": bool(compassai_emergent_key),
-        "emergent_source": str(COMPASSAI_ENV_FILE),
+        "pharos_configured": bool(compassai_pharos_key),
+        "pharos_source": str(COMPASSAI_ENV_FILE),
         "resend_configured": bool(compassai_resend_key),
         "openai_configured": bool(os.environ.get("OPENAI_API_KEY")),
         "openai_base_url_configured": bool(os.environ.get("OPENAI_BASE_URL")),
-        "emergent_library_present": (ROOT_DIR.parent / "emergentintegrations").exists(),
+        "pharos_library_present": (ROOT_DIR.parent / "pharos_integrations").exists(),
         "notes": [
-            "CompassAI and AurorAI pick up EMERGENT_LLM_KEY through the local stack launcher.",
+            "CompassAI and AurorAI pick up PHAROS_LLM_KEY through the local stack launcher.",
             "OpenAI-compatible credentials can be supplied with OPENAI_API_KEY and optionally OPENAI_BASE_URL.",
             "AurorAI falls back to heuristic extraction when no compatible LLM call succeeds.",
         ],

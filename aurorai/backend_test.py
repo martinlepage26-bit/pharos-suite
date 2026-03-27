@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 
 class DocumentSorterAPITester:
-    def __init__(self, base_url="https://paper-organizer-2.preview.emergentagent.com/api"):
+    def __init__(self, base_url="http://127.0.0.1:9206/api"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
@@ -362,9 +362,9 @@ References:
 
 def main():
     print("🚀 Starting Document Sorter API Tests")
-    print(f"Testing against: https://paper-organizer-2.preview.emergentagent.com/api")
     
     tester = DocumentSorterAPITester()
+    print(f"Testing against: {tester.base_url}")
 
     # Core API Tests
     tests = [

@@ -13,8 +13,8 @@ MONGO_HOST="${MONGO_HOST:-127.0.0.1}"
 MONGO_PORT="${MONGO_PORT:-27017}"
 PREVIEW_ORIGIN="${PREVIEW_ORIGIN:-https://pharos-suite-review.pages.dev}"
 MONGO_URL="${MONGO_URL:-mongodb://127.0.0.1:27017}"
-DB_NAME="${DB_NAME:-govern_ai}"
-DEFAULT_CORS_ORIGINS="http://localhost:3000,http://127.0.0.1:3000,http://localhost:9201,http://127.0.0.1:9201,https://pharos-ai.ca,https://www.pharos-ai.ca,https://govern-ai.ca,https://www.govern-ai.ca,https://govern-ai.pages.dev"
+DB_NAME="${DB_NAME:-pharos_suite}"
+DEFAULT_CORS_ORIGINS="http://localhost:3000,http://127.0.0.1:3000,http://localhost:9201,http://127.0.0.1:9201,https://pharos-ai.ca,https://www.pharos-ai.ca,https://pharos-suite.ca,https://www.pharos-suite.ca,https://pharos-suite.pages.dev"
 
 mkdir -p "$RUNTIME_DIR"
 

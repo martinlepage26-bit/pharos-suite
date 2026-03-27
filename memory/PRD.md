@@ -75,7 +75,7 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
   - Bookings (existing)
   - **FAQ Management** (NEW): CRUD for FAQ items across 3 sections (Definitions, Evidence, Engagements) with ordering
   - **Services Management** (NEW): CRUD for service packages with bilingual EN/FR support
-- **Email Sender Updated**: Changed Resend sender email to `consult@govern-ai.ca` (verified domain)
+- **Email Sender Updated**: Changed Resend sender email to `consult@pharos-suite.ca` (verified domain)
 - **Backend APIs Added**: New endpoints for `/api/faq` and `/api/services` with full CRUD operations
 - **Database Seeding**: Added auto-seeding for FAQ items (15) and service packages (3)
 - **Home Page Redesign**: Implemented new layout based on user-provided reference image

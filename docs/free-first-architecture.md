@@ -4,7 +4,7 @@
 
 - `pharos-ai.ca` is the PHAROS public website
 - `www.pharos-ai.ca` should redirect to the apex domain
-- `govern-ai.ca` should also redirect to the apex domain during migration
+- `pharos-suite.ca` should also redirect to the apex domain during migration
 - `CompassAI` is the PHAROS governance app, and `Aurora` is its intake workflow, but neither is a standalone public subdomain yet
 
 ## Current free setup
@@ -36,5 +36,5 @@ If it needs a Python server, Mongo, PDF processing, or file uploads, keep it pri
 
 1. Keep building the PHAROS public product in this repo
 2. If Admin and dynamic content need to go live, use the bridge plan in `docs/public-backend-plan.md`
-3. Move Martin Lepage profile, resume, publication, and other non-PHAROS material to `governai.ca`
+3. Move Martin Lepage profile, resume, publication, and other non-PHAROS material to `pharossuite.ca`
 4. Keep Lotus out of the PHAROS repo and PHAROS public surface

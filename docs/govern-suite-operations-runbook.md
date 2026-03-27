@@ -2,7 +2,7 @@
 
 This runbook covers the current local operating model for:
 
-- `govern-ai`
+- `pharos-suite`
 - `AurorAI`
 - `CompassAI`
 
@@ -10,15 +10,15 @@ Current public/private split:
 
 - Public frontend target: `https://pharos-ai.ca`
 - Local frontend preview: `http://127.0.0.1:9201/`
-- Local backends only: `govern-ai`, `AurorAI`, `CompassAI`
+- Local backends only: `pharos-suite`, `AurorAI`, `CompassAI`
 
 ## 1. What runs where
 
 | Service | Purpose | Local URL | Port |
 |---|---|---|---:|
 | Dashboard | local service dashboard | `http://127.0.0.1:9200/` | `9200` |
-| govern-ai frontend | public site UI | `http://127.0.0.1:9201/` | `9201` |
-| govern-ai backend | bookings, services, platform status | `http://127.0.0.1:9202/` | `9202` |
+| pharos-suite frontend | public site UI | `http://127.0.0.1:9201/` | `9201` |
+| pharos-suite backend | bookings, services, platform status | `http://127.0.0.1:9202/` | `9202` |
 | CompassAI backend | governance engine | `http://127.0.0.1:9205/api/` | `9205` |
 | AurorAI backend | evidence and document engine | `http://127.0.0.1:9206/api/` | `9206` |
 | Local MongoDB | shared local database | `mongodb://127.0.0.1:27017` | `27017` |
@@ -45,17 +45,17 @@ Open a Linux terminal in WSL and use these commands.
 /home/cerebrhoe/repo-hosting/stop-all.sh
 ```
 
-### Rebuild the govern-ai frontend for local preview
+### Rebuild the pharos-suite frontend for local preview
 
 ```bash
-/home/cerebrhoe/repo-hosting/build-govern-ai.sh
+/home/cerebrhoe/repo-hosting/build-pharos-suite.sh
 ```
 
 ## 3. Main folders
 
 Linux paths:
 
-- govern-ai repo: `/home/cerebrhoe/repos/govern-ai`
+- pharos-suite repo: `/home/cerebrhoe/repos/pharos-suite`
 - AurorAI repo: `/home/cerebrhoe/repos/pharos-suite/aurorai`
 - CompassAI repo: `/home/cerebrhoe/repos/pharos-suite/compassai`
 - hosting scripts: `/home/cerebrhoe/repo-hosting`
@@ -69,7 +69,7 @@ Windows paths from WSL:
 
 ## 4. Current service connections
 
-### govern-ai
+### pharos-suite
 
 - Frontend is static and served from the built React app on `9201`
 - Backend runs on `9202`
@@ -105,7 +105,7 @@ That means:
 
 ## 5. Health and smoke-check URLs
 
-### govern-ai
+### pharos-suite
 
 ```bash
 curl http://127.0.0.1:9202/health
@@ -132,24 +132,24 @@ curl http://127.0.0.1:9205/api/
 Tail logs with:
 
 ```bash
-tail -f /home/cerebrhoe/repo-hosting/logs/govern-ai-backend.log
-tail -f /home/cerebrhoe/repo-hosting/logs/govern-ai-frontend.log
+tail -f /home/cerebrhoe/repo-hosting/logs/pharos-suite-backend.log
+tail -f /home/cerebrhoe/repo-hosting/logs/pharos-suite-frontend.log
 tail -f /home/cerebrhoe/repo-hosting/logs/aurorai.log
 tail -f /home/cerebrhoe/repo-hosting/logs/compassai.log
 ```
 
-## 7. govern-ai day-to-day commands
+## 7. pharos-suite day-to-day commands
 
 ### Open the repo
 
 ```bash
-cd /home/cerebrhoe/repos/govern-ai
+cd /home/cerebrhoe/repos/pharos-suite
 ```
 
 ### Frontend dev mode
 
 ```bash
-cd /home/cerebrhoe/repos/govern-ai/frontend
+cd /home/cerebrhoe/repos/pharos-suite/frontend
 npm install
 npm start
 ```
@@ -162,22 +162,22 @@ This runs:
 ### Frontend production build
 
 ```bash
-cd /home/cerebrhoe/repos/govern-ai/frontend
+cd /home/cerebrhoe/repos/pharos-suite/frontend
 npm run build
 ```
 
 ### Cloudflare Pages deploy
 
 ```bash
-cd /home/cerebrhoe/repos/govern-ai/frontend
+cd /home/cerebrhoe/repos/pharos-suite/frontend
 npm run cf:deploy
 ```
 
 ### Backend manual run
 
 ```bash
-cd /home/cerebrhoe/repos/govern-ai/backend
-env MONGO_URL=mongodb://127.0.0.1:27017 DB_NAME=govern_ai /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9202
+cd /home/cerebrhoe/repos/pharos-suite/backend
+env MONGO_URL=mongodb://127.0.0.1:27017 DB_NAME=pharos_suite /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9202
 ```
 
 ## 8. AurorAI day-to-day commands
@@ -206,7 +206,7 @@ env \
   AURORAI_API_TOKEN=aurorai-local-dev-token \
   COMPASSAI_BASE_URL=http://127.0.0.1:9205 \
   COMPASSAI_INGEST_TOKEN=compassai-local-ingest-token \
-  PYTHONPATH="/home/cerebrhoe/repos/govern-ai/emergentintegrations${PYTHONPATH:+:$PYTHONPATH}" \
+  PYTHONPATH="/home/cerebrhoe/repos/pharos-suite/pharos_integrations${PYTHONPATH:+:$PYTHONPATH}" \
   /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9206
 ```
 
@@ -267,7 +267,7 @@ env \
   MONGO_URL=mongodb://127.0.0.1:27017 \
   DB_NAME=compassai \
   COMPASSAI_INGEST_TOKEN=compassai-local-ingest-token \
-  PYTHONPATH="/home/cerebrhoe/repos/govern-ai/emergentintegrations${PYTHONPATH:+:$PYTHONPATH}" \
+  PYTHONPATH="/home/cerebrhoe/repos/pharos-suite/pharos_integrations${PYTHONPATH:+:$PYTHONPATH}" \
   /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9205
 ```
 
@@ -373,7 +373,7 @@ Observed result:
 
 ## 11. Known local caveats
 
-- `govern-ai` frontend is public on Cloudflare Pages, but the backends are still local-only
+- `pharos-suite` frontend is public on Cloudflare Pages, but the backends are still local-only
 - `AurorAI` currently accepts `PDF` and `TXT`, not `DOC` or `DOCX`
 - `AurorAI` falls back to heuristic extraction if the LLM path is not fully configured
 - `CompassAI` requires JWT auth for most routes
@@ -395,7 +395,7 @@ mkdir -p /home/cerebrhoe/repos/pharos-suite/aurorai/uploads
 ### Before editing frontend
 
 ```bash
-cd /home/cerebrhoe/repos/govern-ai/frontend
+cd /home/cerebrhoe/repos/pharos-suite/frontend
 npm run build
 ```
 

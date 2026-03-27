@@ -219,10 +219,10 @@ function scanTextSurface(filePath) {
   }
 
   const governIdentityPatterns = [
-    /\bcanonical\b.{0,80}\bgovern-ai(?:\.ca)?\b/gi,
-    /\bcanonical\b.{0,80}\bgovernai(?:\.ca)?\b/gi,
-    /\bgovern-ai(?:\.ca)?\b.{0,80}\b(?:is|remains|serves as)\b.{0,40}\b(?:canonical|primary|public)\b/gi,
-    /\bgovernai(?:\.ca)?\b.{0,80}\b(?:is|remains|serves as)\b.{0,40}\b(?:canonical|primary|public)\b/gi
+    /\bcanonical\b.{0,80}\bpharos-suite(?:\.ca)?\b/gi,
+    /\bcanonical\b.{0,80}\bpharossuite(?:\.ca)?\b/gi,
+    /\bpharos-suite(?:\.ca)?\b.{0,80}\b(?:is|remains|serves as)\b.{0,40}\b(?:canonical|primary|public)\b/gi,
+    /\bpharossuite(?:\.ca)?\b.{0,80}\b(?:is|remains|serves as)\b.{0,40}\b(?:canonical|primary|public)\b/gi
   ];
 
   for (const pattern of governIdentityPatterns) {
@@ -232,7 +232,7 @@ function scanTextSurface(filePath) {
         text,
         match.index,
         'legacy-identity',
-        'Do not present govern-ai/governai as the canonical PHAROS public identity.'
+        'Do not present pharos-suite/pharossuite as the canonical PHAROS public identity.'
       );
     }
   }

@@ -1,4 +1,4 @@
-const TARGET_HOSTNAME = "govern-ai.pages.dev";
+const TARGET_HOSTNAME = "pharos-suite.pages.dev";
 const REMOVED_ASSET_PATH = "/images/pharos-main-logo-quantum-lighthouse.png";
 
 function buildTargetUrl(requestUrl) {

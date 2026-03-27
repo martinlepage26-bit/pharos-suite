@@ -6,8 +6,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 hosts=(
   "pharos-ai.ca"
   "www.pharos-ai.ca"
-  "govern-ai.ca"
-  "govern-ai.pages.dev"
+  "pharos-suite.ca"
+  "pharos-suite.pages.dev"
 )
 
 failures=0

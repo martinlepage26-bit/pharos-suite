@@ -596,7 +596,7 @@ What this would feel like:
 
 - AurorAI still ingests and extracts
 - CompassAI still assesses and derives controls
-- Govern AI still remains the shell
+- Pharos Suite still remains the shell
 - the recursive loop still exists
 - the difference is that files live in `R2` and the state graph lives in `D1`
 

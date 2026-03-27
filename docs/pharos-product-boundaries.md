@@ -23,4 +23,4 @@ This document is the current naming and boundary source of truth for the safe-la
 ## Rename hold for this pass
 
 - Do not rename filesystem paths, package names, route mechanics, redirects, storage keys, env vars, deploy identifiers, or runtime wiring in this pass.
-- Legacy `govern-ai` and `governai` technical references may still be load-bearing and should be reviewed individually before any rename.
+- Legacy `pharos-suite` and `pharossuite` technical references may still be load-bearing and should be reviewed individually before any rename.

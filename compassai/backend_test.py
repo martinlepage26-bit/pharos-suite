@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 class AIGovernanceEngineAPITester:
-    def __init__(self, base_url="https://admin-features-test-3.preview.emergentagent.com/api"):
+    def __init__(self, base_url="http://127.0.0.1:9205/api"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

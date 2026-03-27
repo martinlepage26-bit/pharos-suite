@@ -66,7 +66,7 @@ If you choose to do a manual Pages deploy from that clean candidate later:
 npm run cf:deploy
 ```
 
-That still targets the existing `govern-ai` Pages project, which is expected for now.
+That still targets the existing `pharos-suite` Pages project, which is expected for now.
 
 ## Verification after Cloudflare repair or deploy
 

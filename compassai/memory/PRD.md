@@ -22,7 +22,7 @@ Build an AI Governance Engine web application. A governance scoring engine that 
 
 ### Backend (FastAPI + MongoDB)
 - **Core Models**: Client, AISystem, Assessment, ControlAssessment, AssessmentResult
-- **AI Services**: Multi-LLM support (GPT-5.2, Claude, Gemini) via emergentintegrations
+- **AI Services**: Multi-LLM support (GPT-5.2, Claude, Gemini) via pharos_integrations
 - **New Models**: OnboardingSubmission, PolicyAnalysis, MarketIntelCache
 - **Governance Engine**: 8 control categories, sector-specific weights
 

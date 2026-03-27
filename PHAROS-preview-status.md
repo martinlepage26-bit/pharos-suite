@@ -112,7 +112,7 @@ Browser-level request inspection, previously verified expectation:
 - No public CompassAI module API origin is confirmed.
 - This preview does not expose live module data.
 - Do not point portal routes at `preview-api.pharos-ai.ca`.
-- Do not reuse old `preview.emergentagent.com` hosts.
+- Do not reuse legacy third-party preview hosts.
 - Do not touch production during preview recovery.
 
 ## If the portal looks broken again

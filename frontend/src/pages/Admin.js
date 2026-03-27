@@ -4,7 +4,7 @@ import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, CalendarDays, Hel
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 const ADMIN_SESSION_KEY = 'pharos-ai-admin-token';
-const LEGACY_ADMIN_SESSION_KEY = 'govern-ai-admin-token';
+const LEGACY_ADMIN_SESSION_KEY = 'pharos-suite-admin-token';
 
 const Admin = () => {
   const { t } = useLanguage();
@@ -666,9 +666,9 @@ const Admin = () => {
                     </div>
                     <div className="space-y-3 text-sm text-gray-700">
                       <p className="flex items-center justify-between gap-3">
-                        <span>Emergent key configured</span>
-                        <span className={platformStatus.llm?.emergent_configured ? 'text-green-700' : 'text-red-700'}>
-                          {platformStatus.llm?.emergent_configured ? 'Yes' : 'No'}
+                        <span>Pharos key configured</span>
+                        <span className={platformStatus.llm?.pharos_configured ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.llm?.pharos_configured ? 'Yes' : 'No'}
                         </span>
                       </p>
                       <p className="flex items-center justify-between gap-3">
@@ -690,14 +690,14 @@ const Admin = () => {
                         </span>
                       </p>
                       <p className="flex items-center justify-between gap-3">
-                        <span>Emergent library present</span>
-                        <span className={platformStatus.llm?.emergent_library_present ? 'text-green-700' : 'text-red-700'}>
-                          {platformStatus.llm?.emergent_library_present ? 'Yes' : 'No'}
+                        <span>Pharos library present</span>
+                        <span className={platformStatus.llm?.pharos_library_present ? 'text-green-700' : 'text-red-700'}>
+                          {platformStatus.llm?.pharos_library_present ? 'Yes' : 'No'}
                         </span>
                       </p>
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-100">
-                      <p className="text-xs text-gray-500 break-all">Source: {platformStatus.llm?.emergent_source}</p>
+                      <p className="text-xs text-gray-500 break-all">Source: {platformStatus.llm?.pharos_source}</p>
                       <ul className="mt-3 space-y-2 text-xs text-gray-500">
                         {(platformStatus.llm?.notes || []).map((note) => (
                           <li key={note}>• {note}</li>
