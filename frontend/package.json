@@ -31,16 +31,18 @@
     },
     "scripts": {
         "start": "concurrently -k \"npm:tailwind:watch\" \"npm:react:start\"",
-        "react:start": "craco start",
-        "build": "npm run tailwind:build && craco build && node scripts/generate-static-route-pages.cjs",
+        "react:start": "npm run style:lock:check && craco start",
+        "build": "npm run style:lock:check && npm run tailwind:build && craco build && node scripts/generate-static-route-pages.cjs",
         "validate:boundaries": "node scripts/validate-product-boundaries.cjs",
         "tailwind:build": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --minify",
         "tailwind:watch": "tailwindcss -i ./src/index.css -o ./src/tailwind.generated.css --watch",
-        "cf:deploy": "wrangler pages deploy build --project-name pharos-ai --branch main --commit-dirty=true",
-        "cf:deploy:legacy-govern-ai": "wrangler pages deploy build --project-name govern-ai --branch main --commit-dirty=true",
-        "cf:preview": "wrangler pages deploy build --project-name pharos-suite-review --branch preview",
-        "test": "craco test",
-        "eject": "react-scripts eject"
+        "cf:deploy": "npm run style:lock:check && wrangler pages deploy build --project-name pharos-ai --branch main --commit-dirty=true",
+        "cf:deploy:legacy-govern-ai": "npm run style:lock:check && wrangler pages deploy build --project-name govern-ai --branch main --commit-dirty=true",
+        "cf:preview": "npm run style:lock:check && wrangler pages deploy build --project-name pharos-suite-review --branch preview",
+        "test": "npm run style:lock:check && craco test",
+        "eject": "react-scripts eject",
+        "style:lock:check": "node scripts/style-lock.cjs check",
+        "style:lock:update": "node scripts/style-lock.cjs update"
     },
     "eslintConfig": {
         "extends": [
