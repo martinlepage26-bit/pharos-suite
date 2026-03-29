@@ -299,111 +299,12 @@ describe('PHAROS route smoke coverage', () => {
     expect(window.location.pathname).toBe('/portal/compassai/aurora');
   });
 
-  test('renders a bounded Aurora preview without live module requests when no module origin is configured', async () => {
-    setStoredModuleConfig('aurorai', {
-      baseUrl: '',
-      token: ''
-    });
-    global.fetch.mockClear();
-    window.history.pushState({}, '', '/portal/compassai/aurora');
-
-    await act(async () => {
-      root.render(<App />);
-    });
-
-    const element = await waitForTestId(container, 'portal-aurorai-page');
-    expect(element).toBeTruthy();
-    expect(container.textContent).toContain('Preview unavailable');
-    expect(container.textContent).toContain('not publicly configured');
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/idp/pipeline'))).toBe(false);
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats'))).toBe(false);
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/categories'))).toBe(false);
-  });
-
-  test('renders a bounded CompassAI preview without live module requests when no module origin is configured', async () => {
-    setStoredModuleConfig('compassai', {
-      baseUrl: '',
-      token: ''
-    });
-    global.fetch.mockClear();
-    window.history.pushState({}, '', '/portal/compassai');
-
-    await act(async () => {
-      root.render(<App />);
-    });
-
-    const element = await waitForTestId(container, 'portal-compassai-page');
-    expect(element).toBeTruthy();
-    expect(container.textContent).toContain('Preview unavailable');
-    expect(container.textContent).toContain('not publicly configured');
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats/dashboard'))).toBe(false);
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/clients'))).toBe(false);
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/ai-systems'))).toBe(false);
-    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/assessments'))).toBe(false);
-  });
-
-  test('Aurora still fetches live module data when a module origin is configured', async () => {
-    setStoredModuleConfig('aurorai', {
-      baseUrl: 'http://preview-aurora',
-      token: ''
-    });
-    global.fetch.mockClear();
-    window.history.pushState({}, '', '/portal/compassai/aurora');
-
-    await act(async () => {
-      root.render(<App />);
-    });
-
-    const element = await waitForTestId(container, 'portal-aurorai-page');
-    await flushEffects(6);
-    expect(element).toBeTruthy();
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/idp/pipeline', expect.any(Object));
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/stats', expect.any(Object));
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/categories', expect.any(Object));
-  });
-
-  test('CompassAI still fetches live module data when a module origin is configured', async () => {
-    setStoredModuleConfig('compassai', {
-      baseUrl: 'http://preview-compassai',
-      token: ''
-    });
-    global.fetch.mockClear();
-    window.history.pushState({}, '', '/portal/compassai');
-
-    await act(async () => {
-      root.render(<App />);
-    });
-
-    const element = await waitForTestId(container, 'portal-compassai-page');
-    await flushEffects(6);
-    expect(element).toBeTruthy();
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/stats/dashboard', expect.any(Object));
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/clients', expect.any(Object));
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/ai-systems', expect.any(Object));
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-compassai/api/assessments', expect.any(Object));
-  });
-
-  test('Aurora preserves the selected document across an unauthenticated save when the module origin stays configured', async () => {
+  test('renders the shared architecture reference on the Aurora route without module API requests', async () => {
     setStoredModuleConfig('aurorai', {
       baseUrl: 'http://preview-aurora',
       token: 'secret'
     });
-    mockFetchHandler = (requestUrl) => {
-      if (requestUrl === 'http://preview-aurora/api/documents') {
-        return [
-          { id: 'doc-1', original_filename: 'First.pdf', current_state: 'uploaded', page_count: 1 },
-          { id: 'doc-2', original_filename: 'Second.pdf', current_state: 'uploaded', page_count: 1 }
-        ];
-      }
-      if (requestUrl === 'http://preview-aurora/api/documents/doc-1') {
-        return { id: 'doc-1', original_filename: 'First.pdf', current_state: 'uploaded' };
-      }
-      if (requestUrl === 'http://preview-aurora/api/documents/doc-2') {
-        return { id: 'doc-2', original_filename: 'Second.pdf', current_state: 'uploaded' };
-      }
-      return defaultFetchPayload(requestUrl);
-    };
-
+    global.fetch.mockClear();
     window.history.pushState({}, '', '/portal/compassai/aurora');
 
     await act(async () => {
@@ -412,32 +313,38 @@ describe('PHAROS route smoke coverage', () => {
 
     const element = await waitForTestId(container, 'portal-aurorai-page');
     expect(element).toBeTruthy();
+    expect(element.getAttribute('data-portal-state')).toBe('under-construction');
+    expect(container.textContent).toContain('Status: /portal under construction');
+    expect(container.textContent).toContain('COMPASSai and AurorA');
+    expect(container.textContent).toContain('pharos-ai.ca');
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/idp/pipeline'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/categories'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/documents'))).toBe(false);
+  });
 
-    const secondDocumentButton = await waitForButtonByText(container, 'Second.pdf');
-    await clickElement(secondDocumentButton);
-    await flushEffects(6);
-    expect((await waitForButtonByText(container, 'Second.pdf')).className).toContain('active');
-
+  test('renders the shared architecture reference on the CompassAI route without module API requests', async () => {
+    setStoredModuleConfig('compassai', {
+      baseUrl: 'http://preview-compassai',
+      token: 'secret'
+    });
     global.fetch.mockClear();
+    window.history.pushState({}, '', '/portal/compassai');
 
-    const tokenInput = getInputByLabel(container, 'Aurora API token');
-    const saveButton = Array.from(container.querySelectorAll('button')).find((button) => button.textContent.includes('Save connection'));
-    expect(saveButton).toBeTruthy();
+    await act(async () => {
+      root.render(<App />);
+    });
 
-    await setInputValue(tokenInput, '');
-    await clickElement(saveButton);
-    await waitForText(container, 'Add an Aurora token above');
-
-    global.fetch.mockClear();
-
-    await setInputValue(tokenInput, 'secret');
-    await clickElement(saveButton);
-    await flushEffects(6);
-
-    expect((await waitForButtonByText(container, 'Second.pdf')).className).toContain('active');
-    expect((await waitForButtonByText(container, 'First.pdf')).className).not.toContain('active');
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/documents', expect.any(Object));
-    expect(global.fetch).toHaveBeenCalledWith('http://preview-aurora/api/documents/doc-2', expect.any(Object));
-    expect(global.fetch).not.toHaveBeenCalledWith('http://preview-aurora/api/documents/doc-1', expect.any(Object));
+    const element = await waitForTestId(container, 'portal-compassai-page');
+    expect(element).toBeTruthy();
+    expect(element.getAttribute('data-portal-state')).toBe('under-construction');
+    expect(container.textContent).toContain('Status: /portal under construction');
+    expect(container.textContent).toContain('COMPASSai · Governance Engine');
+    expect(container.textContent).toContain('AurorA · Document Intake');
+    expect(container.textContent).toContain('pharos@pharos-ai.ca');
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats/dashboard'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/clients'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/ai-systems'))).toBe(false);
+    expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/assessments'))).toBe(false);
   });
 });

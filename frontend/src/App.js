@@ -13,8 +13,7 @@ import TypographyPolish from './components/TypographyPolish';
 import Admin from './pages/Admin';
 import Game from './pages/Game';
 import Home from './pages/Home';
-import PortalAurorAI from './pages/PortalAurorAI';
-import PortalCompassAI from './pages/PortalCompassAI';
+import PortalArchitectureReference from './pages/PortalArchitectureReference';
 import Privacy from './pages/Privacy';
 import SealedCard from './pages/SealedCard';
 import SurfaceBoundary from './pages/SurfaceBoundary';
@@ -113,9 +112,15 @@ function AppRoutes() {
           <Route path="/connect" element={<HomeSurfaceRoute sectionId="contact" />} />
           <Route path="/contact" element={<HomeSurfaceRoute sectionId="contact" />} />
           <Route path="/library" element={<HomeSurfaceRoute sectionId="methods" />} />
-          <Route path="/portal/compassai/aurora" element={<PortalAurorAI />} />
+          <Route
+            path="/portal/compassai/aurora"
+            element={<PortalArchitectureReference routePath="/portal/compassai/aurora" testId="portal-aurorai-page" />}
+          />
           <Route path="/portal/aurorai" element={<Navigate to="/portal/compassai/aurora" replace />} />
-          <Route path="/portal/compassai" element={<PortalCompassAI />} />
+          <Route
+            path="/portal/compassai"
+            element={<PortalArchitectureReference routePath="/portal/compassai" testId="portal-compassai-page" />}
+          />
           <Route path="/sealed-card" element={<SealedCard />} />
           <Route
             path="/portfolio"

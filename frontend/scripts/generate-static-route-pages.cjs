@@ -387,41 +387,41 @@ const ROUTE_PAGES = [
   },
   {
     path: '/portal/compassai/aurora',
-    title: 'Aurora — CompassAI Intake Workflow in PHAROS',
+    title: 'PHAROS Stack — COMPASSai & AurorA Architecture Reference',
     description:
-      'Aurora remains under the PHAROS public surface as the CompassAI intake, extraction, and evidence-package workflow until its standalone review surface is ready.',
-    eyebrow: 'Aurora',
-    heading: 'Aurora remains inside CompassAI within the PHAROS public surface',
+      'The /portal routes are under construction. COMPASSai and AurorA remain in development, so PHAROS currently publishes an architecture reference instead of a live operational portal surface.',
+    eyebrow: 'Portal architecture',
+    heading: '/portal is under construction',
     body:
-      'Aurora is presented here as the intake workflow within CompassAI, focused on document intake, extraction, quality gates, and evidence package assembly.',
+      'COMPASSai and AurorA remain in development. This public route currently publishes the architecture reference, route relationship, and bounded status instead of the full portal surface.',
     bullets: [
-      'Document intake and extraction workflows.',
-      'Quality gates for evidence packaging.',
-      'Still bounded within CompassAI under the PHAROS public surface.'
+      'Architecture reference only for the current public route.',
+      'COMPASSai and AurorA remain in development.',
+      'The /portal surface is still under construction.'
     ],
-    primaryHref: '/contact',
-    primaryLabel: 'Ask about Aurora',
+    primaryHref: '/assurance',
+    primaryLabel: 'Read the assurance boundary',
     secondaryHref: '/assurance',
-    secondaryLabel: 'See the surface boundary'
+    secondaryLabel: 'Review the public claim boundary'
   },
   {
     path: '/portal/compassai',
-    title: 'CompassAI — PHAROS Portal Overview',
+    title: 'PHAROS Stack — COMPASSai & AurorA Architecture Reference',
     description:
-      'CompassAI remains under the PHAROS public surface as a registry, evidence intake, and risk-tiering workflow until its standalone review surface is ready.',
-    eyebrow: 'CompassAI',
-    heading: 'CompassAI remains inside the PHAROS public surface',
+      'The /portal routes are under construction. COMPASSai and AurorA remain in development, so PHAROS currently publishes an architecture reference instead of a live operational portal surface.',
+    eyebrow: 'Portal architecture',
+    heading: '/portal is under construction',
     body:
-      'CompassAI is presented here as an internal PHAROS module focused on use-case registries, evidence intake, risk tiering, and governance deliverables.',
+      'COMPASSai and AurorA remain in development. This public route currently publishes the architecture reference, route relationship, and bounded status instead of the full portal surface.',
     bullets: [
-      'Use-case registry and evidence intake.',
-      'Risk tiering and governance deliverables.',
-      'Still bounded within the PHAROS public surface.'
+      'Architecture reference only for the current public route.',
+      'COMPASSai and AurorA remain in development.',
+      'The /portal surface is still under construction.'
     ],
-    primaryHref: '/contact',
-    primaryLabel: 'Ask about CompassAI',
+    primaryHref: '/assurance',
+    primaryLabel: 'Read the assurance boundary',
     secondaryHref: '/assurance',
-    secondaryLabel: 'See the surface boundary'
+    secondaryLabel: 'Review the public claim boundary'
   }
 ];
 
