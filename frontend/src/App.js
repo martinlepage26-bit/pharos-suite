@@ -21,6 +21,7 @@ import SurfaceBoundary from './pages/SurfaceBoundary';
 import Terms from './pages/Terms';
 import Tool from './pages/Tool';
 
+// PHAROS-NEWLOOK is the canonical public informational shell for pharos-ai.ca.
 const HOME_SURFACE_SECTIONS = {
   '/about': 'about',
   '/governance': 'governance',

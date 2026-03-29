@@ -19,32 +19,53 @@ const makeJsonResponse = (payload, ok = true, status = 200) => ({
 const routeCases = [
   ['/', 'home-page'],
   ['/game', 'game-page'],
-  ['/services', 'services-page'],
-  ['/governance', 'services-page'],
-  ['/services/menu', 'service-menu-page'],
+  ['/services', 'home-page'],
+  ['/governance', 'home-page'],
+  ['/services/menu', 'home-page'],
   ['/tool', 'tool-page'],
-  ['/assurance', 'assurance-page'],
-  ['/transparency', 'assurance-page'],
-  ['/trust', 'assurance-page'],
-  ['/auditability', 'assurance-page'],
-  ['/faq', 'faq-page'],
+  ['/assurance', 'home-page'],
+  ['/transparency', 'home-page'],
+  ['/trust', 'home-page'],
+  ['/auditability', 'home-page'],
+  ['/faq', 'home-page'],
   ['/privacy', 'privacy-page'],
   ['/terms', 'terms-page'],
-  ['/research', 'research-page'],
-  ['/observatory', 'research-page'],
-  ['/cases', 'cases-page'],
-  ['/about', 'about-page'],
-  ['/about/conceptual-method', 'conceptual-method-page'],
-  ['/methods', 'conceptual-method-page'],
-  ['/connect', 'connect-page'],
-  ['/contact', 'connect-page'],
+  ['/research', 'home-page'],
+  ['/observatory', 'home-page'],
+  ['/cases', 'home-page'],
+  ['/about', 'home-page'],
+  ['/about/conceptual-method', 'home-page'],
+  ['/methods', 'home-page'],
+  ['/connect', 'home-page'],
+  ['/contact', 'home-page'],
   ['/portal/compassai/aurora', 'portal-aurorai-page'],
   ['/portal/compassai', 'portal-compassai-page'],
   ['/sealed-card', 'sealed-card-page'],
   ['/portfolio', 'surface-boundary-page'],
-  ['/library', 'library-page'],
+  ['/library', 'home-page'],
   ['/admin', 'admin-login'],
   ['/publications/trust-advantage-analysis', 'surface-boundary-page']
+];
+
+const publicShellRoutes = [
+  '/',
+  '/about',
+  '/governance',
+  '/services',
+  '/services/menu',
+  '/observatory',
+  '/research',
+  '/methods',
+  '/about/conceptual-method',
+  '/assurance',
+  '/transparency',
+  '/trust',
+  '/auditability',
+  '/faq',
+  '/cases',
+  '/library',
+  '/connect',
+  '/contact'
 ];
 
 const flushEffects = async (cycles = 4) => {
@@ -252,6 +273,18 @@ describe('PHAROS route smoke coverage', () => {
 
     const element = await waitForTestId(container, testId);
     expect(element).toBeTruthy();
+  });
+
+  test.each(publicShellRoutes)('keeps %s on the PHAROS-NEWLOOK public shell', async (route) => {
+    window.history.pushState({}, '', route);
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const element = await waitForTestId(container, 'home-page');
+    expect(element).toBeTruthy();
+    expect(element.className).toContain('home-newlook');
   });
 
   test('redirects the Aurora compatibility route to the canonical CompassAI path', async () => {
