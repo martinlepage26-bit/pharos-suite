@@ -1,7 +1,8 @@
 import './App.css';
 import './site.css';
 import './game.css';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 
 import Footer from './components/Footer';
@@ -9,54 +10,108 @@ import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
 import TypographyPolish from './components/TypographyPolish';
 
-import About from './pages/About';
 import Admin from './pages/Admin';
-import Assurance from './pages/Assurance';
-import Cases from './pages/Cases';
-import Connect from './pages/Connect';
-import ConceptualMethod from './pages/ConceptualMethod';
-import FAQ from './pages/FAQ';
 import Game from './pages/Game';
 import Home from './pages/Home';
-import Library from './pages/Library';
 import PortalAurorAI from './pages/PortalAurorAI';
 import PortalCompassAI from './pages/PortalCompassAI';
 import Privacy from './pages/Privacy';
-import Research from './pages/Research';
 import SealedCard from './pages/SealedCard';
-import ServiceMenu from './pages/ServiceMenu';
-import Services from './pages/Services';
 import SurfaceBoundary from './pages/SurfaceBoundary';
 import Terms from './pages/Terms';
 import Tool from './pages/Tool';
 
+const HOME_SURFACE_SECTIONS = {
+  '/about': 'about',
+  '/governance': 'governance',
+  '/services': 'services',
+  '/services/menu': 'services',
+  '/observatory': 'governance',
+  '/research': 'governance',
+  '/methods': 'methods',
+  '/about/conceptual-method': 'methods',
+  '/faq': 'faq',
+  '/contact': 'contact',
+  '/connect': 'contact',
+  '/assurance': 'governance',
+  '/transparency': 'governance',
+  '/trust': 'governance',
+  '/auditability': 'governance',
+  '/cases': 'services',
+  '/library': 'methods'
+};
+
+const HOME_SURFACE_PATHS = new Set(['/', ...Object.keys(HOME_SURFACE_SECTIONS)]);
+
+function scrollToSection(sectionId) {
+  const target = document.getElementById(sectionId);
+  if (!target) {
+    return false;
+  }
+
+  target.scrollIntoView({ block: 'start' });
+  return true;
+}
+
+function HomeSurfaceRoute({ sectionId }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    let rafOne = 0;
+    let rafTwo = 0;
+    let timeout = 0;
+
+    const attemptScroll = () => {
+      if (!scrollToSection(sectionId)) {
+        timeout = window.setTimeout(attemptScroll, 120);
+      }
+    };
+
+    rafOne = window.requestAnimationFrame(() => {
+      rafTwo = window.requestAnimationFrame(attemptScroll);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(rafOne);
+      window.cancelAnimationFrame(rafTwo);
+      window.clearTimeout(timeout);
+    };
+  }, [location.pathname, sectionId]);
+
+  return <Home />;
+}
+
 function AppRoutes() {
+  const location = useLocation();
+  const isHomeRoute = HOME_SURFACE_PATHS.has(location.pathname);
+
   return (
     <>
       <ScrollToTop />
       <TypographyPolish />
       <Navbar />
-      <main className="site-main">
+      <main className={`site-main ${isHomeRoute ? 'route-home' : 'route-interior'}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<Game />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/governance" element={<Services />} />
-          <Route path="/services/menu" element={<ServiceMenu />} />
+          <Route path="/services" element={<HomeSurfaceRoute sectionId="services" />} />
+          <Route path="/governance" element={<HomeSurfaceRoute sectionId="governance" />} />
+          <Route path="/services/menu" element={<HomeSurfaceRoute sectionId="services" />} />
           <Route path="/tool" element={<Tool />} />
-          <Route path="/assurance" element={<Assurance />} />
-          <Route path="/transparency" element={<Assurance />} />
-          <Route path="/faq" element={<FAQ />} />
+          <Route path="/assurance" element={<HomeSurfaceRoute sectionId="governance" />} />
+          <Route path="/transparency" element={<HomeSurfaceRoute sectionId="governance" />} />
+          <Route path="/faq" element={<HomeSurfaceRoute sectionId="faq" />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/research" element={<Research />} />
-          <Route path="/observatory" element={<Research />} />
-          <Route path="/cases" element={<Cases />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/about/conceptual-method" element={<ConceptualMethod />} />
-          <Route path="/methods" element={<ConceptualMethod />} />
-          <Route path="/connect" element={<Connect />} />
-          <Route path="/contact" element={<Connect />} />
+          <Route path="/research" element={<HomeSurfaceRoute sectionId="governance" />} />
+          <Route path="/observatory" element={<HomeSurfaceRoute sectionId="governance" />} />
+          <Route path="/cases" element={<HomeSurfaceRoute sectionId="services" />} />
+          <Route path="/about" element={<HomeSurfaceRoute sectionId="about" />} />
+          <Route path="/about/conceptual-method" element={<HomeSurfaceRoute sectionId="methods" />} />
+          <Route path="/methods" element={<HomeSurfaceRoute sectionId="methods" />} />
+          <Route path="/connect" element={<HomeSurfaceRoute sectionId="contact" />} />
+          <Route path="/contact" element={<HomeSurfaceRoute sectionId="contact" />} />
+          <Route path="/library" element={<HomeSurfaceRoute sectionId="methods" />} />
           <Route path="/portal/compassai/aurora" element={<PortalAurorAI />} />
           <Route path="/portal/aurorai" element={<Navigate to="/portal/compassai/aurora" replace />} />
           <Route path="/portal/compassai" element={<PortalCompassAI />} />
@@ -71,9 +126,8 @@ function AppRoutes() {
               />
             )}
           />
-          <Route path="/library" element={<Library />} />
-          <Route path="/trust" element={<Assurance />} />
-          <Route path="/auditability" element={<Assurance />} />
+          <Route path="/trust" element={<HomeSurfaceRoute sectionId="governance" />} />
+          <Route path="/auditability" element={<HomeSurfaceRoute sectionId="governance" />} />
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/publications/trust-advantage-analysis"

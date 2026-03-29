@@ -28,9 +28,7 @@ const NAV_COPY = {
       { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
       { path: '/tool', label: 'TOOL', matchPaths: ['/tool'] },
       { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
-      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] },
-      { path: '/library', label: 'LIBRARY', matchPaths: ['/library'] },
-      { path: '/cases', label: 'CASES', matchPaths: ['/cases'] }
+      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] }
     ],
     bookReview: 'BOOK A REVIEW'
   },
@@ -59,9 +57,7 @@ const NAV_COPY = {
       { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
       { path: '/tool', label: 'OUTIL', matchPaths: ['/tool'] },
       { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
-      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] },
-      { path: '/library', label: 'BIBLIOTHEQUE', matchPaths: ['/library'] },
-      { path: '/cases', label: 'CAS', matchPaths: ['/cases'] }
+      { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] }
     ],
     bookReview: 'RESERVER UNE REVUE'
   }
@@ -130,7 +126,6 @@ const Navbar = () => {
                 className={`nav-sitemap-toggle${sitemapOpen ? ' open' : ''}`}
                 aria-label={sitemapOpen ? (language === 'fr' ? 'Fermer le plan du site' : 'Close site map') : (language === 'fr' ? 'Ouvrir le plan du site' : 'Open site map')}
                 aria-expanded={sitemapOpen}
-                aria-controls="site-map-panel"
                 type="button"
                 onClick={() => setSitemapOpen((open) => !open)}
               >
@@ -190,17 +185,10 @@ const Navbar = () => {
         type="button"
         className={`sitemap-backdrop${sitemapOpen ? ' open' : ''}`}
         aria-label={language === 'fr' ? 'Fermer le plan du site' : 'Close site map'}
-        aria-hidden={!sitemapOpen}
-        tabIndex={sitemapOpen ? 0 : -1}
         onClick={() => setSitemapOpen(false)}
       />
 
-      <aside
-        id="site-map-panel"
-        className={`sitemap-panel${sitemapOpen ? ' open' : ''}`}
-        aria-hidden={!sitemapOpen}
-        aria-label={copy.sitemapLabel}
-      >
+      <aside className={`sitemap-panel${sitemapOpen ? ' open' : ''}`} aria-hidden={!sitemapOpen}>
         <div className="sitemap-panel-inner">
           <div className="sitemap-links sitemap-links-compact">
             {copy.sitemapLinks.map((item) => {
@@ -210,7 +198,6 @@ const Navbar = () => {
                   key={item.path}
                   to={item.path}
                   className={`sitemap-link compact${isActive ? ' active' : ''}`}
-                  tabIndex={sitemapOpen ? 0 : -1}
                   onClick={() => setSitemapOpen(false)}
                 >
                   {item.label}
@@ -223,7 +210,6 @@ const Navbar = () => {
             <button
               type="button"
               className="nav-lang mobile-lang-toggle"
-              tabIndex={sitemapOpen ? 0 : -1}
               onClick={() => {
                 toggleLanguage();
                 setSitemapOpen(false);
