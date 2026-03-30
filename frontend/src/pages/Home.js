@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import deskReferenceImage from '../assets/pharos-documents-desk-reference.png';
 import './Home.newlook.css';
 
 const HERO_IMAGE = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa9sVq4AbrYE3FRZFywvK/pharos-hero-lighthouse-h9QXVQpbrL37sEHw8pxMfR.webp';
 const GOVERNANCE_IMG = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa9sVq4AbrYE3FRZFywvK/pharos-governance-abstract-iSC7d8YMMfBcBt4Wc9W8Zd.webp';
-const DESK_IMG = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa9sVq4AbrYE3FRZFywvK/pharos-documents-desk-RscmNxYDQYtw8QCeiwPVnj.webp';
+const DESK_IMG = deskReferenceImage;
 
 const GOVERNANCE_PILLARS = [
   {
