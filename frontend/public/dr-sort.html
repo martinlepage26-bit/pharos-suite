@@ -1,0 +1,2965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DR·SORT — Archive Triage Surface</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #0a0a0b;
+    --surface: #111114;
+    --surface2: #18181c;
+    --surface3: #1f2025;
+    --border: #2a2a32;
+    --accent: #e8ff47;
+    --accent2: #47d4ff;
+    --text: #e8e8f0;
+    --muted: #5a5a70;
+    --danger: #ff4747;
+    --success: #47ff8a;
+    --warning: #ffb347;
+
+    --cat-img: #ff8c47;
+    --cat-doc: #47d4ff;
+    --cat-video: #c847ff;
+    --cat-audio: #47ff8a;
+    --cat-code: #e8ff47;
+    --cat-archive: #ff4796;
+    --cat-other: #8c8ca0;
+
+    --triage: #e8ff47;
+    --duplicate: #ff8c47;
+    --deferred: #ff4796;
+    --staged: #47d4ff;
+    --applied: #47ff8a;
+    --reviewed: #8c8ca0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,255,71,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,255,71,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+
+  .logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -1px;
+  }
+
+  .logo span { color: var(--muted); }
+
+  .tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-left: auto;
+  }
+
+  .session-banner,
+  .pass-banner,
+  .pane,
+  .table-wrap,
+  #dropZone {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .session-banner {
+    display: none;
+    margin-bottom: 18px;
+    padding: 14px 18px;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .session-banner.show {
+    display: flex;
+  }
+
+  .session-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .session-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+
+  .session-sub {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  #dropZone {
+    padding: 44px 36px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #dropZone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(232,255,71,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #dropZone.drag-over,
+  #dropZone:hover {
+    border-color: var(--accent);
+    background: rgba(232,255,71,0.04);
+  }
+
+  #dropZone.drag-over { transform: scale(1.003); }
+
+  .drop-icon {
+    font-size: 44px;
+    margin-bottom: 14px;
+    filter: grayscale(0.2);
+  }
+
+  .drop-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .drop-sub {
+    max-width: 760px;
+    margin: 0 auto 18px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .drop-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .drop-note {
+    margin-top: 14px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+
+  .btn:hover:not([disabled]) { background: #fff; transform: translateY(-1px); }
+  .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .btn-ghost:hover:not([disabled]) { background: var(--accent); color: #000; }
+
+  .btn-sm { padding: 8px 14px; font-size: 11px; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover:not([disabled]) { background: #ff6666; }
+  .btn-success { background: var(--success); color: #000; }
+
+  #fileInput,
+  #folderInput { display: none; }
+
+  #workspace {
+    display: none;
+    margin-top: 22px;
+  }
+
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+
+  .stat-cell {
+    background: var(--surface);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .pass-banner {
+    display: grid;
+    grid-template-columns: minmax(280px, 1.2fr) minmax(280px, 1fr) auto;
+    gap: 18px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    align-items: center;
+  }
+
+  .pass-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .pass-sub {
+    margin-top: 4px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .pass-metrics {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .metric-pill,
+  .cat-pill,
+  .status-pill,
+  .flag-chip,
+  .queue-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--surface);
+  }
+
+  .metric-pill strong,
+  .status-pill strong {
+    color: var(--accent);
+  }
+
+  .pass-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .control-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  select,
+  input[type="text"],
+  textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  select:hover,
+  select:focus,
+  input[type="text"]:hover,
+  input[type="text"]:focus,
+  textarea:hover,
+  textarea:focus {
+    border-color: var(--accent);
+    background: var(--surface3);
+  }
+
+  input[type="text"] { min-width: 240px; }
+  textarea {
+    width: 100%;
+    min-height: 84px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .spacer { flex: 1; }
+
+  .bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .cat-bar,
+  .status-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cat-pill:hover,
+  .status-pill:hover {
+    border-color: var(--accent);
+  }
+
+  .cat-pill.active,
+  .status-pill.active {
+    border-color: var(--accent);
+    background: rgba(232,255,71,0.08);
+  }
+
+  .cat-dot,
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .workspace-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(340px, 0.9fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .pane {
+    overflow: hidden;
+  }
+
+  .pane-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .pane-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .pane-sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  th:hover { color: var(--accent); }
+  th .sort-arrow { margin-left: 4px; opacity: 0.4; }
+  th.sorted { color: var(--accent); }
+  th.sorted .sort-arrow { opacity: 1; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s ease, border-color 0.1s ease;
+    cursor: pointer;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody tr.selected {
+    background: rgba(232,255,71,0.06);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  td {
+    padding: 12px 16px;
+    font-size: 12px;
+    vertical-align: top;
+  }
+
+  .file-name {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    max-width: 100%;
+  }
+
+  .file-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .name-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .fname-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .path-text,
+  .subtext,
+  .date-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .queue-pill {
+    padding: 4px 9px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .confidence-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 120px;
+  }
+
+  .confidence-bar {
+    height: 5px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    background: var(--accent2);
+    border-radius: 999px;
+  }
+
+  .confidence-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .flag-list {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .flag-chip {
+    padding: 4px 8px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .group-section { border-top: 1px solid var(--border); }
+  .group-section:first-child { border-top: none; }
+
+  .group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .group-count {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .group-chevron {
+    transition: transform 0.2s;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .group-header.collapsed .group-chevron { transform: rotate(-90deg); }
+
+  .empty {
+    padding: 54px 28px;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .inspector {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .inspect-card {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 14px;
+    background: rgba(255,255,255,0.01);
+  }
+
+  .inspect-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .meta-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-val {
+    word-break: break-word;
+    line-height: 1.5;
+  }
+
+  .preview-box {
+    max-height: 280px;
+    overflow: auto;
+    background: #0d0d10;
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .preview-empty {
+    color: var(--muted);
+  }
+
+  .decision-actions,
+  .decision-tools {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .suggest-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .suggest-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .suggest-bin {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    color: var(--accent);
+  }
+
+  .suggest-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .suggest-reasons ul {
+    margin-left: 18px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .similar-list,
+  .log-list,
+  .plan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .similar-item,
+  .log-item,
+  .plan-item {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.01);
+  }
+
+  .similar-item strong,
+  .log-item strong,
+  .plan-item strong {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .plan-item {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(120px, 0.8fr) minmax(120px, 0.8fr) auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .plan-note {
+    color: var(--muted);
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .plan-summary {
+    padding: 16px;
+  }
+
+  .plan-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .inspector-empty {
+    padding: 38px 20px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.7;
+  }
+
+  .muted { color: var(--muted); }
+  .danger { color: var(--danger); }
+  .success { color: var(--success); }
+  .warning { color: var(--warning); }
+  .key-hint {
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 20px;
+    border-radius: 2px;
+    z-index: 1000;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  .progress-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--border);
+    z-index: 999;
+    display: none;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.25s ease;
+    width: 0%;
+  }
+
+  @media (max-width: 1100px) {
+    .workspace-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pass-banner {
+      grid-template-columns: 1fr;
+    }
+
+    .plan-item {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .container { padding: 24px 16px 36px; }
+    .controls { align-items: stretch; }
+    .control-group { flex-wrap: wrap; }
+    input[type="text"] { min-width: 0; width: 100%; }
+    .meta-grid { grid-template-columns: 1fr; }
+    th:nth-child(5),
+    td:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="container">
+  <header>
+    <div class="logo">DR<span>·</span>SORT</div>
+    <div class="tagline">Reserved Archive Triage Surface</div>
+  </header>
+
+  <div class="session-banner" id="sessionBanner"></div>
+
+  <div id="dropZone">
+    <div class="drop-icon">🗄</div>
+    <div class="drop-title">Reserve a sorting window</div>
+    <div class="drop-sub">
+      Ingest a folder tree or document packet, build a triage queue, inspect content, stage reversible decisions,
+      and export an organized pass without touching the source archive.
+    </div>
+    <div class="drop-actions">
+      <button class="btn" id="folderBtn">Select Folder Tree</button>
+      <button class="btn btn-ghost" id="filesBtn">Add Files Only</button>
+      <button class="btn btn-ghost" id="reservePassDropBtn">Reserve Pass</button>
+    </div>
+    <div class="drop-note" id="dropNote">Directory intake preserves subfolders and treats top-level folders as candidate project bins.</div>
+    <input type="file" id="folderInput" multiple webkitdirectory directory>
+    <input type="file" id="fileInput" multiple>
+  </div>
+
+  <div id="workspace">
+    <div class="stats-bar">
+      <div class="stat-cell">
+        <div class="stat-val" id="statTotal">0</div>
+        <div class="stat-key">Total Items</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="statBins">0</div>
+        <div class="stat-key">Project Bins</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="statTriage">0</div>
+        <div class="stat-key">Needs Triage</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="statStaged">0</div>
+        <div class="stat-key">Staged</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="statDeferred">0</div>
+        <div class="stat-key">Deferred</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="statDupes">0</div>
+        <div class="stat-key">Duplicate Risk</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val" id="statReadiness">0%</div>
+        <div class="stat-key">Cabinet Readiness</div>
+      </div>
+    </div>
+
+    <div class="pass-banner">
+      <div>
+        <div class="pass-title" id="passTitle">No reserved pass</div>
+        <div class="pass-sub" id="passMeta">Ingest a folder tree, then reserve a pass to snapshot the current visible queue and track decisions with context.</div>
+      </div>
+      <div class="pass-metrics" id="passMetrics"></div>
+      <div class="pass-actions">
+        <button class="btn btn-ghost btn-sm" id="reservePassBtn">Reserve Pass</button>
+        <button class="btn btn-ghost btn-sm" id="saveSessionBtn">Save Session</button>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <span class="control-label">View</span>
+        <select id="viewMode">
+          <option value="queue">Queue Board</option>
+          <option value="flat">Archive Table</option>
+          <option value="group">By Source Bin</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Sort</span>
+        <select id="sortKey">
+          <option value="priority">Priority</option>
+          <option value="confidence">Confidence</option>
+          <option value="name">Name</option>
+          <option value="size">Size</option>
+          <option value="date">Date</option>
+          <option value="currentBin">Current Bin</option>
+        </select>
+        <select id="sortDir">
+          <option value="desc">Desc</option>
+          <option value="asc">Asc</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Bin</span>
+        <select id="binFilter"></select>
+      </div>
+      <div class="control-group">
+        <input type="text" id="searchInput" placeholder="Search name, path, note, or preview...">
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-ghost btn-sm" id="exportLogBtn">⬇ Export Log</button>
+      <button class="btn btn-success btn-sm" id="applyBtn">✓ Apply Staged</button>
+      <button class="btn btn-ghost btn-sm" id="rollbackBtn">↶ Rollback Last Apply</button>
+      <button class="btn btn-danger btn-sm" id="clearBtn">✕ Clear Session</button>
+    </div>
+
+    <div class="bar-row">
+      <div class="cat-bar" id="catBar"></div>
+      <div class="status-bar" id="statusBar"></div>
+    </div>
+
+    <div class="workspace-grid">
+      <div class="pane">
+        <div class="pane-head">
+          <div>
+            <div class="pane-title">Archive Queue</div>
+            <div class="pane-sub" id="queueSummary">No files loaded.</div>
+            <div class="key-hint">J / K move through queue · A accept · G keep · E defer · O override · / search</div>
+          </div>
+        </div>
+        <div id="fileView"></div>
+      </div>
+
+      <div class="pane">
+        <div class="pane-head">
+          <div>
+            <div class="pane-title">Inspector</div>
+            <div class="pane-sub" id="inspectSummary">Select an item to review its evidence, destination, and triage history.</div>
+          </div>
+        </div>
+        <div id="inspector" class="inspector-empty">No selection. Use the queue to inspect one item at a time and reserve a destination with notes.</div>
+      </div>
+    </div>
+
+    <div class="pane" style="margin-top:18px;">
+      <div class="pane-head">
+        <div>
+          <div class="pane-title">Staged Move Plan</div>
+          <div class="pane-sub">Review reserved decisions before export. Apply creates a safe organized bundle and leaves the source archive untouched.</div>
+        </div>
+      </div>
+      <div id="planView" class="plan-summary"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'drsort.session.v3';
+const APPLY_NOTE = 'TODO: replace export-based apply with native filesystem move/copy when Dr.Sort is wrapped in Tauri or another desktop shell.';
+
+const CATEGORIES = {
+  image:   { label: 'Images',   icon: '🖼', color: '#ff8c47', exts: ['jpg','jpeg','png','gif','webp','svg','ico','bmp','tiff','tif','avif','heic','raw','cr2','nef'] },
+  video:   { label: 'Videos',   icon: '🎬', color: '#c847ff', exts: ['mp4','mov','avi','mkv','webm','flv','wmv','m4v','3gp','ogv','ts'] },
+  audio:   { label: 'Audio',    icon: '🎵', color: '#47ff8a', exts: ['mp3','wav','flac','aac','ogg','m4a','opus','wma','aiff'] },
+  doc:     { label: 'Docs',     icon: '📄', color: '#47d4ff', exts: ['pdf','doc','docx','txt','rtf','md','odt','pages','epub','tex','csv','xls','xlsx','ppt','pptx','ods','odp','json','html','htm'] },
+  code:    { label: 'Code',     icon: '💻', color: '#e8ff47', exts: ['js','ts','jsx','tsx','py','rb','go','rs','java','c','cpp','h','cs','php','swift','kt','css','scss','yaml','yml','sh','bash','zsh','sql','r','lua','dart','vue'] },
+  archive: { label: 'Archives', icon: '📦', color: '#ff4796', exts: ['zip','tar','gz','rar','7z','bz2','xz','tgz','dmg','iso','pkg','deb','rpm'] },
+  other:   { label: 'Other',    icon: '📎', color: '#8c8ca0', exts: [] }
+};
+
+const QUEUE_GROUPS = {
+  all:       { label: 'All Queue', color: '#8c8ca0' },
+  triage:    { label: 'Needs Triage', color: '#e8ff47' },
+  duplicate: { label: 'Duplicate Risk', color: '#ff8c47' },
+  deferred:  { label: 'Deferred', color: '#ff4796' },
+  staged:    { label: 'Staged', color: '#47d4ff' },
+  applied:   { label: 'Applied', color: '#47ff8a' }
+};
+
+const TEXT_EXTS = new Set(['txt','md','csv','json','yaml','yml','xml','html','htm','tex','sql','r','py','js','ts','css','scss']);
+const STOPWORDS = new Set([
+  'the','and','for','with','that','this','from','into','when','where','what','which','while','about','across','under',
+  'onto','over','between','among','within','without','there','their','they','them','your','yours','our','ours','have',
+  'has','had','does','did','been','being','were','was','are','his','her','hers','its','than','then','also','only',
+  'just','very','more','most','some','such','into','like','will','would','could','should','avec','dans','pour','une',
+  'des','les','sur','par','est','sont','aux','que','qui','quoi','plus','sans','dont','cet','cette','ces','elle','elles',
+  'nous','vous','leur','leurs','mais','donc','alors','ainsi','after','before','draft','final','latest','copy','backup',
+  'revised','candidate','version','working','paper','document','notes'
+]);
+
+let state = createDefaultState();
+const liveFiles = new Map();
+let saveTimer = null;
+let dragCounter = 0;
+
+if (window.pdfjsLib && pdfjsLib.GlobalWorkerOptions) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+function createDefaultState() {
+  return {
+    version: 3,
+    sessionId: null,
+    sessionName: 'Unreserved session',
+    sourceSummary: '',
+    files: [],
+    bins: [],
+    stagedPlan: [],
+    decisions: [],
+    appliedBatches: [],
+    currentPass: null,
+    activeTypeFilter: 'all',
+    activeQueueFilter: 'all',
+    binFilter: 'all',
+    searchQuery: '',
+    sortKey: 'priority',
+    sortDir: 'desc',
+    viewMode: 'queue',
+    selectedFileId: null,
+    liveFilesConnected: false,
+    isApplying: false,
+    lastSavedAt: null,
+    groupState: {}
+  };
+}
+
+function createId(seed) {
+  let hash = 2166136261;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash ^= seed.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return 'f_' + (hash >>> 0).toString(36);
+}
+
+function getExt(name) {
+  const match = name.match(/\.([^.]+)$/);
+  return match ? match[1].toLowerCase() : '';
+}
+
+function normalizePath(path) {
+  return (path || '').replace(/\\/g, '/').replace(/^\/+/, '').replace(/\/+/g, '/');
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function sanitizeName(value) {
+  return String(value ?? '')
+    .replace(/[<>:"|?*]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\.+$/, '') || 'untitled';
+}
+
+function formatSize(bytes) {
+  if (!bytes) return '0 B';
+  const units = ['B','KB','MB','GB','TB'];
+  const index = Math.floor(Math.log(bytes) / Math.log(1024));
+  return `${(bytes / Math.pow(1024, index)).toFixed(index > 0 ? 1 : 0)} ${units[index]}`;
+}
+
+function formatDate(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleDateString('fr-CA') + ' ' + d.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+}
+
+function formatPercent(value) {
+  return `${Math.round(value)}%`;
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  window.clearTimeout(showToast.timer);
+  showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+function setProgress(value, label) {
+  const wrap = document.getElementById('progressWrap');
+  const bar = document.getElementById('progressBar');
+  if (label) document.getElementById('dropNote').textContent = label;
+  wrap.style.display = value >= 0 ? 'block' : 'none';
+  bar.style.width = value >= 0 ? `${Math.max(0, Math.min(100, value))}%` : '0%';
+}
+
+function clearProgress() {
+  setProgress(-1, null);
+  document.getElementById('dropNote').textContent = state.liveFilesConnected
+    ? 'Live file handles connected. Decisions will persist locally.'
+    : 'Directory intake preserves subfolders and treats top-level folders as candidate project bins.';
+}
+
+function getCategory(file) {
+  const ext = file.ext || getExt(file.name);
+  for (const [key, cat] of Object.entries(CATEGORIES)) {
+    if (key !== 'other' && cat.exts.includes(ext)) return key;
+  }
+  return 'other';
+}
+
+function getCategoryLabel(key) {
+  return CATEGORIES[key]?.label || 'Other';
+}
+
+function getCategoryColor(key) {
+  return CATEGORIES[key]?.color || CATEGORIES.other.color;
+}
+
+function getCategoryIcon(key) {
+  return CATEGORIES[key]?.icon || CATEGORIES.other.icon;
+}
+
+function getBinIdFromPath(relativePath) {
+  const parts = normalizePath(relativePath).split('/').filter(Boolean);
+  return parts.length > 1 ? parts[0] : 'ROOT';
+}
+
+function formatBinLabel(binId) {
+  return binId === 'ROOT'
+    ? 'ROOT CABINET'
+    : binId.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function buildDestinationPath(file, targetBin) {
+  const binPart = targetBin === 'ROOT' ? '_ROOT' : sanitizeName(targetBin);
+  return `${binPart}/${sanitizeName(file.name)}`;
+}
+
+function normalizeTitle(name) {
+  const stem = name.replace(/\.[^.]+$/, '').toLowerCase();
+  return stem
+    .replace(/[_-]+/g, ' ')
+    .replace(/\b(v\d+|draft|final|latest|copy|backup|candidate|review|revised|dup\d*|wip|src)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractTokens(text, limit = 28) {
+  const tokens = (text || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\u00c0-\u024f]+/g, ' ')
+    .split(/\s+/)
+    .filter(token => token.length > 2 && !STOPWORDS.has(token));
+  return Array.from(new Set(tokens)).slice(0, limit);
+}
+
+function tokenFrequency(tokens) {
+  const map = new Map();
+  tokens.forEach(token => map.set(token, (map.get(token) || 0) + 1));
+  return map;
+}
+
+function jaccard(a, b) {
+  const setA = new Set(a);
+  const setB = new Set(b);
+  if (!setA.size && !setB.size) return 0;
+  let intersection = 0;
+  setA.forEach(token => {
+    if (setB.has(token)) intersection += 1;
+  });
+  const union = setA.size + setB.size - intersection;
+  return union ? intersection / union : 0;
+}
+
+async function digestFile(file) {
+  try {
+    const buffer = await file.arrayBuffer();
+    if (window.crypto && crypto.subtle) {
+      const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    return createId(`${file.name}:${file.size}:${file.lastModified}:${buffer.byteLength}`);
+  } catch (error) {
+    return createId(`${file.name}:${file.size}:${file.lastModified}`);
+  }
+}
+
+function collapseWhitespace(text) {
+  return (text || '').replace(/\s+/g, ' ').trim();
+}
+
+function limitText(text, limit = 2600) {
+  const collapsed = collapseWhitespace(text);
+  return collapsed.length > limit ? `${collapsed.slice(0, limit)}…` : collapsed;
+}
+
+function stripRtf(text) {
+  return limitText(
+    text
+      .replace(/\\'[0-9a-f]{2}/gi, ' ')
+      .replace(/\\[a-z]+\d* ?/gi, ' ')
+      .replace(/[{}]/g, ' ')
+  );
+}
+
+function htmlToText(text) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = text;
+  return limitText(tmp.textContent || tmp.innerText || '');
+}
+
+async function extractDocxText(file) {
+  const zip = await JSZip.loadAsync(file);
+  const xml = await zip.file('word/document.xml')?.async('string');
+  if (!xml) return '';
+  return limitText(
+    xml
+      .replace(/<w:p[^>]*>/g, '\n')
+      .replace(/<[^>]+>/g, ' ')
+  );
+}
+
+async function extractOdtText(file) {
+  const zip = await JSZip.loadAsync(file);
+  const xml = await zip.file('content.xml')?.async('string');
+  if (!xml) return '';
+  return limitText(
+    xml
+      .replace(/<text:p[^>]*>/g, '\n')
+      .replace(/<[^>]+>/g, ' ')
+  );
+}
+
+async function extractPdfText(file) {
+  if (!window.pdfjsLib) return '';
+  const buffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+  const limit = Math.min(pdf.numPages, 2);
+  let text = '';
+  for (let pageNumber = 1; pageNumber <= limit; pageNumber += 1) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+    text += ' ' + content.items.map(item => item.str).join(' ');
+  }
+  return limitText(text);
+}
+
+async function extractPreview(file, ext) {
+  try {
+    if (TEXT_EXTS.has(ext)) {
+      const text = await file.text();
+      return { text: ext === 'html' || ext === 'htm' ? htmlToText(text) : limitText(text), status: 'ready' };
+    }
+    if (ext === 'rtf') {
+      return { text: stripRtf(await file.text()), status: 'ready' };
+    }
+    if (ext === 'docx') {
+      return { text: await extractDocxText(file), status: 'ready' };
+    }
+    if (ext === 'odt') {
+      return { text: await extractOdtText(file), status: 'ready' };
+    }
+    if (ext === 'pdf') {
+      return { text: await extractPdfText(file), status: 'ready' };
+    }
+    return { text: '', status: 'unsupported' };
+  } catch (error) {
+    return { text: '', status: 'error' };
+  }
+}
+
+function inferDraftMaturity(name, text, ext) {
+  let score = 52;
+  const blob = `${name} ${text.slice(0, 1200)}`.toLowerCase();
+  if (/\b(final|latest|submitted|official|master|journal|cited|accepted)\b/.test(blob)) score += 24;
+  if (/\b(draft|candidate|backup|dup|copy|revised|review|working|wip|src|recovery)\b/.test(blob)) score -= 20;
+  if (/\babstract\b/.test(blob)) score += 8;
+  if (/\bconclusion\b/.test(blob)) score += 4;
+  if (/\b(reference|references|bibliography)\b/.test(blob)) score += 8;
+  if (text.length < 400) score -= 10;
+  if (ext === 'pdf') score += 4;
+  const bounded = Math.max(10, Math.min(98, score));
+  return {
+    score: bounded,
+    label: bounded >= 78 ? 'Mature' : bounded >= 56 ? 'Working' : 'Fragment'
+  };
+}
+
+function serializeState() {
+  return {
+    ...state,
+    files: state.files.map(file => {
+      const clone = { ...file };
+      delete clone.priority;
+      return clone;
+    }),
+    liveFilesConnected: false,
+    lastSavedAt: Date.now()
+  };
+}
+
+function scheduleSave() {
+  window.clearTimeout(saveTimer);
+  saveTimer = window.setTimeout(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeState()));
+      state.lastSavedAt = Date.now();
+      updateSessionBanner();
+    } catch (error) {
+      showToast('Session save hit local storage limits.');
+    }
+  }, 240);
+}
+
+function loadSavedState() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return false;
+  try {
+    const saved = JSON.parse(raw);
+    state = {
+      ...createDefaultState(),
+      ...saved,
+      groupState: saved.groupState || {},
+      files: Array.isArray(saved.files) ? saved.files : [],
+      bins: Array.isArray(saved.bins) ? saved.bins : [],
+      decisions: Array.isArray(saved.decisions) ? saved.decisions : [],
+      stagedPlan: Array.isArray(saved.stagedPlan) ? saved.stagedPlan : [],
+      appliedBatches: Array.isArray(saved.appliedBatches) ? saved.appliedBatches : []
+    };
+    liveFiles.clear();
+    rebuildDerivedState();
+    return !!state.files.length;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+function clearSavedState() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+function createSessionIfNeeded(sourceLabel) {
+  if (!state.sessionId) {
+    state.sessionId = createId(`${Date.now()}:${sourceLabel || 'dr-sort'}`);
+  }
+  if (!state.sessionName || state.sessionName === 'Unreserved session') {
+    state.sessionName = sourceLabel ? `${sanitizeName(sourceLabel)} triage` : 'Archive triage session';
+  }
+}
+
+function getDecisionHistory(fileId) {
+  return state.decisions.filter(entry => entry.fileId === fileId).sort((a, b) => b.at - a.at);
+}
+
+function getPlanItem(fileId) {
+  return state.stagedPlan.find(item => item.fileId === fileId) || null;
+}
+
+function getPlanCollisions() {
+  const buckets = new Map();
+  state.stagedPlan.forEach(item => {
+    const key = item.toPath || `${item.toBin}/${item.fileId}`;
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(item);
+  });
+  return Array.from(buckets.values()).filter(items => items.length > 1);
+}
+
+function getFile(fileId) {
+  return state.files.find(file => file.id === fileId) || null;
+}
+
+function getQueueGroup(file) {
+  if (file.queueStatus === 'applied') return 'applied';
+  if (file.queueStatus === 'staged') return 'staged';
+  if (file.queueStatus === 'deferred') return 'deferred';
+  if (file.exactDuplicateIds?.length || file.nearDuplicateIds?.length) return 'duplicate';
+  return 'triage';
+}
+
+function getQueueColor(group) {
+  return QUEUE_GROUPS[group]?.color || QUEUE_GROUPS.all.color;
+}
+
+function recordDecision(fileId, action, payload = {}) {
+  const entry = {
+    id: createId(`${fileId}:${action}:${Date.now()}`),
+    fileId,
+    action,
+    at: Date.now(),
+    passId: state.currentPass?.id || null,
+    ...payload
+  };
+  state.decisions.unshift(entry);
+  return entry;
+}
+
+function rebuildBinProfiles() {
+  const bins = new Map();
+  state.files.forEach(file => {
+    if (!bins.has(file.currentBin)) {
+      bins.set(file.currentBin, {
+        id: file.currentBin,
+        label: formatBinLabel(file.currentBin),
+        docCount: 0,
+        fileCount: 0,
+        profile: new Map(),
+        nameTokens: extractTokens(formatBinLabel(file.currentBin), 8)
+      });
+    }
+    const bin = bins.get(file.currentBin);
+    bin.fileCount += 1;
+    if (file.category === 'doc' || file.previewText) {
+      bin.docCount += 1;
+      file.keywordSketch.forEach(token => {
+        bin.profile.set(token, (bin.profile.get(token) || 0) + 1);
+      });
+    }
+  });
+
+  state.bins = Array.from(bins.values())
+    .sort((a, b) => {
+      if (a.id === 'ROOT') return -1;
+      if (b.id === 'ROOT') return 1;
+      return a.label.localeCompare(b.label);
+    })
+    .map(bin => ({
+      ...bin,
+      keywords: Array.from(bin.profile.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 18)
+        .map(([token]) => token)
+    }));
+}
+
+function suggestBin(file) {
+  const nonRootBins = state.bins.filter(bin => bin.id !== 'ROOT');
+  if (!nonRootBins.length) {
+    return {
+      suggestedBin: file.currentBin,
+      confidence: 22,
+      reasons: ['No established project bins detected in the current intake.']
+    };
+  }
+
+  const duplicateBins = [...new Set(
+    [...(file.exactDuplicateIds || []), ...(file.nearDuplicateIds || [])]
+      .map(id => getFile(id))
+      .filter(Boolean)
+      .map(match => match.currentBin)
+      .filter(binId => binId && binId !== 'ROOT')
+  )];
+
+  if (duplicateBins.length === 1) {
+    return {
+      suggestedBin: duplicateBins[0],
+      confidence: 93,
+      reasons: [`Duplicate sibling already sits in ${formatBinLabel(duplicateBins[0])}.`]
+    };
+  }
+
+  const scoreBin = (bin) => {
+    let score = 0;
+    const sharedTokens = file.keywordSketch.filter(token => bin.keywords.includes(token));
+    score += sharedTokens.length * 3;
+    const titleOverlap = jaccard(file.keywordSketch.slice(0, 8), bin.nameTokens);
+    score += titleOverlap * 12;
+    if (file.currentBin === 'ROOT') score += 3;
+    if (file.relativePath.toLowerCase().includes(bin.id.toLowerCase())) score += 5;
+    return { binId: bin.id, score, sharedTokens };
+  };
+
+  const ranked = nonRootBins.map(scoreBin).sort((a, b) => b.score - a.score);
+  const top = ranked[0];
+  const second = ranked[1] || { score: 0 };
+  const currentScore = ranked.find(entry => entry.binId === file.currentBin)?.score || 0;
+
+  if (!top || top.score <= 0) {
+    return {
+      suggestedBin: file.currentBin,
+      confidence: file.currentBin === 'ROOT' ? 18 : 36,
+      reasons: ['Content signal is too thin to recommend a safer reassignment.']
+    };
+  }
+
+  const binId = file.currentBin !== 'ROOT' && top.score < currentScore + 4 ? file.currentBin : top.binId;
+  const confidence = Math.max(
+    18,
+    Math.min(
+      96,
+      Math.round(
+        34 +
+        top.score * 5 +
+        (top.score - second.score) * 3 +
+        (file.currentBin === 'ROOT' ? 10 : 0) +
+        (duplicateBins.length ? 12 : 0)
+      )
+    )
+  );
+
+  const reasons = [];
+  if (file.currentBin === 'ROOT') reasons.push('Loose root item: existing project bins provide stronger context.');
+  if (top.sharedTokens?.length) reasons.push(`Shared topic terms: ${top.sharedTokens.slice(0, 4).join(', ')}.`);
+  if (binId === file.currentBin) reasons.push('Current cabinet remains the strongest available match.');
+  if (binId !== file.currentBin) reasons.push(`Strongest bin profile points to ${formatBinLabel(binId)}.`);
+
+  return { suggestedBin: binId, confidence, reasons };
+}
+
+function computePriority(file) {
+  let score = 10;
+  if (file.queueStatus === 'staged') score += 65;
+  if (file.queueStatus === 'deferred') score += 55;
+  if (file.exactDuplicateIds?.length) score += 48;
+  if (file.nearDuplicateIds?.length) score += 28;
+  if (file.currentBin === 'ROOT') score += 20;
+  if (file.misfileRisk) score += 18;
+  if (file.underClassified) score += 10;
+  if (file.previewStatus !== 'ready') score += 4;
+  return score;
+}
+
+function rebuildDuplicateSignals() {
+  state.files.forEach(file => {
+    file.exactDuplicateIds = [];
+    file.nearDuplicateIds = [];
+  });
+
+  const exactGroups = new Map();
+  state.files.forEach(file => {
+    if (!file.contentHash) return;
+    const key = `${file.ext}:${file.contentHash}`;
+    if (!exactGroups.has(key)) exactGroups.set(key, []);
+    exactGroups.get(key).push(file.id);
+  });
+
+  exactGroups.forEach(ids => {
+    if (ids.length < 2) return;
+    ids.forEach(id => {
+      const file = getFile(id);
+      if (file) file.exactDuplicateIds = ids.filter(other => other !== id);
+    });
+  });
+
+  const candidateBuckets = new Map();
+  state.files
+    .filter(file => file.category === 'doc' || file.previewText)
+    .forEach(file => {
+      const key = file.normalizedTitle || file.keywordSketch.slice(0, 3).join(' ');
+      if (!key) return;
+      if (!candidateBuckets.has(key)) candidateBuckets.set(key, []);
+      candidateBuckets.get(key).push(file.id);
+    });
+
+  candidateBuckets.forEach(ids => {
+    if (ids.length < 2 || ids.length > 14) return;
+    for (let i = 0; i < ids.length; i += 1) {
+      for (let j = i + 1; j < ids.length; j += 1) {
+        const a = getFile(ids[i]);
+        const b = getFile(ids[j]);
+        if (!a || !b || a.exactDuplicateIds.includes(b.id)) continue;
+        const titleScore = jaccard(extractTokens(a.normalizedTitle), extractTokens(b.normalizedTitle));
+        const textScore = jaccard(a.keywordSketch, b.keywordSketch);
+        const sizeScore = 1 - Math.min(1, Math.abs(a.size - b.size) / Math.max(a.size, b.size, 1));
+        const score = (titleScore * 0.46) + (textScore * 0.42) + (sizeScore * 0.12);
+        if (score >= 0.68) {
+          a.nearDuplicateIds.push(b.id);
+          b.nearDuplicateIds.push(a.id);
+        }
+      }
+    }
+  });
+}
+
+function rebuildDerivedState() {
+  state.files.forEach(file => {
+    file.category = getCategory(file);
+    file.currentBin = file.currentBin || getBinIdFromPath(file.relativePath);
+    file.normalizedTitle = file.normalizedTitle || normalizeTitle(file.name);
+    file.keywordSketch = file.keywordSketch || extractTokens(`${file.name} ${file.previewText || ''}`);
+    file.queueStatus = file.queueStatus || 'queued';
+    file.maturity = file.maturity || inferDraftMaturity(file.name, file.previewText || '', file.ext);
+  });
+
+  rebuildBinProfiles();
+  rebuildDuplicateSignals();
+
+  state.files.forEach(file => {
+    const suggestion = suggestBin(file);
+    file.suggestedBin = suggestion.suggestedBin;
+    file.confidence = suggestion.confidence;
+    file.suggestionReasons = suggestion.reasons;
+    file.misfileRisk = file.currentBin !== 'ROOT' && file.suggestedBin !== file.currentBin && file.confidence >= 62;
+    file.underClassified = file.currentBin === 'ROOT' || /^(untitled|scan|document|notes?)$/i.test(file.normalizedTitle || '');
+    file.priority = computePriority(file);
+  });
+
+  buildBinFilter();
+  updateStats();
+  buildCategoryBar();
+  buildStatusBar();
+  updatePassBanner();
+  updateSessionBanner();
+}
+
+function mergeRecord(existing, incoming) {
+  if (!existing) return incoming;
+  return {
+    ...existing,
+    ...incoming,
+    queueStatus: existing.queueStatus || incoming.queueStatus,
+    noteDraft: existing.noteDraft || incoming.noteDraft || '',
+    assignedBin: existing.assignedBin || incoming.assignedBin || null,
+    appliedBin: existing.appliedBin || incoming.appliedBin || null
+  };
+}
+
+async function analyseEntry(entry) {
+  const file = entry.file;
+  const relativePath = normalizePath(entry.relativePath || file.webkitRelativePath || file.name);
+  const ext = getExt(file.name);
+  const preview = await extractPreview(file, ext);
+  const contentHash = await digestFile(file);
+  const maturity = inferDraftMaturity(file.name, preview.text, ext);
+  return {
+    id: createId(`${relativePath}:${file.size}:${file.lastModified}`),
+    name: file.name,
+    relativePath,
+    parentPath: relativePath.includes('/') ? relativePath.split('/').slice(0, -1).join('/') : '',
+    currentBin: getBinIdFromPath(relativePath),
+    assignedBin: null,
+    appliedBin: null,
+    ext,
+    size: file.size,
+    type: file.type || 'application/octet-stream',
+    date: file.lastModified || Date.now(),
+    category: getCategory({ name: file.name, ext }),
+    previewText: preview.text,
+    previewStatus: preview.status,
+    contentHash,
+    normalizedTitle: normalizeTitle(file.name),
+    keywordSketch: extractTokens(`${file.name} ${preview.text}`),
+    maturity,
+    queueStatus: 'queued',
+    noteDraft: '',
+    suggestionReasons: [],
+    exactDuplicateIds: [],
+    nearDuplicateIds: [],
+    confidence: 0,
+    misfileRisk: false,
+    underClassified: false
+  };
+}
+
+async function ingestEntries(entries, sourceLabel) {
+  if (!entries.length) return;
+  createSessionIfNeeded(sourceLabel);
+  state.sourceSummary = sourceLabel || state.sourceSummary || 'Local packet';
+  state.liveFilesConnected = true;
+  document.getElementById('workspace').style.display = 'block';
+
+  const incoming = [];
+  for (let i = 0; i < entries.length; i += 1) {
+    const entry = entries[i];
+    setProgress((i / entries.length) * 100, `Scanning ${i + 1} / ${entries.length}: ${entry.relativePath || entry.file.name}`);
+    const analysed = await analyseEntry(entry);
+    incoming.push(analysed);
+    liveFiles.set(analysed.id, entry.file);
+  }
+
+  incoming.forEach(record => {
+    const existingIndex = state.files.findIndex(file => file.id === record.id);
+    if (existingIndex >= 0) {
+      state.files[existingIndex] = mergeRecord(state.files[existingIndex], record);
+    } else {
+      state.files.push(record);
+    }
+  });
+
+  rebuildDerivedState();
+  if (!state.selectedFileId && state.files.length) state.selectedFileId = state.files[0].id;
+  renderAll();
+  scheduleSave();
+  clearProgress();
+  showToast(`Loaded ${incoming.length} item${incoming.length !== 1 ? 's' : ''}.`);
+}
+
+async function collectEntryFiles(entry, prefix = '') {
+  if (entry.isFile) {
+    return new Promise(resolve => {
+      entry.file(file => resolve([{ file, relativePath: normalizePath(`${prefix}${file.name}`) }]));
+    });
+  }
+  if (entry.isDirectory) {
+    const reader = entry.createReader();
+    const children = await new Promise(resolve => {
+      const all = [];
+      const pump = () => reader.readEntries(items => {
+        if (!items.length) return resolve(all);
+        all.push(...items);
+        pump();
+      });
+      pump();
+    });
+    const nested = await Promise.all(children.map(child => collectEntryFiles(child, `${prefix}${entry.name}/`)));
+    return nested.flat();
+  }
+  return [];
+}
+
+async function gatherDroppedFiles(event) {
+  const items = Array.from(event.dataTransfer.items || []);
+  const entries = items
+    .map(item => item.webkitGetAsEntry && item.webkitGetAsEntry())
+    .filter(Boolean);
+
+  if (!entries.length) {
+    return Array.from(event.dataTransfer.files || []).map(file => ({
+      file,
+      relativePath: normalizePath(file.webkitRelativePath || file.name)
+    }));
+  }
+
+  const batches = await Promise.all(entries.map(entry => collectEntryFiles(entry)));
+  return batches.flat();
+}
+
+function buildCategoryBar() {
+  const counts = state.files.reduce((acc, file) => {
+    acc[file.category] = (acc[file.category] || 0) + 1;
+    return acc;
+  }, {});
+
+  const bar = document.getElementById('catBar');
+  const pills = [{
+    key: 'all',
+    label: 'All types',
+    color: '#8c8ca0',
+    count: state.files.length
+  }];
+
+  Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([key, count]) => {
+      pills.push({
+        key,
+        label: getCategoryLabel(key),
+        color: getCategoryColor(key),
+        count
+      });
+    });
+
+  bar.innerHTML = pills.map(pill => `
+    <button class="cat-pill ${state.activeTypeFilter === pill.key ? 'active' : ''}" data-type-filter="${pill.key}">
+      <span class="cat-dot" style="background:${pill.color}"></span>
+      <span>${escapeHtml(pill.label)}</span>
+      <strong>${pill.count}</strong>
+    </button>
+  `).join('');
+}
+
+function buildStatusBar() {
+  const counts = { all: state.files.length };
+  state.files.forEach(file => {
+    const group = getQueueGroup(file);
+    counts[group] = (counts[group] || 0) + 1;
+  });
+
+  const bar = document.getElementById('statusBar');
+  bar.innerHTML = Object.entries(QUEUE_GROUPS).map(([key, meta]) => `
+    <button class="status-pill ${state.activeQueueFilter === key ? 'active' : ''}" data-queue-filter="${key}">
+      <span class="status-dot" style="background:${meta.color}"></span>
+      <span>${escapeHtml(meta.label)}</span>
+      <strong>${counts[key] || 0}</strong>
+    </button>
+  `).join('');
+}
+
+function buildBinFilter() {
+  const select = document.getElementById('binFilter');
+  const current = state.binFilter || 'all';
+  select.innerHTML = [
+    '<option value="all">All bins</option>',
+    ...state.bins.map(bin => `<option value="${escapeHtml(bin.id)}">${escapeHtml(bin.label)} (${bin.fileCount})</option>`)
+  ].join('');
+  select.value = state.bins.some(bin => bin.id === current) ? current : 'all';
+  state.binFilter = select.value;
+}
+
+function updateStats() {
+  const total = state.files.length;
+  const bins = state.bins.filter(bin => bin.id !== 'ROOT').length;
+  const triageCount = state.files.filter(file => getQueueGroup(file) === 'triage').length;
+  const stagedCount = state.files.filter(file => getQueueGroup(file) === 'staged').length;
+  const deferredCount = state.files.filter(file => getQueueGroup(file) === 'deferred').length;
+  const duplicateCount = state.files.filter(file => getQueueGroup(file) === 'duplicate').length;
+  const ready = total ? ((state.files.filter(file => ['staged', 'applied'].includes(file.queueStatus)).length) / total) * 100 : 0;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBins').textContent = bins;
+  document.getElementById('statTriage').textContent = triageCount;
+  document.getElementById('statStaged').textContent = stagedCount;
+  document.getElementById('statDeferred').textContent = deferredCount;
+  document.getElementById('statDupes').textContent = duplicateCount;
+  document.getElementById('statReadiness').textContent = formatPercent(ready);
+}
+
+function updatePassBanner() {
+  const title = document.getElementById('passTitle');
+  const meta = document.getElementById('passMeta');
+  const metrics = document.getElementById('passMetrics');
+  if (!state.currentPass) {
+    title.textContent = 'No reserved pass';
+    meta.textContent = 'Reserve a pass to snapshot the current visible queue and log why each decision happened.';
+    metrics.innerHTML = '';
+    return;
+  }
+
+  const passFiles = getPassScopedFiles();
+  const queued = passFiles.filter(file => getQueueGroup(file) === 'triage').length;
+  const deferred = passFiles.filter(file => getQueueGroup(file) === 'deferred').length;
+  const staged = passFiles.filter(file => getQueueGroup(file) === 'staged').length;
+  title.textContent = state.currentPass.name;
+  meta.textContent = `Reserved ${formatDate(state.currentPass.reservedAt)} · ${passFiles.length} scoped item${passFiles.length !== 1 ? 's' : ''} from ${state.files.length} indexed`;
+  metrics.innerHTML = `
+    <span class="metric-pill"><strong>${queued}</strong> triage</span>
+    <span class="metric-pill"><strong>${deferred}</strong> deferred</span>
+    <span class="metric-pill"><strong>${staged}</strong> staged</span>
+  `;
+}
+
+function updateSessionBanner() {
+  const banner = document.getElementById('sessionBanner');
+  if (!state.files.length) {
+    banner.className = 'session-banner';
+    banner.innerHTML = '';
+    return;
+  }
+
+  const reconnectCopy = state.liveFilesConnected
+    ? 'Live previews and bundle export are available for the current intake.'
+    : 'Saved session restored from local storage. Reconnect the folder tree or add files again to restore live previews and exportable bundle contents.';
+
+  banner.className = 'session-banner show';
+  banner.innerHTML = `
+    <div class="session-copy">
+      <div class="session-title">${escapeHtml(state.sessionName || 'Archive triage session')}</div>
+      <div class="session-sub">${escapeHtml(reconnectCopy)}</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn btn-ghost btn-sm" id="reconnectBtn">Reconnect Sources</button>
+    <button class="btn btn-ghost btn-sm" id="discardSavedBtn">Discard Saved Session</button>
+  `;
+}
+
+function refreshWorkspaceChrome() {
+  updateStats();
+  buildStatusBar();
+  updatePassBanner();
+  updateSessionBanner();
+}
+
+function getPassScopedFiles() {
+  if (!state.currentPass?.scopeIds?.length) return state.files;
+  const scopeIds = new Set(state.currentPass.scopeIds);
+  return state.files.filter(file => scopeIds.has(file.id));
+}
+
+function getFilteredFiles(options = {}) {
+  const query = (state.searchQuery || '').trim().toLowerCase();
+  const sourceFiles = options.ignorePassScope ? state.files : getPassScopedFiles();
+  const filtered = sourceFiles.filter(file => {
+    if (state.activeTypeFilter !== 'all' && file.category !== state.activeTypeFilter) return false;
+    if (state.activeQueueFilter !== 'all' && getQueueGroup(file) !== state.activeQueueFilter) return false;
+    if (state.binFilter !== 'all' && file.currentBin !== state.binFilter && file.suggestedBin !== state.binFilter) return false;
+    if (!query) return true;
+    const haystack = `${file.name} ${file.relativePath} ${file.previewText || ''} ${file.noteDraft || ''}`.toLowerCase();
+    return haystack.includes(query);
+  });
+
+  const { sortKey, sortDir } = state;
+  return filtered.sort((a, b) => {
+    const order = sortDir === 'asc' ? 1 : -1;
+    const mapValue = (file) => {
+      if (sortKey === 'name') return file.name.toLowerCase();
+      if (sortKey === 'currentBin') return file.currentBin.toLowerCase();
+      if (sortKey === 'size') return file.size;
+      if (sortKey === 'date') return file.date;
+      if (sortKey === 'confidence') return file.confidence || 0;
+      return file.priority || 0;
+    };
+    const valueA = mapValue(a);
+    const valueB = mapValue(b);
+    if (typeof valueA === 'string') return valueA.localeCompare(valueB) * order;
+    return (valueA - valueB) * order;
+  });
+}
+
+function ensureSelection(files) {
+  if (!files.length) {
+    state.selectedFileId = null;
+    return;
+  }
+  if (!state.selectedFileId || !files.some(file => file.id === state.selectedFileId)) {
+    state.selectedFileId = files[0].id;
+  }
+}
+
+function selectRelative(delta) {
+  const files = getFilteredFiles();
+  if (!files.length) return;
+  const currentIndex = files.findIndex(file => file.id === state.selectedFileId);
+  const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+  const nextIndex = Math.max(0, Math.min(files.length - 1, safeIndex + delta));
+  state.selectedFileId = files[nextIndex].id;
+  renderAll();
+  scheduleSave();
+}
+
+function toggleSort(key) {
+  if (state.sortKey === key) {
+    state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    state.sortKey = key;
+    state.sortDir = key === 'name' || key === 'currentBin' ? 'asc' : 'desc';
+  }
+  document.getElementById('sortKey').value = state.sortKey;
+  document.getElementById('sortDir').value = state.sortDir;
+  renderAll();
+}
+
+function fileFlags(file) {
+  const flags = [];
+  if (file.exactDuplicateIds?.length) flags.push({ label: 'Exact duplicate', color: '#ff8c47' });
+  else if (file.nearDuplicateIds?.length) flags.push({ label: 'Near duplicate', color: '#ffb347' });
+  if (file.currentBin === 'ROOT') flags.push({ label: 'Loose root', color: '#e8ff47' });
+  if (file.misfileRisk) flags.push({ label: 'Misfile risk', color: '#47d4ff' });
+  if (file.underClassified) flags.push({ label: 'Thin context', color: '#8c8ca0' });
+  if (file.previewStatus !== 'ready') flags.push({ label: 'Preview limited', color: '#ff4796' });
+  return flags;
+}
+
+function queuePill(group) {
+  const meta = QUEUE_GROUPS[group] || QUEUE_GROUPS.triage;
+  return `<span class="queue-pill" style="border-color:${meta.color}55;color:${meta.color}">${escapeHtml(meta.label)}</span>`;
+}
+
+function rowFlagsMarkup(file) {
+  const flags = fileFlags(file);
+  return flags.length
+    ? `<div class="flag-list">${flags.map(flag => `<span class="flag-chip" style="border-color:${flag.color}55;color:${flag.color}">${escapeHtml(flag.label)}</span>`).join('')}</div>`
+    : '<span class="muted">Stable</span>';
+}
+
+function tableHeader() {
+  const arrow = (key) => state.sortKey === key ? (state.sortDir === 'asc' ? '↑' : '↓') : '↕';
+  return `
+    <thead>
+      <tr>
+        <th onclick="toggleSort('name')" class="${state.sortKey === 'name' ? 'sorted' : ''}">Document <span class="sort-arrow">${arrow('name')}</span></th>
+        <th onclick="toggleSort('currentBin')" class="${state.sortKey === 'currentBin' ? 'sorted' : ''}">Current Bin <span class="sort-arrow">${arrow('currentBin')}</span></th>
+        <th>Suggested Destination</th>
+        <th>Queue</th>
+        <th onclick="toggleSort('confidence')" class="${state.sortKey === 'confidence' ? 'sorted' : ''}">Confidence <span class="sort-arrow">${arrow('confidence')}</span></th>
+        <th>Flags</th>
+      </tr>
+    </thead>
+  `;
+}
+
+function fileRow(file) {
+  const group = getQueueGroup(file);
+  const selected = state.selectedFileId === file.id ? 'selected' : '';
+  return `
+    <tr class="${selected}" data-select-file="${file.id}">
+      <td>
+        <div class="file-name">
+          <span class="file-icon">${getCategoryIcon(file.category)}</span>
+          <div class="name-stack">
+            <span class="fname-text" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
+            <span class="path-text">${escapeHtml(file.relativePath || file.name)}</span>
+            <span class="subtext">${escapeHtml(file.maturity.label)} draft · ${formatSize(file.size)} · ${formatDate(file.date)}</span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <span class="cat-pill" style="border-color:${getCategoryColor(file.category)}33">${escapeHtml(formatBinLabel(file.currentBin))}</span>
+      </td>
+      <td>
+        <div class="name-stack">
+          <strong>${escapeHtml(formatBinLabel(file.suggestedBin || file.currentBin))}</strong>
+          <span class="subtext">${escapeHtml((file.suggestionReasons || [])[0] || 'No structured destination suggestion yet.')}</span>
+        </div>
+      </td>
+      <td>${queuePill(group)}</td>
+      <td>
+        <div class="confidence-wrap">
+          <div class="confidence-bar"><div class="confidence-fill" style="width:${Math.max(6, file.confidence || 0)}%"></div></div>
+          <span class="confidence-text">${formatPercent(file.confidence || 0)}</span>
+        </div>
+      </td>
+      <td>${rowFlagsMarkup(file)}</td>
+    </tr>
+  `;
+}
+
+function renderFlatView(files) {
+  return `
+    <div class="table-wrap">
+      <table>
+        ${tableHeader()}
+        <tbody>${files.map(fileRow).join('')}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderGroupedView(files, mode) {
+  const groups = new Map();
+  files.forEach(file => {
+    const key = mode === 'queue' ? getQueueGroup(file) : file.currentBin;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(file);
+  });
+
+  if (!groups.size) {
+    return '<div class="empty">No files match your current filters.</div>';
+  }
+
+  return Array.from(groups.entries()).map(([key, items]) => {
+    const color = mode === 'queue' ? getQueueColor(key) : '#47d4ff';
+    const label = mode === 'queue' ? QUEUE_GROUPS[key]?.label || key : formatBinLabel(key);
+    const collapsed = !!state.groupState[`${mode}:${key}`];
+    return `
+      <div class="group-section">
+        <div class="group-header ${collapsed ? 'collapsed' : ''}" data-toggle-group="${mode}:${key}" style="border-left:3px solid ${color}">
+          <span style="color:${color}">▣</span>
+          <span>${escapeHtml(label)}</span>
+          <span class="group-count">${items.length} item${items.length !== 1 ? 's' : ''}</span>
+          <span class="group-chevron">▼</span>
+        </div>
+        <div class="group-body" style="display:${collapsed ? 'none' : 'block'}">
+          <div class="table-wrap" style="border-left:none;border-right:none;border-bottom:none;border-radius:0;">
+            <table>
+              ${tableHeader()}
+              <tbody>${items.map(fileRow).join('')}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderFileView(files) {
+  const view = document.getElementById('fileView');
+  const queueSummary = document.getElementById('queueSummary');
+  queueSummary.textContent = `${files.length} visible item${files.length !== 1 ? 's' : ''} · ${state.stagedPlan.length} staged · ${state.decisions.length} decision notes logged`;
+
+  if (!files.length) {
+    view.innerHTML = '<div class="empty">No files match the current queue, bin, type, or search filters.</div>';
+    return;
+  }
+
+  if (state.viewMode === 'flat') {
+    view.innerHTML = renderFlatView(files);
+  } else if (state.viewMode === 'group') {
+    view.innerHTML = renderGroupedView(files, 'bin');
+  } else {
+    view.innerHTML = renderGroupedView(files, 'queue');
+  }
+}
+
+function renderInspector() {
+  const inspector = document.getElementById('inspector');
+  const file = getFile(state.selectedFileId);
+  const inspectSummary = document.getElementById('inspectSummary');
+  if (!file) {
+    inspectSummary.textContent = 'Select an item to review its evidence, destination, and triage history.';
+    inspector.className = 'inspector-empty';
+    inspector.innerHTML = 'No selection. Use the queue to inspect one item at a time and reserve a destination with notes.';
+    return;
+  }
+
+  inspector.className = 'inspector';
+  inspectSummary.textContent = `${file.name} · ${formatBinLabel(file.currentBin)} · ${formatPercent(file.confidence)} confidence`;
+
+  const plan = getPlanItem(file.id);
+  const similarItems = [...(file.exactDuplicateIds || []), ...(file.nearDuplicateIds || [])]
+    .map(id => getFile(id))
+    .filter(Boolean)
+    .slice(0, 5);
+  const history = getDecisionHistory(file.id).slice(0, 8);
+  const flags = fileFlags(file);
+  const selectedBin = plan?.toBin || file.assignedBin || file.suggestedBin || file.currentBin;
+
+  inspector.innerHTML = `
+    <div class="inspect-card">
+      <div class="inspect-title">File Record</div>
+      <div class="meta-grid">
+        <div class="meta-row">
+          <span class="meta-key">Relative path</span>
+          <span class="meta-val">${escapeHtml(file.relativePath)}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Current cabinet</span>
+          <span class="meta-val">${escapeHtml(formatBinLabel(file.currentBin))}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Type</span>
+          <span class="meta-val">${escapeHtml(getCategoryLabel(file.category))} · ${escapeHtml(file.ext || 'no ext')}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Modified</span>
+          <span class="meta-val">${formatDate(file.date)}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Size</span>
+          <span class="meta-val">${formatSize(file.size)}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Draft maturity</span>
+          <span class="meta-val">${escapeHtml(file.maturity.label)} · ${file.maturity.score}</span>
+        </div>
+      </div>
+      <div class="decision-tools" style="margin-top:12px;">
+        ${flags.length ? flags.map(flag => `<span class="flag-chip" style="border-color:${flag.color}55;color:${flag.color}">${escapeHtml(flag.label)}</span>`).join('') : '<span class="muted">No immediate risk flags.</span>'}
+      </div>
+    </div>
+
+    <div class="inspect-card">
+      <div class="inspect-title">Preview Extract</div>
+      <div class="preview-box">${file.previewText ? escapeHtml(file.previewText) : `<span class="preview-empty">Preview unavailable for this file type in the standalone browser build.</span>`}</div>
+    </div>
+
+    <div class="inspect-card">
+      <div class="inspect-title">Destination Suggestion</div>
+      <div class="suggest-line">
+        <div class="suggest-main">
+          <span class="suggest-bin">${escapeHtml(formatBinLabel(file.suggestedBin || file.currentBin))}</span>
+          <span class="subtext">Reserved action defaults to the strongest current bin profile.</span>
+        </div>
+        <div class="confidence-wrap">
+          <div class="confidence-bar"><div class="confidence-fill" style="width:${Math.max(6, file.confidence || 0)}%"></div></div>
+          <span class="confidence-text">${formatPercent(file.confidence || 0)}</span>
+        </div>
+      </div>
+      <div class="suggest-reasons">
+        <ul>${(file.suggestionReasons || []).map(reason => `<li>${escapeHtml(reason)}</li>`).join('')}</ul>
+      </div>
+      <div style="margin-top:14px;">
+        <label class="meta-key" for="inspectorBinSelect">Reserved destination</label>
+        <select id="inspectorBinSelect">${state.bins.map(bin => `<option value="${escapeHtml(bin.id)}" ${selectedBin === bin.id ? 'selected' : ''}>${escapeHtml(bin.label)}</option>`).join('')}</select>
+      </div>
+      <div style="margin-top:12px;">
+        <label class="meta-key" for="inspectorNote">Decision note</label>
+        <textarea id="inspectorNote" placeholder="Record why this item belongs where it does, or why it should stay unresolved.">${escapeHtml(file.noteDraft || '')}</textarea>
+      </div>
+      <div class="decision-actions">
+        <button class="btn btn-success btn-sm" id="acceptSuggestionBtn">Accept Suggestion</button>
+        <button class="btn btn-ghost btn-sm" id="stageOverrideBtn">Stage Override</button>
+        <button class="btn btn-ghost btn-sm" id="stageKeepBtn">Stage Keep</button>
+        <button class="btn btn-ghost btn-sm" id="deferBtn">Defer</button>
+        <button class="btn btn-danger btn-sm" id="clearDecisionBtn">Clear Decision</button>
+      </div>
+      <div class="subtext" style="margin-top:10px;">Staging is reversible. Apply exports an organized bundle and decision ledger without touching source files.</div>
+    </div>
+
+    <div class="inspect-card">
+      <div class="inspect-title">Similar Items</div>
+      <div class="similar-list">
+        ${similarItems.length ? similarItems.map(item => `
+          <div class="similar-item">
+            <strong>${escapeHtml(item.name)}</strong>
+            <div class="subtext">${escapeHtml(item.relativePath)} · ${escapeHtml(formatBinLabel(item.currentBin))}</div>
+          </div>
+        `).join('') : '<div class="muted">No duplicate or near-duplicate siblings detected in the current scan.</div>'}
+      </div>
+    </div>
+
+    <div class="inspect-card">
+      <div class="inspect-title">Decision Log</div>
+      <div class="log-list">
+        ${history.length ? history.map(entry => `
+          <div class="log-item">
+            <strong>${escapeHtml(entry.action)}</strong>
+            <div class="subtext">${formatDate(entry.at)}${entry.toBin ? ` · ${escapeHtml(formatBinLabel(entry.toBin))}` : ''}</div>
+            ${entry.note ? `<div class="plan-note">${escapeHtml(entry.note)}</div>` : ''}
+          </div>
+        `).join('') : '<div class="muted">No logged decisions yet for this item.</div>'}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('inspectorNote').addEventListener('input', (event) => {
+    file.noteDraft = event.target.value;
+    scheduleSave();
+    renderPlanView();
+  });
+
+  document.getElementById('acceptSuggestionBtn').addEventListener('click', () => stageDecision(file.id, file.suggestedBin || file.currentBin, 'accept'));
+  document.getElementById('stageOverrideBtn').addEventListener('click', () => stageDecision(file.id, document.getElementById('inspectorBinSelect').value, 'override'));
+  document.getElementById('stageKeepBtn').addEventListener('click', () => stageDecision(file.id, file.currentBin, 'keep'));
+  document.getElementById('deferBtn').addEventListener('click', () => deferDecision(file.id));
+  document.getElementById('clearDecisionBtn').addEventListener('click', () => clearDecision(file.id));
+}
+
+function renderPlanView() {
+  const planView = document.getElementById('planView');
+  if (!state.stagedPlan.length && !state.appliedBatches.length) {
+    planView.innerHTML = `
+      <div class="empty">
+        No staged plan yet.<br>
+        Accept a suggestion, override it, or stage a keep decision from the inspector.
+      </div>
+    `;
+    return;
+  }
+
+  const collisions = getPlanCollisions();
+  const stagedMarkup = state.stagedPlan.length ? `
+    <div class="plan-controls">
+      <span class="metric-pill"><strong>${state.stagedPlan.length}</strong> staged item${state.stagedPlan.length !== 1 ? 's' : ''}</span>
+      <span class="metric-pill"><strong>${state.decisions.length}</strong> log entries</span>
+      ${collisions.length ? `<span class="metric-pill danger"><strong>${collisions.length}</strong> collision risk</span>` : ''}
+    </div>
+    ${collisions.length ? `
+      <div class="inspect-card" style="margin-bottom:16px;">
+        <div class="inspect-title">Collision Review Required</div>
+        <div class="plan-list">
+          ${collisions.map(group => `
+            <div class="log-item">
+              <strong>${escapeHtml(group[0].toPath)}</strong>
+              <div class="plan-note">Multiple staged items resolve to the same destination path. Apply is blocked until you remove or redirect one of them.</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
+    <div class="plan-list">
+      ${state.stagedPlan.map(item => {
+        const file = getFile(item.fileId);
+        if (!file) return '';
+        return `
+          <div class="plan-item">
+            <div>
+              <strong>${escapeHtml(file.name)}</strong>
+              <div class="subtext">${escapeHtml(file.relativePath)}</div>
+            </div>
+            <div><span class="subtext">${escapeHtml(formatBinLabel(item.fromBin))}</span></div>
+            <div><strong>${escapeHtml(formatBinLabel(item.toBin))}</strong></div>
+            <div style="display:flex; gap:8px; justify-content:flex-end;">
+              <button class="btn btn-ghost btn-sm" data-plan-open="${item.fileId}">Inspect</button>
+              <button class="btn btn-danger btn-sm" data-plan-remove="${item.fileId}">Remove</button>
+            </div>
+            ${item.note ? `<div class="plan-note">${escapeHtml(item.note)}</div>` : '<div class="plan-note muted">No reasoning note recorded.</div>'}
+          </div>
+        `;
+      }).join('')}
+    </div>
+  ` : '<div class="muted">No staged items.</div>';
+
+  const applied = state.appliedBatches[0];
+  const appliedMarkup = applied ? `
+    <div class="inspect-card" style="margin-top:16px;">
+      <div class="inspect-title">Last Applied Bundle</div>
+      <div class="subtext">${formatDate(applied.at)} · ${applied.items.length} item${applied.items.length !== 1 ? 's' : ''} exported</div>
+      <div class="plan-note">${escapeHtml(applied.note)}</div>
+    </div>
+  ` : '';
+
+  planView.innerHTML = stagedMarkup + appliedMarkup;
+}
+
+function renderAll() {
+  const visibleFiles = getFilteredFiles();
+  ensureSelection(visibleFiles);
+  document.getElementById('workspace').style.display = state.files.length ? 'block' : 'none';
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput && searchInput.value !== state.searchQuery) searchInput.value = state.searchQuery;
+  document.getElementById('viewMode').value = state.viewMode;
+  document.getElementById('sortKey').value = state.sortKey;
+  document.getElementById('sortDir').value = state.sortDir;
+  refreshWorkspaceChrome();
+  renderFileView(visibleFiles);
+  renderInspector();
+  renderPlanView();
+  bindDynamicEvents();
+}
+
+function handleKeyboardShortcuts(event) {
+  const target = event.target;
+  const tag = target?.tagName;
+  const editable = target?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag);
+  const key = (event.key || '').toLowerCase();
+  const file = getFile(state.selectedFileId);
+
+  if ((event.metaKey || event.ctrlKey) && key === 's') {
+    event.preventDefault();
+    scheduleSave();
+    showToast('Save requested locally.');
+    return;
+  }
+
+  if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+    event.preventDefault();
+    applyStagedPlan();
+    return;
+  }
+
+  if (!editable && key === '/') {
+    event.preventDefault();
+    document.getElementById('searchInput').focus();
+    document.getElementById('searchInput').select();
+    return;
+  }
+
+  if (editable) return;
+  if (!file && !['j', 'k'].includes(key)) return;
+
+  if (key === 'j') {
+    event.preventDefault();
+    selectRelative(1);
+    return;
+  }
+
+  if (key === 'k') {
+    event.preventDefault();
+    selectRelative(-1);
+    return;
+  }
+
+  if (key === 'a') {
+    event.preventDefault();
+    stageDecision(file.id, file.suggestedBin || file.currentBin, 'accept');
+    return;
+  }
+
+  if (key === 'g') {
+    event.preventDefault();
+    stageDecision(file.id, file.currentBin, 'keep');
+    return;
+  }
+
+  if (key === 'e') {
+    event.preventDefault();
+    deferDecision(file.id);
+    return;
+  }
+
+  if (key === 'o') {
+    event.preventDefault();
+    const overrideSelect = document.getElementById('inspectorBinSelect');
+    stageDecision(file.id, overrideSelect?.value || file.suggestedBin || file.currentBin, 'override');
+  }
+}
+
+function bindDynamicEvents() {
+  document.querySelectorAll('[data-type-filter]').forEach(button => {
+    button.onclick = () => {
+      state.activeTypeFilter = button.dataset.typeFilter;
+      renderAll();
+      scheduleSave();
+    };
+  });
+
+  document.querySelectorAll('[data-queue-filter]').forEach(button => {
+    button.onclick = () => {
+      state.activeQueueFilter = button.dataset.queueFilter;
+      renderAll();
+      scheduleSave();
+    };
+  });
+
+  document.querySelectorAll('[data-select-file]').forEach(row => {
+    row.onclick = () => {
+      state.selectedFileId = row.dataset.selectFile;
+      renderAll();
+      scheduleSave();
+    };
+  });
+
+  document.querySelectorAll('[data-toggle-group]').forEach(header => {
+    header.onclick = () => {
+      const key = header.dataset.toggleGroup;
+      state.groupState[key] = !state.groupState[key];
+      renderAll();
+      scheduleSave();
+    };
+  });
+
+  document.querySelectorAll('[data-plan-remove]').forEach(button => {
+    button.onclick = (event) => {
+      event.stopPropagation();
+      removeStagedDecision(button.dataset.planRemove);
+    };
+  });
+
+  document.querySelectorAll('[data-plan-open]').forEach(button => {
+    button.onclick = (event) => {
+      event.stopPropagation();
+      state.selectedFileId = button.dataset.planOpen;
+      renderAll();
+      scheduleSave();
+    };
+  });
+
+  const reconnectBtn = document.getElementById('reconnectBtn');
+  if (reconnectBtn) reconnectBtn.onclick = () => document.getElementById('folderInput').click();
+  const discardBtn = document.getElementById('discardSavedBtn');
+  if (discardBtn) discardBtn.onclick = () => resetAll(true);
+}
+
+function reservePass(showToastFlag = true) {
+  if (!state.files.length) {
+    if (showToastFlag) showToast('Load a folder tree before reserving a pass.');
+    return;
+  }
+  const scopedFiles = getFilteredFiles({ ignorePassScope: true });
+  if (!scopedFiles.length) {
+    if (showToastFlag) showToast('No visible queue items match the current filters.');
+    return;
+  }
+  const suggestion = state.currentPass?.name || `Pass ${String((state.appliedBatches.length || 0) + 1).padStart(2, '0')}`;
+  const name = window.prompt('Reserve pass name', suggestion);
+  if (!name) return;
+  state.currentPass = {
+    id: createId(`${Date.now()}:${name}`),
+    name: name.trim(),
+    reservedAt: Date.now(),
+    scopeIds: scopedFiles.map(file => file.id),
+    filterSnapshot: {
+      activeTypeFilter: state.activeTypeFilter,
+      activeQueueFilter: state.activeQueueFilter,
+      binFilter: state.binFilter,
+      searchQuery: state.searchQuery
+    }
+  };
+  state.selectedFileId = scopedFiles[0]?.id || state.selectedFileId;
+  updatePassBanner();
+  renderAll();
+  scheduleSave();
+  if (showToastFlag) showToast(`Reserved ${name.trim()} for ${scopedFiles.length} scoped item${scopedFiles.length !== 1 ? 's' : ''}.`);
+}
+
+function requireDecisionNote(file, actionLabel) {
+  const note = (file.noteDraft || '').trim();
+  if (note) return note;
+  showToast(`Add a decision note before ${actionLabel}.`);
+  const noteField = document.getElementById('inspectorNote');
+  if (noteField) noteField.focus();
+  return null;
+}
+
+function stageDecision(fileId, toBin, mode) {
+  const file = getFile(fileId);
+  if (!file) return;
+  const note = requireDecisionNote(file, 'staging this decision');
+  if (!note) return;
+  const existingIndex = state.stagedPlan.findIndex(item => item.fileId === fileId);
+  const plan = {
+    id: createId(`${fileId}:${toBin}:${Date.now()}`),
+    fileId,
+    fromBin: file.currentBin,
+    toBin,
+    toPath: buildDestinationPath(file, toBin),
+    mode,
+    note,
+    createdAt: Date.now(),
+    passId: state.currentPass?.id || null
+  };
+  if (existingIndex >= 0) state.stagedPlan.splice(existingIndex, 1, plan);
+  else state.stagedPlan.unshift(plan);
+  file.queueStatus = 'staged';
+  file.assignedBin = toBin;
+  const action = mode === 'accept'
+    ? 'accept_suggestion'
+    : mode === 'override'
+      ? 'stage_override'
+      : 'stage_keep';
+  recordDecision(fileId, action, {
+    fromBin: file.currentBin,
+    toBin,
+    note,
+    confidence: file.confidence
+  });
+  renderAll();
+  scheduleSave();
+  showToast(`Staged ${file.name}.`);
+}
+
+function deferDecision(fileId) {
+  const file = getFile(fileId);
+  if (!file) return;
+  const note = requireDecisionNote(file, 'deferring this item');
+  if (!note) return;
+  state.stagedPlan = state.stagedPlan.filter(item => item.fileId !== fileId);
+  file.queueStatus = 'deferred';
+  file.assignedBin = null;
+  recordDecision(fileId, 'defer', {
+    note,
+    fromBin: file.currentBin
+  });
+  renderAll();
+  scheduleSave();
+  showToast(`Deferred ${file.name}.`);
+}
+
+function clearDecision(fileId) {
+  const file = getFile(fileId);
+  if (!file) return;
+  state.stagedPlan = state.stagedPlan.filter(item => item.fileId !== fileId);
+  if (file.queueStatus !== 'applied') file.queueStatus = 'queued';
+  file.assignedBin = null;
+  recordDecision(fileId, 'clear_decision', {
+    note: (file.noteDraft || '').trim(),
+    fromBin: file.currentBin
+  });
+  renderAll();
+  scheduleSave();
+  showToast(`Cleared reserved action for ${file.name}.`);
+}
+
+function removeStagedDecision(fileId) {
+  const file = getFile(fileId);
+  state.stagedPlan = state.stagedPlan.filter(item => item.fileId !== fileId);
+  if (file && file.queueStatus !== 'applied') {
+    file.queueStatus = 'queued';
+    file.assignedBin = null;
+  }
+  renderAll();
+  scheduleSave();
+}
+
+function buildExportPayload(options = {}) {
+  const stagedPlan = Array.isArray(options.stagedPlan) ? options.stagedPlan : state.stagedPlan;
+  const decisions = Array.isArray(options.decisions) ? options.decisions : state.decisions;
+  return {
+    sessionId: state.sessionId,
+    sessionName: state.sessionName,
+    sourceSummary: state.sourceSummary,
+    pass: state.currentPass,
+    stagedPlan: stagedPlan.map(item => {
+      const file = getFile(item.fileId);
+      return {
+        ...item,
+        file: file ? {
+          name: file.name,
+          relativePath: file.relativePath,
+          currentBin: file.currentBin,
+          suggestedBin: file.suggestedBin,
+          confidence: file.confidence,
+          flags: fileFlags(file).map(flag => flag.label)
+        } : null
+      };
+    }),
+    decisions,
+    appliedBatch: options.appliedBatch || null,
+    note: APPLY_NOTE,
+    generatedAt: new Date().toISOString()
+  };
+}
+
+async function applyStagedPlan() {
+  if (!state.stagedPlan.length) {
+    showToast('No staged items to apply.');
+    return;
+  }
+
+  const button = document.getElementById('applyBtn');
+  if (state.isApplying || button.disabled) {
+    showToast('Apply already in progress.');
+    return;
+  }
+  const collisions = getPlanCollisions();
+  if (collisions.length) {
+    showToast('Resolve staged collision review before apply.');
+    return;
+  }
+
+  state.isApplying = true;
+  button.disabled = true;
+  setProgress(0, 'Building safe triage bundle...');
+  try {
+    const zip = new JSZip();
+    const originalPlan = state.stagedPlan.map(item => ({ ...item }));
+    const missingFiles = [];
+    const includedIds = new Set();
+
+    for (let i = 0; i < state.stagedPlan.length; i += 1) {
+      const plan = state.stagedPlan[i];
+      const file = getFile(plan.fileId);
+      const live = liveFiles.get(plan.fileId);
+      const exportPath = `organized/${buildDestinationPath(file, plan.toBin)}`;
+      if (live) {
+        zip.file(exportPath, live);
+        includedIds.add(plan.fileId);
+      } else {
+        missingFiles.push({
+          fileId: plan.fileId,
+          name: file?.name || plan.fileId,
+          reason: 'Live file handle unavailable in restored session.'
+        });
+      }
+      setProgress(((i + 1) / state.stagedPlan.length) * 70, `Packing ${i + 1} / ${state.stagedPlan.length}: ${file?.name || plan.fileId}`);
+    }
+
+    setProgress(88, 'Compressing bundle...');
+    const appliedItems = state.stagedPlan
+      .filter(item => includedIds.has(item.fileId))
+      .map(item => ({ ...item }));
+    const remainingItems = state.stagedPlan
+      .filter(item => !includedIds.has(item.fileId))
+      .map(item => ({ ...item }));
+    const batchNote = missingFiles.length
+      ? `Bundle exported with ${missingFiles.length} missing live file handle${missingFiles.length !== 1 ? 's' : ''}. Missing items were retained in the staged plan.`
+      : 'Bundle exported with live file payloads.';
+
+    appliedItems.forEach(item => {
+      const file = getFile(item.fileId);
+      if (!file) return;
+      file.queueStatus = 'applied';
+      file.appliedBin = item.toBin;
+      recordDecision(item.fileId, 'apply_bundle', {
+        fromBin: item.fromBin,
+        toBin: item.toBin,
+        note: batchNote
+      });
+    });
+
+    state.stagedPlan = remainingItems;
+    let appliedBatch = null;
+    if (appliedItems.length) {
+      appliedBatch = {
+        id: createId(`${Date.now()}:apply`),
+        at: Date.now(),
+        items: appliedItems,
+        note: batchNote
+      };
+      state.appliedBatches.unshift(appliedBatch);
+    }
+
+    const payload = buildExportPayload({
+      stagedPlan: originalPlan,
+      decisions: state.decisions,
+      appliedBatch
+    });
+
+    zip.file('dr-sort/decision-log.json', JSON.stringify(state.decisions, null, 2));
+    zip.file('dr-sort/staged-plan.json', JSON.stringify(payload, null, 2));
+    zip.file('dr-sort/missing-live-files.json', JSON.stringify(missingFiles, null, 2));
+    zip.file('dr-sort/README.txt', [
+      'DR.SORT export bundle',
+      '',
+      'This apply step is non-destructive.',
+      'Original source files were not modified.',
+      'The bundle contains the reserved organization plan and any files that were still live in the current browser session.',
+      '',
+      APPLY_NOTE
+    ].join('\n'));
+
+    const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `dr-sort_pass_${new Date().toISOString().slice(0, 10)}.zip`;
+    anchor.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 5000);
+    renderAll();
+    scheduleSave();
+    setProgress(100, 'Bundle ready.');
+    window.setTimeout(clearProgress, 800);
+    showToast(
+      remainingItems.length
+        ? `Applied ${appliedItems.length} item${appliedItems.length !== 1 ? 's' : ''}; ${remainingItems.length} remained staged because live files were unavailable.`
+        : `Applied staged plan to safe bundle (${appliedItems.length} items).`
+    );
+  } catch (error) {
+    console.error(error);
+    showToast('Apply failed before the staged plan was cleared.');
+    clearProgress();
+  } finally {
+    state.isApplying = false;
+    button.disabled = false;
+  }
+}
+
+function rollbackLastApply() {
+  const batch = state.appliedBatches.shift();
+  if (!batch) {
+    showToast('No applied bundle to roll back.');
+    return;
+  }
+
+  batch.items.forEach(item => {
+    const file = getFile(item.fileId);
+    if (!file) return;
+    state.stagedPlan.unshift({ ...item, restoredAt: Date.now() });
+    file.queueStatus = 'staged';
+    file.appliedBin = null;
+    file.assignedBin = item.toBin;
+    recordDecision(item.fileId, 'rollback_bundle', {
+      fromBin: item.toBin,
+      toBin: item.toBin,
+      note: 'Restored last applied batch to staged plan.'
+    });
+  });
+
+  renderAll();
+  scheduleSave();
+  showToast('Restored last applied bundle back into staged plan.');
+}
+
+function exportDecisionLog() {
+  const payload = {
+    session: {
+      id: state.sessionId,
+      name: state.sessionName,
+      sourceSummary: state.sourceSummary,
+      savedAt: new Date().toISOString()
+    },
+    currentPass: state.currentPass,
+    files: state.files.map(file => ({
+      id: file.id,
+      name: file.name,
+      relativePath: file.relativePath,
+      currentBin: file.currentBin,
+      suggestedBin: file.suggestedBin,
+      queueGroup: getQueueGroup(file),
+      confidence: file.confidence,
+      noteDraft: file.noteDraft,
+      flags: fileFlags(file).map(flag => flag.label)
+    })),
+    decisions: state.decisions,
+    stagedPlan: state.stagedPlan,
+    appliedBatches: state.appliedBatches
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = `dr-sort_decision_log_${new Date().toISOString().slice(0, 10)}.json`;
+  anchor.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 5000);
+  showToast('Exported decision history.');
+}
+
+function downloadSingle(fileId) {
+  const file = liveFiles.get(fileId);
+  const record = getFile(fileId);
+  if (!file || !record) {
+    showToast('Reconnect the source file before downloading from a restored session.');
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = record.name;
+  anchor.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+
+function resetAll(clearSaved = false) {
+  state = createDefaultState();
+  liveFiles.clear();
+  document.getElementById('workspace').style.display = 'none';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('folderInput').value = '';
+  if (clearSaved) clearSavedState();
+  renderAll();
+  updateSessionBanner();
+  clearProgress();
+  showToast(clearSaved ? 'Saved session discarded.' : 'Live session cleared.');
+}
+
+async function handleFileList(fileList, sourceLabel) {
+  const entries = Array.from(fileList).map(file => ({
+    file,
+    relativePath: normalizePath(file.webkitRelativePath || file.name)
+  }));
+  if (entries.length) {
+    await ingestEntries(entries, sourceLabel);
+  }
+}
+
+function bindStaticEvents() {
+  document.getElementById('folderBtn').addEventListener('click', (event) => {
+    event.stopPropagation();
+    document.getElementById('folderInput').click();
+  });
+
+  document.getElementById('filesBtn').addEventListener('click', (event) => {
+    event.stopPropagation();
+    document.getElementById('fileInput').click();
+  });
+
+  document.getElementById('reservePassDropBtn').addEventListener('click', (event) => {
+    event.stopPropagation();
+    reservePass(true);
+  });
+
+  document.getElementById('folderInput').addEventListener('change', async (event) => {
+    const files = event.target.files;
+    const firstPath = files?.[0]?.webkitRelativePath || '';
+    const rootLabel = firstPath.split('/')[0] || 'Folder tree';
+    await handleFileList(files, rootLabel);
+  });
+
+  document.getElementById('fileInput').addEventListener('change', async (event) => {
+    await handleFileList(event.target.files, 'Loose files');
+  });
+
+  document.getElementById('reservePassBtn').addEventListener('click', () => reservePass(true));
+  document.getElementById('saveSessionBtn').addEventListener('click', () => {
+    scheduleSave();
+    showToast('Save requested locally.');
+  });
+  document.getElementById('clearBtn').addEventListener('click', () => resetAll(true));
+  document.getElementById('applyBtn').addEventListener('click', applyStagedPlan);
+  document.getElementById('rollbackBtn').addEventListener('click', rollbackLastApply);
+  document.getElementById('exportLogBtn').addEventListener('click', exportDecisionLog);
+
+  document.getElementById('viewMode').addEventListener('change', (event) => {
+    state.viewMode = event.target.value;
+    renderAll();
+    scheduleSave();
+  });
+  document.getElementById('sortKey').addEventListener('change', (event) => {
+    state.sortKey = event.target.value;
+    renderAll();
+    scheduleSave();
+  });
+  document.getElementById('sortDir').addEventListener('change', (event) => {
+    state.sortDir = event.target.value;
+    renderAll();
+    scheduleSave();
+  });
+  document.getElementById('binFilter').addEventListener('change', (event) => {
+    state.binFilter = event.target.value;
+    renderAll();
+    scheduleSave();
+  });
+  document.getElementById('searchInput').addEventListener('input', (event) => {
+    state.searchQuery = event.target.value;
+    renderAll();
+    scheduleSave();
+  });
+  document.addEventListener('keydown', handleKeyboardShortcuts);
+
+  const dropZone = document.getElementById('dropZone');
+  dropZone.addEventListener('click', (event) => {
+    if (event.target.tagName !== 'BUTTON') document.getElementById('folderInput').click();
+  });
+
+  dropZone.addEventListener('dragenter', (event) => {
+    event.preventDefault();
+    dragCounter += 1;
+    dropZone.classList.add('drag-over');
+  });
+
+  dropZone.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dragCounter = Math.max(0, dragCounter - 1);
+    if (!dragCounter) dropZone.classList.remove('drag-over');
+  });
+
+  dropZone.addEventListener('drop', async (event) => {
+    event.preventDefault();
+    dragCounter = 0;
+    dropZone.classList.remove('drag-over');
+    const entries = await gatherDroppedFiles(event);
+    const rootLabel = entries[0]?.relativePath?.split('/')[0] || 'Dropped packet';
+    await ingestEntries(entries, rootLabel);
+  });
+}
+
+function boot() {
+  bindStaticEvents();
+  const restored = loadSavedState();
+  if (restored) {
+    document.getElementById('workspace').style.display = 'block';
+    showToast('Restored saved Dr.Sort session.');
+  }
+  renderAll();
+  updateSessionBanner();
+  clearProgress();
+}
+
+boot();
+</script>
+</body>
+</html>
