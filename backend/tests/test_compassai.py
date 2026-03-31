@@ -32,7 +32,7 @@ def api_client():
 def admin_token(api_client):
     """Obtain an admin Bearer token for authenticated endpoints."""
     if not ADMIN_PASSPHRASE:
-        pytest.skip("ADMIN_PASSPHRASE not configured — skipping authenticated tests")
+        return None
 
     response = api_client.post(f"{BASE_URL}/api/admin/login", json={"passphrase": ADMIN_PASSPHRASE})
     assert response.status_code == 200, f"Admin login failed: {response.text}"
@@ -40,9 +40,24 @@ def admin_token(api_client):
     return token
 
 
+@pytest.fixture(scope="module")
+def admin_headers(admin_token):
+    """Authenticated headers for tests that require a real admin credential."""
+    if not admin_token:
+        pytest.skip("ADMIN_PASSPHRASE not configured — skipping authenticated tests")
+    return auth_headers(admin_token)
+
+
 def auth_headers(admin_token):
     """Build Authorization header dict."""
     return {"Authorization": f"Bearer {admin_token}"}
+
+
+def assert_admin_required(response):
+    """Assert the endpoint rejects unauthenticated access."""
+    assert response.status_code in (401, 403), (
+        f"Expected 401/403 for unauthenticated access, got {response.status_code}: {response.text}"
+    )
 
 
 # ─── Dashboard ───
@@ -66,16 +81,23 @@ class TestDashboardStats:
 # ─── Clients ───
 
 class TestClientsPublic:
-    """Public read endpoints for clients."""
+    """Client read endpoints enforce admin auth."""
 
     def test_list_clients_returns_list(self, api_client):
         response = api_client.get(f"{BASE_URL}/api/clients")
-        assert response.status_code == 200
+        assert_admin_required(response)
+
+    def test_list_clients_returns_list_with_auth(self, api_client, admin_headers):
+        response = api_client.get(f"{BASE_URL}/api/clients", headers=admin_headers)
         assert isinstance(response.json(), list)
         print(f"✓ GET /api/clients returned {len(response.json())} clients")
 
-    def test_get_nonexistent_client_returns_404(self, api_client):
+    def test_get_nonexistent_client_requires_auth(self, api_client):
         response = api_client.get(f"{BASE_URL}/api/clients/nonexistent-id-000")
+        assert_admin_required(response)
+
+    def test_get_nonexistent_client_returns_404(self, api_client, admin_headers):
+        response = api_client.get(f"{BASE_URL}/api/clients/nonexistent-id-000", headers=admin_headers)
         assert response.status_code == 404
         print("✓ GET /api/clients/nonexistent returns 404")
 
@@ -83,7 +105,7 @@ class TestClientsPublic:
 class TestClientsCRUD:
     """Authenticated CRUD for clients."""
 
-    def test_create_client(self, api_client, admin_token):
+    def test_create_client(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         payload = {
             "company_name": f"TEST_Client_{uid}",
@@ -99,7 +121,7 @@ class TestClientsCRUD:
         response = api_client.post(
             f"{BASE_URL}/api/clients",
             json=payload,
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 200, f"Create client failed: {response.text}"
         data = response.json()
@@ -109,12 +131,12 @@ class TestClientsCRUD:
         assert "id" in data
         print(f"✓ Created client: {data['id']}")
 
-    def test_create_and_update_client(self, api_client, admin_token):
+    def test_create_and_update_client(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         create_res = api_client.post(
             f"{BASE_URL}/api/clients",
             json={"company_name": f"TEST_Update_{uid}", "sector": "Healthcare"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert create_res.status_code == 200
         client_id = create_res.json()["id"]
@@ -122,7 +144,7 @@ class TestClientsCRUD:
         update_res = api_client.put(
             f"{BASE_URL}/api/clients/{client_id}",
             json={"sector": "Finance", "jurisdiction": "Ontario"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert update_res.status_code == 200
         updated = update_res.json()
@@ -130,31 +152,34 @@ class TestClientsCRUD:
         assert updated["jurisdiction"] == "Ontario"
         print(f"✓ Updated client {client_id}")
 
-    def test_create_and_delete_client(self, api_client, admin_token):
+    def test_create_and_delete_client(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         create_res = api_client.post(
             f"{BASE_URL}/api/clients",
             json={"company_name": f"TEST_Delete_{uid}", "sector": "Education"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert create_res.status_code == 200
         client_id = create_res.json()["id"]
 
         delete_res = api_client.delete(
             f"{BASE_URL}/api/clients/{client_id}",
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert delete_res.status_code == 200
         assert delete_res.json()["status"] == "deleted"
 
-        get_res = api_client.get(f"{BASE_URL}/api/clients/{client_id}")
+        get_res = api_client.get(
+            f"{BASE_URL}/api/clients/{client_id}",
+            headers=admin_headers,
+        )
         assert get_res.status_code == 404
         print(f"✓ Deleted client {client_id} and verified removal")
 
-    def test_delete_nonexistent_client_returns_404(self, api_client, admin_token):
+    def test_delete_nonexistent_client_returns_404(self, api_client, admin_headers):
         response = api_client.delete(
             f"{BASE_URL}/api/clients/nonexistent-client-999",
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 404
         print("✓ Delete nonexistent client returns 404")
@@ -171,31 +196,43 @@ class TestClientsCRUD:
 # ─── AI Systems ───
 
 class TestAISystemsPublic:
-    """Public read endpoints for AI systems."""
+    """AI system read endpoints enforce admin auth."""
 
     def test_list_ai_systems_returns_list(self, api_client):
         response = api_client.get(f"{BASE_URL}/api/ai-systems")
-        assert response.status_code == 200
+        assert_admin_required(response)
+
+    def test_list_ai_systems_returns_list_with_auth(self, api_client, admin_headers):
+        response = api_client.get(f"{BASE_URL}/api/ai-systems", headers=admin_headers)
         assert isinstance(response.json(), list)
         print(f"✓ GET /api/ai-systems returned {len(response.json())} systems")
+
+    def test_get_nonexistent_ai_system_requires_auth(self, api_client):
+        response = api_client.get(f"{BASE_URL}/api/ai-systems/nonexistent-id-000")
+        assert_admin_required(response)
+
+    def test_get_nonexistent_ai_system_returns_404(self, api_client, admin_headers):
+        response = api_client.get(f"{BASE_URL}/api/ai-systems/nonexistent-id-000", headers=admin_headers)
+        assert response.status_code == 404
+        print("✓ GET /api/ai-systems/nonexistent returns 404")
 
 
 class TestAISystemsCRUD:
     """Authenticated CRUD for AI systems with referential integrity."""
 
     @pytest.fixture(autouse=True)
-    def _create_test_client(self, api_client, admin_token):
+    def _create_test_client(self, api_client, admin_headers):
         """Create a client to own AI systems."""
         uid = str(uuid.uuid4())[:8]
         res = api_client.post(
             f"{BASE_URL}/api/clients",
             json={"company_name": f"TEST_SysOwner_{uid}", "sector": "SaaS"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert res.status_code == 200
         self.test_client_id = res.json()["id"]
 
-    def test_create_ai_system(self, api_client, admin_token):
+    def test_create_ai_system(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         payload = {
             "client_id": self.test_client_id,
@@ -212,7 +249,7 @@ class TestAISystemsCRUD:
         response = api_client.post(
             f"{BASE_URL}/api/ai-systems",
             json=payload,
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 200, f"Create system failed: {response.text}"
         data = response.json()
@@ -221,20 +258,20 @@ class TestAISystemsCRUD:
         assert data["human_override"] is True
         print(f"✓ Created AI system: {data['id']}")
 
-    def test_create_system_bad_client_returns_400(self, api_client, admin_token):
+    def test_create_system_bad_client_returns_400(self, api_client, admin_headers):
         response = api_client.post(
             f"{BASE_URL}/api/ai-systems",
             json={
                 "client_id": "nonexistent-client-000",
                 "system_name": "Ghost System",
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 400
         assert "client" in response.json()["detail"].lower()
         print("✓ Create system with bad client_id returns 400")
 
-    def test_create_update_delete_system(self, api_client, admin_token):
+    def test_create_update_delete_system(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         create_res = api_client.post(
             f"{BASE_URL}/api/ai-systems",
@@ -244,7 +281,7 @@ class TestAISystemsCRUD:
                 "decision_role": "Informational",
                 "high_stakes": False,
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert create_res.status_code == 200
         system_id = create_res.json()["id"]
@@ -252,7 +289,7 @@ class TestAISystemsCRUD:
         update_res = api_client.put(
             f"{BASE_URL}/api/ai-systems/{system_id}",
             json={"decision_role": "Strategic", "high_stakes": True},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert update_res.status_code == 200
         assert update_res.json()["decision_role"] == "Strategic"
@@ -260,7 +297,7 @@ class TestAISystemsCRUD:
 
         delete_res = api_client.delete(
             f"{BASE_URL}/api/ai-systems/{system_id}",
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert delete_res.status_code == 200
         print(f"✓ Full CRUD lifecycle for AI system {system_id}")
@@ -269,26 +306,38 @@ class TestAISystemsCRUD:
 # ─── Assessments ───
 
 class TestAssessmentsPublic:
-    """Public read endpoints for assessments."""
+    """Assessment read endpoints enforce admin auth."""
 
     def test_list_assessments_returns_list(self, api_client):
         response = api_client.get(f"{BASE_URL}/api/assessments")
-        assert response.status_code == 200
+        assert_admin_required(response)
+
+    def test_list_assessments_returns_list_with_auth(self, api_client, admin_headers):
+        response = api_client.get(f"{BASE_URL}/api/assessments", headers=admin_headers)
         assert isinstance(response.json(), list)
         print(f"✓ GET /api/assessments returned {len(response.json())} assessments")
+
+    def test_get_nonexistent_assessment_requires_auth(self, api_client):
+        response = api_client.get(f"{BASE_URL}/api/assessments/nonexistent-000")
+        assert_admin_required(response)
+
+    def test_get_nonexistent_assessment_returns_404(self, api_client, admin_headers):
+        response = api_client.get(f"{BASE_URL}/api/assessments/nonexistent-000", headers=admin_headers)
+        assert response.status_code == 404
+        print("✓ GET /api/assessments/nonexistent returns 404")
 
 
 class TestAssessmentsCRUD:
     """Authenticated assessment creation and deliverables."""
 
     @pytest.fixture(autouse=True)
-    def _create_test_client_and_system(self, api_client, admin_token):
+    def _create_test_client_and_system(self, api_client, admin_headers):
         """Create a client + system for assessments."""
         uid = str(uuid.uuid4())[:8]
         client_res = api_client.post(
             f"{BASE_URL}/api/clients",
             json={"company_name": f"TEST_AssessOwner_{uid}", "sector": "Finance"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert client_res.status_code == 200
         self.test_client_id = client_res.json()["id"]
@@ -301,12 +350,12 @@ class TestAssessmentsCRUD:
                 "decision_role": "Strategic",
                 "high_stakes": True,
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert system_res.status_code == 200
         self.test_system_id = system_res.json()["id"]
 
-    def test_create_assessment(self, api_client, admin_token):
+    def test_create_assessment(self, api_client, admin_headers):
         payload = {
             "client_id": self.test_client_id,
             "ai_system_id": self.test_system_id,
@@ -322,7 +371,7 @@ class TestAssessmentsCRUD:
         response = api_client.post(
             f"{BASE_URL}/api/assessments",
             json=payload,
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 200, f"Create assessment failed: {response.text}"
         data = response.json()
@@ -332,31 +381,35 @@ class TestAssessmentsCRUD:
         assert "id" in data
         print(f"✓ Created assessment: {data['id']}")
 
-    def test_create_assessment_bad_client_returns_400(self, api_client, admin_token):
+    def test_create_assessment_bad_client_returns_400(self, api_client, admin_headers):
         response = api_client.post(
             f"{BASE_URL}/api/assessments",
             json={
                 "client_id": "nonexistent-000",
                 "ai_system_id": self.test_system_id,
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 400
         print("✓ Assessment with bad client returns 400")
 
-    def test_create_assessment_bad_system_returns_400(self, api_client, admin_token):
+    def test_create_assessment_bad_system_returns_400(self, api_client, admin_headers):
         response = api_client.post(
             f"{BASE_URL}/api/assessments",
             json={
                 "client_id": self.test_client_id,
                 "ai_system_id": "nonexistent-000",
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 400
         print("✓ Assessment with bad system returns 400")
 
-    def test_assessment_deliverables(self, api_client, admin_token):
+    def test_assessment_deliverables_requires_auth(self, api_client):
+        response = api_client.get(f"{BASE_URL}/api/assessments/nonexistent-000/deliverables")
+        assert_admin_required(response)
+
+    def test_assessment_deliverables(self, api_client, admin_headers):
         create_res = api_client.post(
             f"{BASE_URL}/api/assessments",
             json={
@@ -365,12 +418,15 @@ class TestAssessmentsCRUD:
                 "strict_mode": True,
                 "governance": {"scope_locked": True, "allowed_uses_defined": True, "prohibited_uses_defined": False}
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert create_res.status_code == 200
         assessment_id = create_res.json()["id"]
 
-        deliv_res = api_client.get(f"{BASE_URL}/api/assessments/{assessment_id}/deliverables")
+        deliv_res = api_client.get(
+            f"{BASE_URL}/api/assessments/{assessment_id}/deliverables",
+            headers=admin_headers,
+        )
         assert deliv_res.status_code == 200
         data = deliv_res.json()
         assert data["assessment_id"] == assessment_id
@@ -382,8 +438,11 @@ class TestAssessmentsCRUD:
         assert data["deliverables"][1]["type"] == "evidence_manifest"
         print(f"✓ Deliverables generated for assessment {assessment_id}")
 
-    def test_deliverables_nonexistent_assessment_returns_404(self, api_client):
-        response = api_client.get(f"{BASE_URL}/api/assessments/nonexistent-000/deliverables")
+    def test_deliverables_nonexistent_assessment_returns_404(self, api_client, admin_headers):
+        response = api_client.get(
+            f"{BASE_URL}/api/assessments/nonexistent-000/deliverables",
+            headers=admin_headers,
+        )
         assert response.status_code == 404
         print("✓ Deliverables for nonexistent assessment returns 404")
 
@@ -418,12 +477,12 @@ class TestScheduledAssessments:
     """Authenticated scheduled assessment endpoints."""
 
     @pytest.fixture(autouse=True)
-    def _create_test_client_and_system(self, api_client, admin_token):
+    def _create_test_client_and_system(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         client_res = api_client.post(
             f"{BASE_URL}/api/clients",
             json={"company_name": f"TEST_SchedOwner_{uid}", "sector": "Public"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert client_res.status_code == 200
         self.test_client_id = client_res.json()["id"]
@@ -434,12 +493,12 @@ class TestScheduledAssessments:
                 "client_id": self.test_client_id,
                 "system_name": f"TEST_SchedSys_{uid}",
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert system_res.status_code == 200
         self.test_system_id = system_res.json()["id"]
 
-    def test_create_scheduled_assessment(self, api_client, admin_token):
+    def test_create_scheduled_assessment(self, api_client, admin_headers):
         payload = {
             "client_id": self.test_client_id,
             "ai_system_id": self.test_system_id,
@@ -450,7 +509,7 @@ class TestScheduledAssessments:
         response = api_client.post(
             f"{BASE_URL}/api/scheduled-assessments",
             json=payload,
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 200, f"Create schedule failed: {response.text}"
         data = response.json()
@@ -460,25 +519,25 @@ class TestScheduledAssessments:
         assert len(data["notify_emails"]) == 2
         print(f"✓ Created scheduled assessment: {data['id']}, next due: {data['next_due']}")
 
-    def test_list_scheduled_assessments(self, api_client, admin_token):
+    def test_list_scheduled_assessments(self, api_client, admin_headers):
         response = api_client.get(
             f"{BASE_URL}/api/scheduled-assessments",
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 200
         assert isinstance(response.json(), list)
         print(f"✓ Listed {len(response.json())} scheduled assessments")
 
-    def test_list_due_assessments(self, api_client, admin_token):
+    def test_list_due_assessments(self, api_client, admin_headers):
         response = api_client.get(
             f"{BASE_URL}/api/scheduled-assessments/due",
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 200
         assert isinstance(response.json(), list)
         print(f"✓ Listed {len(response.json())} due assessments")
 
-    def test_deactivate_scheduled_assessment(self, api_client, admin_token):
+    def test_deactivate_scheduled_assessment(self, api_client, admin_headers):
         create_res = api_client.post(
             f"{BASE_URL}/api/scheduled-assessments",
             json={
@@ -487,14 +546,14 @@ class TestScheduledAssessments:
                 "frequency": "monthly",
                 "notify_emails": []
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert create_res.status_code == 200
         schedule_id = create_res.json()["id"]
 
         delete_res = api_client.delete(
             f"{BASE_URL}/api/scheduled-assessments/{schedule_id}",
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert delete_res.status_code == 200
         assert delete_res.json()["status"] == "deactivated"
@@ -505,7 +564,7 @@ class TestScheduledAssessments:
         assert response.status_code == 401
         print("✓ Scheduled assessments without auth returns 401")
 
-    def test_create_schedule_bad_client_returns_400(self, api_client, admin_token):
+    def test_create_schedule_bad_client_returns_400(self, api_client, admin_headers):
         response = api_client.post(
             f"{BASE_URL}/api/scheduled-assessments",
             json={
@@ -513,7 +572,7 @@ class TestScheduledAssessments:
                 "ai_system_id": self.test_system_id,
                 "frequency": "monthly",
             },
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         assert response.status_code == 400
         print("✓ Schedule with bad client returns 400")
@@ -525,30 +584,30 @@ class TestEvidenceUpload:
     """Authenticated evidence file upload."""
 
     @pytest.fixture(autouse=True)
-    def _create_assessment(self, api_client, admin_token):
+    def _create_assessment(self, api_client, admin_headers):
         uid = str(uuid.uuid4())[:8]
         client_res = api_client.post(
             f"{BASE_URL}/api/clients",
             json={"company_name": f"TEST_EvidOwner_{uid}", "sector": "Healthcare"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         self.test_client_id = client_res.json()["id"]
 
         system_res = api_client.post(
             f"{BASE_URL}/api/ai-systems",
             json={"client_id": self.test_client_id, "system_name": f"TEST_EvidSys_{uid}"},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         self.test_system_id = system_res.json()["id"]
 
         assess_res = api_client.post(
             f"{BASE_URL}/api/assessments",
             json={"client_id": self.test_client_id, "ai_system_id": self.test_system_id},
-            headers=auth_headers(admin_token)
+            headers=admin_headers
         )
         self.test_assessment_id = assess_res.json()["id"]
 
-    def test_upload_evidence_file(self, admin_token):
+    def test_upload_evidence_file(self, admin_headers):
         """Upload a small text file as evidence."""
         file_content = b"Sample evidence document content for governance review."
         files = {"file": ("test_evidence.txt", io.BytesIO(file_content), "text/plain")}
@@ -562,7 +621,7 @@ class TestEvidenceUpload:
             f"{BASE_URL}/api/evidence/upload",
             files=files,
             data=data,
-            headers={"Authorization": f"Bearer {admin_token}"}
+            headers=admin_headers
         )
         assert response.status_code == 200, f"Upload failed: {response.text}"
         result = response.json()
@@ -572,7 +631,7 @@ class TestEvidenceUpload:
         assert result["size_bytes"] == len(file_content)
         print(f"✓ Uploaded evidence: {result['id']} ({result['size_bytes']} bytes)")
 
-    def test_upload_evidence_bad_assessment_returns_400(self, admin_token):
+    def test_upload_evidence_bad_assessment_returns_400(self, admin_headers):
         files = {"file": ("bad.txt", io.BytesIO(b"test"), "text/plain")}
         data = {"assessment_id": "nonexistent-000", "control_id": "", "description": ""}
 
@@ -580,7 +639,7 @@ class TestEvidenceUpload:
             f"{BASE_URL}/api/evidence/upload",
             files=files,
             data=data,
-            headers={"Authorization": f"Bearer {admin_token}"}
+            headers=admin_headers
         )
         assert response.status_code == 400
         print("✓ Evidence upload with bad assessment returns 400")
@@ -605,6 +664,10 @@ def cleanup_test_data(api_client, admin_token):
     """Remove TEST_ prefixed records after all tests."""
     yield
 
+    if not admin_token:
+        print("\n- COMPASSai test cleanup skipped: ADMIN_PASSPHRASE not configured")
+        return
+
     headers = auth_headers(admin_token)
 
     # Clean up scheduled assessments
@@ -618,7 +681,7 @@ def cleanup_test_data(api_client, admin_token):
 
     # Clean up AI systems
     try:
-        systems_res = api_client.get(f"{BASE_URL}/api/ai-systems")
+        systems_res = api_client.get(f"{BASE_URL}/api/ai-systems", headers=headers)
         if systems_res.status_code == 200:
             for system in systems_res.json():
                 if system.get("system_name", "").startswith("TEST_"):
@@ -628,7 +691,7 @@ def cleanup_test_data(api_client, admin_token):
 
     # Clean up clients
     try:
-        clients_res = api_client.get(f"{BASE_URL}/api/clients")
+        clients_res = api_client.get(f"{BASE_URL}/api/clients", headers=headers)
         if clients_res.status_code == 200:
             for client in clients_res.json():
                 if client.get("company_name", "").startswith("TEST_"):

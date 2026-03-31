@@ -23,7 +23,14 @@ import resend
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 FRONTEND_DIR = ROOT_DIR.parent / "frontend"
-COMPASSAI_ENV_FILE = ROOT_DIR.parent.parent / "CompassAI" / "backend" / ".env"
+COMPASSAI_ENV_FILE = Path(
+    os.environ.get(
+        "COMPASSAI_ENV_FILE",
+        str(ROOT_DIR.parent / "compassai" / "backend" / ".env"),
+    )
+).expanduser()
+if not COMPASSAI_ENV_FILE.is_absolute():
+    COMPASSAI_ENV_FILE = (ROOT_DIR.parent / COMPASSAI_ENV_FILE).resolve()
 
 DEFAULT_CORS_ORIGINS = [
     "http://localhost:3000",
@@ -958,13 +965,13 @@ async def compass_dashboard_stats():
 # ─── COMPASSai: Clients ───
 
 @api_router.get("/clients", response_model=List[Client])
-async def list_clients():
+async def list_clients(admin_ok: None = Depends(require_admin)):
     database = await get_database()
     docs = await database.compass_clients.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return docs
 
 @api_router.get("/clients/{client_id}", response_model=Client)
-async def get_client(client_id: str):
+async def get_client(client_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     doc = await database.compass_clients.find_one({"id": client_id}, {"_id": 0})
     if not doc:
@@ -1011,13 +1018,13 @@ async def delete_client(client_id: str, admin_ok: None = Depends(require_admin))
 # ─── COMPASSai: AI Systems ───
 
 @api_router.get("/ai-systems", response_model=List[AISystem])
-async def list_ai_systems():
+async def list_ai_systems(admin_ok: None = Depends(require_admin)):
     database = await get_database()
     docs = await database.compass_ai_systems.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return docs
 
 @api_router.get("/ai-systems/{system_id}", response_model=AISystem)
-async def get_ai_system(system_id: str):
+async def get_ai_system(system_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     doc = await database.compass_ai_systems.find_one({"id": system_id}, {"_id": 0})
     if not doc:
@@ -1063,13 +1070,13 @@ async def delete_ai_system(system_id: str, admin_ok: None = Depends(require_admi
 # ─── COMPASSai: Assessments ───
 
 @api_router.get("/assessments", response_model=List[Assessment])
-async def list_assessments():
+async def list_assessments(admin_ok: None = Depends(require_admin)):
     database = await get_database()
     docs = await database.compass_assessments.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return docs
 
 @api_router.get("/assessments/{assessment_id}", response_model=Assessment)
-async def get_assessment(assessment_id: str):
+async def get_assessment(assessment_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     doc = await database.compass_assessments.find_one({"id": assessment_id}, {"_id": 0})
     if not doc:
@@ -1095,7 +1102,7 @@ async def create_assessment(input: AssessmentCreate, admin_ok: None = Depends(re
 # ─── COMPASSai: Assessment Deliverables ───
 
 @api_router.get("/assessments/{assessment_id}/deliverables")
-async def get_assessment_deliverables(assessment_id: str):
+async def get_assessment_deliverables(assessment_id: str, admin_ok: None = Depends(require_admin)):
     database = await get_database()
     assessment = await database.compass_assessments.find_one({"id": assessment_id}, {"_id": 0})
     if not assessment:
@@ -1333,6 +1340,11 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_db_client():
+    if not COMPASSAI_ENV_FILE.exists():
+        logger.warning(
+            "COMPASSAI_ENV_FILE not found at %s; fallback key loading will use process env and backend/.env only.",
+            COMPASSAI_ENV_FILE,
+        )
     await get_database()
     await seed_faq_items()
     await seed_service_packages()
