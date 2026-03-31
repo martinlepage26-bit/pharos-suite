@@ -8,9 +8,9 @@ const Footer = () => {
 
   const copy = language === 'fr'
     ? {
-        founderLine: 'Dirigé par Martin Lepage, PhD',
-        tagline: 'Un observatoire decentralise pour la gouvernance de l IA.',
-        proofLine: 'Observer, structurer et evaluer la gouvernance a travers les modeles, les institutions, les normes et les revendications.',
+        founderLine: 'Surface publique PHAROS',
+        tagline: 'Gouvernance IA pour les conditions de revue reelles.',
+        proofLine: 'Seuils explicites, droits de decision nommes et chemins de preuve qui restent lisibles sous audit, approvisionnement et supervision.',
         navigation: 'Navigation',
         home: 'Accueil',
         about: 'A propos',
@@ -25,9 +25,9 @@ const Footer = () => {
         location: 'Montreal, Quebec, Canada'
       }
     : {
-        founderLine: 'Led by Martin Lepage, PhD',
-        tagline: 'A decentralized observatory for AI governance.',
-        proofLine: 'Observing, structuring, and evaluating governance across models, institutions, standards, and claims.',
+        founderLine: 'PHAROS public surface',
+        tagline: 'AI governance for live review conditions.',
+        proofLine: 'Explicit thresholds, named decision rights, and evidence paths that stay legible under procurement, audit, and oversight.',
         navigation: 'Navigation',
         home: 'Home',
         about: 'About',

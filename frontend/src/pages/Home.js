@@ -6,6 +6,26 @@ const HERO_IMAGE = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa
 const GOVERNANCE_IMG = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa9sVq4AbrYE3FRZFywvK/pharos-governance-abstract-iSC7d8YMMfBcBt4Wc9W8Zd.webp';
 const DESK_IMG = deskReferenceImage;
 
+const HERO_PROOF_POINTS = [
+  {
+    label: 'Thresholds stated',
+    value: 'No implied gates',
+    body: 'Review conditions are named before they become arguments.'
+  },
+  {
+    label: 'Decision rights named',
+    value: 'Owner before opinion',
+    body: 'Who decides, who escalates, and what must be recorded stay explicit.'
+  },
+  {
+    label: 'Evidence reconstructible',
+    value: 'Ready for later scrutiny',
+    body: 'The answer survives procurement, audit, and executive review.'
+  }
+];
+
+const REVIEW_PRESSURE_NOTES = ['Procurement review', 'Audit pressure', 'Executive oversight'];
+
 const GOVERNANCE_PILLARS = [
   {
     number: '01',
@@ -212,8 +232,172 @@ const FAQS = [
     question: 'What is the typical engagement timeline?',
     answer:
       'Timeline depends on the pressure source and scope. The initial 30-minute review call establishes realistic timelines for your specific condition.'
+  },
+  {
+    question: 'How was PHAROS created?',
+    answer: (
+      <>
+        Start with the{' '}
+        <a
+          href="/pharos-ai-site/index.html#timeline"
+          className="font-medium text-[#173D74] underline decoration-[#D4A853]/70 underline-offset-4 hover:text-[#0F1923] transition-colors duration-200"
+        >
+          research timeline
+        </a>
+        . From there, you can open the governance tree and the linked SKILL ecosystem paper that document the build sequence and governance architecture.
+      </>
+    )
   }
 ];
+
+const HOME_SURFACE_POLISH = `
+  .home-newlook .pharos-hero-topline {
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .home-newlook .pharos-hero-wordmark {
+    color: #f6f1e6;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+  }
+
+  .home-newlook .pharos-hero-context {
+    color: rgba(255, 255, 255, 0.56);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .home-newlook .pharos-hero-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 3.2rem;
+    max-width: 58rem;
+  }
+
+  .home-newlook .pharos-hero-proof {
+    padding: 1rem 1.05rem;
+    border: 1px solid rgba(212, 168, 83, 0.22);
+    background: rgba(7, 17, 30, 0.5);
+    backdrop-filter: blur(14px);
+  }
+
+  .home-newlook .pharos-hero-proof-label {
+    display: block;
+    margin-bottom: 0.38rem;
+    color: rgba(212, 168, 83, 0.82);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .home-newlook .pharos-hero-proof-value {
+    display: block;
+    margin-bottom: 0.42rem;
+    color: #f7f4ec;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .home-newlook .pharos-hero-proof-body {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .home-newlook .pharos-editorial-note {
+    border: 1px solid rgba(212, 168, 83, 0.3);
+    background: linear-gradient(180deg, rgba(15, 25, 35, 0.96) 0%, rgba(19, 31, 46, 0.92) 100%);
+    box-shadow: 0 22px 44px rgba(4, 10, 18, 0.28);
+  }
+
+  .home-newlook .pharos-editorial-note-kicker {
+    color: rgba(212, 168, 83, 0.82);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .home-newlook .pharos-editorial-note-list {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+
+  .home-newlook .pharos-editorial-note-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .home-newlook .pharos-editorial-note-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-top: 0.38rem;
+    border-radius: 999px;
+    background: #d4a853;
+    flex-shrink: 0;
+  }
+
+  .home-newlook .pharos-route-card {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-color 220ms ease,
+      background-color 220ms ease;
+  }
+
+  .home-newlook .pharos-route-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+  }
+
+  .home-newlook .pharos-route-card-featured {
+    background: linear-gradient(180deg, rgba(15, 25, 35, 0.98) 0%, rgba(17, 32, 49, 0.96) 100%);
+    box-shadow: 0 28px 60px rgba(3, 9, 16, 0.32);
+  }
+
+  @media (max-width: 1024px) {
+    .home-newlook .pharos-hero-proof-grid {
+      grid-template-columns: 1fr;
+      max-width: 30rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-newlook .pharos-hero-topline {
+      gap: 0.7rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .home-newlook .pharos-hero-wordmark {
+      letter-spacing: 0.26em;
+    }
+
+    .home-newlook .pharos-hero-context {
+      width: 100%;
+    }
+  }
+`;
 
 function HeroSection() {
   const [loaded, setLoaded] = useState(false);
@@ -248,14 +432,14 @@ function HeroSection() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-24 pb-20 w-full">
-        <div className="max-w-3xl">
-          <div className={`flex items-center gap-4 mb-8 transition-all duration-700 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            <span className="text-[#D4A853] text-xs tracking-[0.3em] uppercase nowrap-ai-governance" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              Legible AI Governance
+        <div className="max-w-4xl">
+          <div className={`flex flex-wrap pharos-hero-topline transition-all duration-700 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <span className="pharos-hero-wordmark">
+              PHAROS
             </span>
             <span className="block w-12 h-px bg-[#D4A853]" />
-            <span className="text-white/50 text-xs tracking-[0.2em] uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>
-              by Martin Lepage, PhD
+            <span className="pharos-hero-context">
+              Procurement · Audit · Oversight
             </span>
           </div>
 
@@ -267,21 +451,19 @@ function HeroSection() {
               fontWeight: 600
             }}
           >
-            Deterministic
+            AI governance
             <br />
-            <span className="nowrap-ai-governance">
-              AI <em style={{ color: '#D4A853', fontStyle: 'italic' }}>governance</em>
-            </span>
+            that survives
             <br />
-            under pressure
+            <em style={{ color: '#D4A853', fontStyle: 'italic' }}>review</em>
           </h1>
 
           <p
             className={`text-white/70 text-lg leading-relaxed mb-10 max-w-xl transition-all duration-700 delay-200 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}
           >
-            When procurement, audit, or executive review asks how AI is governed, PHAROS helps teams answer with evidence,
-            deterministic decision rights, explicit thresholds, and review-ready documentation.
+            When procurement, audit, or executive review asks how AI is governed, PHAROS helps teams answer with explicit thresholds,
+            named decision rights, and evidence a reviewer can actually follow.
           </p>
 
           <div className={`flex flex-wrap gap-4 transition-all duration-700 delay-300 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -300,17 +482,16 @@ function HeroSection() {
               className="inline-flex items-center gap-3 px-8 py-4 border border-white/30 text-white text-sm font-bold tracking-[0.15em] uppercase hover:border-[#D4A853] hover:text-[#D4A853] transition-all duration-200"
               style={{ fontFamily: "'Lato', sans-serif" }}
             >
-              See How It Works
+              Read the Method
             </a>
           </div>
 
-          <div className={`mt-16 pt-8 border-t border-white/10 flex flex-wrap gap-8 transition-all duration-700 delay-500 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            {['NIST AI RMF', 'ISO/IEC 42001', 'EU AI Act'].map((standard) => (
-              <div key={standard} className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4A853]" />
-                <span className="text-white/50 text-xs tracking-widest uppercase" style={{ fontFamily: "'Space Mono', monospace" }}>
-                  {standard}
-                </span>
+          <div className={`pharos-hero-proof-grid transition-all duration-700 delay-500 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {HERO_PROOF_POINTS.map((point) => (
+              <div key={point.label} className="pharos-hero-proof">
+                <span className="pharos-hero-proof-label">{point.label}</span>
+                <span className="pharos-hero-proof-value">{point.value}</span>
+                <p className="pharos-hero-proof-body">{point.body}</p>
               </div>
             ))}
           </div>
@@ -346,25 +527,23 @@ function AboutSection() {
                 fontWeight: 600
               }}
             >
-              Evidence before
+              Built for the moment
               <br />
-              <em style={{ color: '#D4A853', fontStyle: 'italic' }}>rhetoric</em>
+              <em style={{ color: '#D4A853', fontStyle: 'italic' }}>scrutiny turns real</em>
             </h2>
 
             <p className="text-[#4A5568] text-base leading-relaxed mb-6" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              PHAROS is a governance practice built by <strong className="font-bold text-[#1C1C1E]">Martin Lepage, PhD</strong>,
-              for organizations that face live review pressure.
+              PHAROS is a governance practice for organizations facing live review pressure, not abstract governance theater.
             </p>
 
             <p className="text-[#4A5568] text-base leading-relaxed mb-8" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              When a buyer, auditor, vendor, or executive committee asks how AI is governed, the answer must be inspectable,
-              not a posture, not a narrative. PHAROS turns ambiguity into explicit thresholds, named decision rights,
-              and documentation that survives scrutiny.
+              When a buyer, auditor, vendor, or executive committee asks how AI is governed, the useful answer must be inspectable.
+              PHAROS turns ambiguity into explicit thresholds, named decision rights, and documentation that survives the next round of scrutiny.
             </p>
 
             <blockquote className="border-l-2 border-[#D4A853] pl-6 py-2 mb-8">
               <p className="text-[#1C1C1E] text-xl italic leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}>
-                Trust does not come from tone alone. It comes from explicit thresholds, named decisions, and a body of evidence that can actually be inspected.
+                The useful answer is not “we take governance seriously.” It is “here is the threshold, here is the owner, here is the evidence.”
               </p>
             </blockquote>
 
@@ -395,21 +574,18 @@ function AboutSection() {
               <span className="about-photo-corner about-photo-corner-br" aria-hidden="true" />
             </div>
 
-            <div className="absolute -bottom-6 -left-6 bg-[#0F1923] p-6 shadow-2xl" style={{ maxWidth: '220px' }}>
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border border-[#D4A853]/40">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                    <path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="#D4A853" strokeWidth="1.2" fill="none" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-white text-sm font-bold leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1rem' }}>
-                    Martin Lepage
-                  </p>
-                  <p className="text-[#D4A853] text-xs tracking-wide mt-0.5 nowrap-ai-governance" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    PhD · AI Governance
-                  </p>
-                </div>
+            <div className="absolute -bottom-6 -left-6 pharos-editorial-note p-6" style={{ maxWidth: '240px' }}>
+              <p className="pharos-editorial-note-kicker">Most useful when</p>
+              <p className="text-white text-lg leading-tight mt-2" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
+                Review pressure is already shaping the work.
+              </p>
+              <div className="pharos-editorial-note-list">
+                {REVIEW_PRESSURE_NOTES.map((item) => (
+                  <div key={item} className="pharos-editorial-note-item">
+                    <span className="pharos-editorial-note-dot" />
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -635,9 +811,9 @@ function ServicesSection() {
           {SERVICES.map((service, i) => (
             <div
               key={service.title}
-              className={`reveal reveal-delay-${i + 1} relative flex flex-col ${
+              className={`reveal reveal-delay-${i + 1} pharos-route-card relative flex flex-col ${
                 service.featured ? 'bg-[#0F1923] text-white border border-[#D4A853]/35' : 'bg-white border border-[#E8E4DC] text-[#1C1C1E]'
-              } p-10 group hover:shadow-2xl transition-all duration-300`}
+              } ${service.featured ? 'pharos-route-card-featured' : ''} p-10 group`}
             >
               <div className="flex items-center justify-between mb-8">
                 <span
@@ -684,7 +860,7 @@ function ServicesSection() {
                 }`}
                 style={{ fontFamily: "'Lato', sans-serif" }}
               >
-                View Service
+                Start This Route
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -1004,6 +1180,7 @@ export default function Home() {
 
   return (
     <div className="home-newlook min-h-screen" data-testid="home-page">
+      <style>{HOME_SURFACE_POLISH}</style>
       <HeroSection />
       <AboutSection />
       <GovernanceSection />
