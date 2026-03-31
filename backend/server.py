@@ -796,6 +796,519 @@ async def seed_service_packages():
         await database.service_packages.insert_many(SEED_SERVICE_PACKAGES)
         logger.info(f"Seeded {len(SEED_SERVICE_PACKAGES)} service packages")
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMPASSai — Governance Execution Layer
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ─── COMPASSai Models ───
+
+class PrimaryContact(BaseModel):
+    name: str = ""
+    email: str = ""
+    title: str = ""
+
+class Client(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    company_name: str
+    sector: str = "SaaS"
+    primary_contact: PrimaryContact = Field(default_factory=PrimaryContact)
+    jurisdiction: Optional[str] = None
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class ClientCreate(BaseModel):
+    company_name: str
+    sector: str = "SaaS"
+    primary_contact: PrimaryContact = Field(default_factory=PrimaryContact)
+    jurisdiction: Optional[str] = None
+
+class ClientUpdate(BaseModel):
+    company_name: Optional[str] = None
+    sector: Optional[str] = None
+    primary_contact: Optional[PrimaryContact] = None
+    jurisdiction: Optional[str] = None
+
+class AISystem(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    client_id: str
+    system_name: str
+    system_type: str = ""
+    system_description: str = ""
+    decision_role: str = "Informational"
+    user_type: str = "Internal"
+    high_stakes: bool = False
+    intended_use: Optional[str] = None
+    human_override: bool = False
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class AISystemCreate(BaseModel):
+    client_id: str
+    system_name: str
+    system_type: str = ""
+    system_description: str = ""
+    decision_role: str = "Informational"
+    user_type: str = "Internal"
+    high_stakes: bool = False
+    intended_use: Optional[str] = None
+    human_override: bool = False
+
+class AISystemUpdate(BaseModel):
+    client_id: Optional[str] = None
+    system_name: Optional[str] = None
+    system_type: Optional[str] = None
+    system_description: Optional[str] = None
+    decision_role: Optional[str] = None
+    user_type: Optional[str] = None
+    high_stakes: Optional[bool] = None
+    intended_use: Optional[str] = None
+    human_override: Optional[bool] = None
+
+class GovernanceFlags(BaseModel):
+    scope_locked: bool = False
+    allowed_uses_defined: bool = False
+    prohibited_uses_defined: bool = False
+
+class Assessment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    client_id: str
+    ai_system_id: str
+    queries: List[str] = []
+    strict_mode: bool = True
+    governance: GovernanceFlags = Field(default_factory=GovernanceFlags)
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class AssessmentCreate(BaseModel):
+    client_id: str
+    ai_system_id: str
+    queries: List[str] = []
+    strict_mode: bool = True
+    governance: GovernanceFlags = Field(default_factory=GovernanceFlags)
+
+class Evidence(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    assessment_id: str
+    control_id: str = ""
+    description: str = ""
+    filename: str = ""
+    content_type: str = ""
+    size_bytes: int = 0
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class ScheduledAssessment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    client_id: str
+    ai_system_id: str
+    frequency: str = "monthly"
+    notify_emails: List[str] = []
+    active: bool = True
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    next_due: Optional[str] = None
+
+class ScheduledAssessmentCreate(BaseModel):
+    client_id: str
+    ai_system_id: str
+    frequency: str = "monthly"
+    notify_emails: List[str] = []
+
+
+def compute_next_due(frequency: str, from_date: Optional[datetime] = None) -> str:
+    base = from_date or datetime.now(timezone.utc)
+    if frequency == "monthly":
+        month = base.month % 12 + 1
+        year = base.year + (1 if base.month == 12 else 0)
+        return base.replace(year=year, month=month, day=1).isoformat()
+    elif frequency == "quarterly":
+        month = base.month + 3
+        year = base.year + (month - 1) // 12
+        month = (month - 1) % 12 + 1
+        return base.replace(year=year, month=month, day=1).isoformat()
+    else:  # annual
+        return base.replace(year=base.year + 1, month=1, day=1).isoformat()
+
+
+# ─── COMPASSai: Dashboard Stats ───
+
+@api_router.get("/stats/dashboard")
+async def compass_dashboard_stats():
+    database = await get_database()
+    clients_count = await database.compass_clients.count_documents({})
+    systems_count = await database.compass_ai_systems.count_documents({})
+    assessments_count = await database.compass_assessments.count_documents({})
+    evidence_count = await database.compass_evidence.count_documents({})
+    schedules_count = await database.compass_scheduled_assessments.count_documents({"active": True})
+
+    recent_assessments = await database.compass_assessments.find(
+        {}, {"_id": 0, "id": 1, "client_id": 1, "ai_system_id": 1, "created_at": 1}
+    ).sort("created_at", -1).to_list(5)
+
+    return {
+        "clients": clients_count,
+        "ai_systems": systems_count,
+        "assessments": assessments_count,
+        "evidence_files": evidence_count,
+        "active_schedules": schedules_count,
+        "recent_assessments": recent_assessments,
+    }
+
+
+# ─── COMPASSai: Clients ───
+
+@api_router.get("/clients", response_model=List[Client])
+async def list_clients():
+    database = await get_database()
+    docs = await database.compass_clients.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    return docs
+
+@api_router.get("/clients/{client_id}", response_model=Client)
+async def get_client(client_id: str):
+    database = await get_database()
+    doc = await database.compass_clients.find_one({"id": client_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Client not found")
+    return doc
+
+@api_router.post("/clients", response_model=Client)
+async def create_client(input: ClientCreate, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    client_obj = Client(**input.model_dump())
+    doc = client_obj.model_dump()
+    doc["primary_contact"] = doc["primary_contact"] if isinstance(doc["primary_contact"], dict) else doc["primary_contact"].model_dump() if hasattr(doc["primary_contact"], "model_dump") else {}
+    await database.compass_clients.insert_one(doc)
+    return client_obj
+
+@api_router.put("/clients/{client_id}", response_model=Client)
+async def update_client(client_id: str, input: ClientUpdate, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    update_data = {}
+    for k, v in input.model_dump().items():
+        if v is not None:
+            if k == "primary_contact":
+                update_data[k] = v if isinstance(v, dict) else v
+            else:
+                update_data[k] = v
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await database.compass_clients.find_one_and_update(
+        {"id": client_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Client not found")
+    return result
+
+@api_router.delete("/clients/{client_id}")
+async def delete_client(client_id: str, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    result = await database.compass_clients.delete_one({"id": client_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Client not found")
+    return {"status": "deleted"}
+
+
+# ─── COMPASSai: AI Systems ───
+
+@api_router.get("/ai-systems", response_model=List[AISystem])
+async def list_ai_systems():
+    database = await get_database()
+    docs = await database.compass_ai_systems.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    return docs
+
+@api_router.get("/ai-systems/{system_id}", response_model=AISystem)
+async def get_ai_system(system_id: str):
+    database = await get_database()
+    doc = await database.compass_ai_systems.find_one({"id": system_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="AI system not found")
+    return doc
+
+@api_router.post("/ai-systems", response_model=AISystem)
+async def create_ai_system(input: AISystemCreate, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    existing_client = await database.compass_clients.find_one({"id": input.client_id})
+    if not existing_client:
+        raise HTTPException(status_code=400, detail="Client not found")
+    system_obj = AISystem(**input.model_dump())
+    await database.compass_ai_systems.insert_one(system_obj.model_dump())
+    return system_obj
+
+@api_router.put("/ai-systems/{system_id}", response_model=AISystem)
+async def update_ai_system(system_id: str, input: AISystemUpdate, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    if "client_id" in update_data:
+        existing_client = await database.compass_clients.find_one({"id": update_data["client_id"]})
+        if not existing_client:
+            raise HTTPException(status_code=400, detail="Client not found")
+    result = await database.compass_ai_systems.find_one_and_update(
+        {"id": system_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="AI system not found")
+    return result
+
+@api_router.delete("/ai-systems/{system_id}")
+async def delete_ai_system(system_id: str, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    result = await database.compass_ai_systems.delete_one({"id": system_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="AI system not found")
+    return {"status": "deleted"}
+
+
+# ─── COMPASSai: Assessments ───
+
+@api_router.get("/assessments", response_model=List[Assessment])
+async def list_assessments():
+    database = await get_database()
+    docs = await database.compass_assessments.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    return docs
+
+@api_router.get("/assessments/{assessment_id}", response_model=Assessment)
+async def get_assessment(assessment_id: str):
+    database = await get_database()
+    doc = await database.compass_assessments.find_one({"id": assessment_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Assessment not found")
+    return doc
+
+@api_router.post("/assessments", response_model=Assessment)
+async def create_assessment(input: AssessmentCreate, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    existing_client = await database.compass_clients.find_one({"id": input.client_id})
+    if not existing_client:
+        raise HTTPException(status_code=400, detail="Client not found")
+    existing_system = await database.compass_ai_systems.find_one({"id": input.ai_system_id})
+    if not existing_system:
+        raise HTTPException(status_code=400, detail="AI system not found")
+    assessment_obj = Assessment(**input.model_dump())
+    doc = assessment_obj.model_dump()
+    doc["governance"] = doc["governance"] if isinstance(doc["governance"], dict) else doc["governance"]
+    await database.compass_assessments.insert_one(doc)
+    return assessment_obj
+
+
+# ─── COMPASSai: Assessment Deliverables ───
+
+@api_router.get("/assessments/{assessment_id}/deliverables")
+async def get_assessment_deliverables(assessment_id: str):
+    database = await get_database()
+    assessment = await database.compass_assessments.find_one({"id": assessment_id}, {"_id": 0})
+    if not assessment:
+        raise HTTPException(status_code=404, detail="Assessment not found")
+
+    evidence_docs = await database.compass_evidence.find(
+        {"assessment_id": assessment_id}, {"_id": 0}
+    ).to_list(100)
+
+    client = await database.compass_clients.find_one(
+        {"id": assessment.get("client_id")}, {"_id": 0, "company_name": 1, "sector": 1, "jurisdiction": 1}
+    )
+    system = await database.compass_ai_systems.find_one(
+        {"id": assessment.get("ai_system_id")}, {"_id": 0, "system_name": 1, "decision_role": 1, "high_stakes": 1, "human_override": 1}
+    )
+
+    governance = assessment.get("governance", {})
+
+    return {
+        "assessment_id": assessment_id,
+        "client": client,
+        "system": system,
+        "strict_mode": assessment.get("strict_mode", True),
+        "governance": governance,
+        "evidence_count": len(evidence_docs),
+        "evidence": evidence_docs,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "deliverables": [
+            {
+                "type": "governance_summary",
+                "title": "Governance Assessment Summary",
+                "status": "generated",
+                "sections": [
+                    f"Client: {client.get('company_name', 'Unknown') if client else 'Unknown'}",
+                    f"System: {system.get('system_name', 'Unknown') if system else 'Unknown'}",
+                    f"Decision role: {system.get('decision_role', 'N/A') if system else 'N/A'}",
+                    f"High stakes: {'Yes' if system and system.get('high_stakes') else 'No'}",
+                    f"Human override: {'Yes' if system and system.get('human_override') else 'No'}",
+                    f"Scope locked: {'Yes' if governance.get('scope_locked') else 'No'}",
+                    f"Evidence files: {len(evidence_docs)}",
+                ]
+            },
+            {
+                "type": "evidence_manifest",
+                "title": "Evidence Manifest",
+                "status": "generated" if evidence_docs else "pending",
+                "items": [
+                    {"control_id": e.get("control_id", ""), "description": e.get("description", ""), "filename": e.get("filename", "")}
+                    for e in evidence_docs
+                ]
+            },
+        ]
+    }
+
+
+# ─── COMPASSai: Benchmarks ───
+
+SECTOR_BENCHMARKS = {
+    "SaaS": {
+        "sector": "SaaS",
+        "avg_systems_per_client": 4.2,
+        "governance_adoption_pct": 38,
+        "common_risk_tier": "Medium",
+        "top_controls": ["Access logging", "Model versioning", "Bias testing", "Data retention policy"],
+        "regulatory_focus": ["EU AI Act (general-purpose)", "Quebec Law 25 (privacy)"],
+    },
+    "Healthcare": {
+        "sector": "Healthcare",
+        "avg_systems_per_client": 2.8,
+        "governance_adoption_pct": 52,
+        "common_risk_tier": "High",
+        "top_controls": ["Clinical validation", "Patient consent tracking", "Explainability reports", "Adverse event monitoring"],
+        "regulatory_focus": ["EU AI Act (high-risk)", "FDA AI/ML guidance", "Quebec Law 25"],
+    },
+    "Finance": {
+        "sector": "Finance",
+        "avg_systems_per_client": 5.1,
+        "governance_adoption_pct": 61,
+        "common_risk_tier": "High",
+        "top_controls": ["Model risk management", "Fair lending analysis", "Audit trail", "Stress testing"],
+        "regulatory_focus": ["EU AI Act (high-risk)", "SR 11-7 model risk", "OSFI B-13"],
+    },
+    "Education": {
+        "sector": "Education",
+        "avg_systems_per_client": 2.1,
+        "governance_adoption_pct": 22,
+        "common_risk_tier": "Medium",
+        "top_controls": ["Student data protection", "Algorithmic grading review", "Accessibility audit", "Parental consent"],
+        "regulatory_focus": ["FERPA", "Quebec Law 25", "EU AI Act (education context)"],
+    },
+    "Public": {
+        "sector": "Public",
+        "avg_systems_per_client": 3.4,
+        "governance_adoption_pct": 45,
+        "common_risk_tier": "High",
+        "top_controls": ["Algorithmic impact assessment", "Transparency reporting", "Human-in-the-loop", "Equity review"],
+        "regulatory_focus": ["Treasury Board Directive on ADS", "EU AI Act (public sector)", "Quebec Law 25"],
+    },
+    "Construction": {
+        "sector": "Construction",
+        "avg_systems_per_client": 1.7,
+        "governance_adoption_pct": 14,
+        "common_risk_tier": "Low",
+        "top_controls": ["Safety monitoring validation", "Equipment prediction review", "Worker data protection", "Vendor AI due diligence"],
+        "regulatory_focus": ["Quebec Law 25 (privacy)", "Provincial OHS regulations"],
+    },
+    "Other": {
+        "sector": "Other",
+        "avg_systems_per_client": 2.5,
+        "governance_adoption_pct": 28,
+        "common_risk_tier": "Medium",
+        "top_controls": ["Use case inventory", "Risk classification", "Decision logging", "Vendor review"],
+        "regulatory_focus": ["EU AI Act (general obligations)", "Quebec Law 25"],
+    },
+}
+
+@api_router.get("/benchmarks/{sector}")
+async def get_sector_benchmark(sector: str):
+    benchmark = SECTOR_BENCHMARKS.get(sector)
+    if not benchmark:
+        raise HTTPException(status_code=404, detail=f"No benchmark data for sector: {sector}")
+    return benchmark
+
+
+# ─── COMPASSai: Evidence Upload ───
+
+from fastapi import File, Form, UploadFile
+
+EVIDENCE_UPLOAD_DIR = ROOT_DIR / "uploads" / "evidence"
+EVIDENCE_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+MAX_EVIDENCE_SIZE = 10 * 1024 * 1024  # 10 MB
+
+@api_router.post("/evidence/upload", response_model=Evidence)
+async def upload_evidence(
+    assessment_id: str = Form(...),
+    control_id: str = Form(""),
+    description: str = Form(""),
+    file: UploadFile = File(...),
+    admin_ok: None = Depends(require_admin),
+):
+    database = await get_database()
+    existing_assessment = await database.compass_assessments.find_one({"id": assessment_id})
+    if not existing_assessment:
+        raise HTTPException(status_code=400, detail="Assessment not found")
+
+    contents = await file.read()
+    if len(contents) > MAX_EVIDENCE_SIZE:
+        raise HTTPException(status_code=413, detail="File exceeds 10 MB limit")
+
+    evidence_obj = Evidence(
+        assessment_id=assessment_id,
+        control_id=control_id,
+        description=description,
+        filename=file.filename or "unnamed",
+        content_type=file.content_type or "application/octet-stream",
+        size_bytes=len(contents),
+    )
+
+    file_path = EVIDENCE_UPLOAD_DIR / f"{evidence_obj.id}_{evidence_obj.filename}"
+    with open(file_path, "wb") as f:
+        f.write(contents)
+
+    await database.compass_evidence.insert_one(evidence_obj.model_dump())
+    return evidence_obj
+
+
+# ─── COMPASSai: Scheduled Assessments ───
+
+@api_router.get("/scheduled-assessments", response_model=List[ScheduledAssessment])
+async def list_scheduled_assessments(admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    docs = await database.compass_scheduled_assessments.find(
+        {"active": True}, {"_id": 0}
+    ).sort("created_at", -1).to_list(500)
+    return docs
+
+@api_router.get("/scheduled-assessments/due")
+async def list_due_scheduled_assessments(admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    now = datetime.now(timezone.utc).isoformat()
+    docs = await database.compass_scheduled_assessments.find(
+        {"active": True, "next_due": {"$lte": now}}, {"_id": 0}
+    ).sort("next_due", 1).to_list(100)
+    return docs
+
+@api_router.post("/scheduled-assessments", response_model=ScheduledAssessment)
+async def create_scheduled_assessment(input: ScheduledAssessmentCreate, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    existing_client = await database.compass_clients.find_one({"id": input.client_id})
+    if not existing_client:
+        raise HTTPException(status_code=400, detail="Client not found")
+    existing_system = await database.compass_ai_systems.find_one({"id": input.ai_system_id})
+    if not existing_system:
+        raise HTTPException(status_code=400, detail="AI system not found")
+
+    schedule_obj = ScheduledAssessment(
+        **input.model_dump(),
+        next_due=compute_next_due(input.frequency),
+    )
+    await database.compass_scheduled_assessments.insert_one(schedule_obj.model_dump())
+    return schedule_obj
+
+@api_router.delete("/scheduled-assessments/{schedule_id}")
+async def delete_scheduled_assessment(schedule_id: str, admin_ok: None = Depends(require_admin)):
+    database = await get_database()
+    result = await database.compass_scheduled_assessments.find_one_and_update(
+        {"id": schedule_id}, {"$set": {"active": False}}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Scheduled assessment not found")
+    return {"status": "deactivated"}
+
+
 # ─── App Setup ───
 
 app.include_router(api_router)
