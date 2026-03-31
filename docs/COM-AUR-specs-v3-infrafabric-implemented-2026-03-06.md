@@ -1,4 +1,4 @@
-# AurorAI + ComPassAI — Specification Sheets (InfraFabric-Implemented, Bible-Compliant)
+# AurorA + ComPassAI — Specification Sheets (InfraFabric-Implemented, Bible-Compliant)
 
 Martin Lepage | pharos@pharos-ai.ca | Govern AI — AI Governance Practice and Research | 2026-03-06
 
@@ -7,7 +7,7 @@ Martin Lepage | pharos@pharos-ai.ca | Govern AI — AI Governance Practice and R
 **Next checkpoint date:** 2026-04-06
 **Accountable and responsible approver:** Martin Lepage | pharos@pharos-ai.ca
 **InfraFabric framework contributor and designated reviewer:** Danny Stocker | ds@infrafabric.io | InfraFabric Research
-**Provenance note:** AurorAI and ComPassAI are original products of Martin Lepage, developed under GovernAI. Their governance architecture and claim-boundary discipline are built on InfraFabric's structural framework with explicit permission from Danny Stocker, owner of InfraFabric.
+**Provenance note:** AurorA and ComPassAI are original products of Martin Lepage, developed under GovernAI. Their governance architecture and claim-boundary discipline are built on InfraFabric's structural framework with explicit permission from Danny Stocker, owner of InfraFabric.
 **Backup reviewer/operator:** TBD — open continuity risk; must be named before next checkpoint or this risk remains explicitly unresolved.
 **LLM-assist disclosure:** Synthesized and revised with Claude Sonnet assistance on 2026-03-06; accountable human author remains Martin Lepage.
 **Alignment basis:** InfraFabric module registry `if.registry.json` rechecked live on `2026-03-06`, supplemented by module-specific explainers in the local InfraFabric source corpus (`C:\Users\softinfo\Documents\InfraFabric`) and blackboard-confirmed posture from `2026-03-06T08:04:14Z` (IF-2348 evidence bundle).
@@ -18,13 +18,13 @@ Martin Lepage | pharos@pharos-ai.ca | Govern AI — AI Governance Practice and R
 
 ## Governance Architecture
 
-AurorAI and ComPassAI are built on a single constraint: governance documentation is only as credible as the evidence it derives from, and no capability claim in either product exceeds what the underlying infrastructure currently supports.
+AurorA and ComPassAI are built on a single constraint: governance documentation is only as credible as the evidence it derives from, and no capability claim in either product exceeds what the underlying infrastructure currently supports.
 
 Both products are original creations of Martin Lepage, developed under GovernAI. Their technical architecture and claim-boundary discipline are built on InfraFabric's governance framework, used with permission from Danny Stocker, InfraFabric's owner.
 
 InfraFabric's framework does specific structural work here. It supplies the registry-pinned module status system that prevents capability claims from outrunning deployment reality, the evidence hierarchy that distinguishes what is publicly verifiable from what requires operator configuration, and the fail-closed posture that treats uncertainty as a reason to downgrade claims rather than smooth them over.
 
-Where InfraFabric modules are integrated into AurorAI or ComPassAI, each is described at its actual registry status: `shipped`, `preview`, or `roadmap`. That status is the floor of what can be claimed, not a starting point for negotiation.
+Where InfraFabric modules are integrated into AurorA or ComPassAI, each is described at its actual registry status: `shipped`, `preview`, or `roadmap`. That status is the floor of what can be claimed, not a starting point for negotiation.
 
 The implication is deliberate and non-optional: an AI governance platform that overstates its own capabilities cannot credibly govern the AI systems of others. GovernAI therefore holds itself to the same evidentiary standard it asks of every system it governs.
 
@@ -35,7 +35,7 @@ This is not an incidental design preference. It reflects a shared conviction: AI
 - Draft/internal surface: `/home/claude/` working directory
 - Reviewer interpretation rule: outputs directory version is authoritative for current claims.
 
-**Complexity budget justification (bible Section 7.2):** This document exceeds 5,000 words and 15 top-level sections because AurorAI and ComPassAI are two interdependent products sharing a claim boundary framework, a regulatory compliance annex spanning five jurisdictions, and a governance philosophy that must be explained once and applied consistently. Splitting now would require duplicating the claim boundary framework and registry status table in each part, creating cross-reference maintenance debt greater than the complexity of the merged document.
+**Complexity budget justification (bible Section 7.2):** This document exceeds 5,000 words and 15 top-level sections because AurorA and ComPassAI are two interdependent products sharing a claim boundary framework, a regulatory compliance annex spanning five jurisdictions, and a governance philosophy that must be explained once and applied consistently. Splitting now would require duplicating the claim boundary framework and registry status table in each part, creating cross-reference maintenance debt greater than the complexity of the merged document.
 
 ---
 
@@ -47,7 +47,7 @@ Register mode default: `domain-native`. Every section uses literal product, cont
 
 **Power Users / Operators** — Sections: Core Architecture, Quality Controls Matrix, Implementation Guide, Operating Procedures, Open Findings. Purpose: configure extraction pipelines, set confidence thresholds, run the approval workflow, respond to incidents. Register: `domain-native` throughout. Literal zone starts at Core Architecture.
 
-**Engineers / Implementers** — Sections: Evidence Package Format, InfraFabric Integration, Policy Engine, Deliverable Generation, Approval Workflow. Purpose: integrate AurorAI with source systems, build ComPassAI policy rules, wire if.trace binding. Register: `domain-native` throughout.
+**Engineers / Implementers** — Sections: Evidence Package Format, InfraFabric Integration, Policy Engine, Deliverable Generation, Approval Workflow. Purpose: integrate AurorA with source systems, build ComPassAI policy rules, wire if.trace binding. Register: `domain-native` throughout.
 
 **LLM Runtime Developers / Compliance Reviewers** — Sections: Claim Boundary, Registry Status Table, Regulatory Alignment Matrix, Annex A. Purpose: verify claim strength against module registry, confirm what is and is not certified, audit evidence hierarchy. Register: `domain-native` throughout; abstraction is a publish blocker in these sections.
 
@@ -59,9 +59,9 @@ Register mode default: `domain-native`. Every section uses literal product, cont
 
 **Why:** AI document processing pipelines that produce no chain-of-custody evidence create unresolvable audit gaps. Governance documentation that is composed by hand rather than derived from structured evidence is inconsistent, unrepeatable, and breaks down whenever the underlying system changes faster than the documentation cycle. This specification exists because both failure modes are preventable.
 
-**What:** The designed architecture for AurorAI (intelligent document extraction with evidence packages) and ComPassAI (governance workflow engine consuming those packages), including all claim boundaries, InfraFabric integration points, and multi-jurisdiction regulatory alignment posture.
+**What:** The designed architecture for AurorA (intelligent document extraction with evidence packages) and ComPassAI (governance workflow engine consuming those packages), including all claim boundaries, InfraFabric integration points, and multi-jurisdiction regulatory alignment posture.
 
-**Where:** AurorAI and ComPassAI deployments; InfraFabric module registry at `https://infrafabric.io/llm/if.registry.json.txt`; blackboard at `https://infrafabric.io/llm/blackboard/index.md.txt`.
+**Where:** AurorA and ComPassAI deployments; InfraFabric module registry at `https://infrafabric.io/llm/if.registry.json.txt`; blackboard at `https://infrafabric.io/llm/blackboard/index.md.txt`.
 
 **When:** Drafting and review in LLM/operator windows (`30/60/90 minutes | 3/6/9 hours`). Deployment decisions and regulatory compliance determinations are day-scale decisions requiring human legal review. Do not conflate LLM drafting windows with compliance determination timelines.
 
@@ -73,13 +73,13 @@ Register mode default: `domain-native`. Every section uses literal product, cont
 
 Every organization that deploys AI document processing eventually faces the same audit moment: a regulator, a procurement officer, or an incident investigator asks for the chain of custody on a decision that was made using AI-extracted data, and nobody can produce it. Not because the data was wrong — but because the pipeline that produced it generated no evidence of its own behavior. The logs record that processing happened. They do not record whether the confidence threshold was met, whether PII was detected, whether a human reviewed the low-confidence fields, or why the extraction result was trusted.
 
-This is the structural failure AurorAI and ComPassAI are designed to prevent. AurorAI makes chain of custody the primary output — structured data is the secondary output. ComPassAI turns that chain of custody into auditable governance documentation. Together, they close the gap between "we processed a document" and "we can prove, to a skeptical external reviewer, exactly how that document was processed and who approved the result."
+This is the structural failure AurorA and ComPassAI are designed to prevent. AurorA makes chain of custody the primary output — structured data is the secondary output. ComPassAI turns that chain of custody into auditable governance documentation. Together, they close the gap between "we processed a document" and "we can prove, to a skeptical external reviewer, exactly how that document was processed and who approved the result."
 
 The risk of ignoring this problem is not theoretical. The EU AI Act's high-risk system obligations begin applying to relevant deployment categories between August 2026 and August 2027. Canada's Quebec Law 25 is already in force. US state AI laws — Colorado, California, Illinois, New York City — are in effect or imminent. Organizations that cannot produce governance documentation on demand will face not just regulatory exposure but operational vulnerability: when something goes wrong with an AI-assisted decision, the inability to reconstruct the decision trail is its own liability, independent of whether the decision itself was correct.
 
-The assumption most likely to be wrong in this problem framing: that the governance documentation problem is primarily a compliance problem. It is also an operational problem. Teams that cannot reconstruct why a configuration exists will eventually "improve" it into failure. The AI copilot that suggests cleaning up the rate-limit logic does not know about the Black Friday incident — and without a narrative trail, neither will the next engineer. AurorAI and ComPassAI solve both problems simultaneously.
+The assumption most likely to be wrong in this problem framing: that the governance documentation problem is primarily a compliance problem. It is also an operational problem. Teams that cannot reconstruct why a configuration exists will eventually "improve" it into failure. The AI copilot that suggests cleaning up the rate-limit logic does not know about the Black Friday incident — and without a narrative trail, neither will the next engineer. AurorA and ComPassAI solve both problems simultaneously.
 
-Invalidation test: if an operator can produce a complete, auditable governance trail for an AI-assisted decision without AurorAI and ComPassAI — using only their existing tooling — then these products add no value for that operator. The correct response to that scenario is not to reframe the products; it is to document it as a scope boundary.
+Invalidation test: if an operator can produce a complete, auditable governance trail for an AI-assisted decision without AurorA and ComPassAI — using only their existing tooling — then these products add no value for that operator. The correct response to that scenario is not to reframe the products; it is to document it as a scope boundary.
 
 ---
 
@@ -87,7 +87,7 @@ Invalidation test: if an operator can produce a complete, auditable governance t
 
 | Decision question | Current answer | Evidence state | Risk if ignored |
 |---|---|---|---|
-| Does AurorAI produce a chain-of-custody evidence package on every extraction? | Yes, with operator configuration | Evidence package schema is a defined interface contract | Without it, audit trail is narrative, not cryptographic |
+| Does AurorA produce a chain-of-custody evidence package on every extraction? | Yes, with operator configuration | Evidence package schema is a defined interface contract | Without it, audit trail is narrative, not cryptographic |
 | Is ComPassAI governance documentation derived from evidence, not hand-composed? | Yes | Policy engine + deliverable generator consume evidence package fields | Hand-composed docs diverge from actual system behavior |
 | Is if.trace binding automatic on every evidence package? | No — operator-triggered for high-risk use cases | `if_trace_receipt: null` in default schema; explicit configuration required | High-risk use cases may lack cryptographic integrity proof |
 | Is if.gov.council automated voting deployed? | No — roadmap | `if.gov.council` is `roadmap`; council/triage scripts run locally only | Claiming automated council voting in proposals is an overclaim |
@@ -102,11 +102,11 @@ The governance documentation problem can be addressed three ways. The first is m
 
 The second is template automation: structured templates that operators fill in. This is faster than pure manual documentation but still requires human knowledge of what to enter; the documentation is not derived from the actual system behavior, so it can diverge from reality without detection. When a system configuration changes, the template documentation may not be updated.
 
-The third is evidence-derived documentation, which is what AurorAI and ComPassAI implement: governance documents are generated from the structured evidence that the extraction pipeline produces. The documentation cannot claim more than the evidence supports. Gaps produce gaps, not fabricated content. The audit trail is the evidence chain, not a separate artifact maintained in parallel.
+The third is evidence-derived documentation, which is what AurorA and ComPassAI implement: governance documents are generated from the structured evidence that the extraction pipeline produces. The documentation cannot claim more than the evidence supports. Gaps produce gaps, not fabricated content. The audit trail is the evidence chain, not a separate artifact maintained in parallel.
 
-The chosen path is the third. The first two remain available to operators as supplementary approaches — particularly in areas where AurorAI and ComPassAI are not yet deployed, or where legal determinations (legal basis for processing, DPIA necessity, EU AI Act high-risk classification) require human analysis that no automated system should substitute for.
+The chosen path is the third. The first two remain available to operators as supplementary approaches — particularly in areas where AurorA and ComPassAI are not yet deployed, or where legal determinations (legal basis for processing, DPIA necessity, EU AI Act high-risk classification) require human analysis that no automated system should substitute for.
 
-**Psychology friction:** The most common shortcut behavior in governance documentation is completing the intake form with whatever information is already at hand, rather than going back to verify what the system actually does. The form gets filled; the fields get populated; the checkbox gets checked. The documentation exists. It does not match the system. This happens not because operators are careless but because the incentive structure rewards documentation existence, not documentation accuracy. AurorAI and ComPassAI address this structurally — if the evidence package does not contain a field value, the generated deliverable cannot fabricate one. The guardrail is architectural, not procedural. Operators who find themselves wanting to manually edit generated deliverables to fill in missing fields should treat that impulse as a signal that their evidence configuration is incomplete, not as a reason to override the system.
+**Psychology friction:** The most common shortcut behavior in governance documentation is completing the intake form with whatever information is already at hand, rather than going back to verify what the system actually does. The form gets filled; the fields get populated; the checkbox gets checked. The documentation exists. It does not match the system. This happens not because operators are careless but because the incentive structure rewards documentation existence, not documentation accuracy. AurorA and ComPassAI address this structurally — if the evidence package does not contain a field value, the generated deliverable cannot fabricate one. The guardrail is architectural, not procedural. Operators who find themselves wanting to manually edit generated deliverables to fill in missing fields should treat that impulse as a signal that their evidence configuration is incomplete, not as a reason to override the system.
 
 ---
 
@@ -170,7 +170,7 @@ Cross-module status inheritance is explicitly forbidden. A module does not inher
 | Evidence tier | Current artifact examples | Reviewer reproducibility | Promotion path |
 |---|---|---|---|
 | Independent (public no-login) | Registry mirror at `/llm/if.registry.json.txt`; blackboard at `/llm/blackboard/index.md.txt`; if.trace receipts at `/if/trace/` | High — curl or browser, no credentials, no operator contact required | Already public; maintain liveness |
-| Operator-assisted | AurorAI evidence package schema; confidence threshold calibration outputs; ComPassAI policy rule JSON; deployment-specific baselines | Medium — requires host access or operator-supplied artifact | Publish immutable summary JSON at `/llm/products/com-aur/evidence/weekly-YYYY-MM-DD.json` + `.sha256`; minimum fields: `generated_utc`, `doc_sha256`, `checks`, `source_urls` |
+| Operator-assisted | AurorA evidence package schema; confidence threshold calibration outputs; ComPassAI policy rule JSON; deployment-specific baselines | Medium — requires host access or operator-supplied artifact | Publish immutable summary JSON at `/llm/products/com-aur/evidence/weekly-YYYY-MM-DD.json` + `.sha256`; minimum fields: `generated_utc`, `doc_sha256`, `checks`, `source_urls` |
 | Intent-only | if.gov.council automated voting; compass_cli binary; multi-host deployment; certified regulatory compliance | Not reproducible — design intent only; no artifact exists | Registry promotion requires: shipped runtime, sustained public evidence, and explicit gate approval |
 
 Freshness rule: operator-assisted evidence older than 7 days must be marked `A-stale` and must not be cited to support promotion-level claims. Independent evidence should be spot-checked for liveness at each 30-day cadence review. Any canonical URL returning `4xx/5xx` is a release blocker for this document until the endpoint or content is fixed.
@@ -182,7 +182,7 @@ Freshness rule: operator-assisted evidence older than 7 days must be marked `A-s
 ## Reviewer Conclusion Boundary Block
 
 **What reviewers can conclude from this document:**
-AurorAI and ComPassAI form a two-layer evidence-and-governance architecture. The evidence package schema is a defined interface contract. The quality controls (HITL, PII masking, confidence thresholds, RBAC, audit logging, hash verification) are designed and configurable. `if.trace` integrity binding is available for critical artifacts. The InfraFabric module integration points are described at accurate registry status. The regulatory alignment posture describes what ComPassAI provides toward compliance, not what it certifies.
+AurorA and ComPassAI form a two-layer evidence-and-governance architecture. The evidence package schema is a defined interface contract. The quality controls (HITL, PII masking, confidence thresholds, RBAC, audit logging, hash verification) are designed and configurable. `if.trace` integrity binding is available for critical artifacts. The InfraFabric module integration points are described at accurate registry status. The regulatory alignment posture describes what ComPassAI provides toward compliance, not what it certifies.
 
 **What reviewers cannot conclude from this document:**
 That any `preview` module integration provides production-grade reliability guarantees. That ComPassAI governance documentation constitutes regulatory compliance. That the performance metrics (48-hour cycle, 15-minute generation, 90%+ coverage) are independently audited benchmarks. That `if.gov.council` automated voting is a current capability. That `compass_cli` is a shipped binary. That this document is a certification packet, legal submission, or procurement-complete evidence bundle.
@@ -196,7 +196,7 @@ That any `preview` module integration provides production-grade reliability guar
 **Do not conclude:**
 - That `preview` modules described as integrations are production-ready components.
 - That the regulatory annex constitutes legal advice or replaces jurisdiction-specific legal review.
-- That evidence packages generated by AurorAI constitute compliance certification by themselves.
+- That evidence packages generated by AurorA constitute compliance certification by themselves.
 - That this document can be excerpted into a sales proposal without running the blocked phrases scan.
 
 **Safe path:** Keep claim language strictly within the registry status of each module. When a client asks "is this compliant with [regulation]?" the answer is "ComPassAI produces governance documentation that supports compliance review; whether your specific deployment satisfies [regulation] requires legal analysis of your use case, data categories, and decision types." Bind any derivative artifacts to if.trace receipts so integrity can be verified independently.
@@ -211,13 +211,13 @@ https://infrafabric.io/if/trace/
 ## Release Language Guardrails
 
 **Approved wording:**
-- "AurorAI produces structured evidence packages with chain-of-custody records for each document extraction."
+- "AurorA produces structured evidence packages with chain-of-custody records for each document extraction."
 - "ComPassAI generates governance documentation from evidence; it supports compliance review and does not constitute certification."
 - "if.trace receipts provide cryptographic integrity verification for designated artifacts; binding is operator-configured."
 - "The InfraFabric module integrations are described at their current preview or roadmap registry status."
 
 **Blocked wording — enforce with scan below:**
-- "AurorAI is HIPAA/GDPR/EU AI Act compliant."
+- "AurorA is HIPAA/GDPR/EU AI Act compliant."
 - "ComPassAI certifies regulatory compliance."
 - "if.gov council provides automated multi-voice governance."
 - "if.switchboard enforces real-time deployment gates."
@@ -240,7 +240,7 @@ rg -n -i "(hipaa compliant|gdpr compliant|eu ai act compliant|certifies regulato
 ---
 ---
 
-# Part One: AurorAI
+# Part One: AurorA
 
 ## Intelligent Document Processing — Specification Sheet
 
@@ -253,7 +253,7 @@ rg -n -i "(hipaa compliant|gdpr compliant|eu ai act compliant|certifies regulato
 
 **Who:** Extraction engineers configuring pipelines, compliance operators reviewing evidence packages, executives authorizing AI document processing deployments, and external auditors verifying chain-of-custody claims.
 
-**Why:** Generic OCR and document processing tools produce output without governance evidence. When an extraction pipeline has no chain of custody, every downstream automated decision built on its output is unauditable. AurorAI exists to make the evidence trail the primary output.
+**Why:** Generic OCR and document processing tools produce output without governance evidence. When an extraction pipeline has no chain of custody, every downstream automated decision built on its output is unauditable. AurorA exists to make the evidence trail the primary output.
 
 **What:** An intelligent document processing platform that classifies documents, extracts structured fields with per-field confidence scores, applies configurable quality controls (HITL, PII masking, confidence thresholds), and emits evidence packages that ComPassAI consumes for governance documentation.
 
@@ -269,9 +269,9 @@ rg -n -i "(hipaa compliant|gdpr compliant|eu ai act compliant|certifies regulato
 
 An invoice processed without a confidence score is a number someone typed. An invoice processed by an extraction pipeline that recorded a 0.94 confidence score, passed the mandatory-field check, did not trigger HITL, and produced a SHA-256-hashed evidence package with an operator-signed approval record is auditable evidence. The difference between those two things is not the quality of the extraction — it is the existence of the trail.
 
-AurorAI exists because the default behavior of document processing pipelines is to discard the trail. The output matters; the metadata about how the output was produced does not make it into the ticket, the database, or the audit log. When something goes wrong with an AI-assisted financial, medical, or legal decision three months later, the organization cannot reconstruct the processing chain. It cannot answer the question "was this field extracted at 94% confidence or 51%?" It cannot show that PII was detected and masked before the record was passed downstream. It cannot prove that a human reviewed the low-confidence fields before the decision was made.
+AurorA exists because the default behavior of document processing pipelines is to discard the trail. The output matters; the metadata about how the output was produced does not make it into the ticket, the database, or the audit log. When something goes wrong with an AI-assisted financial, medical, or legal decision three months later, the organization cannot reconstruct the processing chain. It cannot answer the question "was this field extracted at 94% confidence or 51%?" It cannot show that PII was detected and masked before the record was passed downstream. It cannot prove that a human reviewed the low-confidence fields before the decision was made.
 
-The system that rewards teams for shipping fast rather than documenting carefully is not a people problem. It is a structural incentive problem. AurorAI addresses it structurally: the evidence package is a required output of the processing pipeline, not an optional artifact that someone might add later.
+The system that rewards teams for shipping fast rather than documenting carefully is not a people problem. It is a structural incentive problem. AurorA addresses it structurally: the evidence package is a required output of the processing pipeline, not an optional artifact that someone might add later.
 
 *If the chain of custody is not generated at extraction time, it cannot be reconstructed from audit logs after the fact.*
 
@@ -279,7 +279,7 @@ The system that rewards teams for shipping fast rather than documenting carefull
 
 ## Core Architecture
 
-AurorAI operates as a staged, deterministic processing pipeline. Each stage produces intermediate artifacts. The exit artifact — the evidence package — is not a summary of the processing; it is a structured record of every gate decision made during processing, including gates that fired and gates that did not.
+AurorA operates as a staged, deterministic processing pipeline. Each stage produces intermediate artifacts. The exit artifact — the evidence package — is not a summary of the processing; it is a structured record of every gate decision made during processing, including gates that fired and gates that did not.
 
 ```
 Document Input → Classification → Extraction → Quality Gates → Evidence Package → ComPassAI
@@ -289,7 +289,7 @@ Understanding the staging matters because it determines where claim strength is 
 
 **Proven (verified) components:**
 
-The evidence package schema — including `usecase_id`, `producer`, `artifact_type`, `payload`, `hash`, and `control_checks` fields — is a defined interface contract. The schema drives the `POST /v1/evidence` endpoint that ComPassAI consumes. SHA-256 hashing on both input documents and output packages is implemented and provides integrity proof for the specific artifact at the time of processing. This does not prove the document was unmodified before ingestion — that requires upstream chain-of-custody controls outside AurorAI's scope. HITL triggering logic (configurable rules that fire on confidence below threshold, PII detection, or domain-specific markers) is a configurable gate; the gate design is proven. HITL correctness for a specific domain depends on operator threshold calibration, which is not a default guarantee.
+The evidence package schema — including `usecase_id`, `producer`, `artifact_type`, `payload`, `hash`, and `control_checks` fields — is a defined interface contract. The schema drives the `POST /v1/evidence` endpoint that ComPassAI consumes. SHA-256 hashing on both input documents and output packages is implemented and provides integrity proof for the specific artifact at the time of processing. This does not prove the document was unmodified before ingestion — that requires upstream chain-of-custody controls outside AurorA's scope. HITL triggering logic (configurable rules that fire on confidence below threshold, PII detection, or domain-specific markers) is a configurable gate; the gate design is proven. HITL correctness for a specific domain depends on operator threshold calibration, which is not a default guarantee.
 
 **Bounded (operator-assisted) components:**
 
@@ -297,7 +297,7 @@ Extraction accuracy above 95% represents design targets measured on curated test
 
 **Non-claims (intent-only):**
 
-AurorAI is not certification-complete for regulated domains (HIPAA, GDPR, EU AI Act) by itself. It produces evidence that feeds compliance documentation workflows. PII masking reduces exposure; it does not substitute for a DPIA, retention policy, or data minimization review. Confidence scores are the explicit acknowledgment that extraction quality is probabilistic, not a claim that extracted values are correct.
+AurorA is not certification-complete for regulated domains (HIPAA, GDPR, EU AI Act) by itself. It produces evidence that feeds compliance documentation workflows. PII masking reduces exposure; it does not substitute for a DPIA, retention policy, or data minimization review. Confidence scores are the explicit acknowledgment that extraction quality is probabilistic, not a claim that extracted values are correct.
 
 *If the evidence package is treated as proof of correctness rather than proof of process, it will fail exactly when correctness is most disputed.*
 
@@ -408,7 +408,7 @@ Evidence generated: access logs; permission check records per action.
 |---|---|---|
 | Extractor cannot approve without validator review | `tested` | Role boundary enforced at API level |
 | Override requires `override_reason` field | `tested` | Absent field returns 400; override without reason is blocked |
-| Enterprise IAM integration (Okta, AAD, SSO) | `N/A` — P1 roadmap | Current authentication is AurorAI-internal; enterprise SSO is a known gap |
+| Enterprise IAM integration (Okta, AAD, SSO) | `N/A` — P1 roadmap | Current authentication is AurorA-internal; enterprise SSO is a known gap |
 
 Negative-path check (expected: override without reason is rejected):
 ```bash
@@ -421,7 +421,7 @@ curl -X POST http://localhost:8080/v1/approve \
 # If output is null (approved without reason), RBAC has a defect — open incident immediately
 ```
 
-Claim posture: RBAC is enforced within AurorAI's own access layer. Enterprise IAM integration is a P1 roadmap item; claiming SSO support in a proposal is a non-claim.
+Claim posture: RBAC is enforced within AurorA's own access layer. Enterprise IAM integration is a P1 roadmap item; claiming SSO support in a proposal is a non-claim.
 
 *Role boundaries enforced only in the application layer and not at the infrastructure layer will be circumvented by any sufficiently motivated database administrator.*
 
@@ -435,11 +435,11 @@ Evidence generated: processing logs; decision trails; validation chain records.
 
 | Coverage cell | Classification | Notes |
 |---|---|---|
-| Local append-only behavior | `tested` | Log entries are append-only within AurorAI's local log store |
+| Local append-only behavior | `tested` | Log entries are append-only within AurorA's local log store |
 | External immutability (cryptographic proof) | `inferred` — requires if.trace binding | Local append-only does not prevent infrastructure-level log deletion; cryptographic immutability requires if.trace |
 | Log export for audit | `tested` | Export API exists; format is human-readable JSONL |
 
-Claim posture: logs are local and append-only within AurorAI's scope. External, cryptographic immutability requires binding to `if.trace` (shipped). Operators who require proof that logs were not modified at the infrastructure level must configure if.trace binding.
+Claim posture: logs are local and append-only within AurorA's scope. External, cryptographic immutability requires binding to `if.trace` (shipped). Operators who require proof that logs were not modified at the infrastructure level must configure if.trace binding.
 
 *An append-only log that lives on a single host proves nothing to an auditor who suspects the host was compromised.*
 
@@ -464,7 +464,7 @@ Claim posture: the hash proves the artifact was not modified after the hash was 
 
 ## Evidence Package Format
 
-This is the primary interface contract between AurorAI and ComPassAI. The format is fixed at schema version `2026-03-01`. Breaking changes require version negotiation and migration notes.
+This is the primary interface contract between AurorA and ComPassAI. The format is fixed at schema version `2026-03-01`. Breaking changes require version negotiation and migration notes.
 
 ```json
 {
@@ -518,23 +518,23 @@ The `if_trace_receipt: null` field is not a placeholder — it is the honest def
 
 ---
 
-## InfraFabric Integration (AurorAI)
+## InfraFabric Integration (AurorA)
 
-Each integration point states the module, its registry status, what AurorAI uses it for, and what cannot be claimed at current status.
+Each integration point states the module, its registry status, what AurorA uses it for, and what cannot be claimed at current status.
 
-**if.trace (shipped):** AurorAI can bind evidence packages to `if.trace` receipts for cryptographic integrity verification. This is the strongest integration claim because `if.trace` is the only shipped module in the stack. Receipt binding is available; automatic binding on all packages is not the current default. What the receipt proves: the artifact was not modified after the receipt was generated. What the receipt does not prove: the extraction was correct, the confidence threshold was appropriate, or the PII scan covered all relevant patterns.
+**if.trace (shipped):** AurorA can bind evidence packages to `if.trace` receipts for cryptographic integrity verification. This is the strongest integration claim because `if.trace` is the only shipped module in the stack. Receipt binding is available; automatic binding on all packages is not the current default. What the receipt proves: the artifact was not modified after the receipt was generated. What the receipt does not prove: the extraction was correct, the confidence threshold was appropriate, or the PII scan covered all relevant patterns.
 
 Why if.trace is included in this section: it is the integrity anchor for the whole evidence chain. If.trace receipts allow external reviewers to verify specific artifacts without logging in or contacting anyone.
 
 **if.bus (preview):** Evidence packages can be transported over `if.bus` envelopes with HMAC-SHA256 integrity and replay guards. Because `if.bus` is `preview`, production-grade exactly-once delivery and multi-region HA are non-claims. The transport path exists in design; it does not carry an SLA.
 
-**if.api (preview):** AurorAI integrates through `if.api` normalized adapters for external system connectivity. Eighty-three LLM adapters and structured extraction output adapters are active development targets. Production deployment of all adapters is not claimed.
+**if.api (preview):** AurorA integrates through `if.api` normalized adapters for external system connectivity. Eighty-three LLM adapters and structured extraction output adapters are active development targets. Production deployment of all adapters is not claimed.
 
 **if.blackboard (preview):** Extraction events and HITL decisions can be logged to `if.blackboard`. The `/llm/blackboard/**` surfaces are publicly readable without login, providing independent evidence that coordination is happening. Single-host deployment only; multi-host fleet deployment is not claimed.
 
 **if.context (preview):** Evidence provenance management through `if.context`'s staged pipeline (ingest → summarize → index → publish) provides structured retrieval context for evidence artifacts. The pipeline exists as a documented protocol; runtime service deployment is not a current claim.
 
-**if.knowledge (preview):** The knowledge graph and related runtime retrieval surfaces are now best described as `preview` with strict scope and audit boundaries. AurorAI can use the graph as an advisory extraction-context substrate and reviewer evidence source, but it must not present `if.knowledge` as a GA retrieval service or as a semantic-truth engine. Dynamic extraction guidance remains bounded, operator-reviewed, and non-authoritative unless explicitly promoted by later evidence.
+**if.knowledge (preview):** The knowledge graph and related runtime retrieval surfaces are now best described as `preview` with strict scope and audit boundaries. AurorA can use the graph as an advisory extraction-context substrate and reviewer evidence source, but it must not present `if.knowledge` as a GA retrieval service or as a semantic-truth engine. Dynamic extraction guidance remains bounded, operator-reviewed, and non-authoritative unless explicitly promoted by later evidence.
 
 *An integration list that omits registry status for each item is not a technical specification; it is a wish list formatted as a table.*
 
@@ -594,13 +594,13 @@ Evidence completeness: greater than 95% of processed documents produce a complet
 
 These are explicit boundary statements. Hiding them creates false confidence in downstream governance assessments.
 
-IAM integration (Okta, AAD, SSO) is a P1 roadmap item. Current authentication is AurorAI-internal. Enterprise environments requiring SSO must plan for this gap in their deployment timeline.
+IAM integration (Okta, AAD, SSO) is a P1 roadmap item. Current authentication is AurorA-internal. Enterprise environments requiring SSO must plan for this gap in their deployment timeline.
 
 `if.trace` automatic binding per evidence package is not the current default. High-risk use cases requiring cryptographic receipt on every artifact must configure explicit binding triggers.
 
 `if.knowledge` runtime query integration should now be treated as `preview` advisory context only. It is useful for bounded retrieval and graph-backed review support, but it must not be treated as a guaranteed production dependency or an autonomous decision engine.
 
-Multi-region or multi-host AurorAI deployment is not claimed. Current deployment model is single-host. Availability and redundancy requirements must be addressed in the infrastructure layer.
+Multi-region or multi-host AurorA deployment is not claimed. Current deployment model is single-host. Availability and redundancy requirements must be addressed in the infrastructure layer.
 
 *The gaps that are documented here are not the dangerous ones. The dangerous gaps are the ones nobody has named yet.*
 
@@ -622,7 +622,7 @@ Multi-region or multi-host AurorAI deployment is not claimed. Current deployment
 
 **Why:** The gap between AI system execution and governance documentation is the most common audit failure mode in AI deployments. Manual documentation is slow, inconsistent, and breaks down whenever the system changes faster than the documentation cycle. ComPassAI closes this gap by deriving governance artifacts from structured evidence rather than composing them in parallel.
 
-**What:** A workflow-first governance engine that maintains a use case registry, runs risk tiering on ingested AurorAI evidence, enforces policy-defined controls, generates compliance deliverables (model cards, DPIAs, risk assessments, audit trail exports), and manages approval workflows with RBAC and signature collection.
+**What:** A workflow-first governance engine that maintains a use case registry, runs risk tiering on ingested AurorA evidence, enforces policy-defined controls, generates compliance deliverables (model cards, DPIAs, risk assessments, audit trail exports), and manages approval workflows with RBAC and signature collection.
 
 **Where:** ComPassAI governance workflows; `if.blackboard` at `https://infrafabric.io/llm/blackboard/index.md.txt`; evidence store at operator-deployed infrastructure; public registry at `https://infrafabric.io/llm/if.registry.json.txt`.
 
@@ -638,9 +638,9 @@ The governance documentation problem for AI systems has two failure modes that l
 
 Both failure modes share a root cause: governance documentation that is maintained in parallel with the system, rather than derived from it, will eventually diverge from it. The question is not whether divergence will happen but when.
 
-ComPassAI addresses this structurally. Every deliverable is generated from the structured evidence that AurorAI produces. The model card's performance section is populated from the benchmark fields in the evidence package, not typed in from a vendor spec sheet. The DPIA's data categories are drawn from the PII detection records in the extraction audit trail, not assembled from memory. The risk assessment's confidence section reflects the actual per-field confidence scores and HITL trigger history, not a general description of the system's capabilities.
+ComPassAI addresses this structurally. Every deliverable is generated from the structured evidence that AurorA produces. The model card's performance section is populated from the benchmark fields in the evidence package, not typed in from a vendor spec sheet. The DPIA's data categories are drawn from the PII detection records in the extraction audit trail, not assembled from memory. The risk assessment's confidence section reflects the actual per-field confidence scores and HITL trigger history, not a general description of the system's capabilities.
 
-The system that produces accurate governance documentation today but cannot maintain accuracy as the system evolves is not solving the problem — it is postponing it. ComPassAI's evidence-derived architecture means that when AurorAI's configuration changes, the governance documentation reflects the change on the next evidence ingestion cycle.
+The system that produces accurate governance documentation today but cannot maintain accuracy as the system evolves is not solving the problem — it is postponing it. ComPassAI's evidence-derived architecture means that when AurorA's configuration changes, the governance documentation reflects the change on the next evidence ingestion cycle.
 
 The assumption most likely to be wrong in this framing: that governance documentation accuracy is the primary stakeholder concern. For many organizations, the primary concern is governance documentation existence — they need any documentation, produced quickly, that passes a surface review. ComPassAI serves both concerns, but operators should be explicit about which one they are optimizing for: a generated document that is accurate but incomplete is better governance than a polished document that is inaccurate, but it may not pass a procurement checklist that expects completeness.
 
@@ -652,13 +652,13 @@ Invalidation test: if an organization can produce accurate, auditable, evidence-
 
 ## Core Architecture
 
-ComPassAI operates as a two-layer system built on the AurorAI evidence foundation.
+ComPassAI operates as a two-layer system built on the AurorA evidence foundation.
 
 ```
-AurorAI (execution) → Evidence Package → ComPassAI (governance) → Deliverables → Audit Trail
+AurorA (execution) → Evidence Package → ComPassAI (governance) → Deliverables → Audit Trail
 ```
 
-The architecture is intentionally asymmetric: AurorAI generates evidence without requiring governance awareness; ComPassAI consumes evidence without requiring execution awareness. The interface between them — the evidence package schema — is the coupling point. Changes to the schema require version negotiation. Neither product can make claims that exceed what the evidence package contains.
+The architecture is intentionally asymmetric: AurorA generates evidence without requiring governance awareness; ComPassAI consumes evidence without requiring execution awareness. The interface between them — the evidence package schema — is the coupling point. Changes to the schema require version negotiation. Neither product can make claims that exceed what the evidence package contains.
 
 **Core modules at P0 (minimum viable governance):**
 
@@ -706,7 +706,7 @@ Tier assignment is not a legal determination. Whether a specific deployment cons
 
 **if.story (preview):** Compliance deliverables use `if.story`'s narrative structure — bitmap (point-in-time state) and vector (decision trajectory with rationale). Deliverables record not just the current assessment but the reasoning path that produced it. The `if.story` protocol and demo artifacts are published; no deployed `if.story` runtime service is claimed. The deliverable format follows the spec; automatic narrative generation via a running `if.story` service is not the current implementation.
 
-**if.bus (preview):** Evidence transport from AurorAI to ComPassAI can route over `if.bus` envelopes with HMAC-SHA256 integrity and replay guards. Exactly-once delivery and multi-region HA are non-claims at `preview` status.
+**if.bus (preview):** Evidence transport from AurorA to ComPassAI can route over `if.bus` envelopes with HMAC-SHA256 integrity and replay guards. Exactly-once delivery and multi-region HA are non-claims at `preview` status.
 
 **if.api (preview):** ComPassAI receives evidence from external systems through `if.api` normalized adapters. Adapter coverage is active development; not all integrations are production-deployed.
 
@@ -852,7 +852,7 @@ Regulatory compliance declarations are not automatic. Generating a DPIA does not
 
 # Annex A: Jurisdiction-by-Jurisdiction Regulatory Compliance Framework
 
-**Annex purpose:** This annex maps AurorAI and ComPassAI obligations and alignment posture against actual laws, regulations, and binding guidance in force or imminently effective across five client jurisdictions: EU/France, Canada, United States, United Kingdom, and cross-jurisdiction intersections. It follows the same claim discipline as the main specification — every statement is classified as proven alignment, bounded alignment, or non-claim/gap. Jurisdiction entries do not borrow status from each other: a compliance posture in France does not inherit from Canada simply because both apply GDPR-family obligations.
+**Annex purpose:** This annex maps AurorA and ComPassAI obligations and alignment posture against actual laws, regulations, and binding guidance in force or imminently effective across five client jurisdictions: EU/France, Canada, United States, United Kingdom, and cross-jurisdiction intersections. It follows the same claim discipline as the main specification — every statement is classified as proven alignment, bounded alignment, or non-claim/gap. Jurisdiction entries do not borrow status from each other: a compliance posture in France does not inherit from Canada simply because both apply GDPR-family obligations.
 
 **This annex is not legal advice.** Determining actual compliance in any jurisdiction requires review by qualified legal counsel familiar with the specific deployment context, data categories, decision types, and organizational structure. This annex identifies what questions operators must ask and what controls to configure — it does not answer those questions on their behalf. Treating it as a substitute for legal review is itself a compliance failure.
 
@@ -866,29 +866,29 @@ Regulatory compliance declarations are not automatic. Generating a DPIA does not
 
 ## A.1 European Union — EU AI Act + GDPR
 
-**Jurisdictional scope:** The EU AI Act (Regulation 2024/1689) and GDPR (Regulation 2016/679) apply to AurorAI and ComPassAI deployments where the system is placed on the EU market, used within the EU, or where outputs affect persons located in the EU — regardless of where the provider is based. The extraterritorial reach is explicit and mirrors the GDPR model established since 2018. Operators based in Canada, the US, or UK who serve EU clients or process data about EU persons are subject to both instruments.
+**Jurisdictional scope:** The EU AI Act (Regulation 2024/1689) and GDPR (Regulation 2016/679) apply to AurorA and ComPassAI deployments where the system is placed on the EU market, used within the EU, or where outputs affect persons located in the EU — regardless of where the provider is based. The extraterritorial reach is explicit and mirrors the GDPR model established since 2018. Operators based in Canada, the US, or UK who serve EU clients or process data about EU persons are subject to both instruments.
 
 **Primary instruments in force — as of 2026-03-06:**
 
 The EU AI Act entered into force on 1 August 2024. Its enforcement is phased: prohibited AI practices have been banned since February 2025; general-purpose AI model obligations apply from August 2025; obligations for high-risk AI systems under Annex III become applicable between August 2026 and August 2027 depending on system category. GDPR applies in full and simultaneously — neither instrument suspends the other.
 
-**Risk classification analysis for AurorAI and ComPassAI:**
+**Risk classification analysis for AurorA and ComPassAI:**
 
-Document processing systems that extract structured data from documents containing personal information are candidates for Annex III high-risk classification in specific deployment contexts. The relevant Annex III categories include employment and workers management (category 4, covering AI used to influence employment, recruitment, or task allocation decisions); access to essential private services (category 5, covering AI in creditworthiness assessment, insurance risk scoring, or similar consequential financial decisions); and administration of justice (category 8). Whether a specific AurorAI deployment falls within these categories depends on the use case, not on the technology. Invoice processing in accounts payable does not trigger high-risk classification. The same extraction engine used to process loan applications likely does. ComPassAI's T2 or T3 tier assignment for a use case involving personal data and consequential automated decisions should always trigger a parallel EU AI Act Annex III check by legal counsel — the tier is a signal, not a legal determination.
+Document processing systems that extract structured data from documents containing personal information are candidates for Annex III high-risk classification in specific deployment contexts. The relevant Annex III categories include employment and workers management (category 4, covering AI used to influence employment, recruitment, or task allocation decisions); access to essential private services (category 5, covering AI in creditworthiness assessment, insurance risk scoring, or similar consequential financial decisions); and administration of justice (category 8). Whether a specific AurorA deployment falls within these categories depends on the use case, not on the technology. Invoice processing in accounts payable does not trigger high-risk classification. The same extraction engine used to process loan applications likely does. ComPassAI's T2 or T3 tier assignment for a use case involving personal data and consequential automated decisions should always trigger a parallel EU AI Act Annex III check by legal counsel — the tier is a signal, not a legal determination.
 
-**What AurorAI and ComPassAI provide toward EU AI Act obligations:**
+**What AurorA and ComPassAI provide toward EU AI Act obligations:**
 
-For high-risk systems, the EU AI Act requires a risk management system (Article 9), technical documentation (Article 11), data governance (Article 10), logging for traceability (Article 12), transparency to deployers (Article 13), human oversight measures (Article 14), and accuracy and robustness requirements (Article 15). ComPassAI's risk engine addresses Article 9 structurally, providing documented tiering rationale, uncertainty handling, and re-assessment triggers. AurorAI's evidence packages with confidence scores and control check records address Article 10 and Article 12 logging. The HITL gate addresses Article 14. The model card addresses Article 11. These are genuine contributions — and they are not sufficient alone. Article 9 requires a risk management system that is implemented, monitored, reviewed, and updated throughout the lifecycle; ComPassAI provides documentation and monitoring infrastructure, not the complete risk management system. The distinction matters for an auditor.
+For high-risk systems, the EU AI Act requires a risk management system (Article 9), technical documentation (Article 11), data governance (Article 10), logging for traceability (Article 12), transparency to deployers (Article 13), human oversight measures (Article 14), and accuracy and robustness requirements (Article 15). ComPassAI's risk engine addresses Article 9 structurally, providing documented tiering rationale, uncertainty handling, and re-assessment triggers. AurorA's evidence packages with confidence scores and control check records address Article 10 and Article 12 logging. The HITL gate addresses Article 14. The model card addresses Article 11. These are genuine contributions — and they are not sufficient alone. Article 9 requires a risk management system that is implemented, monitored, reviewed, and updated throughout the lifecycle; ComPassAI provides documentation and monitoring infrastructure, not the complete risk management system. The distinction matters for an auditor.
 
-**What AurorAI and ComPassAI do not provide toward EU AI Act obligations:**
+**What AurorA and ComPassAI do not provide toward EU AI Act obligations:**
 
 Legal determination of whether a deployment constitutes a high-risk system under Annex III. Registration of high-risk systems in the EU database (a regulatory filing obligation). Conformity assessment (required for certain high-risk categories before deployment). Post-market monitoring reports to the relevant national supervisory authority. Legal basis for processing personal data — this must be established by the operator before ingestion begins.
 
 **GDPR obligations at the intersection with document processing:**
 
-When AurorAI processes documents containing personal data, GDPR applies to that processing in full. Legal basis must be established before ingestion — the evidence package schema includes a `legal_basis` field that must be populated by the operator. Data minimization under Article 5(1)(c) applies to what fields are extracted and retained, not only to what is in the source document. The PII masking controls reduce exposure but do not discharge the data minimization obligation — operators must configure what is extracted, not only what is masked after extraction.
+When AurorA processes documents containing personal data, GDPR applies to that processing in full. Legal basis must be established before ingestion — the evidence package schema includes a `legal_basis` field that must be populated by the operator. Data minimization under Article 5(1)(c) applies to what fields are extracted and retained, not only to what is in the source document. The PII masking controls reduce exposure but do not discharge the data minimization obligation — operators must configure what is extracted, not only what is masked after extraction.
 
-For automated decision-making under Article 22, if AurorAI extraction results feed into decisions producing legal or similarly significant effects on individuals without meaningful human review, the deployment may require explicit safeguards: information to the data subject, the right to human review, and the right to contest. The HITL gate addresses this partially — it triggers review for low-confidence extractions. Whether it satisfies Article 22 for a specific use case requires assessment of whether the downstream decision qualifies as legally significant.
+For automated decision-making under Article 22, if AurorA extraction results feed into decisions producing legal or similarly significant effects on individuals without meaningful human review, the deployment may require explicit safeguards: information to the data subject, the right to human review, and the right to contest. The HITL gate addresses this partially — it triggers review for low-confidence extractions. Whether it satisfies Article 22 for a specific use case requires assessment of whether the downstream decision qualifies as legally significant.
 
 GDPR Article 35 DPIA requirements apply when processing is likely to result in high risk, including systematic automated processing for profiling, large-scale processing of special categories of data, and systematic monitoring of publicly accessible areas. ComPassAI's DPIA generation module produces the documentation template; whether a DPIA is legally required is a human legal assessment that ComPassAI cannot make automatically.
 
@@ -906,7 +906,7 @@ France's CNIL is designated as national supervisory authority for both GDPR and 
 
 ## A.2 Canada
 
-**Jurisdictional scope:** Canada's federal private-sector privacy regime covers organizations and their contractors processing personal data about Canadians in commercial contexts. Provincial laws apply in provinces with substantially similar legislation — Quebec, Alberta, and British Columbia each maintain separate privacy regimes. Federal institutions are separately governed by the Treasury Board's Directive on Automated Decision-Making. The scope for AurorAI and ComPassAI depends on whether the operator is a federal institution, a federally regulated industry, or a private-sector organization in a province with its own law.
+**Jurisdictional scope:** Canada's federal private-sector privacy regime covers organizations and their contractors processing personal data about Canadians in commercial contexts. Provincial laws apply in provinces with substantially similar legislation — Quebec, Alberta, and British Columbia each maintain separate privacy regimes. Federal institutions are separately governed by the Treasury Board's Directive on Automated Decision-Making. The scope for AurorA and ComPassAI depends on whether the operator is a federal institution, a federally regulated industry, or a private-sector organization in a province with its own law.
 
 **Current state of AI-specific law — as of 2026-03-06:**
 
@@ -914,7 +914,7 @@ Canada does not have a general federal AI law. The Artificial Intelligence and D
 
 **Applicable privacy law:**
 
-PIPEDA governs private-sector personal data processing at the federal level. When AurorAI processes documents containing personal information about identifiable individuals in a commercial context, PIPEDA applies: meaningful consent or a legitimate non-consent ground must be established before collection; purpose must be identified at or before collection; collection must be limited to what is necessary. The Consumer Privacy Protection Act (CPPA), signalled by the government as a replacement for PIPEDA with penalties up to C$25 million or 5% of global revenue, had not been confirmed as passed as of this annex's freshness date. Operators must confirm current PIPEDA/CPPA status before deployment.
+PIPEDA governs private-sector personal data processing at the federal level. When AurorA processes documents containing personal information about identifiable individuals in a commercial context, PIPEDA applies: meaningful consent or a legitimate non-consent ground must be established before collection; purpose must be identified at or before collection; collection must be limited to what is necessary. The Consumer Privacy Protection Act (CPPA), signalled by the government as a replacement for PIPEDA with penalties up to C$25 million or 5% of global revenue, had not been confirmed as passed as of this annex's freshness date. Operators must confirm current PIPEDA/CPPA status before deployment.
 
 Quebec's Law 25 (fully in force since September 2023) is Canada's strictest provincial privacy law and applies broadly to organizations processing personal data about Quebec residents. It requires mandatory privacy impact assessments for certain high-risk processing, grants individuals an explicit algorithmic explanation right (the right to request explanation of any decision made exclusively by automated processing that affects them), and imposes stricter breach notification than federal PIPEDA. For ComPassAI, the algorithmic explanation right directly affects deliverable template design: disclosure templates for Quebec deployments must include explanation-ready outputs that satisfy the Law 25 requirement, not merely the federal PIPEDA minimum. The right belongs to the individual, not the organization — it cannot be waived in a contract. ComPassAI's default English-language disclosure templates do not satisfy this requirement without locale configuration and template extension.
 
@@ -926,11 +926,11 @@ The Treasury Board Directive on Automated Decision-Making requires algorithmic i
 
 Ontario's Enhancing Digital Security and Trust Act (passed late 2024, regulations pending as of early 2026) establishes accountability requirements for public-sector AI use in Ontario. The Ontario IPC and Ontario Human Rights Commission jointly released six responsible AI principles in January 2026 that are relevant compliance guidance for Ontario public-sector deployments even before formal regulations take effect. The Government of Canada's Voluntary Code of Conduct on the Responsible Development and Management of Advanced Generative AI Systems (September 2023) is not mandatory but is material evidence of responsible practice — ComPassAI governance records should document the operator's posture against the Code's principles.
 
-**What AurorAI and ComPassAI provide toward Canadian obligations:**
+**What AurorA and ComPassAI provide toward Canadian obligations:**
 
 The evidence package schema supports the `legal_basis` and `purpose` fields required by PIPEDA. The PII masking controls reduce exposure of personal information in extracted fields. The HITL gate supports human review for automated decisions affecting individuals. ComPassAI's governance documentation, including model cards and risk assessments, provides the accountability evidence required by the Voluntary Code of Conduct. For Quebec Law 25, ComPassAI's disclosure template structure is the right architectural approach — the current gap is the default English-only template content and the absence of Law 25-specific explanation-ready fields.
 
-**What AurorAI and ComPassAI do not provide:**
+**What AurorA and ComPassAI do not provide:**
 
 Determination of whether a specific processing activity requires a privacy impact assessment under Law 25. Legal basis assessment for PIPEDA consent grounds. The Government of Canada AIA for federal institution deployments. CPPA compliance confirmation (since CPPA status is not confirmed as of this writing).
 
@@ -954,19 +954,19 @@ President Trump signed EO 14179 in January 2025 revoking the Biden administratio
 
 Colorado's AI Act — the most comprehensive US state AI law — applies to developers and deployers of high-risk AI systems making or substantially influencing consequential decisions in categories including education, employment, housing, credit, healthcare, insurance, and legal services. Its original February 2026 effective date was delayed to June 30, 2026. For ComPassAI risk assessments feeding into consequential decisions for Colorado residents, this law requires impact assessments, disclosure obligations, and the right to contest automated decisions. Operators must verify the current Colorado Act status and amendment history before the June 30, 2026 date.
 
-California enacted three AI laws effective January 1, 2026: the Transparency in Frontier AI Act (critical safety incident reporting), the GAI Training Data Transparency Act (AB 2013, requiring disclosure of training datasets for covered systems), and the AI Transparency Act (SB 942, requiring disclosure when content is AI-generated). Training data transparency obligations under AB 2013 may apply to AurorAI's extraction models if they qualify as covered AI systems under California's definitions — operators should obtain legal confirmation before making California deployment claims.
+California enacted three AI laws effective January 1, 2026: the Transparency in Frontier AI Act (critical safety incident reporting), the GAI Training Data Transparency Act (AB 2013, requiring disclosure of training datasets for covered systems), and the AI Transparency Act (SB 942, requiring disclosure when content is AI-generated). Training data transparency obligations under AB 2013 may apply to AurorA's extraction models if they qualify as covered AI systems under California's definitions — operators should obtain legal confirmation before making California deployment claims.
 
 Illinois's Artificial Intelligence Video Interview Act (effective 2026) requires notification to candidates before AI-based evaluation of video interviews and sets data retention requirements. New York City Local Law 144 (effective July 2023) requires third-party bias audits of automated employment decision tools used in hiring or promotion affecting NYC residents. Both apply to narrow use cases but directly govern those use cases; they are not general AI laws and should not be confused with the broader Colorado/California frameworks.
 
 **Sector-specific federal frameworks:**
 
-For healthcare deployments, HIPAA applies in full to any PHI processed by AurorAI. The HIPAA de-identification requirements (Safe Harbor method or Expert Determination method) are more specific than general PII pattern matching — AurorAI's PII masking controls must be explicitly configured to meet HIPAA standards, not merely general privacy standards. For financial services, the OCC/FDIC/Fed joint guidance on AI in financial services and FTC consumer protection enforcement apply. The NIST AI Risk Management Framework (AI RMF 1.0, January 2023) is voluntary but widely referenced in US government contracting and financial regulation; ComPassAI's T0–T3 tiering is conceptually aligned with the AI RMF's Govern, Map, Measure, Manage functions, and documenting that alignment strengthens defensibility.
+For healthcare deployments, HIPAA applies in full to any PHI processed by AurorA. The HIPAA de-identification requirements (Safe Harbor method or Expert Determination method) are more specific than general PII pattern matching — AurorA's PII masking controls must be explicitly configured to meet HIPAA standards, not merely general privacy standards. For financial services, the OCC/FDIC/Fed joint guidance on AI in financial services and FTC consumer protection enforcement apply. The NIST AI Risk Management Framework (AI RMF 1.0, January 2023) is voluntary but widely referenced in US government contracting and financial regulation; ComPassAI's T0–T3 tiering is conceptually aligned with the AI RMF's Govern, Map, Measure, Manage functions, and documenting that alignment strengthens defensibility.
 
-**What AurorAI and ComPassAI provide toward US obligations:**
+**What AurorA and ComPassAI provide toward US obligations:**
 
 The evidence package chain of custody addresses Colorado AI Act impact assessment documentation requirements. The HITL gate and human approval workflow address contestability obligations where required. The model card addresses transparency disclosure requirements. NIST AI RMF alignment documentation can be generated from ComPassAI governance records for US federal and financial services contexts.
 
-**What AurorAI and ComPassAI do not provide:**
+**What AurorA and ComPassAI do not provide:**
 
 Colorado AI Act legal compliance determination for specific use cases. California training data transparency disclosures (depends on model provenance, not governance workflow). Third-party bias audit required by NYC Local Law 144 (requires independent auditor). HIPAA Safe Harbor de-identification certification. Legal basis assessment for any sector-specific regulatory obligation.
 
@@ -986,25 +986,25 @@ Colorado AI Act legal compliance determination for specific use cases. Californi
 
 The UK has no standalone horizontal AI legislation in force. The government's approach is pro-innovation, principles-based, and sector-specific. The DSIT 2023 White Paper established five cross-sectoral principles — Safety, Security and Robustness; Appropriate Transparency and Explainability; Fairness; Accountability and Governance; Contestability and Redress — that existing sectoral regulators are expected to apply. These principles are non-statutory guidance. They are not backed by specific legislation creating enforceable obligations for private-sector organizations in the way the EU AI Act does. A comprehensive AI Bill is anticipated in 2026; until it passes, the UK operates on a principles-first basis.
 
-The Data (Use and Access) Act received Royal Assent on June 19, 2025. It relaxes some constraints on automated decision-making relative to UK GDPR Article 22 and expands lawful bases for data use in research and public services contexts. For AurorAI deployments processing data for research or public service purposes, the updated lawful bases may expand what is permissible — operators should obtain legal confirmation before relying on these provisions. The AI Safety Institute was renamed the AI Security Institute in February 2025, reflecting a pivot toward security-focused risks (weapons development, cyber threats) rather than broad safety concerns like bias and discrimination.
+The Data (Use and Access) Act received Royal Assent on June 19, 2025. It relaxes some constraints on automated decision-making relative to UK GDPR Article 22 and expands lawful bases for data use in research and public services contexts. For AurorA deployments processing data for research or public service purposes, the updated lawful bases may expand what is permissible — operators should obtain legal confirmation before relying on these provisions. The AI Safety Institute was renamed the AI Security Institute in February 2025, reflecting a pivot toward security-focused risks (weapons development, cyber threats) rather than broad safety concerns like bias and discrimination.
 
 **UK GDPR obligations:**
 
-UK GDPR is substantively equivalent to EU GDPR for most purposes but is administered by the ICO independently of EU data protection authorities. All GDPR obligations described in section A.1 apply under UK GDPR with the ICO as supervisory authority. Cross-border data transfers from the UK to non-adequate third countries — including the US in most contexts — require Standard Contractual Clauses (International Data Transfer Agreements in UK terminology) or other transfer mechanisms. The ICO committed in March 2025 to producing a statutory Code of Practice for AI and automated decision-making; that Code is under development as of March 2026 and will materially affect AurorAI/ComPassAI obligations once published.
+UK GDPR is substantively equivalent to EU GDPR for most purposes but is administered by the ICO independently of EU data protection authorities. All GDPR obligations described in section A.1 apply under UK GDPR with the ICO as supervisory authority. Cross-border data transfers from the UK to non-adequate third countries — including the US in most contexts — require Standard Contractual Clauses (International Data Transfer Agreements in UK terminology) or other transfer mechanisms. The ICO committed in March 2025 to producing a statutory Code of Practice for AI and automated decision-making; that Code is under development as of March 2026 and will materially affect AurorA/ComPassAI obligations once published.
 
 **Sector-specific UK regulators:**
 
-For financial services, the FCA's model risk management guidance (SS1/23) applies to algorithmic and AI-driven models in regulated firms. ComPassAI governance records address the documentation and monitoring aspects of model risk management, but FCA compliance is not automatic — the FCA expects firms to demonstrate independent validation, explainability, and ongoing monitoring in ways that go beyond governance documentation. For healthcare, the MHRA regulates AI as a medical device where the system is intended to support clinical decisions. AurorAI processing clinical documents for administrative purposes is unlikely to trigger MHRA regulation; AurorAI supporting diagnostic or treatment decisions likely does. The distinction is the intended purpose, not the technology.
+For financial services, the FCA's model risk management guidance (SS1/23) applies to algorithmic and AI-driven models in regulated firms. ComPassAI governance records address the documentation and monitoring aspects of model risk management, but FCA compliance is not automatic — the FCA expects firms to demonstrate independent validation, explainability, and ongoing monitoring in ways that go beyond governance documentation. For healthcare, the MHRA regulates AI as a medical device where the system is intended to support clinical decisions. AurorA processing clinical documents for administrative purposes is unlikely to trigger MHRA regulation; AurorA supporting diagnostic or treatment decisions likely does. The distinction is the intended purpose, not the technology.
 
 **ISO/IEC 42001 relevance:**
 
 ISO/IEC 42001 (AI Management Systems, published December 2023) is referenced in UK DSIT guidance and by the AI Security Institute. ComPassAI's governance architecture is conceptually aligned with ISO 42001's management system requirements — governance, risk assessment, policy, operational controls, performance evaluation, and improvement. ISO 42001 certification requires an external certification body and is currently listed as `roadmap` in the main specification's regulatory alignment table. UK clients requesting ISO 42001 alignment as a procurement requirement should receive an honest roadmap timeline, not a current capability claim.
 
-**What AurorAI and ComPassAI provide toward UK obligations:**
+**What AurorA and ComPassAI provide toward UK obligations:**
 
 UK GDPR controls (legal basis, PII masking, HITL for significant decisions, audit trail, DPIA generation) map directly from section A.1 guidance above. The governance documentation structure supports the DSIT five principles in an auditable way. FCA model risk management documentation requirements are partially addressed by ComPassAI model cards and risk assessments — the gap is independent validation, which requires a separate engagement.
 
-**What AurorAI and ComPassAI do not provide:**
+**What AurorA and ComPassAI do not provide:**
 
 Determination of whether the Data (Use and Access) Act 2025 relaxations apply to a specific use case. ICO Code of Practice compliance (the Code is not yet published). FCA independent model validation. MHRA medical device conformity assessment. ISO 42001 certification.
 
@@ -1018,7 +1018,7 @@ Determination of whether the Data (Use and Access) Act 2025 relaxations apply to
 
 ## A.5 Cross-Jurisdiction Obligations
 
-**EU AI Act extraterritoriality** applies to operators in any other jurisdiction who place AurorAI or ComPassAI on the EU market or whose systems affect EU persons. Section A.1 applies in addition to the home jurisdiction section for any such deployment. This is not optional and cannot be contracted around.
+**EU AI Act extraterritoriality** applies to operators in any other jurisdiction who place AurorA or ComPassAI on the EU market or whose systems affect EU persons. Section A.1 applies in addition to the home jurisdiction section for any such deployment. This is not optional and cannot be contracted around.
 
 **GDPR and UK GDPR data transfer rules.** Processing data about EU or UK persons using infrastructure hosted outside the EU or UK requires adequate transfer mechanisms. Canada currently benefits from an EU adequacy decision for PIPEDA-covered transfers, but this is under periodic review and does not extend to all Quebec Law 25 contexts. The US has no general EU adequacy decision; Data Privacy Framework certification is the primary EU-US transfer mechanism but has been challenged and should not be relied upon without current legal confirmation. Operators must confirm transfer mechanism status before deploying cross-border evidence infrastructure.
 
@@ -1034,7 +1034,7 @@ This checklist is not a substitute for legal review. It identifies the minimum c
 
 **All jurisdictions — required before any production deployment:**
 
-Establish the legal basis for processing personal data for each document type processed. Populate the `legal_basis` field in the evidence package schema before ingestion begins. Confirm that data subject rights obligations (access, rectification, erasure, objection) are operationally addressable for all personal data categories being processed. Document the data retention policy and configure AurorAI to enforce it. Confirm that cross-border data transfer mechanisms are in place if evidence infrastructure is hosted outside the country where data subjects are located.
+Establish the legal basis for processing personal data for each document type processed. Populate the `legal_basis` field in the evidence package schema before ingestion begins. Confirm that data subject rights obligations (access, rectification, erasure, objection) are operationally addressable for all personal data categories being processed. Document the data retention policy and configure AurorA to enforce it. Confirm that cross-border data transfer mechanisms are in place if evidence infrastructure is hosted outside the country where data subjects are located.
 
 **EU/France additions — blocking for EU deployments:**
 
@@ -1046,7 +1046,7 @@ Confirm PIPEDA lawful basis and, for Quebec deployments, Law 25 compliance indep
 
 **US additions — blocking before June 30, 2026 deployments:**
 
-Confirm Colorado AI Act applicability and compliance requirements for consequential decision use cases before June 30, 2026 effective date. For California deployments, confirm training data transparency obligations under AB 2013. For HIPAA-covered processing, configure AurorAI de-identification controls to meet Safe Harbor or Expert Determination standards specifically — not general PII masking. For NYC employment decision tools, confirm third-party bias audit requirement before deployment.
+Confirm Colorado AI Act applicability and compliance requirements for consequential decision use cases before June 30, 2026 effective date. For California deployments, confirm training data transparency obligations under AB 2013. For HIPAA-covered processing, configure AurorA de-identification controls to meet Safe Harbor or Expert Determination standards specifically — not general PII masking. For NYC employment decision tools, confirm third-party bias audit requirement before deployment.
 
 **UK additions — blocking for UK deployments:**
 
@@ -1072,9 +1072,9 @@ Regulatory monitoring is assigned to the `governance_admin` role in ComPassAI's 
 
 ## Annex Reviewer Conclusion Boundary Block
 
-**What reviewers can conclude from this annex:** That AurorAI and ComPassAI's governance architecture addresses real, current regulatory obligations across five jurisdictions. That the specific obligations described are accurately characterized against law in force as of March 2026. That the checklist items in section A.6 represent genuine minimum configuration requirements. That the freshness gates and review dates are honest.
+**What reviewers can conclude from this annex:** That AurorA and ComPassAI's governance architecture addresses real, current regulatory obligations across five jurisdictions. That the specific obligations described are accurately characterized against law in force as of March 2026. That the checklist items in section A.6 represent genuine minimum configuration requirements. That the freshness gates and review dates are honest.
 
-**What reviewers cannot conclude from this annex:** That deploying AurorAI and ComPassAI with the configuration checklist completed constitutes regulatory compliance in any jurisdiction. That this annex is a substitute for legal advice. That the regulatory landscape described will remain unchanged through the operator's deployment timeline. That any `preview`-status module integration provides the production-grade control reliability that regulatory compliance requires.
+**What reviewers cannot conclude from this annex:** That deploying AurorA and ComPassAI with the configuration checklist completed constitutes regulatory compliance in any jurisdiction. That this annex is a substitute for legal advice. That the regulatory landscape described will remain unchanged through the operator's deployment timeline. That any `preview`-status module integration provides the production-grade control reliability that regulatory compliance requires.
 
 
 ---
@@ -1083,14 +1083,14 @@ Regulatory monitoring is assigned to the `governance_admin` role in ComPassAI's 
 
 This annex is the explicit bridge between the InfraFabric source corpus in `C:\Users\softinfo\Documents\InfraFabric` and the specification claims made above.
 
-Its purpose is simple: a reviewer should be able to trace every integration claim in AurorAI and ComPassAI back to (1) a canonical module explainer and (2) at least one no-login verification surface.
+Its purpose is simple: a reviewer should be able to trace every integration claim in AurorA and ComPassAI back to (1) a canonical module explainer and (2) at least one no-login verification surface.
 
 ## B.1 Structural Role Map
 
 | Module | Registry floor used in this spec | Structural role in COM-AUR | Immediate product effect | Explicit non-upgrade rule |
 |---|---|---|---|---|
 | if.trace | `shipped` | Receipt and byte-integrity anchor | Evidence packages and deliverables can carry externally reviewable integrity markers | Does not upgrade extraction correctness, governance correctness, or compliance posture |
-| if.bus | `preview` | Handoff discipline and envelope transport | AurorAI-to-ComPassAI evidence transfer can be structured and replay-guarded | Does not justify SLA, exactly-once, or HA claims |
+| if.bus | `preview` | Handoff discipline and envelope transport | AurorA-to-ComPassAI evidence transfer can be structured and replay-guarded | Does not justify SLA, exactly-once, or HA claims |
 | if.api | `preview` | Contract and adapter substrate | External system inputs can be normalized before governance handling | Does not create a public runtime endpoint guarantee |
 | if.blackboard | `preview` | Append-only coordination evidence | Task, debt, and workflow visibility can be made reviewable | Does not prove message delivery, cryptographic immutability, or certification readiness |
 | if.context | `preview` | Provenance and staged context environment | Evidence can move through explicit ingest -> summarize -> index -> publish stages | Does not justify GA retrieval/runtime claims |
@@ -1119,7 +1119,7 @@ Its purpose is simple: a reviewer should be able to trace every integration clai
 
 ## B.3 Processing Logic Map
 
-| Stage | AurorAI responsibility | InfraFabric logic carried into the stage | ComPassAI responsibility | Recursive state that must persist |
+| Stage | AurorA responsibility | InfraFabric logic carried into the stage | ComPassAI responsibility | Recursive state that must persist |
 |---|---|---|---|---|
 | Artifact intake | Store file, hash, preview, source identity | `if.trace` reconstructability discipline begins at byte identity | None yet, but later use-case linkage depends on stable hashes | Artifact version lineage |
 | Classification pass | Assign category and document type with confidence | `if.api` contract discipline, `if.context` staged handling | None yet | Processing run history per stage |
@@ -1133,7 +1133,7 @@ Its purpose is simple: a reviewer should be able to trace every integration clai
 
 ## B.4 Implementation Consequence
 
-The practical consequence of this annex is that AurorAI and ComPassAI must preserve recursive state explicitly.
+The practical consequence of this annex is that AurorA and ComPassAI must preserve recursive state explicitly.
 
 That means:
 

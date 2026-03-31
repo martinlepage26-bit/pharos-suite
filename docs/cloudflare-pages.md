@@ -53,6 +53,6 @@ Not created yet:
 
 Current stance:
 
-- `AurorAI` and `CompassAI` are PHAROS products
+- `AurorA` and `CompassAI` are PHAROS products
 - they remain under the main PHAROS surface for now
 - do not create standalone public subdomains for them until hosting and boundary decisions are explicit

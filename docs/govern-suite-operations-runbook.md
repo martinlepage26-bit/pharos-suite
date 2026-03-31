@@ -3,14 +3,14 @@
 This runbook covers the current local operating model for:
 
 - `govern-ai`
-- `AurorAI`
+- `AurorA`
 - `CompassAI`
 
 Current public/private split:
 
 - Public frontend target: `https://pharos-ai.ca`
 - Local frontend preview: `http://127.0.0.1:9201/`
-- Local backends only: `govern-ai`, `AurorAI`, `CompassAI`
+- Local backends only: `govern-ai`, `AurorA`, `CompassAI`
 
 ## 1. What runs where
 
@@ -20,7 +20,7 @@ Current public/private split:
 | govern-ai frontend | public site UI | `http://127.0.0.1:9201/` | `9201` |
 | govern-ai backend | bookings, services, platform status | `http://127.0.0.1:9202/` | `9202` |
 | CompassAI backend | governance engine | `http://127.0.0.1:9205/api/` | `9205` |
-| AurorAI backend | evidence and document engine | `http://127.0.0.1:9206/api/` | `9206` |
+| AurorA backend | evidence and document engine | `http://127.0.0.1:9206/api/` | `9206` |
 | Local MongoDB | shared local database | `mongodb://127.0.0.1:27017` | `27017` |
 
 ## 2. Fastest way to operate everything
@@ -56,7 +56,7 @@ Open a Linux terminal in WSL and use these commands.
 Linux paths:
 
 - govern-ai repo: `/home/cerebrhoe/repos/govern-ai`
-- AurorAI repo: `/home/cerebrhoe/repos/AurorAI`
+- AurorA repo: `/home/cerebrhoe/repos/AurorA`
 - CompassAI repo: `/home/cerebrhoe/repos/CompassAI`
 - hosting scripts: `/home/cerebrhoe/repo-hosting`
 - logs: `/home/cerebrhoe/repo-hosting/logs`
@@ -75,7 +75,7 @@ Windows paths from WSL:
 - Backend runs on `9202`
 - The frontend build assumes backend access at `http://127.0.0.1:9202`
 
-### AurorAI
+### AurorA
 
 - Runs on `9206`
 - Uses Mongo database `aurorai`
@@ -87,9 +87,9 @@ Windows paths from WSL:
 - Runs on `9205`
 - Uses Mongo database `compassai`
 - Most routes require JWT auth
-- The evidence ingest route can also accept the internal service token used by AurorAI handoff
+- The evidence ingest route can also accept the internal service token used by AurorA handoff
 
-### AurorAI -> CompassAI handoff
+### AurorA -> CompassAI handoff
 
 Local stack wiring already sets:
 
@@ -98,8 +98,8 @@ Local stack wiring already sets:
 
 That means:
 
-1. AurorAI generates an evidence package
-2. AurorAI posts it to `CompassAI /api/v1/evidence`
+1. AurorA generates an evidence package
+2. AurorA posts it to `CompassAI /api/v1/evidence`
 3. CompassAI stores it against a use case
 4. CompassAI can then assess that use case
 
@@ -113,7 +113,7 @@ curl http://127.0.0.1:9202/api/admin/platform-status
 curl http://127.0.0.1:9202/api/services/active
 ```
 
-### AurorAI
+### AurorA
 
 ```bash
 curl http://127.0.0.1:9206/api/
@@ -180,12 +180,12 @@ cd /home/cerebrhoe/repos/govern-ai/backend
 env MONGO_URL=mongodb://127.0.0.1:27017 DB_NAME=govern_ai /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9202
 ```
 
-## 8. AurorAI day-to-day commands
+## 8. AurorA day-to-day commands
 
 ### Open the repo
 
 ```bash
-cd /home/cerebrhoe/repos/AurorAI
+cd /home/cerebrhoe/repos/AurorA
 ```
 
 ### Important local prerequisite
@@ -193,13 +193,13 @@ cd /home/cerebrhoe/repos/AurorAI
 Make sure the local uploads directory exists:
 
 ```bash
-mkdir -p /home/cerebrhoe/repos/AurorAI/uploads
+mkdir -p /home/cerebrhoe/repos/AurorA/uploads
 ```
 
 ### Manual run
 
 ```bash
-cd /home/cerebrhoe/repos/AurorAI
+cd /home/cerebrhoe/repos/AurorA
 env \
   MONGO_URL=mongodb://127.0.0.1:27017 \
   DB_NAME=aurorai \
@@ -314,7 +314,7 @@ curl -X POST http://127.0.0.1:9205/api/v1/use-cases \
     "purpose":"Validate invoice extraction and governance handoff",
     "business_owner":"Finance Ops",
     "business_owner_confirmed":true,
-    "systems_involved":["AurorAI","CompassAI"],
+    "systems_involved":["AurorA","CompassAI"],
     "data_categories":["financial","contact"],
     "automation_level":"assistive",
     "decision_impact":"advisory",
@@ -360,8 +360,8 @@ This sequence was verified locally today:
 
 1. register in `CompassAI`
 2. create a use case in `CompassAI`
-3. upload a TXT invoice into `AurorAI`
-4. extract fields in `AurorAI`
+3. upload a TXT invoice into `AurorA`
+4. extract fields in `AurorA`
 5. hand off the evidence package to `CompassAI`
 6. assess the use case in `CompassAI`
 
@@ -374,13 +374,13 @@ Observed result:
 ## 11. Known local caveats
 
 - `govern-ai` frontend is public on Cloudflare Pages, but the backends are still local-only
-- `AurorAI` currently accepts `PDF` and `TXT`, not `DOC` or `DOCX`
-- `AurorAI` falls back to heuristic extraction if the LLM path is not fully configured
+- `AurorA` currently accepts `PDF` and `TXT`, not `DOC` or `DOCX`
+- `AurorA` falls back to heuristic extraction if the LLM path is not fully configured
 - `CompassAI` requires JWT auth for most routes
 - if a local upload path disappears, recreate it with:
 
 ```bash
-mkdir -p /home/cerebrhoe/repos/AurorAI/uploads
+mkdir -p /home/cerebrhoe/repos/AurorA/uploads
 ```
 
 ## 12. Daily operator checklist

@@ -462,13 +462,13 @@ This is the recursion process preserved explicitly.
 
 Nothing gets flattened into "latest state only."
 
-## Mapping from current AurorAI records
+## Mapping from current AurorA records
 
 ### Current `Document`
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L75)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L75)
 
 Mapping:
 
@@ -487,7 +487,7 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L114)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L114)
 
 Mapping:
 
@@ -500,8 +500,8 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L1118)
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L1130)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L1118)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L1130)
 
 Mapping:
 
@@ -584,7 +584,7 @@ Those are the parts that preserve recursion, not just storage.
 3. Move files to `R2`
 4. Mirror metadata into `D1`
 5. Replace Mongo writes one bounded object family at a time:
-   - `AurorAI artifacts`
+   - `AurorA artifacts`
    - `evidence packages`
    - `CompassAI use cases`
    - `assessments`
@@ -594,7 +594,7 @@ Those are the parts that preserve recursion, not just storage.
 
 What this would feel like:
 
-- AurorAI still ingests and extracts
+- AurorA still ingests and extracts
 - CompassAI still assesses and derives controls
 - Govern AI still remains the shell
 - the recursive loop still exists

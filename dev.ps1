@@ -1,6 +1,6 @@
 ﻿[CmdletBinding()]
 param(
-  [string[]]$Apps = @("frontend","backend","CompassAI","AurorAI","Agency")
+  [string[]]$Apps = @("frontend","backend","CompassAI","AurorA","Agency")
 )
 
 $ErrorActionPreference = "Stop"

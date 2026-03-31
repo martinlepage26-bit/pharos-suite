@@ -19,7 +19,7 @@ import FAQ from './pages/FAQ';
 import Game from './pages/Game';
 import Home from './pages/Home';
 import Library from './pages/Library';
-import PortalAurorAI from './pages/PortalAurorAI';
+import PortalAurorA from './pages/PortalAurorA';
 import PortalCompassAI from './pages/PortalCompassAI';
 import Research from './pages/Research';
 import SealedCard from './pages/SealedCard';
@@ -53,7 +53,7 @@ function AppRoutes() {
           <Route path="/methods" element={<ConceptualMethod />} />
           <Route path="/connect" element={<Connect />} />
           <Route path="/contact" element={<Connect />} />
-          <Route path="/portal/aurorai" element={<PortalAurorAI />} />
+          <Route path="/portal/aurorai" element={<PortalAurorA />} />
           <Route path="/portal/compassai" element={<PortalCompassAI />} />
           <Route path="/sealed-card" element={<SealedCard />} />
           <Route

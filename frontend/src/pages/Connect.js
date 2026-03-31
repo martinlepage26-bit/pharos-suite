@@ -92,7 +92,7 @@ const CONNECT_COPY = {
     sendEmail: 'Send an email',
     linkedin: 'Connect on LinkedIn',
     internalModules: 'PHAROS products',
-    internalBody: 'AurorAI and CompassAI stay under the PHAROS surface until their hosting, lineage, and review paths are ready for standalone presentation.',
+    internalBody: 'AurorA and CompassAI stay under the PHAROS surface until their hosting, lineage, and review paths are ready for standalone presentation.',
     resources: 'Resources',
     startPrompt: 'Not sure where to start?',
     startTitle: 'Take a quick readiness signal',
@@ -123,7 +123,7 @@ const CONNECT_COPY = {
     ],
     modulesList: [
       {
-        title: 'AurorAI',
+        title: 'AurorA',
         description: 'Document intake, extraction, quality gates, and evidence package assembly.'
       },
       {
@@ -205,7 +205,7 @@ const CONNECT_COPY = {
     sendEmail: 'Envoyer un courriel',
     linkedin: 'Écrire sur LinkedIn',
     internalModules: 'Produits PHAROS',
-    internalBody: 'AurorAI et CompassAI demeurent sous la surface PHAROS tant que leur hébergement, leur chaîne de preuve et leurs parcours de revue ne sont pas prêts pour une présentation autonome.',
+    internalBody: 'AurorA et CompassAI demeurent sous la surface PHAROS tant que leur hébergement, leur chaîne de preuve et leurs parcours de revue ne sont pas prêts pour une présentation autonome.',
     resources: 'Ressources',
     startPrompt: 'Vous ne savez pas par où commencer ?',
     startTitle: 'Obtenez un signal rapide de préparation',
@@ -236,7 +236,7 @@ const CONNECT_COPY = {
     ],
     modulesList: [
       {
-        title: 'AurorAI',
+        title: 'AurorA',
         description: 'Accueil documentaire, extraction, portes qualité et assemblage de dossiers de preuve.'
       },
       {

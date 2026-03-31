@@ -5,7 +5,7 @@
 - `pharos-ai.ca` is the PHAROS public website
 - `www.pharos-ai.ca` should redirect to the apex domain
 - `govern-ai.ca` should also redirect to the apex domain during migration
-- `AurorAI` and `CompassAI` are PHAROS products, but not yet standalone public subdomains
+- `AurorA` and `CompassAI` are PHAROS products, but not yet standalone public subdomains
 
 ## Current free setup
 
@@ -21,7 +21,7 @@ If it needs a Python server, Mongo, PDF processing, or file uploads, keep it pri
 ## What to tell yourself
 
 1. Keep PHAROS public at `pharos-ai.ca`
-2. Keep `AurorAI` and `CompassAI` inside the PHAROS surface until separate hosting is ready
+2. Keep `AurorA` and `CompassAI` inside the PHAROS surface until separate hosting is ready
 3. If a public backend is needed, start with only `api.pharos-ai.ca`
 4. Keep heavier product surfaces off standalone public subdomains until hosting decisions are explicit
 5. Use one storage plan before exposing heavier backend features

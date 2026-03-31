@@ -627,11 +627,11 @@ const ABOUT_COPY = {
       }
     ],
     modulesLabel: 'PHAROS products',
-    modulesTitle: 'AurorAI & CompassAI',
-    modulesBody: 'AurorAI and CompassAI are PHAROS products developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission. AurorAI handles evidence and document processing. CompassAI handles governance intake, assessment, and output generation. Their product surfaces remain under PHAROS while separate standalone hosting is still being staged.',
+    modulesTitle: 'AurorA & CompassAI',
+    modulesBody: 'AurorA and CompassAI are PHAROS products developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission. AurorA handles evidence and document processing. CompassAI handles governance intake, assessment, and output generation. Their product surfaces remain under PHAROS while separate standalone hosting is still being staged.',
     modules: [
       {
-        title: 'AurorAI',
+        title: 'AurorA',
         description: 'A PHAROS evidence and document engine developed by Martin Lepage in accordance with Deterministic AI governance models by InfraFabric, with permission.',
         portalPath: '/portal/aurorai'
       },
@@ -716,11 +716,11 @@ const ABOUT_COPY = {
       }
     ],
     modulesLabel: 'Produits PHAROS',
-    modulesTitle: 'AurorAI et CompassAI',
-    modulesBody: 'AurorAI et CompassAI sont des produits PHAROS développés par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission. AurorAI prend en charge la preuve et le traitement documentaire. CompassAI prend en charge l’accueil de gouvernance, l’évaluation et la production des livrables. Leurs surfaces produit demeurent sous PHAROS tant que leur hébergement autonome n’est pas encore stabilisé.',
+    modulesTitle: 'AurorA et CompassAI',
+    modulesBody: 'AurorA et CompassAI sont des produits PHAROS développés par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission. AurorA prend en charge la preuve et le traitement documentaire. CompassAI prend en charge l’accueil de gouvernance, l’évaluation et la production des livrables. Leurs surfaces produit demeurent sous PHAROS tant que leur hébergement autonome n’est pas encore stabilisé.',
     modules: [
       {
-        title: 'AurorAI',
+        title: 'AurorA',
         description: 'Un moteur PHAROS de preuve et de traitement documentaire développé par Martin Lepage conformément aux modèles de gouvernance déterministe d’InfraFabric, avec permission.',
         portalPath: '/portal/aurorai'
       },

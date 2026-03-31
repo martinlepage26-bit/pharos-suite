@@ -396,7 +396,7 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
             **compassai_probe,
         },
         {
-            "name": "AurorAI backend",
+            "name": "AurorA backend",
             "key": "aurorai",
             "url": "http://127.0.0.1:9206/api/categories",
             **aurorai_probe,
@@ -411,9 +411,9 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
         "openai_base_url_configured": bool(os.environ.get("OPENAI_BASE_URL")),
         "emergent_library_present": (ROOT_DIR.parent / "emergentintegrations").exists(),
         "notes": [
-            "CompassAI and AurorAI pick up EMERGENT_LLM_KEY through the local stack launcher.",
+            "CompassAI and AurorA pick up EMERGENT_LLM_KEY through the local stack launcher.",
             "OpenAI-compatible credentials can be supplied with OPENAI_API_KEY and optionally OPENAI_BASE_URL.",
-            "AurorAI falls back to heuristic extraction when no compatible LLM call succeeds.",
+            "AurorA falls back to heuristic extraction when no compatible LLM call succeeds.",
         ],
     }
 

@@ -7,7 +7,7 @@ PHAROS public-surface repo for `pharos-ai.ca`.
 - PHAROS public domain: `pharos-ai.ca`
 - Legacy PHAROS/GovernAI product domain: `govern-ai.ca`
 - Martin Lepage personal/professional surface: `governai.ca`
-- AurorAI and CompassAI belong under the PHAROS surface
+- AurorA and CompassAI belong under the PHAROS surface
 - Lotus does not belong on the PHAROS surface
 
 ## Repo structure

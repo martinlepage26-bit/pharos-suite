@@ -93,7 +93,7 @@ const ASSURANCE_COPY = {
       'PHAROS provides public descriptions of its services, methods, and review posture.',
       'The site discloses accountable human review, public claim boundaries, and review dates.',
       'The readiness tool is a calibration aid. It is not a certification, legal determination, or audit opinion.',
-      'AurorAI and CompassAI remain under the PHAROS surface until their hosting, lineage, and review paths are ready for standalone public presentation.'
+      'AurorA and CompassAI remain under the PHAROS surface until their hosting, lineage, and review paths are ready for standalone public presentation.'
     ],
     limitsTitle: 'Non-claims and hard limits',
     limits: [
@@ -281,7 +281,7 @@ const ASSURANCE_COPY = {
       'PHAROS fournit des descriptions publiques de ses services, de sa methode et de sa posture de revue.',
       'Le site divulgue la revue humaine responsable, les limites de revendication publiques et les dates de revue.',
       'L outil de preparation est une aide de calibration. Ce n est ni une certification, ni une determination juridique, ni une opinion d audit.',
-      'AurorAI et CompassAI restent sous la surface PHAROS tant que leur hebergement, leur lignage et leurs parcours de revue ne sont pas prets pour une presentation publique autonome.'
+      'AurorA et CompassAI restent sous la surface PHAROS tant que leur hebergement, leur lignage et leurs parcours de revue ne sont pas prets pour une presentation publique autonome.'
     ],
     limitsTitle: 'Non-revendications et limites dures',
     limits: [

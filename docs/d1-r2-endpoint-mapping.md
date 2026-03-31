@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This note maps the current `AurorAI` and `CompassAI` backend surfaces onto the simplified `D1 + R2` storage model.
+This note maps the current `AurorA` and `CompassAI` backend surfaces onto the simplified `D1 + R2` storage model.
 
 It also keeps one rule explicit: no endpoint should claim a stronger governance state than the persisted evidence can actually support.
 
@@ -23,13 +23,13 @@ That means:
 
 ---
 
-# Part 1: AurorAI mapping
+# Part 1: AurorA mapping
 
 ## `POST /api/documents/upload`
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L838)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L838)
 
 ### Current behavior
 
@@ -167,7 +167,7 @@ For the first migration, option `1` is simpler.
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L1118)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L1118)
 
 ### Current behavior
 
@@ -207,7 +207,7 @@ It only means a versioned evidence envelope now exists.
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/AurorAI/server.py#L1130)
+- [server.py](/home/cerebrhoe/repos/AurorA/server.py#L1130)
 
 ### Current behavior
 
@@ -442,7 +442,7 @@ That is the InfraFabric recursion made concrete in `D1`.
 
 ## First
 
-Move AurorAI file storage to `R2`
+Move AurorA file storage to `R2`
 
 Why:
 
@@ -474,7 +474,7 @@ Retire Mongo once reads and writes have both been switched
 
 What this would feel like in practice:
 
-- AurorAI still processes documents
+- AurorA still processes documents
 - CompassAI still assesses governance
 - Govern AI still presents the work
 - but the system stores files in `R2`, state in `D1`, and recursion in explicit linked rows

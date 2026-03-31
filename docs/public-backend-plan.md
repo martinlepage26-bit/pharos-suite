@@ -78,7 +78,7 @@ Add Cloudflare controls on `api.pharos-ai.ca`:
 
 - `api.pharos-ai.ca` via Tunnel is suitable as a bridge, not a final uptime story
 - if the local host is asleep, offline, or the local stack is stopped, the public API will fail
-- `platform-status` only remains meaningful if `CompassAI` and `AurorAI` are still reachable from the same machine as the PHAROS backend
+- `platform-status` only remains meaningful if `CompassAI` and `AurorA` are still reachable from the same machine as the PHAROS backend
 - Lotus is no longer part of the PHAROS public/backend surface and should not be republished through this hostname
 
 ## Implementation checklist

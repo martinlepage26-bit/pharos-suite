@@ -6,7 +6,7 @@
 
 ### Added
 - Lighthouse-led brand system across the public frontend
-- Client portal placeholder routes for AurorAI and CompassAI
+- Client portal placeholder routes for AurorA and CompassAI
 - Admin platform status tab for service, LLM, and Cloudflare readiness
 - Cloudflare Pages prep with `wrangler.jsonc` and SPA redirects
 

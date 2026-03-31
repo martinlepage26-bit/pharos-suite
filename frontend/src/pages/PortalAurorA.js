@@ -44,7 +44,7 @@ const heroSignals = [
   {
     label: 'Module',
     title: 'Document intelligence layer',
-    description: 'AurorAI handles intake, classification, extraction, citation capture, and evidence packaging before records move into CompassAI.'
+    description: 'AurorA handles intake, classification, extraction, citation capture, and evidence packaging before records move into CompassAI.'
   },
   {
     label: 'Current backend truth',
@@ -60,7 +60,7 @@ const heroSignals = [
 
 const getSafeConfig = () => normalizeModuleConfig(MODULE_KEY, getModuleConfig(MODULE_KEY));
 
-const PortalAurorAI = () => {
+const PortalAurorA = () => {
   const [config, setConfig] = useState(getSafeConfig);
   const [draftConfig, setDraftConfig] = useState(getSafeConfig);
 
@@ -108,7 +108,7 @@ const PortalAurorAI = () => {
       setStats(statsPayload);
       setCategories(normalizeList(categoriesPayload, 'categories'));
     } catch (error) {
-      setLoadError(error.message || 'Could not load AurorAI pipeline metadata.');
+      setLoadError(error.message || 'Could not load AurorA pipeline metadata.');
     } finally {
       setLoading(false);
     }
@@ -184,7 +184,7 @@ const PortalAurorAI = () => {
     saveModuleConfig(MODULE_KEY, nextConfig);
     setConfig(nextConfig);
     resetActionState();
-    setActionMessage('AurorAI connection updated.');
+    setActionMessage('AurorA connection updated.');
   };
 
   const handleResetConnection = () => {
@@ -193,7 +193,7 @@ const PortalAurorAI = () => {
     setConfig(nextConfig);
     setDraftConfig(nextConfig);
     resetActionState();
-    setActionMessage('AurorAI connection reset to local defaults.');
+    setActionMessage('AurorA connection reset to local defaults.');
   };
 
   const uploadDocument = async (event) => {
@@ -218,7 +218,7 @@ const PortalAurorAI = () => {
         formData
       });
 
-      setActionMessage('Document uploaded to AurorAI.');
+      setActionMessage('Document uploaded to AurorA.');
       setUploadForm(defaultUploadForm);
       setSelectedDocId(payload.id);
       await Promise.all([loadDocuments(), loadPublicData()]);
@@ -350,7 +350,7 @@ const PortalAurorAI = () => {
         <div className="container">
           <div className="section-header">
             <p className="eyebrow">PHAROS product</p>
-            <h1>AurorAI</h1>
+            <h1>AurorA</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
               Process documents into classified, extractable, governance-ready evidence while keeping each stage legible inside the PHAROS shell.
             </p>
@@ -363,13 +363,13 @@ const PortalAurorAI = () => {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container portal-stack">
           <PortalConnectionPanel
-            title="AurorAI backend connection"
-            body="Pipeline metadata and category stats are public. Upload, document actions, and handoff flows require the AurorAI API token."
+            title="AurorA backend connection"
+            body="Pipeline metadata and category stats are public. Upload, document actions, and handoff flows require the AurorA API token."
             draftConfig={draftConfig}
             onDraftChange={handleDraftChange}
             onSave={handleSaveConnection}
             onReset={handleResetConnection}
-            tokenLabel="AurorAI API token"
+            tokenLabel="AurorA API token"
             helper="Default local target is http://127.0.0.1:9206. The current backend only accepts PDF and TXT uploads; DOC/DOCX extraction and OCR still need implementation."
           />
 
@@ -390,7 +390,7 @@ const PortalAurorAI = () => {
               <FileSearch />
               <span className="portal-metric-label">Documents</span>
               <strong>{stats?.total_documents ?? 0}</strong>
-              <span className="portal-metric-foot">Indexed inside AurorAI</span>
+              <span className="portal-metric-foot">Indexed inside AurorA</span>
             </div>
             <div className="portal-metric-card">
               <Bot />
@@ -409,7 +409,7 @@ const PortalAurorAI = () => {
           {loading ? (
             <div className="portal-empty">
               <LoaderCircle className="portal-spin" />
-              <p>Loading AurorAI pipeline metadata...</p>
+              <p>Loading AurorA pipeline metadata...</p>
             </div>
           ) : (
             <>
@@ -421,7 +421,7 @@ const PortalAurorAI = () => {
                       <h2>Read the current IDP contract</h2>
                     </div>
                     <p className="body-sm">
-                      The PHAROS route now exposes the same mission, stage order, and golden rules the AurorAI backend publishes directly.
+                      The PHAROS route now exposes the same mission, stage order, and golden rules the AurorA backend publishes directly.
                     </p>
                   </div>
 
@@ -447,7 +447,7 @@ const PortalAurorAI = () => {
                   <div className="portal-section-head">
                     <div>
                       <p className="eyebrow">Category footprint</p>
-                      <h2>See what AurorAI is already classifying</h2>
+                      <h2>See what AurorA is already classifying</h2>
                     </div>
                     <p className="body-sm">
                       These category counts are public in the backend today, so the PHAROS shell can show adoption without a token.
@@ -526,18 +526,18 @@ const PortalAurorAI = () => {
                   {secureLoading ? (
                     <div className="portal-empty">
                       <LoaderCircle className="portal-spin" />
-                      <p>Loading AurorAI document records...</p>
+                      <p>Loading AurorA document records...</p>
                     </div>
                   ) : !authenticated ? (
                     <div className="portal-empty">
                       <ShieldCheck />
-                      <p>Add an AurorAI token above to list documents and run the processing pipeline.</p>
+                      <p>Add an AurorA token above to list documents and run the processing pipeline.</p>
                     </div>
                   ) : (
                     <div className="portal-list">
                       {documents.length === 0 ? (
                         <div className="portal-empty">
-                          <p>No AurorAI documents are indexed yet.</p>
+                          <p>No AurorA documents are indexed yet.</p>
                         </div>
                       ) : documents.map((document) => (
                         <button
@@ -580,7 +580,7 @@ const PortalAurorAI = () => {
                       <h2>Classify, summarize, extract, and cite</h2>
                     </div>
                     <p className="body-sm">
-                      These buttons call the live AurorAI endpoints for the selected document. Each response is shown immediately so the PHAROS shell doubles as a review surface.
+                      These buttons call the live AurorA endpoints for the selected document. Each response is shown immediately so the PHAROS shell doubles as a review surface.
                     </p>
                   </div>
 
@@ -724,7 +724,7 @@ const PortalAurorAI = () => {
                     <h2>Turn document output into CompassAI-ready evidence</h2>
                   </div>
                   <p className="body-sm">
-                    This is the key bridge between the two modules: AurorAI packages the document, then hands it to CompassAI’s governance intake using the append-only evidence endpoint.
+                    This is the key bridge between the two modules: AurorA packages the document, then hands it to CompassAI’s governance intake using the append-only evidence endpoint.
                   </p>
                 </div>
 
@@ -780,7 +780,7 @@ const PortalAurorAI = () => {
                 <div className="portal-section-head">
                   <div>
                     <p className="eyebrow">Module alignment</p>
-                    <h2>AurorAI now feeds the same shell that CompassAI lives in</h2>
+                    <h2>AurorA now feeds the same shell that CompassAI lives in</h2>
                   </div>
                   <p className="body-sm">
                     The next backend step is to close the document-format and OCR gaps, then normalize bulk and single-document audit behavior behind this same PHAROS front end.
@@ -794,7 +794,7 @@ const PortalAurorAI = () => {
                   </Link>
                   <button type="button" className="btn-secondary portal-secondary-button" onClick={() => Promise.all([loadPublicData(), loadDocuments(), loadDocumentDetail()])}>
                     <RefreshCw size={16} />
-                    Refresh AurorAI
+                    Refresh AurorA
                   </button>
                 </div>
               </div>
@@ -808,4 +808,4 @@ const PortalAurorAI = () => {
 
 const safeArray = (value) => (Array.isArray(value) ? value : []);
 
-export default PortalAurorAI;
+export default PortalAurorA;

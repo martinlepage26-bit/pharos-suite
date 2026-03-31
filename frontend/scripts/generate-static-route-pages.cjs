@@ -349,20 +349,20 @@ const ROUTE_PAGES = [
   },
   {
     path: '/portal/aurorai',
-    title: 'AurorAI — PHAROS Portal Overview',
+    title: 'AurorA — PHAROS Portal Overview',
     description:
-      'AurorAI remains under the PHAROS public surface as a document intake, extraction, and evidence-package workflow until its standalone review surface is ready.',
-    eyebrow: 'AurorAI',
-    heading: 'AurorAI remains inside the PHAROS public surface',
+      'AurorA remains under the PHAROS public surface as a document intake, extraction, and evidence-package workflow until its standalone review surface is ready.',
+    eyebrow: 'AurorA',
+    heading: 'AurorA remains inside the PHAROS public surface',
     body:
-      'AurorAI is presented here as an internal PHAROS module focused on document intake, extraction, quality gates, and evidence package assembly.',
+      'AurorA is presented here as an internal PHAROS module focused on document intake, extraction, quality gates, and evidence package assembly.',
     bullets: [
       'Document intake and extraction workflows.',
       'Quality gates for evidence packaging.',
       'Still bounded within the PHAROS public surface.'
     ],
     primaryHref: '/contact',
-    primaryLabel: 'Ask about AurorAI',
+    primaryLabel: 'Ask about AurorA',
     secondaryHref: '/assurance',
     secondaryLabel: 'See the surface boundary'
   },

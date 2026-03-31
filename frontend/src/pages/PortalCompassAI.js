@@ -1274,7 +1274,7 @@ const PortalCompassAI = () => {
 
                 <div className="portal-action-row">
                   <Link to="/portal/aurorai" className="btn-primary">
-                    Open AurorAI
+                    Open AurorA
                     <ArrowRight />
                   </Link>
                   <button type="button" className="btn-secondary portal-secondary-button" onClick={loadPublicData}>

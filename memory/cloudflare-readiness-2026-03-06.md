@@ -26,6 +26,6 @@
   - `compassai.govern-ai.ca`
 
 ### Backend constraint
-- `govern-ai`, `AurorAI`, and `CompassAI` are Python/Uvicorn services using Mongo sockets and local file upload behavior
+- `govern-ai`, `AurorA`, and `CompassAI` are Python/Uvicorn services using Mongo sockets and local file upload behavior
 - They are not a drop-in Cloudflare move in their current architecture
 - Treat Cloudflare Pages as ready for the React frontend only

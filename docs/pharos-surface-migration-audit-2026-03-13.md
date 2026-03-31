@@ -19,7 +19,7 @@ This is a boundary-enforcement audit for the GovernAI -> PHAROS migration. It do
 - `pharos-ai.ca`: PHAROS public surface only
 - `govern-ai.ca`: legacy product hostname redirected into PHAROS
 - `governai.ca`: Martin Lepage personal/professional and non-PHAROS surface
-- `AurorAI` and `CompassAI`: kept under PHAROS
+- `AurorA` and `CompassAI`: kept under PHAROS
 - `LOTUS`, resume/profile/portfolio/publication surfaces: kept out of PHAROS
 
 ## Reference classification
