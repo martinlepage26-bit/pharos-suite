@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowRight, ExternalLink, FileCheck2, ShieldCheck, Waypoints } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
@@ -277,10 +277,10 @@ const Assurance = () => {
           </div>
           <div className="grid-3">
             {copy.routes.map((route, index) => (
-              <Link key={route.to} to={route.to} className={`surface reveal-up delay-${Math.min(index, 3)}`}>
+              <LocalizedLink key={route.to} to={route.to} className={`surface reveal-up delay-${Math.min(index, 3)}`}>
                 <h3>{route.title}</h3>
                 <p className="body-sm" style={{ marginTop: '0.5rem' }}>{route.body}</p>
-              </Link>
+              </LocalizedLink>
             ))}
           </div>
         </div>
@@ -292,13 +292,13 @@ const Assurance = () => {
             <h2>{copy.ctaTitle}</h2>
             <p className="body-lead" style={{ marginTop: '0.7rem' }}>{copy.ctaBody}</p>
             <div className="btn-row" style={{ marginTop: '0.95rem' }}>
-              <Link className="btn-primary" to="/contact">
+              <LocalizedLink className="btn-primary" to="/contact">
                 {copy.ctaPrimary}
                 <ArrowRight size={14} />
-              </Link>
-              <Link className="btn-secondary" to="/methods">
+              </LocalizedLink>
+              <LocalizedLink className="btn-secondary" to="/methods">
                 {copy.ctaSecondary}
-              </Link>
+              </LocalizedLink>
             </div>
           </div>
         </div>

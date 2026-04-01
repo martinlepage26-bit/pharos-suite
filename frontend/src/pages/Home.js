@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import deskReferenceImage from '../assets/pharos-documents-desk-reference.png';
 import './Home.newlook.css';
+import { useLanguage } from '../context/LanguageContext';
 
 const HERO_IMAGE = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa9sVq4AbrYE3FRZFywvK/pharos-hero-lighthouse-h9QXVQpbrL37sEHw8pxMfR.webp';
 const GOVERNANCE_IMG = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476837393/Rxa9sVq4AbrYE3FRZFywvK/pharos-governance-abstract-iSC7d8YMMfBcBt4Wc9W8Zd.webp';
 const DESK_IMG = deskReferenceImage;
+const TIMELINE_PATH = '/pharos-ai-site/index.html#timeline';
 
 const HERO_PROOF_POINTS = [
   {
@@ -25,6 +27,7 @@ const HERO_PROOF_POINTS = [
 ];
 
 const REVIEW_PRESSURE_NOTES = ['Procurement review', 'Audit pressure', 'Executive oversight'];
+const REVIEW_PRESSURE_NOTES_FR = ['Revue d\'approvisionnement', 'Pression d\'audit', 'Supervision de direction'];
 
 const GOVERNANCE_PILLARS = [
   {
@@ -50,6 +53,33 @@ const GOVERNANCE_PILLARS = [
     title: 'Reconstructible Governance',
     description:
       'A posture that still holds when later scrutiny asks what happened, why, and what changes next. Governance that survives the post-mortem.'
+  }
+];
+
+const GOVERNANCE_PILLARS_FR = [
+  {
+    number: '01',
+    title: 'Droits decisionnels deterministes',
+    description:
+      'Une logique d\'approbation claire, des chemins d\'escalade explicites et des responsables nommes qui ne changent pas selon l\'examinateur. Chaque decision a un proprietaire et une justification consignee.'
+  },
+  {
+    number: '02',
+    title: 'Seuils explicites',
+    description:
+      'Des seuils qui montrent quand un systeme doit monter d\'un cran, pourquoi il y monte et quelle preuve devient necessaire ensuite. Aucun seuil implicite, seulement des seuils declares.'
+  },
+  {
+    number: '03',
+    title: 'Preuve prete pour la revue',
+    description:
+      'Un dossier qu\'un acheteur, un auditeur ou un comite peut suivre sans reconstruire la logique a partir de zero. La piste est complete avant que l\'examen arrive.'
+  },
+  {
+    number: '04',
+    title: 'Gouvernance reconstructible',
+    description:
+      'Une posture qui tient encore lorsque l\'on demande plus tard ce qui s\'est passe, pourquoi et ce qui doit changer ensuite. Une gouvernance qui survit au post-mortem.'
   }
 ];
 
@@ -101,6 +131,33 @@ const PRESSURE_POINTS = [
   }
 ];
 
+const PRESSURE_POINTS_FR = [
+  {
+    title: 'Approvisionnement',
+    description:
+      'La question cesse d\'etre de savoir si un systeme est utile et devient de savoir si sa gouvernance peut tenir devant une revue client.',
+    icon: PRESSURE_POINTS[0].icon
+  },
+  {
+    title: 'Audit',
+    description:
+      'L\'audit revele ou les seuils restent implicites et ou les pistes de preuve sont trop minces pour inspirer confiance.',
+    icon: PRESSURE_POINTS[1].icon
+  },
+  {
+    title: 'Revue fournisseur',
+    description:
+      'Les dependances envers les partenaires et les modeles ont besoin d\'une revue structuree, pas de reponses improvisees quand la diligence commence.',
+    icon: PRESSURE_POINTS[2].icon
+  },
+  {
+    title: 'Supervision de direction',
+    description:
+      'La direction et les comites ont besoin d\'une reponse de gouvernance qui reste lisible sous examen, plutot que de s\'effondrer dans l\'abstraction.',
+    icon: PRESSURE_POINTS[3].icon
+  }
+];
+
 const METHOD_STEPS = [
   {
     number: '01',
@@ -125,6 +182,33 @@ const METHOD_STEPS = [
     title: 'Build the Evidence Path',
     description:
       'Keep the resulting posture reconstructible through review packets, thresholds, decision logs, and follow-through cadence. The trail must survive later scrutiny.'
+  }
+];
+
+const METHOD_STEPS_FR = [
+  {
+    number: '01',
+    title: 'Lire la source de pression',
+    description:
+      'Commencer par la condition d\'examen reelle : approvisionnement, audit, diligence fournisseur, lancement, incident ou supervision de direction. Le point d\'entree faconne tout le reste.'
+  },
+  {
+    number: '02',
+    title: 'Fixer des seuils deterministes',
+    description:
+      'Rendre les declencheurs de revue, les frontieres de risque et les conditions d\'approbation assez explicites pour que plusieurs examinateurs arrivent a la meme logique. L\'ambiguite est l\'ennemi de la gouvernance.'
+  },
+  {
+    number: '03',
+    title: 'Attribuer les decisions',
+    description:
+      'Nommer qui decide, qui escalade, ce qui doit etre documente et ce qui ne peut pas avancer sans preuve supplementaire. Chaque decision a un responsable.'
+  },
+  {
+    number: '04',
+    title: 'Construire la piste de preuve',
+    description:
+      'Garder la posture obtenue reconstructible au moyen de dossiers de revue, de seuils, de journaux de decision et d\'une cadence de suivi. La piste doit survivre a l\'examen ulterieur.'
   }
 ];
 
@@ -174,6 +258,29 @@ const ARTIFACTS = [
   }
 ];
 
+const ARTIFACTS_FR = [
+  {
+    title: 'Matrice decisionnelle',
+    description: 'Montre qui approuve, qui escalade et ce qui est consigne. La logique de gouvernance rendue visible.',
+    icon: ARTIFACTS[0].icon
+  },
+  {
+    title: 'Carte des seuils',
+    description: 'Definit quels systemes demandent une revue plus poussee, quand ils escaladent et quelle charge de preuve suit.',
+    icon: ARTIFACTS[1].icon
+  },
+  {
+    title: 'Dossier de revue',
+    description: 'Assemble les pieces qu\'un acheteur, un auditeur ou un comite peut vraiment suivre sans refaire toute la logique.',
+    icon: ARTIFACTS[2].icon
+  },
+  {
+    title: 'Dossier post-mortem',
+    description: 'Reconstitue l\'echec, expose les lacunes de controle et resserre ce qui doit changer ensuite.',
+    icon: ARTIFACTS[3].icon
+  }
+];
+
 const SERVICES = [
   {
     tag: 'Baseline',
@@ -199,6 +306,34 @@ const SERVICES = [
     description:
       'Reconstruct incidents, failed reviews, or governance drift and turn the findings into a stronger control posture. Learn from what broke and build a posture that holds.',
     features: ['Incident reconstruction', 'Control gap identification', 'Governance drift analysis', 'Remediation roadmap']
+  }
+];
+
+const SERVICES_FR = [
+  {
+    tag: 'Base',
+    title: 'Gouvernance deterministe',
+    subtitle: 'Etablir la fondation',
+    description:
+      'Etablir des seuils explicites, des droits decisionnels clairs et une base de gouvernance stable avant que l\'examen n\'amplifie l\'ambiguite. Le bon point de depart pour les organisations qui construisent leur gouvernance.',
+    features: ['Cartographie des droits decisionnels', 'Documentation des seuils', 'Conception de la logique d\'escalade', 'Dossier de base de gouvernance']
+  },
+  {
+    tag: 'Pre-lancement',
+    title: 'Revue pre-mortem',
+    subtitle: 'Tester avant l\'exposition',
+    description:
+      'Mettre un systeme d\'IA sous pression avant le lancement, l\'approvisionnement, l\'integration ou une expansion majeure. Reperer les ecarts de gouvernance avant qu\'un examinateur le fasse.',
+    features: ['Cartographie des risques pre-lancement', 'Stress test des seuils', 'Analyse des ecarts de preuve', 'Documentation prete pour la revue'],
+    featured: true
+  },
+  {
+    tag: 'Post-incident',
+    title: 'Revue post-mortem',
+    subtitle: 'Reconstituer et renforcer',
+    description:
+      'Reconstituer les incidents, les revues ratees ou la derive de gouvernance, puis transformer les constats en posture de controle plus solide. Apprendre de ce qui a cede et rebuilder une posture qui tient.',
+    features: ['Reconstitution d\'incident', 'Identification des lacunes de controle', 'Analyse de derive de gouvernance', 'Feuille de route de remediation']
   }
 ];
 
@@ -239,7 +374,7 @@ const FAQS = [
       <>
         Start with the{' '}
         <a
-          href="/pharos-ai-site/index.html#timeline"
+          href={TIMELINE_PATH}
           className="font-medium text-[#173D74] underline decoration-[#D4A853]/70 underline-offset-4 hover:text-[#0F1923] transition-colors duration-200"
         >
           research timeline
@@ -249,6 +384,297 @@ const FAQS = [
     )
   }
 ];
+
+const FAQS_FR = [
+  {
+    question: 'Quand faut-il faire appel a PHAROS ?',
+    answer:
+      'Faites appel a PHAROS lorsque l\'approvisionnement, l\'audit, la diligence fournisseur ou la supervision faconnent deja le travail, ou lorsque vous savez qu\'ils le feront bientot. Le meilleur moment pour structurer la gouvernance est avant qu\'un examinateur ne la demande. Le deuxieme meilleur moment, c\'est maintenant.'
+  },
+  {
+    question: 'Que produit concretement une revue de 30 minutes ?',
+    answer:
+      'Une revue de 30 minutes identifie la source de pression (approvisionnement, audit, fournisseur, supervision), choisit le bon parcours (gouvernance deterministe, pre-mortem ou post-mortem) et definit les premiers livrables sans exagerer le niveau de preparation actuel.'
+  },
+  {
+    question: 'En quoi PHAROS differe-t-il d\'une liste de verification de conformite ?',
+    answer:
+      'Une liste de verification produit un instantane statique. PHAROS produit des controles inspectables avec des seuils explicites, des droits decisionnels nommes et une piste de preuve reconstructible.'
+  },
+  {
+    question: 'Quels cadres reglementaires PHAROS peut-il couvrir ?',
+    answer:
+      'Les dossiers de gouvernance PHAROS peuvent etre croises avec le NIST AI RMF, l\'ISO/IEC 42001 et les obligations de revue du AI Act europeen lorsque la situation l\'exige.'
+  },
+  {
+    question: 'Quels secteurs PHAROS dessert-il ?',
+    answer:
+      'Les dossiers representatifs couvrent les services financiers, la sante, les technologies d\'entreprise et les contextes d\'examen du secteur public.'
+  },
+  {
+    question: 'Quel est le delai typique d\'un mandat ?',
+    answer:
+      'Le delai depend de la source de pression et de la portee. L\'appel initial de 30 minutes sert justement a etablir un calendrier realiste pour votre situation.'
+  },
+  {
+    question: 'Comment PHAROS a-t-il ete construit ?',
+    answer: (
+      <>
+        Commencez par la{' '}
+        <a
+          href={TIMELINE_PATH}
+          className="font-medium text-[#173D74] underline decoration-[#D4A853]/70 underline-offset-4 hover:text-[#0F1923] transition-colors duration-200"
+        >
+          chronologie de recherche
+        </a>
+        . Vous pourrez ensuite ouvrir l\'arbre de gouvernance et le document du systeme de skills lies qui montrent la sequence de construction et l\'architecture de gouvernance.
+      </>
+    )
+  }
+];
+
+const HOME_COPY = {
+  en: {
+    hero: {
+      context: 'Procurement · Audit · Oversight',
+      titleLineOne: 'AI governance',
+      titleLineTwo: 'that survives',
+      emphasis: 'review',
+      body:
+        'When procurement, audit, or executive review asks how AI is governed, PHAROS helps teams answer with explicit thresholds, named decision rights, and evidence a reviewer can actually follow.',
+      primaryCta: 'Book a Review',
+      secondaryCta: 'Read the Method',
+      scroll: 'Scroll',
+      proofPoints: HERO_PROOF_POINTS
+    },
+    about: {
+      eyebrow: 'About PHAROS',
+      titleLineOne: 'Built for the moment',
+      emphasis: 'scrutiny turns real',
+      bodyOne: 'PHAROS is a governance practice for organizations facing live review pressure, not abstract governance theater.',
+      bodyTwo:
+        'When a buyer, auditor, vendor, or executive committee asks how AI is governed, the useful answer must be inspectable. PHAROS turns ambiguity into explicit thresholds, named decision rights, and documentation that survives the next round of scrutiny.',
+      quote:
+        'The useful answer is not “we take governance seriously.” It is “here is the threshold, here is the owner, here is the evidence.”',
+      stats: [
+        { label: 'Sectors', value: 'Financial Services, Healthcare, Enterprise Tech, Public Sector' },
+        { label: 'Frameworks', value: 'NIST AI RMF · ISO/IEC 42001 · EU AI Act' }
+      ],
+      imageAlt: 'AI governance framework visualization',
+      noteKicker: 'Most useful when',
+      noteTitle: 'Review pressure is already shaping the work.',
+      noteItems: REVIEW_PRESSURE_NOTES
+    },
+    governance: {
+      eyebrow: 'PHAROS Standard',
+      titleLead: 'A governance posture that stays',
+      emphasis: 'legible',
+      titleTrail: 'when scrutiny arrives',
+      body:
+        'Trust here does not come from tone alone. It comes from explicit thresholds, named decisions, and a body of evidence that can actually be inspected.',
+      pillars: GOVERNANCE_PILLARS,
+      pressureEyebrow: 'Pressure Points',
+      pressureTitleLead: 'Governance work starts where live review',
+      pressureEmphasis: 'pressure',
+      pressureTitleTrail: 'exposes ambiguity',
+      pressureBody:
+        'PHAROS does not begin with abstract governance theater. It begins where a buyer, auditor, vendor, or executive request makes the missing logic visible.',
+      pressurePoints: PRESSURE_POINTS
+    },
+    methods: {
+      eyebrow: 'Method in Four Steps',
+      titleLead: 'Read the pressure, set the thresholds, assign the decisions,',
+      emphasis: 'keep it reconstructible',
+      body:
+        'The method matters because it produces inspectable controls rather than vague ethical positioning or generic compliance prose.',
+      steps: METHOD_STEPS,
+      imageAlt: 'Governance review documents on desk',
+      artifactsEyebrow: 'Artifacts',
+      artifactsTitleLead: 'Deliverables that make governance',
+      artifactsEmphasis: 'credible',
+      artifactsBody:
+        'The output is not only a posture. It is a usable set of materials that makes thresholds, decisions, and evidence easy to follow later.',
+      artifacts: ARTIFACTS
+    },
+    services: {
+      eyebrow: 'Service Routes',
+      titleLead: 'Choose the route by',
+      emphasis: 'pressure source',
+      titleTrail: ', not vocabulary',
+      body:
+        'The right entry point depends on whether the organization needs a baseline, a pre-mortem before exposure, or a post-mortem after failure or drift.',
+      cards: SERVICES,
+      featuredLabel: 'Most Common',
+      startRoute: 'Start This Route',
+      finalTitle: 'Start with a short review, not a vague governance program',
+      finalBody:
+        'A 30-minute review is enough to identify the pressure source, set the route, and define the first deliverables without overstating readiness.',
+      finalCta: 'Book a Review'
+    },
+    faq: {
+      eyebrow: 'FAQ',
+      title: 'Common',
+      emphasis: 'questions',
+      body:
+        'If your question is not here, a 30-minute review call is the fastest way to get a direct answer for your specific review condition.',
+      cta: 'Book a Review',
+      items: FAQS
+    },
+    contact: {
+      eyebrow: 'Contact',
+      titleLead: 'Book a',
+      emphasis: '30-minute',
+      titleTrail: 'review',
+      body:
+        'A 30-minute review is enough to identify the pressure source, set the route, and define the first deliverables without overstating current readiness.',
+      emailLabel: 'Email',
+      responseTimeLabel: 'Response Time',
+      responseTimeValue: 'Within 24 business hours',
+      submittedTitle: 'Message Received',
+      submittedBody: 'We will be in touch within 24 business hours to schedule your review.',
+      nameLabel: 'Name *',
+      namePlaceholder: 'Your name',
+      organizationLabel: 'Organization *',
+      organizationPlaceholder: 'Your organization',
+      emailFieldLabel: 'Email *',
+      emailPlaceholder: 'your@email.com',
+      pressureLabel: 'Pressure Source',
+      pressurePlaceholder: 'Select the review condition',
+      pressureOptions: ['Procurement review', 'Audit preparation', 'Vendor diligence', 'Executive oversight', 'Post-incident review', 'Other'],
+      contextLabel: 'Context',
+      contextPlaceholder: 'Brief description of your review condition or governance challenge...',
+      submit: 'Request a Review'
+    }
+  },
+  fr: {
+    hero: {
+      context: 'Approvisionnement · Audit · Supervision',
+      titleLineOne: 'Une gouvernance',
+      titleLineTwo: 'de l\'IA qui tient',
+      emphasis: 'a l\'examen',
+      body:
+        'Quand l\'approvisionnement, l\'audit ou la revue de direction demande comment l\'IA est gouvernee, PHAROS aide les equipes a repondre avec des seuils explicites, des droits decisionnels nommes et une preuve qu\'un examinateur peut vraiment suivre.',
+      primaryCta: 'Reserver une revue',
+      secondaryCta: 'Lire la methode',
+      scroll: 'Defiler',
+      proofPoints: [
+        {
+          label: 'Seuils declares',
+          value: 'Aucun seuil implicite',
+          body: 'Les conditions de revue sont nommees avant de devenir des arguments.'
+        },
+        {
+          label: 'Decisions attribuees',
+          value: 'Le responsable avant l\'opinion',
+          body: 'Qui decide, qui escalade et ce qui doit etre consigne reste explicite.'
+        },
+        {
+          label: 'Preuve reconstructible',
+          value: 'Prete pour l\'examen ulterieur',
+          body: 'La reponse tient devant l\'approvisionnement, l\'audit et la revue de direction.'
+        }
+      ]
+    },
+    about: {
+      eyebrow: 'A propos de PHAROS',
+      titleLineOne: 'Concu pour le moment',
+      emphasis: 'ou l\'examen devient concret',
+      bodyOne: 'PHAROS est une pratique de gouvernance pour les organisations qui font face a une vraie pression d\'examen, pas a un theatre de gouvernance abstrait.',
+      bodyTwo:
+        'Quand un acheteur, un auditeur, un fournisseur ou un comite de direction demande comment l\'IA est gouvernee, la reponse utile doit pouvoir etre inspectee. PHAROS transforme l\'ambiguite en seuils explicites, en droits decisionnels nommes et en documentation qui tient au prochain tour d\'examen.',
+      quote:
+        'La reponse utile n\'est pas « nous prenons la gouvernance au serieux ». C\'est « voici le seuil, voici le responsable, voici la preuve ».',
+      stats: [
+        { label: 'Secteurs', value: 'Services financiers, sante, techno d\'entreprise, secteur public' },
+        { label: 'Cadres', value: 'NIST AI RMF · ISO/IEC 42001 · EU AI Act' }
+      ],
+      imageAlt: 'Visualisation d\'un cadre de gouvernance de l\'IA',
+      noteKicker: 'Le plus utile quand',
+      noteTitle: 'La pression d\'examen faconne deja le travail.',
+      noteItems: REVIEW_PRESSURE_NOTES_FR
+    },
+    governance: {
+      eyebrow: 'Standard PHAROS',
+      titleLead: 'Une posture de gouvernance qui reste',
+      emphasis: 'lisible',
+      titleTrail: 'quand l\'examen arrive',
+      body:
+        'La confiance ici ne vient pas du ton seulement. Elle vient de seuils explicites, de decisions nommees et d\'un ensemble de preuves qu\'on peut vraiment inspecter.',
+      pillars: GOVERNANCE_PILLARS_FR,
+      pressureEyebrow: 'Points de pression',
+      pressureTitleLead: 'Le travail de gouvernance commence la ou la vraie',
+      pressureEmphasis: 'pression',
+      pressureTitleTrail: 'revele l\'ambiguite',
+      pressureBody:
+        'PHAROS ne commence pas par un theatre de gouvernance abstrait. Il commence la ou une demande d\'acheteur, d\'auditeur, de fournisseur ou de direction rend la logique manquante visible.',
+      pressurePoints: PRESSURE_POINTS_FR
+    },
+    methods: {
+      eyebrow: 'Methode en quatre etapes',
+      titleLead: 'Lire la pression, fixer les seuils, attribuer les decisions,',
+      emphasis: 'garder la piste reconstructible',
+      body:
+        'La methode compte parce qu\'elle produit des controles inspectables plutot qu\'une posture ethique vague ou une prose generique de conformite.',
+      steps: METHOD_STEPS_FR,
+      imageAlt: 'Documents de revue de gouvernance sur un bureau',
+      artifactsEyebrow: 'Artefacts',
+      artifactsTitleLead: 'Des livrables qui rendent la gouvernance',
+      artifactsEmphasis: 'credible',
+      artifactsBody:
+        'Le resultat n\'est pas seulement une posture. C\'est un ensemble de materiaux utilisables qui rend les seuils, les decisions et la preuve faciles a suivre plus tard.',
+      artifacts: ARTIFACTS_FR
+    },
+    services: {
+      eyebrow: 'Parcours de service',
+      titleLead: 'Choisir le parcours selon la',
+      emphasis: 'source de pression',
+      titleTrail: ', pas selon le vocabulaire',
+      body:
+        'Le bon point d\'entree depend de ce dont l\'organisation a besoin : une base, un pre-mortem avant l\'exposition ou un post-mortem apres un echec ou une derive.',
+      cards: SERVICES_FR,
+      featuredLabel: 'Le plus frequent',
+      startRoute: 'Commencer ce parcours',
+      finalTitle: 'Commencer par une courte revue, pas par un programme vague',
+      finalBody:
+        'Une revue de 30 minutes suffit pour reperer la source de pression, choisir le parcours et cadrer les premiers livrables sans survendre l\'etat de preparation.',
+      finalCta: 'Reserver une revue'
+    },
+    faq: {
+      eyebrow: 'FAQ',
+      title: 'Questions',
+      emphasis: 'courantes',
+      body:
+        'Si votre question n\'est pas ici, un appel de revue de 30 minutes reste le moyen le plus rapide d\'obtenir une reponse directe pour votre condition d\'examen.',
+      cta: 'Reserver une revue',
+      items: FAQS_FR
+    },
+    contact: {
+      eyebrow: 'Contact',
+      titleLead: 'Reserver une revue de',
+      emphasis: '30 minutes',
+      titleTrail: '',
+      body:
+        'Une revue de 30 minutes suffit pour identifier la source de pression, choisir le parcours et definir les premiers livrables sans exagerer l\'etat de preparation actuel.',
+      emailLabel: 'Courriel',
+      responseTimeLabel: 'Delai de reponse',
+      responseTimeValue: 'Dans les 24 heures ouvrables',
+      submittedTitle: 'Message recu',
+      submittedBody: 'Nous communiquerons avec vous dans les 24 heures ouvrables pour fixer votre revue.',
+      nameLabel: 'Nom *',
+      namePlaceholder: 'Votre nom',
+      organizationLabel: 'Organisation *',
+      organizationPlaceholder: 'Votre organisation',
+      emailFieldLabel: 'Courriel *',
+      emailPlaceholder: 'votre@courriel.ca',
+      pressureLabel: 'Source de pression',
+      pressurePlaceholder: 'Choisissez la condition d\'examen',
+      pressureOptions: ['Revue d\'approvisionnement', 'Preparation a l\'audit', 'Diligence fournisseur', 'Supervision de direction', 'Revue post-incident', 'Autre'],
+      contextLabel: 'Contexte',
+      contextPlaceholder: 'Breve description de votre condition d\'examen ou de votre defi de gouvernance...',
+      submit: 'Demander une revue'
+    }
+  }
+};
 
 const HOME_SURFACE_POLISH = `
   .home-newlook .pharos-hero-topline {
@@ -399,7 +825,7 @@ const HOME_SURFACE_POLISH = `
   }
 `;
 
-function HeroSection() {
+function HeroSection({ copy }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -439,7 +865,7 @@ function HeroSection() {
             </span>
             <span className="block w-12 h-px bg-[#D4A853]" />
             <span className="pharos-hero-context">
-              Procurement · Audit · Oversight
+              {copy.context}
             </span>
           </div>
 
@@ -451,19 +877,18 @@ function HeroSection() {
               fontWeight: 600
             }}
           >
-            AI governance
+            {copy.titleLineOne}
             <br />
-            that survives
+            {copy.titleLineTwo}
             <br />
-            <em style={{ color: '#D4A853', fontStyle: 'italic' }}>review</em>
+            <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em>
           </h1>
 
           <p
             className={`text-white/70 text-lg leading-relaxed mb-10 max-w-xl transition-all duration-700 delay-200 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}
           >
-            When procurement, audit, or executive review asks how AI is governed, PHAROS helps teams answer with explicit thresholds,
-            named decision rights, and evidence a reviewer can actually follow.
+            {copy.body}
           </p>
 
           <div className={`flex flex-wrap gap-4 transition-all duration-700 delay-300 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -472,7 +897,7 @@ function HeroSection() {
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#D4A853] text-[#0F1923] text-sm font-bold tracking-[0.15em] uppercase hover:bg-[#E8C87A] transition-all duration-200 hover:shadow-[0_8px_30px_rgba(212,168,83,0.4)]"
               style={{ fontFamily: "'Lato', sans-serif" }}
             >
-              Book a Review
+              {copy.primaryCta}
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -482,12 +907,12 @@ function HeroSection() {
               className="inline-flex items-center gap-3 px-8 py-4 border border-white/30 text-white text-sm font-bold tracking-[0.15em] uppercase hover:border-[#D4A853] hover:text-[#D4A853] transition-all duration-200"
               style={{ fontFamily: "'Lato', sans-serif" }}
             >
-              Read the Method
+              {copy.secondaryCta}
             </a>
           </div>
 
           <div className={`pharos-hero-proof-grid transition-all duration-700 delay-500 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            {HERO_PROOF_POINTS.map((point) => (
+            {copy.proofPoints.map((point) => (
               <div key={point.label} className="pharos-hero-proof">
                 <span className="pharos-hero-proof-label">{point.label}</span>
                 <span className="pharos-hero-proof-value">{point.value}</span>
@@ -500,7 +925,7 @@ function HeroSection() {
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
         <span className="text-white/50 text-xs tracking-widest uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>
-          Scroll
+          {copy.scroll}
         </span>
         <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent animate-pulse" />
       </div>
@@ -508,14 +933,14 @@ function HeroSection() {
   );
 }
 
-function AboutSection() {
+function AboutSection({ copy }) {
   return (
     <section id="about" className="py-28 bg-[#FAFAF8]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div className="reveal">
             <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              About PHAROS
+              {copy.eyebrow}
             </span>
             <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
 
@@ -527,31 +952,27 @@ function AboutSection() {
                 fontWeight: 600
               }}
             >
-              Built for the moment
+              {copy.titleLineOne}
               <br />
-              <em style={{ color: '#D4A853', fontStyle: 'italic' }}>scrutiny turns real</em>
+              <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em>
             </h2>
 
             <p className="text-[#4A5568] text-base leading-relaxed mb-6" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              PHAROS is a governance practice for organizations facing live review pressure, not abstract governance theater.
+              {copy.bodyOne}
             </p>
 
             <p className="text-[#4A5568] text-base leading-relaxed mb-8" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              When a buyer, auditor, vendor, or executive committee asks how AI is governed, the useful answer must be inspectable.
-              PHAROS turns ambiguity into explicit thresholds, named decision rights, and documentation that survives the next round of scrutiny.
+              {copy.bodyTwo}
             </p>
 
             <blockquote className="border-l-2 border-[#D4A853] pl-6 py-2 mb-8">
               <p className="text-[#1C1C1E] text-xl italic leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}>
-                The useful answer is not “we take governance seriously.” It is “here is the threshold, here is the owner, here is the evidence.”
+                {copy.quote}
               </p>
             </blockquote>
 
             <div className="flex flex-wrap gap-6">
-              {[
-                { label: 'Sectors', value: 'Financial Services, Healthcare, Enterprise Tech, Public Sector' },
-                { label: 'Frameworks', value: 'NIST AI RMF · ISO/IEC 42001 · EU AI Act' }
-              ].map((item) => (
+              {copy.stats.map((item) => (
                 <div key={item.label} className="flex-1 min-w-[200px]">
                   <span className="block text-[#D4A853] text-xs tracking-widest uppercase mb-1" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                     {item.label}
@@ -566,7 +987,7 @@ function AboutSection() {
 
           <div className="reveal reveal-delay-2 relative">
             <div className="relative overflow-hidden about-photo-frame">
-              <img src={GOVERNANCE_IMG} alt="AI governance framework visualization" className="w-full h-[480px] object-cover" style={{ filter: 'brightness(0.9)' }} />
+              <img src={GOVERNANCE_IMG} alt={copy.imageAlt} className="w-full h-[480px] object-cover" style={{ filter: 'brightness(0.9)' }} />
               <div className="absolute -bottom-4 -right-4 w-full h-full border border-[#D4A853]/30 pointer-events-none" style={{ zIndex: -1 }} />
               <span className="about-photo-corner about-photo-corner-tl" aria-hidden="true" />
               <span className="about-photo-corner about-photo-corner-tr" aria-hidden="true" />
@@ -575,12 +996,12 @@ function AboutSection() {
             </div>
 
             <div className="absolute -bottom-6 -left-6 pharos-editorial-note p-6" style={{ maxWidth: '240px' }}>
-              <p className="pharos-editorial-note-kicker">Most useful when</p>
+              <p className="pharos-editorial-note-kicker">{copy.noteKicker}</p>
               <p className="text-white text-lg leading-tight mt-2" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
-                Review pressure is already shaping the work.
+                {copy.noteTitle}
               </p>
               <div className="pharos-editorial-note-list">
-                {REVIEW_PRESSURE_NOTES.map((item) => (
+                {copy.noteItems.map((item) => (
                   <div key={item} className="pharos-editorial-note-item">
                     <span className="pharos-editorial-note-dot" />
                     <span>{item}</span>
@@ -595,14 +1016,14 @@ function AboutSection() {
   );
 }
 
-function GovernanceSection() {
+function GovernanceSection({ copy }) {
   return (
     <>
       <section id="governance" className="py-28 bg-[#0F1923]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="max-w-2xl mb-16 reveal">
             <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              PHAROS Standard
+              {copy.eyebrow}
             </span>
             <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
             <h2
@@ -613,15 +1034,15 @@ function GovernanceSection() {
                 fontWeight: 600
               }}
             >
-              A governance posture that stays <em style={{ color: '#D4A853', fontStyle: 'italic' }}>legible</em> when scrutiny arrives
+              {copy.titleLead} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em> {copy.titleTrail}
             </h2>
             <p className="text-white/60 text-base leading-relaxed" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              Trust here does not come from tone alone. It comes from explicit thresholds, named decisions, and a body of evidence that can actually be inspected.
+              {copy.body}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-px bg-white/10">
-            {GOVERNANCE_PILLARS.map((pillar, i) => (
+            {copy.pillars.map((pillar, i) => (
               <div key={pillar.number} className={`reveal reveal-delay-${i + 1} bg-[#0F1923] p-10 group hover:bg-[#162030] transition-colors duration-300`}>
                 <div className="flex items-start gap-6">
                   <span className="text-[#D4A853]/50 text-5xl leading-none flex-shrink-0 group-hover:text-[#D4A853] transition-colors duration-300" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700 }}>
@@ -646,7 +1067,7 @@ function GovernanceSection() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="max-w-2xl mb-16 reveal">
             <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              Pressure Points
+              {copy.pressureEyebrow}
             </span>
             <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
             <h2
@@ -657,15 +1078,15 @@ function GovernanceSection() {
                 fontWeight: 600
               }}
             >
-              Governance work starts where live review <em style={{ color: '#D4A853', fontStyle: 'italic' }}>pressure</em> exposes ambiguity
+              {copy.pressureTitleLead} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.pressureEmphasis}</em> {copy.pressureTitleTrail}
             </h2>
             <p className="text-[#4A5568] text-base leading-relaxed" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              PHAROS does not begin with abstract governance theater. It begins where a buyer, auditor, vendor, or executive request makes the missing logic visible.
+              {copy.pressureBody}
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PRESSURE_POINTS.map((point, i) => (
+            {copy.pressurePoints.map((point, i) => (
               <div key={point.title} className={`reveal reveal-delay-${i + 1} pharos-card bg-white border border-[#E8E4DC] p-8 group`}>
                 <div className="mb-5 w-12 h-12 flex items-center justify-center border border-[#D4A853]/30 group-hover:border-[#D4A853] transition-colors duration-300">
                   {point.icon}
@@ -685,7 +1106,7 @@ function GovernanceSection() {
   );
 }
 
-function MethodsSection() {
+function MethodsSection({ copy }) {
   return (
     <>
       <section id="methods" className="py-28 bg-[#0F1923]">
@@ -694,7 +1115,7 @@ function MethodsSection() {
             <div>
               <div className="reveal mb-12">
                 <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                  Method in Four Steps
+                  {copy.eyebrow}
                 </span>
                 <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
                 <h2
@@ -705,15 +1126,15 @@ function MethodsSection() {
                     fontWeight: 600
                   }}
                 >
-                  Read the pressure, set the thresholds, assign the decisions, <em style={{ color: '#D4A853', fontStyle: 'italic' }}>keep it reconstructible</em>
+                  {copy.titleLead} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em>
                 </h2>
                 <p className="text-white/70 text-base leading-relaxed" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-                  The method matters because it produces inspectable controls rather than vague ethical positioning or generic compliance prose.
+                  {copy.body}
                 </p>
               </div>
 
               <div className="space-y-0">
-                {METHOD_STEPS.map((step, i) => (
+                {copy.steps.map((step, i) => (
                   <div key={step.number} className={`reveal reveal-delay-${i + 1} flex gap-6 py-8 border-b border-white/15 last:border-0 group`}>
                     <span className="text-[#D4A853]/30 text-5xl leading-none flex-shrink-0 font-bold group-hover:text-[#D4A853]/60 transition-colors duration-300" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                       {step.number}
@@ -733,7 +1154,7 @@ function MethodsSection() {
 
             <div className="reveal reveal-delay-2 lg:sticky lg:top-24">
               <div className="relative">
-                <img src={DESK_IMG} alt="Governance review documents on desk" className="w-full h-[500px] object-cover" />
+                <img src={DESK_IMG} alt={copy.imageAlt} className="w-full h-[500px] object-cover" />
                 <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-[#D4A853] pointer-events-none" />
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-[#D4A853] pointer-events-none" />
               </div>
@@ -746,7 +1167,7 @@ function MethodsSection() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="max-w-2xl mb-16 reveal">
             <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              Artifacts
+              {copy.artifactsEyebrow}
             </span>
             <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
             <h2
@@ -757,15 +1178,15 @@ function MethodsSection() {
                 fontWeight: 600
               }}
             >
-              Deliverables that make governance <em style={{ color: '#D4A853', fontStyle: 'italic' }}>credible</em>
+              {copy.artifactsTitleLead} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.artifactsEmphasis}</em>
             </h2>
             <p className="text-[#4A5568] text-base leading-relaxed" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              The output is not only a posture. It is a usable set of materials that makes thresholds, decisions, and evidence easy to follow later.
+              {copy.artifactsBody}
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#E8E4DC]">
-            {ARTIFACTS.map((artifact, i) => (
+            {copy.artifacts.map((artifact, i) => (
               <div key={artifact.title} className={`reveal reveal-delay-${i + 1} bg-white border border-[#E8E4DC] p-10 group hover:bg-[#F5F0E8] transition-colors duration-300`}>
                 <div className="mb-6">{artifact.icon}</div>
                 <h3 className="text-[#1C1C1E] text-xl mb-3 group-hover:text-[#D4A853] transition-colors duration-300" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
@@ -783,13 +1204,13 @@ function MethodsSection() {
   );
 }
 
-function ServicesSection() {
+function ServicesSection({ copy }) {
   return (
     <section id="services" className="py-28 bg-[#0F1923]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="max-w-2xl mb-16 reveal">
           <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-            Service Routes
+            {copy.eyebrow}
           </span>
           <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
           <h2
@@ -800,15 +1221,15 @@ function ServicesSection() {
               fontWeight: 600
             }}
           >
-            Choose the route by <em style={{ color: '#D4A853', fontStyle: 'italic' }}>pressure source</em>, not vocabulary
+            {copy.titleLead} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em>{copy.titleTrail}
           </h2>
           <p className="text-white/70 text-base leading-relaxed" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-            The right entry point depends on whether the organization needs a baseline, a pre-mortem before exposure, or a post-mortem after failure or drift.
+            {copy.body}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6 mb-16">
-          {SERVICES.map((service, i) => (
+          {copy.cards.map((service, i) => (
             <div
               key={service.title}
               className={`reveal reveal-delay-${i + 1} pharos-route-card relative flex flex-col ${
@@ -826,7 +1247,7 @@ function ServicesSection() {
                 </span>
                 {service.featured && (
                   <span className="text-xs text-[#D4A853] tracking-widest uppercase" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Most Common
+                    {copy.featuredLabel}
                   </span>
                 )}
               </div>
@@ -860,7 +1281,7 @@ function ServicesSection() {
                 }`}
                 style={{ fontFamily: "'Lato', sans-serif" }}
               >
-                Start This Route
+                {copy.startRoute}
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -874,10 +1295,10 @@ function ServicesSection() {
         <div className="reveal bg-[#0F1923] border border-[#D4A853]/30 p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
             <h3 className="text-white text-2xl mb-3" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
-              Start with a short review, not a vague governance program
+              {copy.finalTitle}
             </h3>
             <p className="text-white/60 text-sm" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              A 30-minute review is enough to identify the pressure source, set the route, and define the first deliverables without overstating readiness.
+              {copy.finalBody}
             </p>
           </div>
           <div className="flex gap-4 flex-shrink-0">
@@ -886,7 +1307,7 @@ function ServicesSection() {
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#D4A853] text-[#0F1923] text-sm font-bold tracking-[0.15em] uppercase hover:bg-[#E8C87A] transition-all duration-200 hover:shadow-[0_8px_30px_rgba(212,168,83,0.4)] whitespace-nowrap"
               style={{ fontFamily: "'Lato', sans-serif" }}
             >
-              Book a Review
+              {copy.finalCta}
             </a>
           </div>
         </div>
@@ -895,7 +1316,7 @@ function ServicesSection() {
   );
 }
 
-function FAQSection() {
+function FAQSection({ copy }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
@@ -904,7 +1325,7 @@ function FAQSection() {
         <div className="grid lg:grid-cols-[1fr,1.8fr] gap-16 lg:gap-24">
           <div className="reveal">
             <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              FAQ
+              {copy.eyebrow}
             </span>
             <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
             <h2
@@ -915,17 +1336,17 @@ function FAQSection() {
                 fontWeight: 600
               }}
             >
-              Common <em style={{ color: '#D4A853', fontStyle: 'italic' }}>questions</em>
+              {copy.title} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em>
             </h2>
             <p className="text-[#4A5568] text-base leading-relaxed mb-8" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              If your question is not here, a 30-minute review call is the fastest way to get a direct answer for your specific review condition.
+              {copy.body}
             </p>
             <a
               href="#contact"
               className="inline-flex items-center gap-3 text-[#1C1C1E] text-sm font-bold tracking-[0.1em] uppercase hover:text-[#D4A853] transition-colors duration-200"
               style={{ fontFamily: "'Lato', sans-serif" }}
             >
-              Book a Review
+              {copy.cta}
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -933,7 +1354,7 @@ function FAQSection() {
           </div>
 
           <div className="reveal reveal-delay-2 space-y-0">
-            {FAQS.map((faq, i) => (
+            {copy.items.map((faq, i) => (
               <div key={faq.question} className="border-b border-[#E8E4DC] last:border-b">
                 <button className="w-full flex items-center justify-between py-6 text-left group" onClick={() => setOpenIndex(openIndex === i ? null : i)}>
                   <span className="text-[#1C1C1E] text-lg pr-8 group-hover:text-[#D4A853] transition-colors duration-200" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
@@ -964,7 +1385,7 @@ function FAQSection() {
   );
 }
 
-function ContactSection() {
+function ContactSection({ copy }) {
   const [formData, setFormData] = useState({
     name: '',
     organization: '',
@@ -973,8 +1394,6 @@ function ContactSection() {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
-
-  const pressureOptions = ['Procurement review', 'Audit preparation', 'Vendor diligence', 'Executive oversight', 'Post-incident review', 'Other'];
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -987,7 +1406,7 @@ function ContactSection() {
         <div className="grid lg:grid-cols-[1fr,1.5fr] gap-16 lg:gap-24">
           <div className="reveal">
             <span className="block text-[#D4A853] text-xs tracking-[0.3em] uppercase mb-6" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              Contact
+              {copy.eyebrow}
             </span>
             <span className="block w-12 h-0.5 bg-[#D4A853] mb-8" />
             <h2
@@ -998,10 +1417,10 @@ function ContactSection() {
                 fontWeight: 600
               }}
             >
-              Book a <em style={{ color: '#D4A853', fontStyle: 'italic' }}>30-minute</em> review
+              {copy.titleLead} <em style={{ color: '#D4A853', fontStyle: 'italic' }}>{copy.emphasis}</em> {copy.titleTrail}
             </h2>
             <p className="text-white/60 text-base leading-relaxed mb-10" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-              A 30-minute review is enough to identify the pressure source, set the route, and define the first deliverables without overstating current readiness.
+              {copy.body}
             </p>
 
             <div className="space-y-6">
@@ -1014,7 +1433,7 @@ function ContactSection() {
                 </div>
                 <div>
                   <p className="text-white/40 text-xs tracking-widest uppercase mb-0.5" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Email
+                    {copy.emailLabel}
                   </p>
                   <a href="mailto:pharos@pharos-ai.ca" className="text-white text-sm hover:text-[#D4A853] transition-colors duration-200" style={{ fontFamily: "'Lato', sans-serif" }}>
                     pharos@pharos-ai.ca
@@ -1031,10 +1450,10 @@ function ContactSection() {
                 </div>
                 <div>
                   <p className="text-white/40 text-xs tracking-widest uppercase mb-0.5" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Response Time
+                    {copy.responseTimeLabel}
                   </p>
                   <p className="text-white text-sm" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Within 24 business hours
+                    {copy.responseTimeValue}
                   </p>
                 </div>
               </div>
@@ -1050,10 +1469,10 @@ function ContactSection() {
                   </svg>
                 </div>
                 <h3 className="text-white text-2xl mb-3" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
-                  Message Received
+                  {copy.submittedTitle}
                 </h3>
                 <p className="text-white/60 text-sm" style={{ fontFamily: "'Lato', sans-serif" }}>
-                  We will be in touch within 24 business hours to schedule your review.
+                  {copy.submittedBody}
                 </p>
               </div>
             ) : (
@@ -1061,7 +1480,7 @@ function ContactSection() {
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-white/50 text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Lato', sans-serif" }}>
-                      Name *
+                      {copy.nameLabel}
                     </label>
                     <input
                       type="text"
@@ -1069,14 +1488,14 @@ function ContactSection() {
                       value={formData.name}
                       onChange={(event) => setFormData({ ...formData, name: event.target.value })}
                       className="w-full bg-white/5 border border-white/15 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#D4A853] transition-colors duration-200 placeholder-white/20"
-                      placeholder="Your name"
+                      placeholder={copy.namePlaceholder}
                       style={{ fontFamily: "'Lato', sans-serif" }}
                     />
                   </div>
 
                   <div>
                     <label className="block text-white/50 text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Lato', sans-serif" }}>
-                      Organization *
+                      {copy.organizationLabel}
                     </label>
                     <input
                       type="text"
@@ -1084,7 +1503,7 @@ function ContactSection() {
                       value={formData.organization}
                       onChange={(event) => setFormData({ ...formData, organization: event.target.value })}
                       className="w-full bg-white/5 border border-white/15 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#D4A853] transition-colors duration-200 placeholder-white/20"
-                      placeholder="Your organization"
+                      placeholder={copy.organizationPlaceholder}
                       style={{ fontFamily: "'Lato', sans-serif" }}
                     />
                   </div>
@@ -1092,7 +1511,7 @@ function ContactSection() {
 
                 <div>
                   <label className="block text-white/50 text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Email *
+                    {copy.emailFieldLabel}
                   </label>
                   <input
                     type="email"
@@ -1100,14 +1519,14 @@ function ContactSection() {
                     value={formData.email}
                     onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     className="w-full bg-white/5 border border-white/15 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#D4A853] transition-colors duration-200 placeholder-white/20"
-                    placeholder="your@email.com"
+                    placeholder={copy.emailPlaceholder}
                     style={{ fontFamily: "'Lato', sans-serif" }}
                   />
                 </div>
 
                 <div>
                   <label className="block text-white/50 text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Pressure Source
+                    {copy.pressureLabel}
                   </label>
                   <select
                     value={formData.pressure}
@@ -1116,9 +1535,9 @@ function ContactSection() {
                     style={{ fontFamily: "'Lato', sans-serif" }}
                   >
                     <option value="" className="bg-[#0F1923]">
-                      Select the review condition
+                      {copy.pressurePlaceholder}
                     </option>
-                    {pressureOptions.map((option) => (
+                    {copy.pressureOptions.map((option) => (
                       <option key={option} value={option} className="bg-[#0F1923]">
                         {option}
                       </option>
@@ -1128,14 +1547,14 @@ function ContactSection() {
 
                 <div>
                   <label className="block text-white/50 text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Lato', sans-serif" }}>
-                    Context
+                    {copy.contextLabel}
                   </label>
                   <textarea
                     rows={4}
                     value={formData.message}
                     onChange={(event) => setFormData({ ...formData, message: event.target.value })}
                     className="w-full bg-white/5 border border-white/15 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#D4A853] transition-colors duration-200 placeholder-white/20 resize-none"
-                    placeholder="Brief description of your review condition or governance challenge..."
+                    placeholder={copy.contextPlaceholder}
                     style={{ fontFamily: "'Lato', sans-serif" }}
                   />
                 </div>
@@ -1145,7 +1564,7 @@ function ContactSection() {
                   className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#D4A853] text-[#0F1923] text-sm font-bold tracking-[0.15em] uppercase hover:bg-[#E8C87A] transition-all duration-200 hover:shadow-[0_8px_30px_rgba(212,168,83,0.4)]"
                   style={{ fontFamily: "'Lato', sans-serif" }}
                 >
-                  Request a Review
+                  {copy.submit}
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -1160,6 +1579,9 @@ function ContactSection() {
 }
 
 export default function Home() {
+  const { language } = useLanguage();
+  const copy = HOME_COPY[language] || HOME_COPY.en;
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -1181,13 +1603,13 @@ export default function Home() {
   return (
     <div className="home-newlook min-h-screen" data-testid="home-page">
       <style>{HOME_SURFACE_POLISH}</style>
-      <HeroSection />
-      <AboutSection />
-      <GovernanceSection />
-      <MethodsSection />
-      <ServicesSection />
-      <FAQSection />
-      <ContactSection />
+      <HeroSection copy={copy.hero} />
+      <AboutSection copy={copy.about} />
+      <GovernanceSection copy={copy.governance} />
+      <MethodsSection copy={copy.methods} />
+      <ServicesSection copy={copy.services} />
+      <FAQSection copy={copy.faq} />
+      <ContactSection copy={copy.contact} />
     </div>
   );
 }

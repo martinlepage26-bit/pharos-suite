@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowRight, BriefcaseBusiness, Radar, Scale, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -315,10 +315,10 @@ const ServiceMenu = () => {
                 </div>
 
                 <div className="btn-row" style={{ marginTop: '0.9rem' }}>
-                  <Link to="/contact" className="btn-secondary">
+                  <LocalizedLink to="/contact" className="btn-secondary">
                     {copy.discuss}
                     <ArrowRight size={14} />
-                  </Link>
+                  </LocalizedLink>
                 </div>
               </article>
             ))}
@@ -351,13 +351,13 @@ const ServiceMenu = () => {
             <h2>{copy.ctaTitle}</h2>
             <p className="body-lead" style={{ marginTop: '0.7rem' }}>{copy.ctaBody}</p>
             <div className="btn-row" style={{ marginTop: '0.95rem' }}>
-              <Link className="btn-primary" to="/contact">
+              <LocalizedLink className="btn-primary" to="/contact">
                 {copy.ctaPrimary}
                 <ArrowRight size={14} />
-              </Link>
-              <Link className="btn-secondary" to="/tool">
+              </LocalizedLink>
+              <LocalizedLink className="btn-secondary" to="/tool">
                 {copy.ctaSecondary}
-              </Link>
+              </LocalizedLink>
             </div>
           </div>
         </div>

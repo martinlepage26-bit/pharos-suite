@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowRight, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -426,11 +426,11 @@ const Tool = () => {
               </article>
 
               <div className="btn-row" style={{ marginTop: '0.9rem' }}>
-                <Link to="/contact" className="btn-primary" data-testid="book-debrief-btn">
+                <LocalizedLink to="/contact" className="btn-primary" data-testid="book-debrief-btn">
                   {copy.discuss}
                   <ArrowRight size={14} />
-                </Link>
-                <Link to="/services" className="btn-secondary">{copy.routeAction}</Link>
+                </LocalizedLink>
+                <LocalizedLink to="/services" className="btn-secondary">{copy.routeAction}</LocalizedLink>
                 <button type="button" className="btn-ghost" onClick={handleReset}>{copy.retake}</button>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
 
 const Footer = () => {
-  const { language } = useLanguage();
+  const { language, localizedPath } = useLanguage();
   const contactHref = `mailto:${PUBLIC_ASSURANCE_META.contactEmail}`;
 
   const copy = language === 'fr'
@@ -59,17 +59,17 @@ const Footer = () => {
 
           <div className="footer-col">
             <h4>{copy.navigation}</h4>
-            <Link to="/">{copy.home}</Link>
-            <Link to="/about">{copy.about}</Link>
-            <Link to="/observatory">{copy.observatory}</Link>
-            <Link to="/governance">{copy.governance}</Link>
-            <Link to="/methods">{copy.methods}</Link>
-            <Link to="/assurance">{copy.assurance}</Link>
+            <Link to={localizedPath('/')}>{copy.home}</Link>
+            <Link to={localizedPath('/about')}>{copy.about}</Link>
+            <Link to={localizedPath('/observatory')}>{copy.observatory}</Link>
+            <Link to={localizedPath('/governance')}>{copy.governance}</Link>
+            <Link to={localizedPath('/methods')}>{copy.methods}</Link>
+            <Link to={localizedPath('/assurance')}>{copy.assurance}</Link>
           </div>
 
           <div className="footer-col">
             <h4>{copy.connect}</h4>
-            <Link to="/contact">{copy.book}</Link>
+            <Link to={localizedPath('/contact')}>{copy.book}</Link>
             <a href={contactHref}>{PUBLIC_ASSURANCE_META.contactEmail}</a>
           </div>
         </div>
@@ -77,7 +77,7 @@ const Footer = () => {
         <div className="footer-bottom">
           <span>&copy; 2026 PHAROS AI&nbsp;Governance</span>
           <div className="footer-bottom-links">
-            <Link to="/assurance">{copy.assurance}</Link>
+            <Link to={localizedPath('/assurance')}>{copy.assurance}</Link>
             <a href={PUBLIC_ASSURANCE_META.transparencyRecordPath} target="_blank" rel="noreferrer">
               {copy.record}
             </a>

@@ -1,7 +1,10 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { translations } from '../translations';
+import { getPathLanguage, isLocalizablePath, localizePath } from '../lib/i18nRouting';
 
 const LanguageContext = createContext();
+const LANGUAGE_STORAGE_KEY = 'lang';
 
 const mergeTranslations = (base, override) => {
   if (Array.isArray(base)) {
@@ -37,26 +40,61 @@ export const useLanguage = () => {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(() => {
-    const saved = localStorage.getItem('lang');
-    if (saved) return saved;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [preferredLanguage, setPreferredLanguage] = useState(() => {
+    const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (saved === 'fr' || saved === 'en') return saved;
     const browserLang = navigator.language.slice(0, 2);
     return browserLang === 'fr' ? 'fr' : 'en';
   });
+  const routeLanguage = getPathLanguage(location.pathname);
+  const language = routeLanguage || (isLocalizablePath(location.pathname) ? 'en' : preferredLanguage);
 
   useEffect(() => {
-    localStorage.setItem('lang', language);
-    document.documentElement.lang = language;
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    document.documentElement.lang = language === 'fr' ? 'fr-CA' : 'en';
   }, [language]);
 
-  const toggleLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'fr' : 'en');
+  useEffect(() => {
+    if (routeLanguage) {
+      setPreferredLanguage(routeLanguage);
+    }
+  }, [routeLanguage]);
+
+  const setLanguage = (nextLanguage, options = {}) => {
+    if (nextLanguage !== 'en' && nextLanguage !== 'fr') {
+      return;
+    }
+
+    setPreferredLanguage(nextLanguage);
+
+    const shouldNavigate = options.navigate !== false && (routeLanguage || isLocalizablePath(location.pathname));
+    if (!shouldNavigate) {
+      return;
+    }
+
+    const currentPath = `${location.pathname}${location.search}${location.hash}`;
+    const nextPath = localizePath(currentPath, nextLanguage, { force: Boolean(routeLanguage) || isLocalizablePath(location.pathname) });
+
+    if (nextPath !== currentPath) {
+      navigate(nextPath, { replace: options.replace ?? false });
+    }
   };
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'fr' : 'en');
+  };
+
+  const localizedPath = useMemo(
+    () => (value, options) => localizePath(value, language, options),
+    [language]
+  );
 
   const t = mergeTranslations(translations.en, translations[language] || translations.en);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, localizedPath, t }}>
       {children}
     </LanguageContext.Provider>
   );

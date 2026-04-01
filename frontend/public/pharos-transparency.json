@@ -1,7 +1,7 @@
 {
   "site_name": "PHAROS",
   "canonical_url": "https://pharos-ai.ca",
-  "public_surface_version": "2026-03-22.1",
+  "public_surface_version": "2026-04-01.1",
   "jurisdictional_root": "Canada",
   "accountable_human": {
     "name": "Martin Lepage, PhD",
@@ -10,8 +10,8 @@
     "location": "Montreal, Quebec, Canada"
   },
   "review_state": {
-    "reviewed_on": "2026-03-18",
-    "next_review_due": "2026-06-18",
+    "reviewed_on": "2026-04-01",
+    "next_review_due": "2026-07-01",
     "review_triggers": [
       "material public claim change",
       "public route or boundary change",
@@ -30,6 +30,12 @@
       "to": "/portal/compassai/aurora",
       "status": 301,
       "purpose": "Legacy Aurora portal compatibility route"
+    },
+    {
+      "from": "/fr/portal/aurorai",
+      "to": "/fr/portal/compassai/aurora",
+      "status": 301,
+      "purpose": "French Aurora portal compatibility route"
     }
   ],
   "claim_boundary": {
@@ -93,19 +99,33 @@
   ],
   "public_routes": [
     "/",
+    "/fr",
     "/about",
+    "/fr/about",
     "/observatory",
+    "/fr/observatory",
     "/governance",
+    "/fr/governance",
     "/methods",
+    "/fr/methods",
     "/assurance",
+    "/fr/assurance",
     "/tool",
+    "/fr/tool",
     "/faq",
+    "/fr/faq",
     "/cases",
+    "/fr/cases",
     "/library",
+    "/fr/library",
     "/services/menu",
+    "/fr/services/menu",
     "/contact",
+    "/fr/contact",
     "/portal/compassai",
-    "/portal/compassai/aurora"
+    "/fr/portal/compassai",
+    "/portal/compassai/aurora",
+    "/fr/portal/compassai/aurora"
   ],
   "evidence_surfaces": [
     {
@@ -130,6 +150,10 @@
     }
   ],
   "change_log": [
+    {
+      "date": "2026-04-01",
+      "change": "Added Quebec French public route mirrors under /fr and connected the EN/FR toggle to route-matched language pages."
+    },
     {
       "date": "2026-03-22",
       "change": "Promoted /portal/compassai/aurora as the canonical Aurora browser route and kept /portal/aurorai as a compatibility redirect."

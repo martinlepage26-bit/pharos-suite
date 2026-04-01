@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowRight, CalendarClock, Mail, ShieldCheck } from 'lucide-react';
 import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
 import { useLanguage } from '../context/LanguageContext';
@@ -421,8 +421,8 @@ const Connect = () => {
               <h2 style={{ marginTop: '0.7rem' }}>{copy.toolTitle}</h2>
               <p className="body-sm" style={{ marginTop: '0.55rem' }}>{copy.toolBody}</p>
               <div className="btn-row" style={{ marginTop: '0.85rem' }}>
-                <Link className="btn-secondary" to="/tool">{copy.toolAction}</Link>
-                <Link className="btn-ghost" to="/services">{copy.serviceAction}</Link>
+                <LocalizedLink className="btn-secondary" to="/tool">{copy.toolAction}</LocalizedLink>
+                <LocalizedLink className="btn-ghost" to="/services">{copy.serviceAction}</LocalizedLink>
               </div>
             </article>
           </div>

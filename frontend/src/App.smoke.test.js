@@ -18,28 +18,36 @@ const makeJsonResponse = (payload, ok = true, status = 200) => ({
 
 const routeCases = [
   ['/', 'home-page'],
+  ['/fr', 'home-page'],
   ['/game', 'game-page'],
   ['/services', 'home-page'],
+  ['/fr/services', 'home-page'],
   ['/governance', 'home-page'],
   ['/services/menu', 'home-page'],
   ['/tool', 'tool-page'],
+  ['/fr/tool', 'tool-page'],
   ['/assurance', 'home-page'],
   ['/transparency', 'home-page'],
   ['/trust', 'home-page'],
   ['/auditability', 'home-page'],
   ['/faq', 'home-page'],
   ['/privacy', 'privacy-page'],
+  ['/fr/privacy', 'privacy-page'],
   ['/terms', 'terms-page'],
+  ['/fr/terms', 'terms-page'],
   ['/research', 'home-page'],
   ['/observatory', 'home-page'],
   ['/cases', 'home-page'],
   ['/about', 'home-page'],
+  ['/fr/about', 'home-page'],
   ['/about/conceptual-method', 'home-page'],
   ['/methods', 'home-page'],
   ['/connect', 'home-page'],
   ['/contact', 'home-page'],
   ['/portal/compassai/aurora', 'portal-aurorai-page'],
+  ['/fr/portal/compassai/aurora', 'portal-aurorai-page'],
   ['/portal/compassai', 'portal-compassai-page'],
+  ['/fr/portal/compassai', 'portal-compassai-page'],
   ['/sealed-card', 'sealed-card-page'],
   ['/portfolio', 'surface-boundary-page'],
   ['/library', 'home-page'],
@@ -49,7 +57,9 @@ const routeCases = [
 
 const publicShellRoutes = [
   '/',
+  '/fr',
   '/about',
+  '/fr/about',
   '/governance',
   '/services',
   '/services/menu',
@@ -297,6 +307,36 @@ describe('PHAROS route smoke coverage', () => {
     const element = await waitForTestId(container, 'portal-aurorai-page');
     expect(element).toBeTruthy();
     expect(window.location.pathname).toBe('/portal/compassai/aurora');
+  });
+
+  test('navigates from English to the matching French route through the language toggle', async () => {
+    window.history.pushState({}, '', '/about');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const toggle = await waitForButtonByText(container, 'FR');
+    await clickElement(toggle);
+
+    expect(window.location.pathname).toBe('/fr/about');
+    await waitForText(container, 'A propos de PHAROS');
+    expect(document.documentElement.lang).toBe('fr-CA');
+  });
+
+  test('navigates from French back to the matching English route through the language toggle', async () => {
+    window.history.pushState({}, '', '/fr/about');
+
+    await act(async () => {
+      root.render(<App />);
+    });
+
+    const toggle = await waitForButtonByText(container, 'EN');
+    await clickElement(toggle);
+
+    expect(window.location.pathname).toBe('/about');
+    await waitForText(container, 'About PHAROS');
+    expect(document.documentElement.lang).toBe('en');
   });
 
   test('renders the shared architecture reference on the Aurora route without module API requests', async () => {

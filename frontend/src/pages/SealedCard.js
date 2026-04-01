@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { BookOpen, Eye, FileText, Layers, Lock, Sparkles } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -128,8 +128,8 @@ const SealedCard = () => {
             <h2>Continue through the research base</h2>
             <p className="body-sm">The protocol sits inside the broader research track on review, legitimacy, and governance design.</p>
             <div className="btn-row">
-              <Link to="/research" className="btn-primary">{t.sealedCard.backToResearch}</Link>
-              <Link to="/about" className="btn-secondary">{t.sealedCard.aboutAuthor}</Link>
+              <LocalizedLink to="/research" className="btn-primary">{t.sealedCard.backToResearch}</LocalizedLink>
+              <LocalizedLink to="/about" className="btn-secondary">{t.sealedCard.aboutAuthor}</LocalizedLink>
             </div>
           </div>
         </div>

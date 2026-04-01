@@ -1,9 +1,9 @@
 import './App.css';
 import './site.css';
-import './game.css';
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
+import { localizePath, stripLocaleFromPath } from './lib/i18nRouting';
 
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -83,7 +83,10 @@ function HomeSurfaceRoute({ sectionId }) {
 
 function AppRoutes() {
   const location = useLocation();
-  const isHomeRoute = HOME_SURFACE_PATHS.has(location.pathname);
+  const basePath = stripLocaleFromPath(location.pathname);
+  const isHomeRoute = HOME_SURFACE_PATHS.has(basePath);
+  const localized = (path, language) => localizePath(path, language, { force: true });
+  const languages = ['en', 'fr'];
 
   return (
     <>
@@ -92,59 +95,127 @@ function AppRoutes() {
       <Navbar />
       <main className={`site-main ${isHomeRoute ? 'route-home' : 'route-interior'}`}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {languages.map((language) => (
+            <Route key={`home-${language}`} path={localized('/', language)} element={<Home />} />
+          ))}
           <Route path="/game" element={<Game />} />
-          <Route path="/services" element={<HomeSurfaceRoute sectionId="services" />} />
-          <Route path="/governance" element={<HomeSurfaceRoute sectionId="governance" />} />
-          <Route path="/services/menu" element={<HomeSurfaceRoute sectionId="services" />} />
-          <Route path="/tool" element={<Tool />} />
-          <Route path="/assurance" element={<HomeSurfaceRoute sectionId="governance" />} />
-          <Route path="/transparency" element={<HomeSurfaceRoute sectionId="governance" />} />
-          <Route path="/faq" element={<HomeSurfaceRoute sectionId="faq" />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/research" element={<HomeSurfaceRoute sectionId="governance" />} />
-          <Route path="/observatory" element={<HomeSurfaceRoute sectionId="governance" />} />
-          <Route path="/cases" element={<HomeSurfaceRoute sectionId="services" />} />
-          <Route path="/about" element={<HomeSurfaceRoute sectionId="about" />} />
-          <Route path="/about/conceptual-method" element={<HomeSurfaceRoute sectionId="methods" />} />
-          <Route path="/methods" element={<HomeSurfaceRoute sectionId="methods" />} />
-          <Route path="/connect" element={<HomeSurfaceRoute sectionId="contact" />} />
-          <Route path="/contact" element={<HomeSurfaceRoute sectionId="contact" />} />
-          <Route path="/library" element={<HomeSurfaceRoute sectionId="methods" />} />
-          <Route
-            path="/portal/compassai/aurora"
-            element={<PortalArchitectureReference routePath="/portal/compassai/aurora" testId="portal-aurorai-page" />}
-          />
-          <Route path="/portal/aurorai" element={<Navigate to="/portal/compassai/aurora" replace />} />
-          <Route
-            path="/portal/compassai"
-            element={<PortalArchitectureReference routePath="/portal/compassai" testId="portal-compassai-page" />}
-          />
+          {languages.map((language) => (
+            <Route key={`services-${language}`} path={localized('/services', language)} element={<HomeSurfaceRoute sectionId="services" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`governance-${language}`} path={localized('/governance', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`services-menu-${language}`} path={localized('/services/menu', language)} element={<HomeSurfaceRoute sectionId="services" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`tool-${language}`} path={localized('/tool', language)} element={<Tool />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`assurance-${language}`} path={localized('/assurance', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`transparency-${language}`} path={localized('/transparency', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`faq-${language}`} path={localized('/faq', language)} element={<HomeSurfaceRoute sectionId="faq" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`privacy-${language}`} path={localized('/privacy', language)} element={<Privacy />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`terms-${language}`} path={localized('/terms', language)} element={<Terms />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`research-${language}`} path={localized('/research', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`observatory-${language}`} path={localized('/observatory', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`cases-${language}`} path={localized('/cases', language)} element={<HomeSurfaceRoute sectionId="services" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`about-${language}`} path={localized('/about', language)} element={<HomeSurfaceRoute sectionId="about" />} />
+          ))}
+          {languages.map((language) => (
+            <Route
+              key={`conceptual-method-${language}`}
+              path={localized('/about/conceptual-method', language)}
+              element={<HomeSurfaceRoute sectionId="methods" />}
+            />
+          ))}
+          {languages.map((language) => (
+            <Route key={`methods-${language}`} path={localized('/methods', language)} element={<HomeSurfaceRoute sectionId="methods" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`connect-${language}`} path={localized('/connect', language)} element={<HomeSurfaceRoute sectionId="contact" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`contact-${language}`} path={localized('/contact', language)} element={<HomeSurfaceRoute sectionId="contact" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`library-${language}`} path={localized('/library', language)} element={<HomeSurfaceRoute sectionId="methods" />} />
+          ))}
+          {languages.map((language) => (
+            <Route
+              key={`portal-aurora-${language}`}
+              path={localized('/portal/compassai/aurora', language)}
+              element={<PortalArchitectureReference routePath={localized('/portal/compassai/aurora', language)} testId="portal-aurorai-page" />}
+            />
+          ))}
+          {languages.map((language) => (
+            <Route
+              key={`portal-legacy-aurora-${language}`}
+              path={localized('/portal/aurorai', language)}
+              element={<Navigate to={localized('/portal/compassai/aurora', language)} replace />}
+            />
+          ))}
+          {languages.map((language) => (
+            <Route
+              key={`portal-compass-${language}`}
+              path={localized('/portal/compassai', language)}
+              element={<PortalArchitectureReference routePath={localized('/portal/compassai', language)} testId="portal-compassai-page" />}
+            />
+          ))}
           <Route path="/sealed-card" element={<SealedCard />} />
-          <Route
-            path="/portfolio"
-            element={(
-              <SurfaceBoundary
-                eyebrow="Boundary update"
-                title="Portfolio material has moved off the PHAROS surface."
-                body="Martin Lepage profile, resume, portfolio, and other non-PHAROS work belong on pharossuite.ca, not on pharos-ai.ca. This route remains out of the PHAROS public shell during the migration."
-              />
-            )}
-          />
-          <Route path="/trust" element={<HomeSurfaceRoute sectionId="governance" />} />
-          <Route path="/auditability" element={<HomeSurfaceRoute sectionId="governance" />} />
+          {languages.map((language) => (
+            <Route
+              key={`portfolio-${language}`}
+              path={localized('/portfolio', language)}
+              element={(
+                <SurfaceBoundary
+                  eyebrow={language === 'fr' ? 'Mise a jour de perimetre' : 'Boundary update'}
+                  title={language === 'fr' ? 'Le contenu portfolio a ete retire de la surface PHAROS.' : 'Portfolio material has moved off the PHAROS surface.'}
+                  body={language === 'fr'
+                    ? 'Le profil de Martin Lepage, son CV, son portfolio et les autres travaux hors PHAROS appartiennent a une surface Martin distincte, et non a pharos-ai.ca. Cette route demeure hors de la coquille publique PHAROS pendant la migration.'
+                    : 'Martin Lepage profile, resume, portfolio, and other non-PHAROS work belong on an external Martin-owned surface, not on pharos-ai.ca. This route remains out of the PHAROS public shell during the migration.'}
+                />
+              )}
+            />
+          ))}
+          {languages.map((language) => (
+            <Route key={`trust-${language}`} path={localized('/trust', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
+          {languages.map((language) => (
+            <Route key={`auditability-${language}`} path={localized('/auditability', language)} element={<HomeSurfaceRoute sectionId="governance" />} />
+          ))}
           <Route path="/admin" element={<Admin />} />
-          <Route
-            path="/publications/trust-advantage-analysis"
-            element={(
-              <SurfaceBoundary
-                eyebrow="Boundary update"
-                title="Publication routes are outside the PHAROS site boundary."
-                body="This repo no longer treats publication pages as part of the PHAROS public surface. Editorial and Martin-centered publication work should live on pharossuite.ca instead."
-              />
-            )}
-          />
+          {languages.map((language) => (
+            <Route
+              key={`publication-boundary-${language}`}
+              path={localized('/publications/trust-advantage-analysis', language)}
+              element={(
+                <SurfaceBoundary
+                  eyebrow={language === 'fr' ? 'Mise a jour de perimetre' : 'Boundary update'}
+                  title={language === 'fr' ? 'Les routes de publication sont hors du perimetre du site PHAROS.' : 'Publication routes are outside the PHAROS site boundary.'}
+                  body={language === 'fr'
+                    ? 'Ce depot ne traite plus les pages de publication comme faisant partie de la surface publique PHAROS. Le travail editorial et centre sur Martin doit vivre sur une surface Martin distincte.'
+                    : 'This repo no longer treats publication pages as part of the PHAROS public surface. Editorial and Martin-centered publication work should live on an external Martin-owned surface instead.'}
+                />
+              )}
+            />
+          ))}
         </Routes>
       </main>
       <Footer />
@@ -154,13 +225,13 @@ function AppRoutes() {
 
 function App() {
   return (
-    <LanguageProvider>
-      <div className="App min-h-screen">
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <div className="App min-h-screen">
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <LanguageProvider>
           <AppRoutes />
-        </BrowserRouter>
-      </div>
-    </LanguageProvider>
+        </LanguageProvider>
+      </BrowserRouter>
+    </div>
   );
 }
 

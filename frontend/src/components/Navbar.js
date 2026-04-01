@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { stripLocaleFromPath } from '../lib/i18nRouting';
 
 const NAV_COPY = {
   en: {
@@ -64,10 +65,11 @@ const NAV_COPY = {
 };
 
 const Navbar = () => {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, toggleLanguage, localizedPath } = useLanguage();
   const location = useLocation();
   const [sitemapOpen, setSitemapOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const basePath = stripLocaleFromPath(location.pathname);
 
   const copy = NAV_COPY[language];
   const languageButtonLabel = language === 'fr' ? 'EN' : 'FR';
@@ -106,14 +108,14 @@ const Navbar = () => {
     return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
-  const homeHeroVisible = location.pathname === '/' && !scrolled;
+  const homeHeroVisible = basePath === '/' && !scrolled;
   const navClass = ['nav', scrolled ? 'scrolled' : '', homeHeroVisible ? 'hero-visible' : '']
     .filter(Boolean)
     .join(' ');
   const isPathActive = (matchPaths) => matchPaths.some((path) => (
     path === '/'
-      ? location.pathname === '/'
-      : location.pathname === path || location.pathname.startsWith(`${path}/`)
+      ? basePath === '/'
+      : basePath === path || basePath.startsWith(`${path}/`)
   ));
 
   return (
@@ -136,7 +138,7 @@ const Navbar = () => {
                 </span>
               </button>
 
-              <Link to="/contact" className="nav-book-review">
+              <Link to={localizedPath('/contact')} className="nav-book-review">
                 {copy.bookReview}
               </Link>
             </div>
@@ -149,14 +151,14 @@ const Navbar = () => {
                   if (item.children) {
                     return (
                       <div key={item.path} className={`nav-item nav-item-has-children${isActive ? ' active' : ''}`}>
-                        <Link to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                        <Link to={localizedPath(item.path)} className={`nav-link${isActive ? ' active' : ''}`}>
                           {item.label}
                         </Link>
                         <div className="nav-dropdown" aria-label={item.label}>
                           {item.children.map((child) => {
                             const childActive = isPathActive(child.matchPaths);
                             return (
-                              <Link key={child.path} to={child.path} className={`nav-dropdown-link${childActive ? ' active' : ''}`}>
+                              <Link key={child.path} to={localizedPath(child.path)} className={`nav-dropdown-link${childActive ? ' active' : ''}`}>
                                 {child.label}
                               </Link>
                             );
@@ -167,7 +169,7 @@ const Navbar = () => {
                   }
 
                   return (
-                    <Link key={item.path} to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
+                    <Link key={item.path} to={localizedPath(item.path)} className={`nav-link${isActive ? ' active' : ''}`}>
                       {item.label}
                     </Link>
                   );
@@ -196,7 +198,7 @@ const Navbar = () => {
               return (
                 <Link
                   key={item.path}
-                  to={item.path}
+                  to={localizedPath(item.path)}
                   className={`sitemap-link compact${isActive ? ' active' : ''}`}
                   onClick={() => setSitemapOpen(false)}
                 >

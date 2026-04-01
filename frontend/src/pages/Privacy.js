@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowRight, Database, MailCheck, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { PUBLIC_ASSURANCE_META } from '../data/publicAssurance';
@@ -183,13 +183,13 @@ const Privacy = () => {
           <h2>{copy.contactTitle}</h2>
           <p className="body-lead" style={{ marginTop: '0.65rem' }}>{copy.contactBody}</p>
           <div className="btn-row" style={{ marginTop: '1rem' }}>
-            <Link className="btn-primary" to="/contact">
+            <LocalizedLink className="btn-primary" to="/contact">
               {copy.contactCta}
               <ArrowRight size={14} />
-            </Link>
-            <Link className="btn-secondary" to="/terms">
+            </LocalizedLink>
+            <LocalizedLink className="btn-secondary" to="/terms">
               {copy.termsCta}
-            </Link>
+            </LocalizedLink>
           </div>
         </div>
       </section>

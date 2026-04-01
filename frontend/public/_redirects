@@ -1,4 +1,3 @@
-/portal/lotus / 301
 /portfolio /about 301
 /publications/trust-advantage-analysis /observatory 301
 /services /services/index.html 200
@@ -19,8 +18,14 @@
 /cases /cases/index.html 200
 /tool /tool/index.html 200
 /library /library/index.html 200
+/martin_lepage_governance_tree.html https://martin.govern-ai.ca/martin_lepage_governance_tree 301
+/skill_ecosystem_tree.html https://martin.govern-ai.ca/skill_ecosystem_tree 301
+/portal/lotus https://martin.govern-ai.ca/lotus/ 301
+/portal/lotus/ https://martin.govern-ai.ca/lotus/ 301
 /portal/aurorai /portal/compassai/aurora 301
 /portal/aurorai/* /portal/compassai/aurora 301
+/fr/portal/aurorai /fr/portal/compassai/aurora 301
+/fr/portal/aurorai/* /fr/portal/compassai/aurora 301
 /portal/compassai/aurora /portal/compassai/aurora/index.html 200
 /portal/compassai /portal/compassai/index.html 200
 /* /index.html 200

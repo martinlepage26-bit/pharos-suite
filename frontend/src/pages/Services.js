@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowRight, BriefcaseBusiness, Radar, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -198,13 +198,13 @@ const Services = () => {
             <h2>{copy.ctaTitle}</h2>
             <p className="body-lead" style={{ marginTop: '0.6rem' }}>{copy.ctaBody}</p>
             <div className="btn-row" style={{ marginTop: '0.95rem' }}>
-              <Link className="btn-primary" to="/contact">
+              <LocalizedLink className="btn-primary" to="/contact">
                 {copy.ctaPrimary}
                 <ArrowRight size={14} />
-              </Link>
-              <Link className="btn-secondary" to="/">
+              </LocalizedLink>
+              <LocalizedLink className="btn-secondary" to="/">
                 {copy.ctaSecondary}
-              </Link>
+              </LocalizedLink>
             </div>
           </article>
         </div>

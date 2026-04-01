@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../components/LocalizedLink';
 import { ArrowUpRight, BookOpen, Shield, Waypoints } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -163,12 +163,12 @@ const Research = () => {
             <h2>{copy.noteTitle}</h2>
             <p className="body-lead" style={{ marginTop: '0.7rem' }}>{copy.noteBody}</p>
             <div className="btn-row" style={{ marginTop: '0.95rem' }}>
-              <Link className="btn-primary" to="/library">
+              <LocalizedLink className="btn-primary" to="/library">
                 {copy.ctaPrimary}
-              </Link>
-              <Link className="btn-secondary" to="/contact">
+              </LocalizedLink>
+              <LocalizedLink className="btn-secondary" to="/contact">
                 {copy.ctaSecondary}
-              </Link>
+              </LocalizedLink>
             </div>
           </article>
         </div>

@@ -1,4 +1,5 @@
 import '../portalArchitecture.css';
+import { useLanguage } from '../context/LanguageContext';
 
 const previewFacts = [
   {
@@ -150,6 +151,228 @@ const boundedGapItems = [
   'Cross-repository references were not fully re-verified at generation time.',
   'Resolution still requires a route-by-route audit and live import-path verification.'
 ];
+
+const previewFactsFr = [
+  {
+    label: 'Etat public',
+    value: 'Statut : /portal en construction',
+    body: 'La route est en ligne dans la coquille publique, mais les surfaces modulaires operationnelles restent volontairement bornees.'
+  },
+  {
+    label: 'Ce que fait cette page',
+    value: 'Garder la pile lisible',
+    body: 'Elle montre la relation entre PHAROS, COMPASSai et AurorA sans laisser entendre que le portail en activite est deja expose.'
+  },
+  {
+    label: 'Ce qui reste hors ligne',
+    value: 'Aucune lecture modulaire en direct',
+    body: 'Les statistiques de tableau de bord, les dossiers, les televersements et les autres actions API modulaires restent desactivees sur cette route de reference publique.'
+  }
+];
+
+const stackLayersFr = [
+  {
+    number: '01',
+    name: 'Couche de methode',
+    title: 'Methode de gouvernance PHAROS',
+    titleClassName: 'portal-architecture-title-gold',
+    description:
+      'La logique de gouvernance amont : sequence P→H→A→R, niveaux T0–T3, schema de paquet de preuve et plafond 10XTHINK. COMPASSai et AurorA n\'inventent pas la methode ici; ils la transportent dans le flux de travail.',
+    tags: [
+      { label: 'Perceive', tone: 'gold' },
+      { label: 'Harmonize', tone: 'gold' },
+      { label: 'Assess', tone: 'gold' },
+      { label: 'Resolve', tone: 'gold' },
+      { label: 'Cible de preuve 10XTHINK', tone: 'gold' }
+    ]
+  },
+  {
+    number: '02',
+    name: 'Couche applicative',
+    title: 'COMPASSai & AurorA',
+    description:
+      'Des surfaces operationnelles qui traduisent la methode PHAROS en intake, routage et operations de previsualisation bornees. COMPASSai reste le coeur du routage; AurorA reste la surface d\'intake imbriquee. Les deux sont encore en developpement actif.',
+    tags: [
+      { label: 'COMPASSai · ~69 routes · :9202', tone: 'compass' },
+      { label: 'AurorA · ~21 routes · imbrique', tone: 'aurora' },
+      { label: 'FastAPI + MongoDB' },
+      { label: 'Coquille publique sure pour la previsualisation' }
+    ]
+  },
+  {
+    number: '03',
+    name: 'Coquille frontale',
+    title: 'Coquille publique PHAROS · pharos-ai.ca',
+    description:
+      'La surface publique PHAROS garde visibles les routes, le langage de perimetre et le contexte de pile pendant que les comportements operationnels du portail restent en construction.',
+    tags: [
+      { label: 'Coquille frontale PHAROS' },
+      { label: 'pharos-ai.ca' },
+      { label: 'Reference d\'architecture seulement', tone: 'think10x' }
+    ]
+  }
+];
+
+const productCardsFr = [
+  {
+    className: 'compass-card',
+    corner: 'Application principale',
+    letter: 'C',
+    fullname: 'COMPASSai · Moteur de gouvernance',
+    stats: [
+      { value: '~69', label: 'Routes' },
+      { value: '9202', label: 'Port' },
+      { value: 'FastAPI', label: 'Backend' }
+    ],
+    body:
+      'La plus grande surface applicative. Elle porte le coeur du routage portal, les operations de previsualisation et la couche de presentation de gouvernance cote client.',
+    items: [
+      'Coeur du routage portal',
+      'Operations de previsualisation',
+      'Surface de presentation des rapports clients',
+      'Couche de persistance MongoDB',
+      'Heberge l\'espace de noms /portal/compassai/aurora'
+    ]
+  },
+  {
+    className: 'aurora-card',
+    corner: 'Application secondaire',
+    letter: 'A',
+    fullname: 'AurorA · Intake documentaire',
+    stats: [
+      { value: '~21', label: 'Routes' },
+      { value: 'Imbrique', label: 'Routage' },
+      { value: 'Preview', label: 'Statut' }
+    ],
+    body:
+      'La surface d\'intake imbriquee dans l\'espace de noms COMPASSai. AurorA gere l\'intake documentaire, la classification, l\'extraction et le paquetage de preuve tout en restant dans une posture de previsualisation bornee.',
+    items: [
+      'Intake et classification documentaire',
+      'Route canonique : /portal/compassai/aurora',
+      'Verifications d\'etat preview',
+      'Redirection de compatibilite depuis /portal/aurorai',
+      'Phases Perceive et Harmonize de PHAROS'
+    ]
+  }
+];
+
+const evidenceSourcesFr = [
+  {
+    label: 'Paquet source 01',
+    name: 'After Reboot Checklist',
+    body:
+      'Document de continuite qui capte l\'etat du systeme, la sequence de redemarrage et les etapes de verification de dependances apres un redemarrage de Cerebrhoe.',
+    status: 'Preuve active',
+    statusClassName: 'badge-active'
+  },
+  {
+    label: 'Paquet source 02',
+    name: 'Version markdown une page',
+    body:
+      'Note d\'architecture condensee qui garde lisibles la topologie de routage et la relation COMPASSai/AurorA dans une reference bornee.',
+    status: 'Preuve active',
+    statusClassName: 'badge-active'
+  },
+  {
+    label: 'Paquet source 03',
+    name: 'Moving Parts',
+    body:
+      'Inventaire de composants qui suit les services actifs, les interdependances et les points d\'integration a travers COMPASSai, AurorA et la coquille frontale PHAROS.',
+    status: 'Liaison preview',
+    statusClassName: 'badge-preview'
+  }
+];
+
+const routeHierarchyFr = [
+  { className: 'rt-root', text: '/portal', note: 'en construction' },
+  { className: 'rt-indent1 rt-compass', text: '/compassai', note: 'espace COMPASSai (~69 routes)' },
+  { className: 'rt-indent2 rt-compass', text: '/compassai/dashboard' },
+  { className: 'rt-indent2 rt-compass', text: '/compassai/governance' },
+  { className: 'rt-indent2 rt-compass', text: '/compassai/reports', note: 'surface de presentation des rapports clients' },
+  { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora', note: 'espace imbrique AurorA (~21 routes)' },
+  { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora/intake' },
+  { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora/evidence' },
+  { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora/preview' },
+  { className: 'rt-indent2 rt-compass', text: '/compassai/gates', note: 'flux d\'approbation G1–G4' }
+];
+
+const boundedGapItemsFr = [
+  'Certaines routes renvoient a des composants qui peuvent ou non exister aux emplacements attendus.',
+  'Des chemins d\'import supposent des structures de repertoires qui ont peut-etre ete reorganisees plus tard.',
+  'Les references inter-depots n\'ont pas ete toutes reverifiees au moment de la generation.',
+  'La resolution exige encore un audit route par route et une verification des chemins d\'import en conditions reelles.'
+];
+
+const PORTAL_PAGE_COPY = {
+  en: {
+    previewFacts,
+    stackLayers,
+    productCards,
+    routeHierarchy,
+    evidenceSources,
+    boundedGapItems,
+    kicker: 'PHAROS · Architecture Reference',
+    titleSub: 'COMPASSai & AurorA public route reference',
+    subtitle: 'COMPASSai and AurorA stay visible from the public shell while live operational portal behaviors remain bounded.',
+    statusAriaLabel: 'Portal preview status',
+    statusTitle: 'Preview Boundary',
+    statusBody:
+      'This route is a governed public reference. It keeps the stack legible without implying that the working dashboard or intake APIs are already exposed.',
+    bylineRouteLabel: 'public architecture route',
+    bylineSiteLabel: 'pharos-ai.ca · architecture reference only',
+    portalStatusHead: 'Portal Status',
+    portalStatusKicker: 'Under construction',
+    portalStatusTitle: '/portal remains a bounded public reference',
+    portalStatusBody:
+      'COMPASSai and AurorA are still in development. These routes keep the architecture, route relationship, and public-state boundary visible while live operational portal surfaces remain off.',
+    portalStatusTags: ['Architecture reference only', 'COMPASSai in development', 'AurorA in development'],
+    stackHead: 'Stack Position · Three-Layer Architecture',
+    applicationsHead: 'Application Surfaces · COMPASSai & AurorA',
+    routeHead: 'Route Hierarchy · AurorA → COMPASSai Redirect',
+    redirectNote: '→ 301 redirect → /portal/compassai/aurora',
+    evidenceHead: 'Evidence Basis · Shared Archive Sources',
+    integrityHead: 'Integrity Notice',
+    integrityTitle: 'Dependency graph fragility remains unresolved',
+    integrityBody:
+      'Integration logic was generated across multiple sessions with prompts referencing components in other repositories without verifying their current state. This remains a known bounded gap, not a resolved one.',
+    footerLeft: 'PHAROS Stack · COMPASSai & AurorA Architecture Reference',
+    footerRight: 'pharos-ai.ca · /portal under construction · 2026'
+  },
+  fr: {
+    previewFacts: previewFactsFr,
+    stackLayers: stackLayersFr,
+    productCards: productCardsFr,
+    routeHierarchy: routeHierarchyFr,
+    evidenceSources: evidenceSourcesFr,
+    boundedGapItems: boundedGapItemsFr,
+    kicker: 'PHAROS · Reference d\'architecture',
+    titleSub: 'Reference publique des routes COMPASSai et AurorA',
+    subtitle: 'COMPASSai et AurorA restent visibles depuis la coquille publique pendant que les comportements operationnels du portail demeurent bornes.',
+    statusAriaLabel: 'Statut preview du portail',
+    statusTitle: 'Perimetre preview',
+    statusBody:
+      'Cette route est une reference publique gouvernee. Elle garde la pile lisible sans laisser entendre que le tableau de bord actif ou les API d\'intake sont deja exposes.',
+    bylineRouteLabel: 'route publique d\'architecture',
+    bylineSiteLabel: 'pharos-ai.ca · reference d\'architecture seulement',
+    portalStatusHead: 'Statut du portail',
+    portalStatusKicker: 'En construction',
+    portalStatusTitle: '/portal reste une reference publique bornee',
+    portalStatusBody:
+      'COMPASSai et AurorA sont toujours en developpement. Ces routes gardent visibles l\'architecture, la relation entre les routes et le perimetre d\'etat public pendant que les surfaces operationnelles du portail restent hors ligne.',
+    portalStatusTags: ['Reference d\'architecture seulement', 'COMPASSai en developpement', 'AurorA en developpement'],
+    stackHead: 'Position dans la pile · Architecture en trois couches',
+    applicationsHead: 'Surfaces applicatives · COMPASSai et AurorA',
+    routeHead: 'Hierarchie des routes · Redirection AurorA → COMPASSai',
+    redirectNote: '→ redirection 301 → /portal/compassai/aurora',
+    evidenceHead: 'Base de preuve · Sources d\'archive partagees',
+    integrityHead: 'Avis d\'integrite',
+    integrityTitle: 'La fragilite du graphe de dependances reste non resolue',
+    integrityBody:
+      'La logique d\'integration a ete generee sur plusieurs sessions avec des prompts faisant reference a des composants dans d\'autres depots sans verification de leur etat courant. Il s\'agit toujours d\'un ecart borne connu, et non d\'un point resolu.',
+    footerLeft: 'Pile PHAROS · Reference d\'architecture COMPASSai et AurorA',
+    footerRight: 'pharos-ai.ca · /portal en construction · 2026'
+  }
+};
 
 const portalReferenceStyles = `
   [data-portal-reference="pharos-stack-architecture"] {
@@ -653,6 +876,9 @@ const portalReferenceStyles = `
 `;
 
 function PortalArchitectureReference({ routePath, testId }) {
+  const { language } = useLanguage();
+  const copy = PORTAL_PAGE_COPY[language] || PORTAL_PAGE_COPY.en;
+
   return (
     <div
       className="portal-architecture-page"
@@ -665,24 +891,24 @@ function PortalArchitectureReference({ routePath, testId }) {
       <div className="portal-architecture-shell">
         <header className="portal-architecture-masthead">
           <div className="portal-architecture-masthead-copy">
-            <p className="portal-architecture-kicker">PHAROS · Architecture Reference</p>
+            <p className="portal-architecture-kicker">{copy.kicker}</p>
             <h1 className="portal-architecture-title">
               PHAROS STACK
-              <span className="portal-architecture-title-sub">COMPASSai &amp; AurorA public route reference</span>
+              <span className="portal-architecture-title-sub">{copy.titleSub}</span>
             </h1>
             <p className="portal-architecture-subtitle">
-              COMPASSai and AurorA stay visible from the public shell while live operational portal behaviors remain bounded.
+              {copy.subtitle}
             </p>
           </div>
 
-          <aside className="portal-architecture-status-panel" aria-label="Portal preview status">
-            <h2 className="portal-architecture-status-title">Preview Boundary</h2>
+          <aside className="portal-architecture-status-panel" aria-label={copy.statusAriaLabel}>
+            <h2 className="portal-architecture-status-title">{copy.statusTitle}</h2>
             <p className="portal-architecture-status-body">
-              This route is a governed public reference. It keeps the stack legible without implying that the working dashboard or intake APIs are already exposed.
+              {copy.statusBody}
             </p>
 
             <div className="portal-architecture-fact-grid">
-              {previewFacts.map((fact) => (
+              {copy.previewFacts.map((fact) => (
                 <div key={fact.label} className="portal-architecture-fact">
                   <span className="portal-architecture-fact-label">{fact.label}</span>
                   <span className="portal-architecture-fact-value">{fact.value}</span>
@@ -695,32 +921,32 @@ function PortalArchitectureReference({ routePath, testId }) {
 
         <div className="portal-architecture-byline">
           <span>pharos@pharos-ai.ca</span>
-          <span>{routePath} · public architecture route</span>
-          <span>pharos-ai.ca · architecture reference only</span>
+          <span>{routePath} · {copy.bylineRouteLabel}</span>
+          <span>{copy.bylineSiteLabel}</span>
         </div>
 
         <section className="portal-architecture-construction" aria-labelledby="portal-construction-title">
-          <p className="portal-architecture-section-head">Portal Status</p>
+          <p className="portal-architecture-section-head">{copy.portalStatusHead}</p>
           <div className="portal-architecture-construction-box">
-            <p className="portal-architecture-construction-kicker">Under construction</p>
+            <p className="portal-architecture-construction-kicker">{copy.portalStatusKicker}</p>
             <h2 id="portal-construction-title" className="portal-architecture-construction-title">
-              /portal remains a bounded public reference
+              {copy.portalStatusTitle}
             </h2>
             <p className="portal-architecture-construction-body">
-              COMPASSai and AurorA are still in development. These routes keep the architecture, route relationship, and public-state boundary visible while live operational portal surfaces remain off.
+              {copy.portalStatusBody}
             </p>
             <div className="portal-architecture-construction-tags">
-              <span className="portal-architecture-tag think10x">Architecture reference only</span>
-              <span className="portal-architecture-tag compass">COMPASSai in development</span>
-              <span className="portal-architecture-tag aurora">AurorA in development</span>
+              <span className="portal-architecture-tag think10x">{copy.portalStatusTags[0]}</span>
+              <span className="portal-architecture-tag compass">{copy.portalStatusTags[1]}</span>
+              <span className="portal-architecture-tag aurora">{copy.portalStatusTags[2]}</span>
             </div>
           </div>
         </section>
 
         <section className="portal-architecture-section">
-          <p className="portal-architecture-section-head">Stack Position · Three-Layer Architecture</p>
+          <p className="portal-architecture-section-head">{copy.stackHead}</p>
           <div className="portal-architecture-stack">
-            {stackLayers.map((layer, index) => (
+            {copy.stackLayers.map((layer, index) => (
               <div key={layer.number}>
                 <div className="portal-architecture-stack-layer">
                   <div className="portal-architecture-layer-label">
@@ -755,9 +981,9 @@ function PortalArchitectureReference({ routePath, testId }) {
         </section>
 
         <section className="portal-architecture-section">
-          <p className="portal-architecture-section-head">Application Surfaces · COMPASSai &amp; AurorA</p>
+          <p className="portal-architecture-section-head">{copy.applicationsHead}</p>
           <div className="portal-architecture-product-grid">
-            {productCards.map((card) => (
+            {copy.productCards.map((card) => (
               <article key={card.fullname} className={`portal-architecture-product-card ${card.className}`}>
                 <span className="portal-architecture-product-corner">{card.corner}</span>
                 <div className="portal-architecture-product-letter">{card.letter}</div>
@@ -782,9 +1008,9 @@ function PortalArchitectureReference({ routePath, testId }) {
         </section>
 
         <section className="portal-architecture-section">
-          <p className="portal-architecture-section-head">Route Hierarchy · AurorA → COMPASSai Redirect</p>
+          <p className="portal-architecture-section-head">{copy.routeHead}</p>
           <div className="portal-architecture-route-tree">
-            {routeHierarchy.map((item) => (
+            {copy.routeHierarchy.map((item) => (
               <div key={`${item.className}-${item.text}`} className={item.className}>
                 {item.text}
                 {item.note ? (
@@ -796,15 +1022,15 @@ function PortalArchitectureReference({ routePath, testId }) {
             ))}
             <div>&nbsp;</div>
             <div className="rt-indent1 rt-aurora">
-              /aurorai <span className="rt-redirect">→ 301 redirect → /portal/compassai/aurora</span>
+              /aurorai <span className="rt-redirect">{copy.redirectNote}</span>
             </div>
           </div>
         </section>
 
         <section className="portal-architecture-section">
-          <p className="portal-architecture-section-head">Evidence Basis · Shared Archive Sources</p>
+          <p className="portal-architecture-section-head">{copy.evidenceHead}</p>
           <div className="portal-architecture-evidence-grid">
-            {evidenceSources.map((source) => (
+            {copy.evidenceSources.map((source) => (
               <article key={source.name} className="portal-architecture-evidence-cell">
                 <p className="portal-architecture-evidence-label">{source.label}</p>
                 <h2 className="portal-architecture-evidence-name">{source.name}</h2>
@@ -818,14 +1044,14 @@ function PortalArchitectureReference({ routePath, testId }) {
         </section>
 
         <section className="portal-architecture-section">
-          <p className="portal-architecture-section-head">Integrity Notice</p>
+          <p className="portal-architecture-section-head">{copy.integrityHead}</p>
           <div className="portal-architecture-gap-box">
-            <h2 className="portal-architecture-gap-title">Dependency graph fragility remains unresolved</h2>
+            <h2 className="portal-architecture-gap-title">{copy.integrityTitle}</h2>
             <p className="portal-architecture-gap-body">
-              Integration logic was generated across multiple sessions with prompts referencing components in other repositories without verifying their current state. This remains a known bounded gap, not a resolved one.
+              {copy.integrityBody}
             </p>
             <div className="portal-architecture-gap-items">
-              {boundedGapItems.map((item) => (
+              {copy.boundedGapItems.map((item) => (
                 <div key={item}>⚠ {item}</div>
               ))}
             </div>
@@ -833,8 +1059,8 @@ function PortalArchitectureReference({ routePath, testId }) {
         </section>
 
         <footer className="portal-architecture-footer">
-          <span>PHAROS Stack · COMPASSai &amp; AurorA Architecture Reference</span>
-          <span>pharos-ai.ca · /portal under construction · 2026</span>
+          <span>{copy.footerLeft}</span>
+          <span>{copy.footerRight}</span>
         </footer>
       </div>
     </div>
