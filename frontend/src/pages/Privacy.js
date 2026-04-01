@@ -68,65 +68,65 @@ const COPY = {
     termsCta: 'Read terms'
   },
   fr: {
-    eyebrow: 'Confidentialite',
-    title: 'Politique de confidentialite du site public PHAROS',
+    eyebrow: 'Confidentialité',
+    title: 'Politique de confidentialité du site public PHAROS',
     body:
-      'Cette politique explique comment les routes publiques PHAROS traitent la telemetrie analytique, les soumissions de contact et le suivi humain des demandes de revue.',
-    updated: 'Derniere mise a jour 25 mars 2026',
+      'Cette politique explique comment les routes publiques de PHAROS traitent la télémétrie analytique, les prises de contact et le suivi humain des demandes de revue.',
+    updated: 'Dernière mise à jour : 25 mars 2026',
     highlights: [
       {
         icon: Database,
-        title: 'Telemetrie technique',
-        body: 'Des signaux d usage et de fiabilite peuvent etre captes pour ameliorer la stabilite du site et la clarte du contenu.'
+        title: 'Télémétrie technique',
+        body: 'Des signaux d’usage et de fiabilité peuvent être recueillis pour améliorer la stabilité du site et la clarté du contenu.'
       },
       {
         icon: MailCheck,
-        title: 'Soumissions de contact',
-        body: 'Les details soumis via les formulaires publics servent a repondre aux demandes et coordonner les appels de revue.'
+        title: 'Demandes de contact',
+        body: 'Les renseignements transmis au moyen des formulaires publics servent à répondre aux demandes et à coordonner les appels de revue.'
       },
       {
         icon: ShieldCheck,
-        title: 'Discipline de frontiere',
-        body: 'Les formulaires publics ne sont pas concus pour des dossiers reglementes sensibles ni des donnees confidentielles de tiers.'
+        title: 'Discipline de périmètre',
+        body: 'Les formulaires publics ne sont pas conçus pour des dossiers réglementés sensibles ni pour des données confidentielles de tiers.'
       }
     ],
     sections: [
       {
-        title: 'Informations pouvant etre collecte',
+        title: 'Renseignements pouvant être recueillis',
         points: [
-          'Analytique de base et diagnostics techniques generes lors des visites du site.',
-          'Coordonnees de contact et contexte de planification soumis via les formulaires.',
-          'Messages, notes de portee et suivi transmis par courriel a PHAROS.'
+          'Données analytiques de base et diagnostics techniques générés lors des visites du site.',
+          'Coordonnées de contact et contexte de planification transmis au moyen des formulaires.',
+          'Messages, notes de portée et éléments de suivi transmis par courriel à PHAROS.'
         ]
       },
       {
         title: 'Utilisation des informations',
         points: [
-          'Repondre aux demandes et preparer les discussions de cadrage de gouvernance.',
-          'Exploiter, securiser et ameliorer la performance du site public.',
-          'Maintenir un dossier borne des demandes de revue et des suivis de communication.'
+          'Répondre aux demandes et préparer les discussions de cadrage de gouvernance.',
+          'Exploiter, sécuriser et améliorer la performance du site public.',
+          'Maintenir un dossier borné des demandes de revue et des suivis de communication.'
         ]
       },
       {
-        title: 'Retention et traitement',
+        title: 'Conservation et traitement',
         points: [
-          'Les donnees sont conservees seulement selon les besoins de communication, de livraison et de dossiers operationnels.',
-          'Les dossiers du site public sont traites sous revue humaine responsable et controles de limites de revendication.',
-          'Aucune phrase du site public ne doit etre interpretee comme un avis juridique ou un depot reglementaire.'
+          'Les données sont conservées uniquement pour les besoins de communication, de livraison et de tenue de dossiers opérationnels.',
+          'Les dossiers liés au site public sont traités sous revue humaine responsable et selon des contrôles de limites d’allégation.',
+          'Aucune phrase du site public ne doit être interprétée comme un avis juridique ou un dépôt réglementaire.'
         ]
       },
       {
         title: 'Vos choix',
         points: [
-          `Vous pouvez demander correction ou suppression des coordonnees en ecrivant a ${PUBLIC_ASSURANCE_META.contactEmail}.`,
-          'Ne soumettez pas de dossiers medicaux, identifiants financiers ou autres donnees a haute sensibilite via les formulaires publics.',
-          'Si la demande exige une preuve propre a un deploiement, utilisez un canal de revue humaine cadree.'
+          `Vous pouvez demander la correction ou la suppression de vos coordonnées en écrivant à ${PUBLIC_ASSURANCE_META.contactEmail}.`,
+          'Ne soumettez pas de dossiers médicaux, d’identifiants financiers ou d’autres données hautement sensibles au moyen des formulaires publics.',
+          'Si la demande exige une preuve propre à un déploiement, utilisez plutôt un canal de revue humaine encadré.'
         ]
       }
     ],
-    contactTitle: 'Demandes et questions de confidentialite',
+    contactTitle: 'Demandes et questions liées à la confidentialité',
     contactBody:
-      'Pour une demande de correction, suppression ou traitement liee a ce site public, contactez PHAROS et indiquez la route ou le formulaire utilise.',
+      'Pour toute demande de correction, de suppression ou de traitement liée à ce site public, communiquez avec PHAROS en indiquant la route ou le formulaire utilisé.',
     contactCta: 'Contacter PHAROS',
     termsCta: 'Lire les conditions'
   }

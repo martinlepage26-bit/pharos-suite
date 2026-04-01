@@ -21,7 +21,7 @@ const SurfaceBoundary = ({
             </p>
             <div className="btn-row" style={{ marginTop: '28px' }}>
               <LocalizedLink to="/" className="btn-dark">
-                {language === 'fr' ? 'Retour a PHAROS' : 'Return to PHAROS'}
+                {language === 'fr' ? 'Retour à PHAROS' : 'Return to PHAROS'}
                 <ArrowRight />
               </LocalizedLink>
               <LocalizedLink to="/contact" className="btn-outline">

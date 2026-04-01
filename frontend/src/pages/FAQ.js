@@ -89,87 +89,87 @@ const COPY = {
   },
   fr: {
     eyebrow: 'FAQ',
-    title: 'Reponses directes pour les equipes sous pression de revue',
+    title: 'Réponses directes pour les équipes sous pression de revue',
     body:
-      'Ces questions reviennent avant une revue d approvisionnement, un audit, une diligence fournisseur ou une escalation de direction. Les reponses restent bornees a la preuve disponible.',
-    overviewTitle: 'Ce que cette page aide a clarifier',
+      'Ces questions reviennent avant une revue d’approvisionnement, un audit, une diligence fournisseur ou une escalade vers la direction. Les réponses restent bornées à ce qui peut être démontré.',
+    overviewTitle: 'Ce que cette page aide à clarifier',
     overviewCards: [
       {
         icon: ShieldCheck,
-        title: 'Portee de gouvernance',
-        body: 'Ce que la gouvernance couvre, et la limite du langage de principes seul.'
+        title: 'Portée de gouvernance',
+        body: 'Ce que la gouvernance couvre, et la limite d’un langage de principes laissé seul.'
       },
       {
         icon: FileCheck2,
         title: 'Base de preuve',
-        body: 'Quels artefacts doivent exister avant qu une revue ne les exige.'
+        body: 'Quels artefacts doivent exister avant qu’une revue ne les exige.'
       },
       {
         icon: Waypoints,
         title: 'Parcours de mandat',
-        body: 'Comment choisir un point d entree deterministe sans surcharger le projet.'
+        body: 'Comment choisir un point d’entrée déterministe sans alourdir inutilement le projet.'
       }
     ],
     sections: [
       {
-        title: 'Point de depart',
-        intro: 'Section utile lorsque l equipe definit encore ce que le travail de gouvernance doit inclure.',
+        title: 'Point de départ',
+        intro: 'Section utile lorsque l’équipe définit encore ce que le travail de gouvernance doit inclure.',
         items: [
           {
-            q: 'Qu est-ce que la gouvernance IA en pratique?',
-            a: 'C est la structure operatoire qui fixe droits de decision, seuils, controles et exigences de preuve pour permettre une revue sans improvisation.'
+            q: 'Qu’est-ce que la gouvernance de l’IA en pratique?',
+            a: 'C’est la structure opérationnelle qui fixe les responsabilités décisionnelles, les seuils, les contrôles et les exigences de preuve afin de permettre une revue sans improvisation.'
           },
           {
-            q: 'Quelle difference avec l ethique IA?',
-            a: 'L ethique nomme des valeurs. La gouvernance transforme ces valeurs en routines responsables: qui decide, ce qui est requis, ce qui declenche l escalation, et quelles traces existent.'
+            q: 'Quelle différence avec l’éthique de l’IA?',
+            a: 'L’éthique nomme des valeurs. La gouvernance transforme ces valeurs en routines responsables : qui décide, ce qui est requis, ce qui déclenche l’escalade et quelles traces doivent exister.'
           },
           {
-            q: 'Comment voir que la gouvernance est deja en retard?',
-            a: 'Si vous ne pouvez pas montrer un inventaire actuel, des responsables nommes et un dossier de preuve simple pour les systemes les plus exposes, la gouvernance est en retard.'
+            q: 'Comment voir que la gouvernance est déjà en retard?',
+            a: 'Si vous ne pouvez pas montrer un inventaire actuel, des responsables nommés et un dossier de preuve simple pour les systèmes les plus exposés, la gouvernance est déjà en retard.'
           }
         ]
       },
       {
         title: 'Preuve et revue',
-        intro: 'Section utile lorsque la pression d approvisionnement, d audit ou de revue fournisseur est deja active.',
+        intro: 'Section utile lorsque la pression d’approvisionnement, d’audit ou de revue fournisseur est déjà active.',
         items: [
           {
-            q: 'Que demandent les reviseurs en premier?',
-            a: 'Ils commencent par responsabilite et traçabilite: qui a approuve quoi, sous quel seuil, et quelle preuve soutient la decision.'
+            q: 'Que demandent les réviseurs en premier?',
+            a: 'Ils commencent généralement par la responsabilité et la traçabilité : qui a approuvé quoi, sous quel seuil, et quelle preuve soutient cette décision.'
           },
           {
             q: 'Que faut-il avoir avant une revue formelle?',
-            a: 'Au minimum: inventaire des systemes et fournisseurs, logique de priorisation, carte des droits de decision, et dossier qui separe clairement preuve verifiee et ecarts ouverts.'
+            a: 'Au minimum : un inventaire des systèmes et des fournisseurs, une logique de priorisation, une carte des responsabilités décisionnelles et un dossier qui sépare clairement la preuve vérifiée des écarts ouverts.'
           },
           {
-            q: 'La gouvernance ralentit-elle toujours?',
-            a: 'Une gouvernance faible ralentit parce que les decisions sont renegociees en continu. Une gouvernance deterministe accelere souvent les cycles de revue.'
+            q: 'La gouvernance ralentit-elle toujours les équipes?',
+            a: 'Une gouvernance faible ralentit les équipes parce que les décisions sont renégociées en continu. Une gouvernance déterministe accélère souvent les cycles de revue en réduisant l’ambiguïté.'
           }
         ]
       },
       {
-        title: 'Mandat et prochaines etapes',
-        intro: 'Section utile lorsqu il faut choisir comment commencer sans ouvrir une portee excessive.',
+        title: 'Mandat et prochaines étapes',
+        intro: 'Section utile lorsqu’il faut choisir comment commencer sans ouvrir une portée excessive.',
         items: [
           {
             q: 'Que produit un premier mandat?',
-            a: 'Un parcours cadre: modele de seuils, carte des responsabilites de decision, attentes de preuve, et premiers livrables bornes.'
+            a: 'Un parcours cadré : modèle de seuils, carte des responsabilités décisionnelles, attentes de preuve et premiers livrables bornés.'
           },
           {
-            q: 'Faut-il gouverner l IA fournisseur?',
-            a: 'Oui. L usage d un fournisseur ne transfere pas la responsabilite. Il faut diligence fournisseur, limites d usage et declencheurs de reevaluation.'
+            q: 'Faut-il gouverner l’IA fournie par un tiers?',
+            a: 'Oui. Le recours à un fournisseur ne transfère pas la responsabilité. Il faut de la diligence fournisseur, des limites d’usage et des déclencheurs de réévaluation.'
           },
           {
-            q: 'Quel est le point d entree le plus leger?',
-            a: 'Commencez par l instantane de preparation, puis un court appel de cadrage pour choisir le bon parcours.'
+            q: 'Quel est le point d’entrée le plus léger?',
+            a: 'Commencez par l’instantané de préparation, puis prenez un court appel de cadrage pour choisir le bon parcours.'
           }
         ]
       }
     ],
-    ctaTitle: 'Besoin de reponses liees a votre situation reelle?',
-    ctaBody: 'Apportez le systeme en portee, la source de pression et l etat actuel de la preuve. PHAROS peut cadrer le bon parcours borne.',
-    ctaPrimary: 'Reserver une revue',
-    ctaSecondary: 'Faire l instantane'
+    ctaTitle: 'Besoin de réponses liées à votre situation réelle?',
+    ctaBody: 'Apportez le système dans la portée, la source de pression et l’état actuel de la preuve. PHAROS peut vous aider à cadrer le bon parcours, sans excès de portée.',
+    ctaPrimary: 'Planifier une revue',
+    ctaSecondary: 'Faire l’instantané'
   }
 };
 

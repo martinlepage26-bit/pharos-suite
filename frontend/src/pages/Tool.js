@@ -101,54 +101,54 @@ const COPY = {
     }
   },
   fr: {
-    eyebrow: 'Outil de preparation',
-    title: 'Instantane rapide de preparation gouvernance',
+    eyebrow: 'Outil de préparation',
+    title: 'Instantané rapide de préparation en gouvernance',
     body:
-      'Choisissez votre contexte operationnel, repondez a huit questions bornees, et obtenez un signal pratique sur les zones a renforcer avant escalation de revue.',
-    sectorPrompt: 'Choisissez le contexte le plus proche',
-    questionPrompt: 'Repondez selon l etat actuel, pas l etat cible',
+      'Choisissez votre contexte opérationnel, répondez à huit questions bornées et obtenez un signal pratique sur les zones à renforcer avant que la pression de revue ne monte.',
+    sectorPrompt: 'Choisissez le contexte qui vous ressemble le plus',
+    questionPrompt: 'Répondez selon l’état actuel, pas selon l’état visé',
     reset: 'Recommencer',
     next: 'Suivant',
     back: 'Retour',
-    seeResults: 'Voir resultats',
-    resultsTitle: 'Signal de preparation',
-    scoreBreakdown: 'Detail des scores',
-    recommendedSteps: 'Prochaines etapes recommandees',
+    seeResults: 'Voir les résultats',
+    resultsTitle: 'Signal de préparation',
+    scoreBreakdown: 'Détail du score',
+    recommendedSteps: 'Prochaines étapes recommandées',
     total: 'Total',
-    discuss: 'Reserver une revue',
+    discuss: 'Planifier une revue',
     routeAction: 'Voir les parcours de service',
-    retake: 'Refaire instantane',
+    retake: 'Refaire l’instantané',
     sectors: [
       {
         id: 'regulated',
-        title: 'Environnement reglemente',
-        description: 'Decisions finance, sante ou public sous supervision formelle.'
+        title: 'Environnement réglementé',
+        description: 'Décisions en finance, en santé ou dans le secteur public sous supervision formelle.'
       },
       {
         id: 'enterprise-saas',
-        title: 'Produit enterprise',
-        description: 'Fonctions IA dans logiciel client avec scrutiny achat.'
+        title: 'Produit d’entreprise',
+        description: 'Fonctions d’IA dans un logiciel client soumis à un examen d’approvisionnement.'
       },
       {
         id: 'procurement',
-        title: 'Cycle fort achat',
-        description: 'Questionnaires et diligence repetes de clients ou partenaires.'
+        title: 'Cycle fortement axé sur l’approvisionnement',
+        description: 'Questionnaires et diligence répétée de la part des clients ou des partenaires.'
       },
       {
         id: 'public-sector',
-        title: 'Programme secteur public',
-        description: 'Deploiement institutionnel avec exigences de trace et responsabilite.'
+        title: 'Programme du secteur public',
+        description: 'Déploiement institutionnel avec exigences de traçabilité et de responsabilité.'
       }
     ],
     questions: {
-      inventory: 'Tenez-vous un inventaire actuel des systemes IA et fournisseurs?',
-      riskTiering: 'Classez-vous les systemes selon consequence et intensite de revue?',
-      decisionRights: 'Les droits de decision sont-ils explicites pour approbation, escalation et arret?',
-      controls: 'Des controles nommes existent-ils pour les usages a forte consequence?',
-      evidence: 'Pouvez-vous produire une preuve lisible sans reconstruction de derniere minute?',
-      vendorReview: 'Les dependances IA fournisseur ont-elles une revue de gouvernance structuree?',
-      cadence: 'Existe-t-il une cadence recurente de revue et mise a jour de gouvernance?',
-      documentation: 'La documentation de gouvernance est-elle actuelle et exploitable par reviseurs?'
+      inventory: 'Tenez-vous un inventaire à jour des systèmes d’IA et des fournisseurs?',
+      riskTiering: 'Classez-vous les systèmes selon leur niveau de conséquence et l’intensité de revue requise?',
+      decisionRights: 'Les responsabilités décisionnelles sont-elles explicites pour l’approbation, l’escalade et l’arrêt?',
+      controls: 'Des contrôles nommés existent-ils pour les usages à fortes conséquences?',
+      evidence: 'Pouvez-vous produire une preuve lisible sans reconstruction de dernière minute?',
+      vendorReview: 'Les dépendances d’IA fournies par des tiers font-elles l’objet d’une revue de gouvernance structurée?',
+      cadence: 'Existe-t-il une cadence récurrente de revue et de mise à jour de la gouvernance?',
+      documentation: 'La documentation de gouvernance est-elle à jour et exploitable par des réviseurs?'
     },
     options: [
       { value: 'none', label: 'Non', score: 0 },
@@ -158,29 +158,29 @@ const COPY = {
     profile: {
       high: {
         label: 'Base solide',
-        summary: 'La structure centrale existe. Priorite: qualite continue de preuve et cadence de mise a jour.',
+        summary: 'La structure centrale est en place. La priorité consiste maintenant à maintenir la qualité de la preuve et la cadence de mise à jour.',
         steps: [
-          'Verifier que les systemes critiques ont des dossiers de preuve actuels.',
-          'Tester les declencheurs d escalation avant changements de lancement.',
-          'Controler periodiquement les owners de droits de decision.'
+          'Vérifier que les systèmes à fortes conséquences disposent de dossiers de preuve à jour.',
+          'Tester les déclencheurs d’escalade avant tout changement majeur de lancement.',
+          'Valider périodiquement la répartition des responsabilités décisionnelles.'
         ]
       },
       medium: {
         label: 'Base en progression',
-        summary: 'Des composants importants existent, mais la pression de revue peut encore exposer des ecarts.',
+        summary: 'Des composants importants existent, mais la pression de revue peut encore exposer des écarts de cohérence ou de preuve.',
         steps: [
-          'Formaliser seuils et regles d escalation dans un modele partage.',
-          'Nommer explicitement les responsables preuve et upkeep.',
-          'Preparer un premier dossier borne pour questions de revue previsibles.'
+          'Formaliser les seuils et les règles d’escalade dans un modèle partagé.',
+          'Nommer explicitement les responsables de la preuve et du maintien de la gouvernance.',
+          'Préparer un premier dossier borné pour les questions de revue les plus prévisibles.'
         ]
       },
       low: {
-        label: 'Exposition elevee',
-        summary: 'La structure actuelle reste trop mince pour soutenir une scrutiny continue.',
+        label: 'Exposition élevée',
+        summary: 'La structure actuelle demeure trop mince pour soutenir une revue soutenue.',
         steps: [
-          'Commencer par une base deterministe avant expansion.',
-          'Prioriser cartographie des droits de decision et obligations de preuve.',
-          'Lancer un pre-mortem cible sur le parcours systeme le plus expose.'
+          'Commencer par établir une base déterministe avant toute expansion.',
+          'Prioriser la cartographie des responsabilités décisionnelles et des obligations de preuve.',
+          'Lancer un pré-mortem ciblé sur le parcours système le plus exposé.'
         ]
       }
     }

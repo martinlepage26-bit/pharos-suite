@@ -40,40 +40,40 @@ const COPY = {
     ctaSecondary: 'Book review'
   },
   fr: {
-    eyebrow: 'A propos',
-    title: 'PHAROS est une pratique de gouvernance pour decisions IA sous forte revue.',
+    eyebrow: 'À propos',
+    title: 'PHAROS est une pratique de gouvernance pour les décisions d’IA soumises à un examen soutenu.',
     body:
-      'Dirige par Martin Lepage, PhD, PHAROS construit des structures deterministes qui restent lisibles quand approvisionnement, audit, diligence fournisseur et supervision convergent.',
+      'Dirigé par Martin Lepage, PhD, PHAROS conçoit des structures de gouvernance déterministes qui demeurent lisibles quand l’approvisionnement, l’audit, la diligence fournisseur et la supervision convergent.',
     principlesTitle: 'Principes de travail',
     principles: [
       {
         icon: Scale,
-        title: 'Mecanisme avant rhetorique',
-        body: 'Le travail commence par la logique de decision, les seuils et la charge de preuve.'
+        title: 'Le mécanisme avant le discours',
+        body: 'Le travail commence par la logique de décision, les seuils et la charge de preuve, pas par un vernis de gouvernance.'
       },
       {
         icon: ShieldCheck,
-        title: 'Revendications bornees',
-        body: 'Les revendications restent proportionnees a la preuve et aux conditions explicites de revue.'
+        title: 'Allégations bornées',
+        body: 'Les énoncés publics et internes restent proportionnés à la preuve disponible et aux conditions explicites de revue.'
       },
       {
         icon: FileCheck2,
         title: 'Traces reconstructibles',
-        body: 'Les decisions sont documentees pour permettre une verification ulterieure.'
+        body: 'Les décisions et les suivis sont consignés de façon à permettre une vérification ultérieure.'
       }
     ],
-    founderTitle: 'Responsabilite et portee',
+    founderTitle: 'Responsabilité et portée',
     founderBody:
-      'PHAROS livre une architecture de gouvernance et des parcours de revue. Il ne remplace ni les juristes, ni les regulateurs, ni les auditeurs independants.',
+      'PHAROS fournit une architecture de gouvernance, des parcours de revue et une structure de preuve. Cette pratique ne remplace ni les avocats, ni les autorités réglementaires, ni les auditeurs indépendants.',
     founderList: [
-      'Responsable humain: Martin Lepage, PhD',
-      'Lieu principal: Montreal, Quebec, Canada',
-      'Usage central: gouvernance sous pression de revue'
+      'Responsable humain : Martin Lepage, PhD',
+      'Lieu principal : Montréal, Québec, Canada',
+      'Usage central : gouvernance sous pression de revue'
     ],
-    ctaTitle: 'Besoin de profondeur conceptuelle avant execution?',
-    ctaBody: 'Lisez la methode, puis cadrez un premier engagement borne.',
-    ctaPrimary: 'Lire la methode',
-    ctaSecondary: 'Reserver'
+    ctaTitle: 'Besoin d’un cadrage conceptuel avant la mise en œuvre?',
+    ctaBody: 'Commencez par la méthode, puis définissons un premier mandat bien borné.',
+    ctaPrimary: 'Lire la méthode',
+    ctaSecondary: 'Planifier une revue'
   }
 };
 

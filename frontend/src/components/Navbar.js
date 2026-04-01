@@ -36,14 +36,14 @@ const NAV_COPY = {
   fr: {
     navItems: [
       { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
-      { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
+      { path: '/about', label: 'À PROPOS', matchPaths: ['/about'] },
       {
         path: '/governance',
         label: 'GOUVERNANCE',
         matchPaths: ['/governance', '/services', '/observatory', '/research', '/methods', '/about/conceptual-method'],
         children: [
           { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
-          { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] }
+          { path: '/methods', label: 'MÉTHODES', matchPaths: ['/methods', '/about/conceptual-method'] }
         ]
       },
       { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
@@ -51,16 +51,16 @@ const NAV_COPY = {
     sitemapLabel: 'Plan du site',
     sitemapLinks: [
       { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
-      { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
+      { path: '/about', label: 'À PROPOS', matchPaths: ['/about'] },
       { path: '/governance', label: 'GOUVERNANCE', matchPaths: ['/governance', '/services'] },
       { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
-      { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/methods', label: 'MÉTHODES', matchPaths: ['/methods', '/about/conceptual-method'] },
       { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] },
       { path: '/tool', label: 'OUTIL', matchPaths: ['/tool'] },
       { path: '/assurance', label: 'ASSURANCE', matchPaths: ['/assurance', '/transparency', '/trust', '/auditability'] },
       { path: '/faq', label: 'FAQ', matchPaths: ['/faq'] }
     ],
-    bookReview: 'RESERVER UNE REVUE'
+    bookReview: 'PLANIFIER UNE REVUE'
   }
 };
 

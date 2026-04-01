@@ -56,54 +56,54 @@ const COPY = {
   },
   fr: {
     eyebrow: 'Recherche',
-    title: 'Un observatoire des signaux qui structurent la revue IA',
+    title: 'Un observatoire des signaux qui structurent les revues en IA',
     body:
-      'Cette page suit les standards, les pressions reglementaires et les patterns de gouvernance pertinents pour l approvisionnement, l audit et la supervision executive.',
+      'Cette page suit les normes, les pressions réglementaires et les schémas de gouvernance pertinents pour l’approvisionnement, l’audit et la supervision de la direction.',
     streams: [
       {
         icon: Shield,
-        title: 'Mouvements reglementaires et standards',
+        title: 'Évolution réglementaire et normalisation',
         body: 'Suivre les changements qui modifient la charge de preuve et les attentes de revue.'
       },
       {
         icon: Waypoints,
-        title: 'Patterns operationnels',
-        body: 'Observer les echecs recurrents dans les seuils, l escalation et la documentation.'
+        title: 'Schémas opérationnels',
+        body: 'Observer les échecs récurrents dans la conception des seuils, l’escalade et la qualité de la documentation.'
       },
       {
         icon: BookOpen,
-        title: 'Couche methode et interpretation',
-        body: 'Garder une clarte conceptuelle entre langage de gouvernance et controles reels.'
+        title: 'Couche méthode et interprétation',
+        body: 'Maintenir une clarté conceptuelle pour que le langage de gouvernance corresponde à de vrais contrôles.'
       }
     ],
-    referencesTitle: 'References externes de base',
+    referencesTitle: 'Références externes de base',
     references: [
       {
         label: 'NIST AI RMF',
         href: 'https://www.nist.gov/itl/ai-risk-management-framework',
-        desc: 'Cadre de risque et de gouvernance pour cartographier les controles.'
+        desc: 'Cadre de risque et de gouvernance utilisé pour cartographier les contrôles.'
       },
       {
         label: 'ISO/IEC 42001',
         href: 'https://www.iso.org/standard/81230.html',
-        desc: 'Standard de systeme de management IA pour processus et responsabilite.'
+        desc: 'Norme de système de management de l’IA pour la conception des processus et des responsabilités.'
       },
       {
         label: 'EU AI Act',
         href: 'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai',
-        desc: 'Architecture reglementaire contraignante qui influence les revues fournisseurs.'
+        desc: 'Architecture réglementaire contraignante qui influence les revues fournisseurs et les attentes d’approvisionnement.'
       },
       {
         label: 'OECD AI Principles',
         href: 'https://oecd.ai/en/ai-principles',
-        desc: 'Principes intergouvernementaux utilises pour le cadrage politique.'
+        desc: 'Principes intergouvernementaux utilisés pour le cadrage des politiques et l’alignement du langage de gouvernance.'
       }
     ],
     noteTitle: 'Usage PHAROS',
     noteBody:
-      'Les signaux de recherche sont convertis en controles orientés revue. Le resultat est un parcours decisionnel plus solide sous pression.',
-    ctaPrimary: 'Ouvrir la bibliotheque',
-    ctaSecondary: 'Reserver'
+      'Les signaux de recherche sont convertis en contrôles orientés vers la revue. Le résultat est un parcours décisionnel plus solide sous pression.',
+    ctaPrimary: 'Ouvrir la bibliothèque',
+    ctaSecondary: 'Planifier une revue'
   }
 };
 

@@ -73,71 +73,71 @@ const COPY = {
   },
   fr: {
     eyebrow: 'Services',
-    title: 'Services de gouvernance deterministe sous pression de revue',
+    title: 'Services de gouvernance déterministe pour des contextes de revue active',
     body:
-      'Choisissez selon la source de pression. Chaque parcours est cadre autour de ce que les reviseurs demanderont a verifier.',
+      'Choisissez selon la source de pression, pas selon le vocabulaire. Chaque parcours est structuré autour de ce que les réviseurs voudront voir, comprendre et vérifier.',
     cards: [
       {
         id: 'deterministic-governance',
         icon: ShieldCheck,
-        title: 'Gouvernance deterministe',
-        bestFor: 'Pour les equipes qui doivent etablir une base stable avant que la pression n amplifie l ambiguite.',
+        title: 'Gouvernance déterministe',
+        bestFor: 'Convient aux équipes qui ont besoin d’une base de gouvernance stable avant que la pression de revue n’amplifie l’ambiguïté.',
         deliverables: [
-          'Inventaire des systemes et fournisseurs',
-          'Seuils deterministes et logique d escalation',
-          'Matrice de decision et cadence de gouvernance'
+          'Inventaire des systèmes et des fournisseurs avec limites de portée',
+          'Seuils déterministes et logique d’escalade',
+          'Matrice décisionnelle et cadence de gouvernance'
         ],
         outcomes: [
-          'Moins de derive decisionnelle sous revue',
-          'Responsabilites et preuve plus claires',
-          'Revendications bornees par la preuve'
+          'Moins de dérive décisionnelle sous pression d’approvisionnement ou d’audit',
+          'Responsabilités et obligations de preuve mieux définies',
+          'Allégations bornées par la preuve disponible'
         ]
       },
       {
         id: 'pre-mortem-review',
         icon: Radar,
-        title: 'Revue pre-mortem',
-        bestFor: 'Pour les equipes qui testent un lancement ou une expansion avant exposition.',
+        title: 'Revue pré-mortem',
+        bestFor: 'Convient aux équipes qui veulent mettre un lancement, un parcours d’intégration ou une expansion majeure à l’épreuve avant exposition.',
         deliverables: [
-          'Stress test des modes d echec et dependances',
-          'Conditions go/no-go avec exigences de preuve',
-          'Questions ciblees de diligence fournisseur'
+          'Mise sous tension des modes de défaillance et des dépendances',
+          'Conditions go / no-go liées à des exigences de preuve',
+          'Questions ciblées pour la diligence fournisseur'
         ],
         outcomes: [
-          'Risques identifies avant exposition',
-          'Conditions de lancement deterministes',
-          'Ecarts de preuve avec responsables'
+          'Risques relevés avant l’exposition externe',
+          'Conditions de lancement déterministes',
+          'Écarts de preuve connus avec responsables assignés'
         ]
       },
       {
         id: 'post-mortem-review',
         icon: BriefcaseBusiness,
         title: 'Revue post-mortem',
-        bestFor: 'Pour les equipes qui repondent a un incident ou un echec de revue.',
+        bestFor: 'Convient aux équipes qui répondent à un incident, à une revue échouée ou à une dérive de gouvernance.',
         deliverables: [
-          'Reconstruction de l evenement et du parcours de preuve',
-          'Analyse des ecarts de controle',
-          'Plan de remediation avec mise a jour des seuils'
+          'Reconstitution de l’événement et de la chaîne de preuve',
+          'Analyse des écarts de contrôle avec cartographie des conséquences',
+          'Plan de remédiation avec mise à jour des seuils'
         ],
         outcomes: [
-          'Dossier defendable de ce qui s est passe',
-          'Remediation claire et sequencee',
-          'Posture renforcee apres echec'
+          'Dossier défendable de ce qui s’est passé et pourquoi',
+          'Remédiation claire, nommée et séquencée',
+          'Posture de gouvernance renforcée après la défaillance'
         ]
       }
     ],
-    scopeTitle: 'Ce qui change la portee',
+    scopeTitle: 'Ce qui fait varier la portée',
     scopeItems: [
-      'Nombre de systemes et de fournisseurs en portee',
-      'Niveau de charge de revue',
-      'Consequence d un echec de controle'
+      'Le nombre de systèmes et de fournisseurs réellement dans la portée',
+      'L’intensité de la charge de revue : approvisionnement, audit, comité ou autorité réglementaire',
+      'Le niveau de conséquence si un contrôle échoue'
     ],
-    ctaTitle: 'Besoin d aide pour choisir le bon parcours?',
-    ctaBody: 'Un court appel suffit pour fixer le parcours, la portee et les premiers livrables.',
-    ctaPrimary: 'Reserver',
-    ctaSecondary: 'Retour accueil',
+    ctaTitle: 'Besoin d’aide pour choisir le bon parcours?',
+    ctaBody: 'Un court appel suffit pour fixer le parcours, la portée et les premiers livrables.',
+    ctaPrimary: 'Planifier une revue',
+    ctaSecondary: 'Retour à l’accueil',
     deliverablesLabel: 'Livrables',
-    outcomesLabel: 'Resultats'
+    outcomesLabel: 'Résultats'
   }
 };
 

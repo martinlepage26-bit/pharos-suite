@@ -63,64 +63,64 @@ const COPY = {
       'This library is intentionally selective. Historical or superseded policy material should be labeled as historical and not treated as active legal obligation without jurisdiction-specific confirmation.'
   },
   fr: {
-    eyebrow: 'Bibliotheque',
-    title: 'Normes, droit et references pour un travail de gouvernance orientee revue',
+    eyebrow: 'Bibliothèque',
+    title: 'Normes, droit et références pour un travail de gouvernance orienté vers la revue',
     body:
-      'Base de references selective pour les equipes qui repondent a la pression d approvisionnement, d audit et de policy. Les sources sont groupees par fonction pour aller vite du probleme a la source.',
+      'Base de références sélective pour les équipes qui répondent à des pressions d’approvisionnement, d’audit et de politique publique. Les sources sont regroupées par fonction afin de passer rapidement de la question à la référence utile.',
     sections: [
       {
-        title: 'Cadres et systemes de management',
-        body: 'A utiliser pour architecture de gouvernance, controles et responsabilites.',
+        title: 'Cadres et systèmes de management',
+        body: 'À utiliser pour l’architecture de gouvernance, les contrôles et la répartition des responsabilités.',
         items: [
           { name: 'NIST AI Risk Management Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework', tag: 'Cadre', status: 'Actuel' },
           { name: 'ISO/IEC 42001', url: 'https://www.iso.org/standard/81230.html', tag: 'Norme', status: 'Actuel' },
-          { name: 'OECD AI Principles', url: 'https://oecd.ai/en/ai-principles', tag: 'Principes policy', status: 'Actuel' },
-          { name: 'IEEE Ethically Aligned Design', url: 'https://ethicsinaction.ieee.org/', tag: 'Guide', status: 'Fondation' }
+          { name: 'OECD AI Principles', url: 'https://oecd.ai/en/ai-principles', tag: 'Principes de politique publique', status: 'Actuel' },
+          { name: 'IEEE Ethically Aligned Design', url: 'https://ethicsinaction.ieee.org/', tag: 'Guide', status: 'Fondamental' }
         ]
       },
       {
-        title: 'Droit et orientation reglementaire',
-        body: 'A utiliser quand obligations, enforcement ou attentes juridictionnelles sont en portee.',
+        title: 'Droit et orientation réglementaire',
+        body: 'À utiliser lorsque des obligations, des mécanismes d’application ou des attentes propres à une juridiction entrent dans la portée.',
         items: [
-          { name: 'EU AI Act', url: 'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai', tag: 'Reglementation', status: 'Actuel' },
+          { name: 'EU AI Act', url: 'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai', tag: 'Réglementation', status: 'Actuel' },
           { name: 'Directive on Automated Decision-Making (Canada)', url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/guide-scope-directive-automated-decision-making.html', tag: 'Directive', status: 'Actuel' },
-          { name: 'OMB Memorandum M-25-21', url: 'https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf', tag: 'Politique federale', status: 'Actuel' },
+          { name: 'OMB Memorandum M-25-21', url: 'https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf', tag: 'Politique fédérale', status: 'Actuel' },
           { name: 'UK AI Security Institute', url: 'https://www.aisi.gov.uk/', tag: 'Institution gouvernementale', status: 'Actuel' }
         ]
       },
       {
-        title: 'Documentation et references de preuve',
-        body: 'A utiliser pour structurer des traces que des reviseurs peuvent inspecter et reconstruire.',
+        title: 'Documentation et références de preuve',
+        body: 'À utiliser pour structurer des traces que des réviseurs peuvent inspecter et reconstruire.',
         items: [
-          { name: 'NIST SP 800-53', url: 'https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final', tag: 'Controles securite', status: 'Actuel' },
-          { name: 'Model Cards for Model Reporting', url: 'https://arxiv.org/abs/1810.03993', tag: 'Methode documentaire', status: 'Fondation' },
-          { name: 'Datasheets for Datasets', url: 'https://arxiv.org/abs/1803.09010', tag: 'Methode documentaire', status: 'Fondation' },
-          { name: 'AI Incident Database', url: 'https://incidentdatabase.ai/', tag: 'Preuve incident', status: 'Actuel' }
+          { name: 'NIST SP 800-53', url: 'https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final', tag: 'Contrôles de sécurité', status: 'Actuel' },
+          { name: 'Model Cards for Model Reporting', url: 'https://arxiv.org/abs/1810.03993', tag: 'Méthode documentaire', status: 'Fondamental' },
+          { name: 'Datasheets for Datasets', url: 'https://arxiv.org/abs/1803.09010', tag: 'Méthode documentaire', status: 'Fondamental' },
+          { name: 'AI Incident Database', url: 'https://incidentdatabase.ai/', tag: 'Preuve d’incident', status: 'Actuel' }
         ]
       }
     ],
-    toolsTitle: 'Outils d execution',
-    toolsBody: 'Points d appui pratiques pour passer de la reference a un artefact de travail.',
+    toolsTitle: 'Outils d’exécution',
+    toolsBody: 'Points d’appui pratiques pour passer de la référence à un artefact de travail.',
     tools: [
       {
         name: 'Treasury Board AIA Tool',
         url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/algorithmic-impact-assessment.html',
-        description: 'Workflow d impact pour systemes publics de decision automatisee.'
+        description: 'Démarche d’évaluation d’impact pour les systèmes publics de décision automatisée.'
       },
       {
         name: 'NIST AI RMF Playbook',
         url: 'https://airc.nist.gov/AI_RMF_Knowledge_Base/Playbook',
-        description: 'Tactiques d implementation pour appliquer RMF en pratique.'
+        description: 'Tactiques de mise en œuvre pour appliquer le RMF dans la pratique.'
       },
       {
         name: 'Guide to Peer Review of Automated Decision Systems',
         url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/guide-peer-review-automated-decision-systems.html',
-        description: 'Cadre de revue par les pairs pour responsabilite des systemes publics.'
+        description: 'Cadre de revue par les pairs pour la responsabilité des systèmes publics.'
       }
     ],
-    notesTitle: 'Note de portee',
+    notesTitle: 'Note de portée',
     notesBody:
-      'Cette bibliotheque est volontairement selective. Le materiel policy historique ou remplace doit etre traite comme historique et non comme obligation active sans verification juridictionnelle.'
+      'Cette bibliothèque est volontairement sélective. Le matériel de politique publique historique ou remplacé doit être traité comme tel, et non comme une obligation active sans vérification propre à la juridiction concernée.'
   }
 };
 

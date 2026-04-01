@@ -92,78 +92,78 @@ const COPY = {
   },
   fr: {
     eyebrow: 'Assurance',
-    title: 'Surface publique d assurance PHAROS',
+    title: 'Surface publique d’assurance de PHAROS',
     body:
-      'Cette page definit ce que le site public soutient, ce qu il ne revendique pas, qui reste responsable et par ou un examinateur externe devrait commencer.',
+      'Cette page définit ce que le site public soutient, ce qu’il ne prétend pas démontrer, qui demeure responsable et par où un examinateur externe devrait commencer.',
     summary: [
       {
         label: 'Responsable humain',
         value: PUBLIC_ASSURANCE_META.accountableHuman,
-        body: 'La decision finale de publication et les limites de revendication restent sous controle humain nomme.'
+        body: 'Le jugement final de publication et les limites d’allégation demeurent sous contrôle humain nommé.'
       },
       {
-        label: 'Derniere revue',
+        label: 'Dernière revue',
         value: PUBLIC_ASSURANCE_META.reviewedOnLabelFr,
-        body: 'La portee de surface, les limites de route et la posture de divulgation ont ete revues a cette date.'
+        body: 'La portée de la surface, les limites de route et la posture de divulgation ont été revues à cette date.'
       },
       {
         label: 'Prochaine revue',
         value: PUBLIC_ASSURANCE_META.nextReviewDueLabelFr,
-        body: 'Revoir plus tot si les revendications, routes ou expositions changent de facon materielle.'
+        body: 'Réviser plus tôt si les allégations, les routes ou le niveau d’exposition changent de façon importante.'
       }
     ],
     supportedTitle: 'Lectures soutenues',
     supported: [
-      'PHAROS decrit publiquement ses services, sa methode et ses parcours de revue.',
-      'Le site identifie responsable, dates de revue et references de transparence.',
-      'L outil de preparation est une calibration, pas une certification ni un avis juridique.',
-      'Une assurance propre a un deploiement exige une revue humaine cadree au-dela du texte public.'
+      'PHAROS décrit publiquement ses services, sa méthode et ses parcours de revue.',
+      'Le site identifie le responsable, les dates de revue et les références de transparence.',
+      'L’outil de préparation sert à la calibration; il ne constitue ni une certification ni un avis juridique.',
+      'Toute assurance propre à un déploiement exige une revue humaine encadrée, au-delà du texte public.'
     ],
-    limitsTitle: 'Limites dures et non-revendications',
+    limitsTitle: 'Limites fermes et non-allégations',
     limits: [
       'Ce site ne constitue pas un avis juridique.',
-      'Ce site n est ni une opinion d audit ni un depot reglementaire.',
-      'Le texte du site ne prouve pas a lui seul la conformite d un deploiement.',
-      'La redaction assistee par IA ne transforme jamais une affirmation non soutenue en fait soutenu.'
+      'Ce site n’est ni une opinion d’audit ni un dépôt réglementaire.',
+      'Le texte du site ne prouve pas à lui seul la conformité d’un déploiement.',
+      'La rédaction assistée par l’IA ne transforme jamais une affirmation non étayée en fait établi.'
     ],
-    reviewTitle: 'Par ou commencer une revue',
+    reviewTitle: 'Par où commencer une revue',
     reviewSteps: [
-      'Verifier d abord le registre de transparence pour responsable, dates, portee et alias.',
-      'Lire methodes et references pour inspecter logique de controle et sources citees.',
-      'Utiliser FAQ et outil de preparation pour evaluer limites et posture probante.',
-      'Demander une revue humaine cadree pour la preuve propre au deploiement.'
+      'Vérifier d’abord le registre de transparence pour le responsable, les dates, la portée et les alias.',
+      'Lire les méthodes et les références pour inspecter la logique de contrôle et les sources citées.',
+      'Utiliser la FAQ et l’outil de préparation pour évaluer les limites et la posture de preuve.',
+      'Demander une revue humaine encadrée lorsqu’une preuve propre au déploiement est requise.'
     ],
     routesTitle: 'Routes publiques par fonction',
     routes: [
       {
         to: '/methods',
-        title: 'Methodes',
-        body: 'Logique conceptuelle et operationnelle de la gouvernance deterministe.'
+        title: 'Méthodes',
+        body: 'Logique conceptuelle et opérationnelle de la gouvernance déterministe.'
       },
       {
         to: '/library',
-        title: 'Bibliotheque',
-        body: 'Normes, droit et references utiles en contexte de revue.'
+        title: 'Bibliothèque',
+        body: 'Normes, droit et références utiles en contexte de revue.'
       },
       {
         to: '/faq',
         title: 'FAQ',
-        body: 'Reponses bornees aux questions de scrutiny recurrentes.'
+        body: 'Réponses bornées aux questions récurrentes sous pression de revue.'
       },
       {
         to: '/tool',
-        title: 'Outil de preparation',
-        body: 'Signal de calibration rapide avant engagement approfondi.'
+        title: 'Outil de préparation',
+        body: 'Signal de calibration rapide avant un échange plus approfondi.'
       },
       {
         to: '/contact',
         title: 'Contact',
-        body: 'Escalader vers une revue humaine cadree quand les details comptent.'
+        body: 'Passer à une revue humaine encadrée quand les détails comptent.'
       }
     ],
-    disclosureTitle: 'Divulgation et metadonnees',
+    disclosureTitle: 'Divulgation et métadonnées',
     disclosureBody:
-      'L IA generative peut assister la redaction et la revision. Le choix des sources, les limites de revendication, les dates de revue et les decisions de publication restent humains.',
+      'L’IA générative peut aider à la rédaction et à la révision. Le choix des sources, les limites d’allégation, les dates de revue et les décisions de publication demeurent sous contrôle humain.',
     disclosureRows: [
       ['Version de surface publique', PUBLIC_ASSURANCE_META.publicSurfaceVersion],
       ['URL canonique', PUBLIC_ASSURANCE_META.canonicalUrl],
@@ -171,10 +171,10 @@ const COPY = {
       ['Racine juridictionnelle', PUBLIC_ASSURANCE_META.jurisdictionalRoot]
     ],
     transparencyAction: 'Ouvrir le JSON de transparence',
-    ctaTitle: 'Besoin de preuve propre a un deploiement?',
-    ctaBody: 'Passez de la posture publique a une revue cadree. PHAROS peut fournir une discussion bornee et orientee revue pour les systemes critiques.',
-    ctaPrimary: 'Reserver une revue',
-    ctaSecondary: 'Lire la methode'
+    ctaTitle: 'Besoin d’une preuve propre à un déploiement?',
+    ctaBody: 'Passez de la posture publique à une revue encadrée. PHAROS peut fournir une discussion bornée et orientée vers la revue pour les systèmes qui comptent réellement.',
+    ctaPrimary: 'Planifier une revue',
+    ctaSecondary: 'Lire la méthode'
   }
 };
 

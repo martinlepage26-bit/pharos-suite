@@ -27,7 +27,7 @@ const HERO_PROOF_POINTS = [
 ];
 
 const REVIEW_PRESSURE_NOTES = ['Procurement review', 'Audit pressure', 'Executive oversight'];
-const REVIEW_PRESSURE_NOTES_FR = ['Revue d\'approvisionnement', 'Pression d\'audit', 'Supervision de direction'];
+const REVIEW_PRESSURE_NOTES_FR = ['Revue d’approvisionnement', 'Pression d’audit', 'Supervision de la direction'];
 
 const GOVERNANCE_PILLARS = [
   {
@@ -59,27 +59,27 @@ const GOVERNANCE_PILLARS = [
 const GOVERNANCE_PILLARS_FR = [
   {
     number: '01',
-    title: 'Droits decisionnels deterministes',
+    title: 'Responsabilités décisionnelles déterministes',
     description:
-      'Une logique d\'approbation claire, des chemins d\'escalade explicites et des responsables nommes qui ne changent pas selon l\'examinateur. Chaque decision a un proprietaire et une justification consignee.'
+      'Une logique d’approbation claire, des chemins d’escalade explicites et des responsables nommés qui ne changent pas selon l’examinateur. Chaque décision a un responsable et une justification consignée.'
   },
   {
     number: '02',
     title: 'Seuils explicites',
     description:
-      'Des seuils qui montrent quand un systeme doit monter d\'un cran, pourquoi il y monte et quelle preuve devient necessaire ensuite. Aucun seuil implicite, seulement des seuils declares.'
+      'Des seuils qui montrent quand un système doit changer de niveau, pourquoi il le fait et quelle preuve devient nécessaire ensuite. Aucun seuil implicite, seulement des seuils déclarés.'
   },
   {
     number: '03',
-    title: 'Preuve prete pour la revue',
+    title: 'Preuve prête pour la revue',
     description:
-      'Un dossier qu\'un acheteur, un auditeur ou un comite peut suivre sans reconstruire la logique a partir de zero. La piste est complete avant que l\'examen arrive.'
+      'Un dossier qu’un acheteur, un auditeur ou un comité peut suivre sans devoir reconstruire la logique à partir de zéro. La piste est complète avant que la revue ne commence.'
   },
   {
     number: '04',
     title: 'Gouvernance reconstructible',
     description:
-      'Une posture qui tient encore lorsque l\'on demande plus tard ce qui s\'est passe, pourquoi et ce qui doit changer ensuite. Une gouvernance qui survit au post-mortem.'
+      'Une posture qui tient encore lorsqu’on demande plus tard ce qui s’est passé, pourquoi et ce qui doit changer ensuite. Une gouvernance qui survit au post-mortem.'
   }
 ];
 
@@ -135,25 +135,25 @@ const PRESSURE_POINTS_FR = [
   {
     title: 'Approvisionnement',
     description:
-      'La question cesse d\'etre de savoir si un systeme est utile et devient de savoir si sa gouvernance peut tenir devant une revue client.',
+      'La question cesse d’être de savoir si un système est utile et devient de savoir si sa gouvernance peut tenir devant une revue client.',
     icon: PRESSURE_POINTS[0].icon
   },
   {
     title: 'Audit',
     description:
-      'L\'audit revele ou les seuils restent implicites et ou les pistes de preuve sont trop minces pour inspirer confiance.',
+      'L’audit révèle où les seuils restent implicites et où les pistes de preuve sont trop minces pour inspirer confiance.',
     icon: PRESSURE_POINTS[1].icon
   },
   {
-    title: 'Revue fournisseur',
+    title: 'Diligence fournisseur',
     description:
-      'Les dependances envers les partenaires et les modeles ont besoin d\'une revue structuree, pas de reponses improvisees quand la diligence commence.',
+      'Les dépendances envers les partenaires et les modèles exigent une revue structurée, pas des réponses improvisées quand la diligence commence.',
     icon: PRESSURE_POINTS[2].icon
   },
   {
-    title: 'Supervision de direction',
+    title: 'Supervision de la direction',
     description:
-      'La direction et les comites ont besoin d\'une reponse de gouvernance qui reste lisible sous examen, plutot que de s\'effondrer dans l\'abstraction.',
+      'La direction et les comités ont besoin d’une réponse de gouvernance qui demeure lisible sous examen, plutôt que de s’effondrer dans l’abstraction.',
     icon: PRESSURE_POINTS[3].icon
   }
 ];
@@ -190,25 +190,25 @@ const METHOD_STEPS_FR = [
     number: '01',
     title: 'Lire la source de pression',
     description:
-      'Commencer par la condition d\'examen reelle : approvisionnement, audit, diligence fournisseur, lancement, incident ou supervision de direction. Le point d\'entree faconne tout le reste.'
+      'Commencer par la condition de revue réelle : approvisionnement, audit, diligence fournisseur, lancement, incident ou supervision de la direction. Le point d’entrée façonne tout le reste.'
   },
   {
     number: '02',
-    title: 'Fixer des seuils deterministes',
+    title: 'Fixer des seuils déterministes',
     description:
-      'Rendre les declencheurs de revue, les frontieres de risque et les conditions d\'approbation assez explicites pour que plusieurs examinateurs arrivent a la meme logique. L\'ambiguite est l\'ennemi de la gouvernance.'
+      'Rendre les déclencheurs de revue, les frontières de risque et les conditions d’approbation assez explicites pour que plusieurs examinateurs arrivent à la même logique. L’ambiguïté est l’ennemi de la gouvernance.'
   },
   {
     number: '03',
-    title: 'Attribuer les decisions',
+    title: 'Attribuer les décisions',
     description:
-      'Nommer qui decide, qui escalade, ce qui doit etre documente et ce qui ne peut pas avancer sans preuve supplementaire. Chaque decision a un responsable.'
+      'Nommer qui décide, qui escalade, ce qui doit être documenté et ce qui ne peut pas avancer sans preuve supplémentaire. Chaque décision a un responsable.'
   },
   {
     number: '04',
     title: 'Construire la piste de preuve',
     description:
-      'Garder la posture obtenue reconstructible au moyen de dossiers de revue, de seuils, de journaux de decision et d\'une cadence de suivi. La piste doit survivre a l\'examen ulterieur.'
+      'Garder la posture obtenue reconstructible au moyen de dossiers de revue, de seuils, de journaux de décision et d’une cadence de suivi. La piste doit survivre à l’examen ultérieur.'
   }
 ];
 
@@ -260,23 +260,23 @@ const ARTIFACTS = [
 
 const ARTIFACTS_FR = [
   {
-    title: 'Matrice decisionnelle',
-    description: 'Montre qui approuve, qui escalade et ce qui est consigne. La logique de gouvernance rendue visible.',
+    title: 'Matrice décisionnelle',
+    description: 'Montre qui approuve, qui escalade et ce qui doit être consigné. La logique de gouvernance rendue visible.',
     icon: ARTIFACTS[0].icon
   },
   {
     title: 'Carte des seuils',
-    description: 'Definit quels systemes demandent une revue plus poussee, quand ils escaladent et quelle charge de preuve suit.',
+    description: 'Définit quels systèmes exigent une revue plus poussée, quand ils escaladent et quelle charge de preuve s’ensuit.',
     icon: ARTIFACTS[1].icon
   },
   {
     title: 'Dossier de revue',
-    description: 'Assemble les pieces qu\'un acheteur, un auditeur ou un comite peut vraiment suivre sans refaire toute la logique.',
+    description: 'Assemble les pièces qu’un acheteur, un auditeur ou un comité peut vraiment suivre sans refaire toute la logique.',
     icon: ARTIFACTS[2].icon
   },
   {
     title: 'Dossier post-mortem',
-    description: 'Reconstitue l\'echec, expose les lacunes de controle et resserre ce qui doit changer ensuite.',
+    description: 'Reconstitue l’échec, expose les lacunes de contrôle et resserre ce qui doit changer ensuite.',
     icon: ARTIFACTS[3].icon
   }
 ];
@@ -312,19 +312,19 @@ const SERVICES = [
 const SERVICES_FR = [
   {
     tag: 'Base',
-    title: 'Gouvernance deterministe',
-    subtitle: 'Etablir la fondation',
+    title: 'Gouvernance déterministe',
+    subtitle: 'Établir la base',
     description:
-      'Etablir des seuils explicites, des droits decisionnels clairs et une base de gouvernance stable avant que l\'examen n\'amplifie l\'ambiguite. Le bon point de depart pour les organisations qui construisent leur gouvernance.',
-    features: ['Cartographie des droits decisionnels', 'Documentation des seuils', 'Conception de la logique d\'escalade', 'Dossier de base de gouvernance']
+      'Établir des seuils explicites, des responsabilités décisionnelles claires et une base de gouvernance stable avant que la revue n’amplifie l’ambiguïté. Le bon point de départ pour les organisations qui structurent leur gouvernance.',
+    features: ['Cartographie des responsabilités décisionnelles', 'Documentation des seuils', 'Conception de la logique d’escalade', 'Dossier de base de gouvernance']
   },
   {
     tag: 'Pre-lancement',
-    title: 'Revue pre-mortem',
-    subtitle: 'Tester avant l\'exposition',
+    title: 'Revue pré-mortem',
+    subtitle: 'Tester avant l’exposition',
     description:
-      'Mettre un systeme d\'IA sous pression avant le lancement, l\'approvisionnement, l\'integration ou une expansion majeure. Reperer les ecarts de gouvernance avant qu\'un examinateur le fasse.',
-    features: ['Cartographie des risques pre-lancement', 'Stress test des seuils', 'Analyse des ecarts de preuve', 'Documentation prete pour la revue'],
+      'Mettre un système d’IA sous pression avant le lancement, l’approvisionnement, l’intégration ou une expansion majeure. Repérer les écarts de gouvernance avant qu’un examinateur le fasse.',
+    features: ['Cartographie des risques pré-lancement', 'Mise sous tension des seuils', 'Analyse des écarts de preuve', 'Documentation prête pour la revue'],
     featured: true
   },
   {
@@ -332,8 +332,8 @@ const SERVICES_FR = [
     title: 'Revue post-mortem',
     subtitle: 'Reconstituer et renforcer',
     description:
-      'Reconstituer les incidents, les revues ratees ou la derive de gouvernance, puis transformer les constats en posture de controle plus solide. Apprendre de ce qui a cede et rebuilder une posture qui tient.',
-    features: ['Reconstitution d\'incident', 'Identification des lacunes de controle', 'Analyse de derive de gouvernance', 'Feuille de route de remediation']
+      'Reconstituer les incidents, les revues échouées ou la dérive de gouvernance, puis transformer les constats en posture de contrôle plus solide. Apprendre de ce qui a cédé et rebâtir une posture qui tient.',
+    features: ['Reconstitution d’incident', 'Identification des lacunes de contrôle', 'Analyse de la dérive de gouvernance', 'Feuille de route de remédiation']
   }
 ];
 
@@ -387,37 +387,37 @@ const FAQS = [
 
 const FAQS_FR = [
   {
-    question: 'Quand faut-il faire appel a PHAROS ?',
+    question: 'Quand faut-il faire appel à PHAROS?',
     answer:
-      'Faites appel a PHAROS lorsque l\'approvisionnement, l\'audit, la diligence fournisseur ou la supervision faconnent deja le travail, ou lorsque vous savez qu\'ils le feront bientot. Le meilleur moment pour structurer la gouvernance est avant qu\'un examinateur ne la demande. Le deuxieme meilleur moment, c\'est maintenant.'
+      'Faites appel à PHAROS lorsque l’approvisionnement, l’audit, la diligence fournisseur ou la supervision façonnent déjà le travail, ou lorsque vous savez qu’ils le feront bientôt. Le meilleur moment pour structurer la gouvernance est avant qu’un examinateur ne la demande. Le deuxième meilleur moment, c’est maintenant.'
   },
   {
-    question: 'Que produit concretement une revue de 30 minutes ?',
+    question: 'Que produit concrètement une revue de 30 minutes?',
     answer:
-      'Une revue de 30 minutes identifie la source de pression (approvisionnement, audit, fournisseur, supervision), choisit le bon parcours (gouvernance deterministe, pre-mortem ou post-mortem) et definit les premiers livrables sans exagerer le niveau de preparation actuel.'
+      'Une revue de 30 minutes permet d’identifier la source de pression (approvisionnement, audit, fournisseur, supervision), de choisir le bon parcours (gouvernance déterministe, pré-mortem ou post-mortem) et de définir les premiers livrables sans exagérer le niveau de préparation actuel.'
   },
   {
-    question: 'En quoi PHAROS differe-t-il d\'une liste de verification de conformite ?',
+    question: 'En quoi PHAROS diffère-t-il d’une simple liste de vérification?',
     answer:
-      'Une liste de verification produit un instantane statique. PHAROS produit des controles inspectables avec des seuils explicites, des droits decisionnels nommes et une piste de preuve reconstructible.'
+      'Une liste de vérification produit un instantané statique. PHAROS produit des contrôles inspectables avec des seuils explicites, des responsabilités décisionnelles nommées et une piste de preuve reconstructible.'
   },
   {
-    question: 'Quels cadres reglementaires PHAROS peut-il couvrir ?',
+    question: 'Quels cadres réglementaires PHAROS peut-il couvrir?',
     answer:
-      'Les dossiers de gouvernance PHAROS peuvent etre croises avec le NIST AI RMF, l\'ISO/IEC 42001 et les obligations de revue du AI Act europeen lorsque la situation l\'exige.'
+      'Les dossiers de gouvernance PHAROS peuvent être mis en correspondance avec le NIST AI RMF, l’ISO/IEC 42001 et les obligations de revue du règlement européen sur l’IA lorsque la situation l’exige.'
   },
   {
-    question: 'Quels secteurs PHAROS dessert-il ?',
+    question: 'Quels secteurs PHAROS dessert-il?',
     answer:
-      'Les dossiers representatifs couvrent les services financiers, la sante, les technologies d\'entreprise et les contextes d\'examen du secteur public.'
+      'Les dossiers représentatifs couvrent les services financiers, la santé, les technologies d’entreprise et les contextes de revue du secteur public.'
   },
   {
-    question: 'Quel est le delai typique d\'un mandat ?',
+    question: 'Quel est le délai typique d’un mandat?',
     answer:
-      'Le delai depend de la source de pression et de la portee. L\'appel initial de 30 minutes sert justement a etablir un calendrier realiste pour votre situation.'
+      'Le délai dépend de la source de pression et de la portée. L’appel initial de 30 minutes sert justement à établir un calendrier réaliste pour votre situation.'
   },
   {
-    question: 'Comment PHAROS a-t-il ete construit ?',
+    question: 'Comment PHAROS a-t-il été construit?',
     answer: (
       <>
         Commencez par la{' '}
@@ -427,7 +427,7 @@ const FAQS_FR = [
         >
           chronologie de recherche
         </a>
-        . Vous pourrez ensuite ouvrir l\'arbre de gouvernance et le document du systeme de skills lies qui montrent la sequence de construction et l\'architecture de gouvernance.
+        . Vous pourrez ensuite ouvrir l’arbre de gouvernance et le document sur l’écosystème de skills lié, qui montrent la séquence de construction et l’architecture de gouvernance.
       </>
     )
   }
@@ -550,78 +550,78 @@ const HOME_COPY = {
     hero: {
       context: 'Approvisionnement · Audit · Supervision',
       titleLineOne: 'Une gouvernance',
-      titleLineTwo: 'de l\'IA qui tient',
-      emphasis: 'a l\'examen',
+      titleLineTwo: 'de l’IA qui tient à',
+      emphasis: 'l’examen',
       body:
-        'Quand l\'approvisionnement, l\'audit ou la revue de direction demande comment l\'IA est gouvernee, PHAROS aide les equipes a repondre avec des seuils explicites, des droits decisionnels nommes et une preuve qu\'un examinateur peut vraiment suivre.',
-      primaryCta: 'Reserver une revue',
-      secondaryCta: 'Lire la methode',
-      scroll: 'Defiler',
+        'Quand l’approvisionnement, l’audit ou la revue de direction demandent comment l’IA est gouvernée, PHAROS aide les équipes à répondre avec des seuils explicites, des responsabilités décisionnelles nommées et une preuve qu’un examinateur peut réellement suivre.',
+      primaryCta: 'Planifier une revue',
+      secondaryCta: 'Lire la méthode',
+      scroll: 'Défiler',
       proofPoints: [
         {
-          label: 'Seuils declares',
+          label: 'Seuils déclarés',
           value: 'Aucun seuil implicite',
-          body: 'Les conditions de revue sont nommees avant de devenir des arguments.'
+          body: 'Les conditions de revue sont nommées avant de devenir des arguments.'
         },
         {
-          label: 'Decisions attribuees',
-          value: 'Le responsable avant l\'opinion',
-          body: 'Qui decide, qui escalade et ce qui doit etre consigne reste explicite.'
+          label: 'Décisions attribuées',
+          value: 'Le responsable avant l’opinion',
+          body: 'Qui décide, qui escalade et ce qui doit être consigné restent explicites.'
         },
         {
           label: 'Preuve reconstructible',
-          value: 'Prete pour l\'examen ulterieur',
-          body: 'La reponse tient devant l\'approvisionnement, l\'audit et la revue de direction.'
+          value: 'Prête pour l’examen ultérieur',
+          body: 'La réponse tient devant l’approvisionnement, l’audit et la revue de direction.'
         }
       ]
     },
     about: {
-      eyebrow: 'A propos de PHAROS',
-      titleLineOne: 'Concu pour le moment',
-      emphasis: 'ou l\'examen devient concret',
-      bodyOne: 'PHAROS est une pratique de gouvernance pour les organisations qui font face a une vraie pression d\'examen, pas a un theatre de gouvernance abstrait.',
+      eyebrow: 'À propos de PHAROS',
+      titleLineOne: 'Conçu pour le moment',
+      emphasis: 'où la revue devient réelle',
+      bodyOne: 'PHAROS est une pratique de gouvernance pour les organisations qui font face à une vraie pression de revue, pas à un théâtre abstrait de la gouvernance.',
       bodyTwo:
-        'Quand un acheteur, un auditeur, un fournisseur ou un comite de direction demande comment l\'IA est gouvernee, la reponse utile doit pouvoir etre inspectee. PHAROS transforme l\'ambiguite en seuils explicites, en droits decisionnels nommes et en documentation qui tient au prochain tour d\'examen.',
+        'Quand un acheteur, un auditeur, un fournisseur ou un comité de direction demande comment l’IA est gouvernée, la réponse utile doit pouvoir être inspectée. PHAROS transforme l’ambiguïté en seuils explicites, en responsabilités décisionnelles nommées et en documentation qui tient au prochain tour de revue.',
       quote:
-        'La reponse utile n\'est pas « nous prenons la gouvernance au serieux ». C\'est « voici le seuil, voici le responsable, voici la preuve ».',
+        'La réponse utile n’est pas « nous prenons la gouvernance au sérieux ». C’est « voici le seuil, voici le responsable, voici la preuve ».',
       stats: [
-        { label: 'Secteurs', value: 'Services financiers, sante, techno d\'entreprise, secteur public' },
+        { label: 'Secteurs', value: 'Services financiers, santé, techno d’entreprise, secteur public' },
         { label: 'Cadres', value: 'NIST AI RMF · ISO/IEC 42001 · EU AI Act' }
       ],
-      imageAlt: 'Visualisation d\'un cadre de gouvernance de l\'IA',
+      imageAlt: 'Visualisation d’un cadre de gouvernance de l’IA',
       noteKicker: 'Le plus utile quand',
-      noteTitle: 'La pression d\'examen faconne deja le travail.',
+      noteTitle: 'La pression de revue façonne déjà le travail.',
       noteItems: REVIEW_PRESSURE_NOTES_FR
     },
     governance: {
       eyebrow: 'Standard PHAROS',
       titleLead: 'Une posture de gouvernance qui reste',
       emphasis: 'lisible',
-      titleTrail: 'quand l\'examen arrive',
+      titleTrail: 'quand la revue commence',
       body:
-        'La confiance ici ne vient pas du ton seulement. Elle vient de seuils explicites, de decisions nommees et d\'un ensemble de preuves qu\'on peut vraiment inspecter.',
+        'Ici, la confiance ne vient pas du ton seulement. Elle vient de seuils explicites, de décisions nommées et d’un ensemble de preuves qu’on peut réellement inspecter.',
       pillars: GOVERNANCE_PILLARS_FR,
       pressureEyebrow: 'Points de pression',
-      pressureTitleLead: 'Le travail de gouvernance commence la ou la vraie',
+      pressureTitleLead: 'Le travail de gouvernance commence là où la',
       pressureEmphasis: 'pression',
-      pressureTitleTrail: 'revele l\'ambiguite',
+      pressureTitleTrail: 'révèle l’ambiguïté',
       pressureBody:
-        'PHAROS ne commence pas par un theatre de gouvernance abstrait. Il commence la ou une demande d\'acheteur, d\'auditeur, de fournisseur ou de direction rend la logique manquante visible.',
+        'PHAROS ne commence pas par un théâtre abstrait de la gouvernance. Il commence là où une demande d’acheteur, d’auditeur, de fournisseur ou de la direction rend la logique manquante visible.',
       pressurePoints: PRESSURE_POINTS_FR
     },
     methods: {
-      eyebrow: 'Methode en quatre etapes',
-      titleLead: 'Lire la pression, fixer les seuils, attribuer les decisions,',
+      eyebrow: 'Méthode en quatre étapes',
+      titleLead: 'Lire la pression, fixer les seuils, attribuer les décisions,',
       emphasis: 'garder la piste reconstructible',
       body:
-        'La methode compte parce qu\'elle produit des controles inspectables plutot qu\'une posture ethique vague ou une prose generique de conformite.',
+        'La méthode compte parce qu’elle produit des contrôles inspectables plutôt qu’une posture éthique vague ou une prose générique de conformité.',
       steps: METHOD_STEPS_FR,
       imageAlt: 'Documents de revue de gouvernance sur un bureau',
       artifactsEyebrow: 'Artefacts',
       artifactsTitleLead: 'Des livrables qui rendent la gouvernance',
-      artifactsEmphasis: 'credible',
+      artifactsEmphasis: 'crédible',
       artifactsBody:
-        'Le resultat n\'est pas seulement une posture. C\'est un ensemble de materiaux utilisables qui rend les seuils, les decisions et la preuve faciles a suivre plus tard.',
+        'Le résultat n’est pas seulement une posture. C’est un ensemble de matériaux utilisables qui rend les seuils, les décisions et la preuve faciles à suivre plus tard.',
       artifacts: ARTIFACTS_FR
     },
     services: {
@@ -630,35 +630,35 @@ const HOME_COPY = {
       emphasis: 'source de pression',
       titleTrail: ', pas selon le vocabulaire',
       body:
-        'Le bon point d\'entree depend de ce dont l\'organisation a besoin : une base, un pre-mortem avant l\'exposition ou un post-mortem apres un echec ou une derive.',
+        'Le bon point d’entrée dépend de ce dont l’organisation a besoin : une base, un pré-mortem avant l’exposition ou un post-mortem après un échec ou une dérive.',
       cards: SERVICES_FR,
-      featuredLabel: 'Le plus frequent',
+      featuredLabel: 'Le plus fréquent',
       startRoute: 'Commencer ce parcours',
       finalTitle: 'Commencer par une courte revue, pas par un programme vague',
       finalBody:
-        'Une revue de 30 minutes suffit pour reperer la source de pression, choisir le parcours et cadrer les premiers livrables sans survendre l\'etat de preparation.',
-      finalCta: 'Reserver une revue'
+        'Une revue de 30 minutes suffit pour repérer la source de pression, choisir le parcours et cadrer les premiers livrables sans survendre l’état de préparation.',
+      finalCta: 'Planifier une revue'
     },
     faq: {
       eyebrow: 'FAQ',
       title: 'Questions',
       emphasis: 'courantes',
       body:
-        'Si votre question n\'est pas ici, un appel de revue de 30 minutes reste le moyen le plus rapide d\'obtenir une reponse directe pour votre condition d\'examen.',
-      cta: 'Reserver une revue',
+        'Si votre question n’est pas ici, un appel de revue de 30 minutes reste le moyen le plus rapide d’obtenir une réponse directe adaptée à votre situation.',
+      cta: 'Planifier une revue',
       items: FAQS_FR
     },
     contact: {
       eyebrow: 'Contact',
-      titleLead: 'Reserver une revue de',
+      titleLead: 'Planifier une revue de',
       emphasis: '30 minutes',
       titleTrail: '',
       body:
-        'Une revue de 30 minutes suffit pour identifier la source de pression, choisir le parcours et definir les premiers livrables sans exagerer l\'etat de preparation actuel.',
+        'Une revue de 30 minutes suffit pour identifier la source de pression, choisir le parcours et définir les premiers livrables sans exagérer l’état de préparation actuel.',
       emailLabel: 'Courriel',
-      responseTimeLabel: 'Delai de reponse',
+      responseTimeLabel: 'Délai de réponse',
       responseTimeValue: 'Dans les 24 heures ouvrables',
-      submittedTitle: 'Message recu',
+      submittedTitle: 'Message reçu',
       submittedBody: 'Nous communiquerons avec vous dans les 24 heures ouvrables pour fixer votre revue.',
       nameLabel: 'Nom *',
       namePlaceholder: 'Votre nom',
@@ -667,10 +667,10 @@ const HOME_COPY = {
       emailFieldLabel: 'Courriel *',
       emailPlaceholder: 'votre@courriel.ca',
       pressureLabel: 'Source de pression',
-      pressurePlaceholder: 'Choisissez la condition d\'examen',
-      pressureOptions: ['Revue d\'approvisionnement', 'Preparation a l\'audit', 'Diligence fournisseur', 'Supervision de direction', 'Revue post-incident', 'Autre'],
+      pressurePlaceholder: 'Choisissez la condition de revue',
+      pressureOptions: ['Revue d’approvisionnement', 'Préparation à l’audit', 'Diligence fournisseur', 'Supervision de la direction', 'Revue post-incident', 'Autre'],
       contextLabel: 'Contexte',
-      contextPlaceholder: 'Breve description de votre condition d\'examen ou de votre defi de gouvernance...',
+      contextPlaceholder: 'Brève description de votre condition de revue ou de votre défi de gouvernance…',
       submit: 'Demander une revue'
     }
   }

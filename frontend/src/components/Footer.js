@@ -8,21 +8,21 @@ const Footer = () => {
 
   const copy = language === 'fr'
     ? {
-        founderLine: 'Surface publique PHAROS',
-        tagline: 'Gouvernance IA pour les conditions de revue reelles.',
-        proofLine: 'Seuils explicites, droits de decision nommes et chemins de preuve qui restent lisibles sous audit, approvisionnement et supervision.',
+        founderLine: 'Surface publique de PHAROS',
+        tagline: 'Gouvernance de l’IA pour des conditions de revue bien réelles.',
+        proofLine: 'Seuils explicites, responsabilités décisionnelles nommées et pistes de preuve qui demeurent lisibles sous audit, en approvisionnement et sous supervision.',
         navigation: 'Navigation',
         home: 'Accueil',
-        about: 'A propos',
+        about: 'À propos',
         observatory: 'Observatoire',
         governance: 'Gouvernance',
-        methods: 'Methodes',
+        methods: 'Méthodes',
         assurance: 'Assurance',
         connect: 'Contact',
-        book: 'Demandes de recherche et de collaboration',
+        book: 'Demandes de recherche ou de collaboration',
         record: 'Registre de transparence',
-        reviewed: `Derniere revue ${PUBLIC_ASSURANCE_META.reviewedOnLabelFr}`,
-        location: 'Montreal, Quebec, Canada'
+        reviewed: `Dernière revue ${PUBLIC_ASSURANCE_META.reviewedOnLabelFr}`,
+        location: 'Montréal, Québec, Canada'
       }
     : {
         founderLine: 'PHAROS public surface',

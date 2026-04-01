@@ -73,71 +73,71 @@ const COPY = {
   },
   fr: {
     eyebrow: 'Contextes de revue',
-    title: 'Contextes representatifs de gouvernance sous scrutiny',
+    title: 'Contextes représentatifs de gouvernance sous examen',
     body:
-      'PHAROS ne publie pas de dossiers clients identifiables sur la surface publique. Cette page montre les patterns de pression recurrents et les sorties habituellement necessaires.',
-    sectorsTitle: 'Ou la pression de revue apparait',
+      'PHAROS ne publie pas de dossiers clients identifiables sur la surface publique. Cette page montre plutôt les schémas de pression récurrents et les livrables habituellement nécessaires.',
+    sectorsTitle: 'Où la pression de revue apparaît',
     sectors: [
       {
         id: 'regulated',
-        title: 'Operations reglementees',
-        body: 'Secteurs financiers, sante, et environnements a forte supervision formelle.',
-        pressure: 'Traçabilite de preuve et discipline des seuils sous revue externe.'
+        title: 'Activités réglementées',
+        body: 'Secteurs financiers, santé et environnements soumis à une supervision formelle soutenue.',
+        pressure: 'Traçabilité de la preuve et discipline des seuils sous revue externe.'
       },
       {
         id: 'enterprise-saas',
-        title: 'Produits IA enterprise',
-        body: 'Equipes qui livrent des fonctions IA dans des plateformes exposees a l achat enterprise.',
-        pressure: 'Questionnaires, revues securite, et diligence de confiance repetee.'
+        title: 'Produits d’IA pour l’entreprise',
+        body: 'Équipes qui livrent des fonctions d’IA dans des plateformes soumises à des cycles de vente exigeants.',
+        pressure: 'Questionnaires, revues de sécurité et diligence répétée sur la confiance.'
       },
       {
         id: 'public-sector',
         title: 'Secteur public et institutions',
-        body: 'Programmes soumis a des exigences de responsabilite, escalation et integrite des traces.',
-        pressure: 'Clarte de gouvernance avant deploiement large ou exposition politique.'
+        body: 'Programmes soumis à des exigences de responsabilité, d’escalade et d’intégrité des traces.',
+        pressure: 'Clarté de gouvernance avant un déploiement large ou une exposition politique.'
       }
     ],
-    scenariosTitle: 'Scenarios de mandat typiques',
+    scenariosTitle: 'Scénarios de mandat typiques',
     scenarios: [
       {
         id: 'baseline-build',
-        title: 'Construction d une base deterministe',
-        situation: 'La gouvernance existe de facon informelle mais ne soutient pas encore la revue achat ou audit.',
+        title: 'Construction d’une base déterministe',
+        situation: 'La gouvernance existe de façon informelle, mais ne soutient pas encore une revue d’achat ou d’audit.',
         outputs: [
-          'Matrice des droits de decision nommes',
-          'Modele de seuils et d escalation',
-          'Structure de dossier pour scrutiny recurrent'
+          'Matrice des responsabilités décisionnelles nommées',
+          'Modèle de seuils et d’escalade',
+          'Structure de dossier pour les revues récurrentes'
         ]
       },
       {
         id: 'pre-launch',
-        title: 'Test pre-lancement',
-        situation: 'Un lancement ou une integration augmente fortement les consequences d un echec de controle.',
+        title: 'Mise sous tension pré-lancement',
+        situation: 'Un lancement ou une intégration augmente fortement les conséquences d’un échec de contrôle.',
         outputs: [
-          'Cartographie des modes d echec systeme et fournisseur',
-          'Conditions go / no-go liees a la preuve',
-          'Responsables explicites des ecarts avant diffusion'
+          'Cartographie des modes de défaillance côté système et côté fournisseur',
+          'Conditions go / no-go liées à la preuve',
+          'Responsables explicites pour les écarts à combler avant la diffusion'
         ]
       },
       {
         id: 'post-incident',
         title: 'Parcours post-incident',
-        situation: 'Un incident, une revue ratee ou une derive de controle exige reconstruction et remediation.',
+        situation: 'Un incident, une revue échouée ou une dérive de contrôle exige reconstruction et remédiation.',
         outputs: [
-          'Reconstruction de l evenement et du parcours decisionnel',
-          'Registre des ecarts de controle avec priorites',
-          'Mise a jour des seuils et cadence de suivi'
+          'Reconstruction de l’événement et du parcours décisionnel',
+          'Registre des écarts de contrôle avec priorités',
+          'Mise à jour des seuils et de la cadence de suivi'
         ]
       }
     ],
-    noteTitle: 'Pourquoi ne pas publier des dossiers clients publics?',
+    noteTitle: 'Pourquoi ne pas publier de dossiers clients sur le site?',
     noteBody:
-      'La confiance publique augmente quand le langage du site reste proportionne. Les revendications propres au deploiement doivent rester dans des artefacts de revue cadres.',
-    ctaTitle: 'Vous avez un scenario specifique a revoir?',
-    ctaBody: 'Reservez une revue courte pour cartographier la source de pression et choisir le bon parcours deterministe.',
-    ctaPrimary: 'Reserver une revue',
+      'La confiance publique augmente quand le langage du site reste proportionné. Les allégations propres à un déploiement doivent demeurer dans des artefacts de revue encadrés, pas sur une surface publique générale.',
+    ctaTitle: 'Vous avez un scénario précis à faire revoir?',
+    ctaBody: 'Planifiez une courte revue pour cartographier la source de pression et choisir le bon parcours déterministe.',
+    ctaPrimary: 'Planifier une revue',
     ctaSecondary: 'Voir les services',
-    outputsLabel: 'Sorties typiques'
+    outputsLabel: 'Livrables typiques'
   }
 };
 

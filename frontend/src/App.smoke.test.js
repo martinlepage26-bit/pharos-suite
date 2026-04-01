@@ -320,7 +320,7 @@ describe('PHAROS route smoke coverage', () => {
     await clickElement(toggle);
 
     expect(window.location.pathname).toBe('/fr/about');
-    await waitForText(container, 'A propos de PHAROS');
+    await waitForText(container, 'PLANIFIER UNE REVUE');
     expect(document.documentElement.lang).toBe('fr-CA');
   });
 

@@ -154,30 +154,30 @@ const boundedGapItems = [
 
 const previewFactsFr = [
   {
-    label: 'Etat public',
+    label: 'État public',
     value: 'Statut : /portal en construction',
-    body: 'La route est en ligne dans la coquille publique, mais les surfaces modulaires operationnelles restent volontairement bornees.'
+    body: 'La route est en ligne dans la surface publique, mais les surfaces modulaires opérationnelles demeurent volontairement bornées.'
   },
   {
     label: 'Ce que fait cette page',
-    value: 'Garder la pile lisible',
-    body: 'Elle montre la relation entre PHAROS, COMPASSai et AurorA sans laisser entendre que le portail en activite est deja expose.'
+    value: 'Rendre la pile lisible',
+    body: 'Elle montre la relation entre PHAROS, COMPASSai et AurorA sans laisser croire que le portail opérationnel est déjà exposé.'
   },
   {
     label: 'Ce qui reste hors ligne',
     value: 'Aucune lecture modulaire en direct',
-    body: 'Les statistiques de tableau de bord, les dossiers, les televersements et les autres actions API modulaires restent desactivees sur cette route de reference publique.'
+    body: 'Les statistiques du tableau de bord, les dossiers, les téléversements et les autres actions d’API modulaires demeurent désactivés sur cette route de référence publique.'
   }
 ];
 
 const stackLayersFr = [
   {
     number: '01',
-    name: 'Couche de methode',
-    title: 'Methode de gouvernance PHAROS',
+    name: 'Couche méthode',
+    title: 'Méthode de gouvernance PHAROS',
     titleClassName: 'portal-architecture-title-gold',
     description:
-      'La logique de gouvernance amont : sequence P→H→A→R, niveaux T0–T3, schema de paquet de preuve et plafond 10XTHINK. COMPASSai et AurorA n\'inventent pas la methode ici; ils la transportent dans le flux de travail.',
+      'La logique de gouvernance en amont : séquence P→H→A→R, niveaux T0–T3, schéma de paquet de preuve et plafond 10XTHINK. COMPASSai et AurorA n’inventent pas la méthode ici; ils la transportent dans le flux de travail.',
     tags: [
       { label: 'Perceive', tone: 'gold' },
       { label: 'Harmonize', tone: 'gold' },
@@ -191,24 +191,24 @@ const stackLayersFr = [
     name: 'Couche applicative',
     title: 'COMPASSai & AurorA',
     description:
-      'Des surfaces operationnelles qui traduisent la methode PHAROS en intake, routage et operations de previsualisation bornees. COMPASSai reste le coeur du routage; AurorA reste la surface d\'intake imbriquee. Les deux sont encore en developpement actif.',
+      'Des surfaces opérationnelles qui traduisent la méthode PHAROS en ingestion, routage et opérations bornées en mode aperçu. COMPASSai reste le cœur du routage; AurorA demeure la surface d’ingestion imbriquée. Les deux sont encore en développement actif.',
     tags: [
       { label: 'COMPASSai · ~69 routes · :9202', tone: 'compass' },
-      { label: 'AurorA · ~21 routes · imbrique', tone: 'aurora' },
+      { label: 'AurorA · ~21 routes · imbriqué', tone: 'aurora' },
       { label: 'FastAPI + MongoDB' },
-      { label: 'Coquille publique sure pour la previsualisation' }
+      { label: 'Surface publique sûre en mode aperçu' }
     ]
   },
   {
     number: '03',
-    name: 'Coquille frontale',
-    title: 'Coquille publique PHAROS · pharos-ai.ca',
+    name: 'Surface publique',
+    title: 'Surface publique PHAROS · pharos-ai.ca',
     description:
-      'La surface publique PHAROS garde visibles les routes, le langage de perimetre et le contexte de pile pendant que les comportements operationnels du portail restent en construction.',
+      'La surface publique PHAROS garde visibles les routes, le langage de périmètre et le contexte de pile pendant que les comportements opérationnels du portail restent en construction.',
     tags: [
-      { label: 'Coquille frontale PHAROS' },
+      { label: 'Surface publique PHAROS' },
       { label: 'pharos-ai.ca' },
-      { label: 'Reference d\'architecture seulement', tone: 'think10x' }
+      { label: 'Référence d’architecture seulement', tone: 'think10x' }
     ]
   }
 ];
@@ -225,32 +225,32 @@ const productCardsFr = [
       { value: 'FastAPI', label: 'Backend' }
     ],
     body:
-      'La plus grande surface applicative. Elle porte le coeur du routage portal, les operations de previsualisation et la couche de presentation de gouvernance cote client.',
+      'La surface applicative principale. Elle porte le cœur du routage du portail, les opérations en mode aperçu et la couche de présentation de gouvernance côté client.',
     items: [
-      'Coeur du routage portal',
-      'Operations de previsualisation',
-      'Surface de presentation des rapports clients',
+      'Cœur du routage du portail',
+      'Opérations en mode aperçu',
+      'Surface de présentation des rapports clients',
       'Couche de persistance MongoDB',
-      'Heberge l\'espace de noms /portal/compassai/aurora'
+      'Héberge l’espace de noms /portal/compassai/aurora'
     ]
   },
   {
     className: 'aurora-card',
     corner: 'Application secondaire',
     letter: 'A',
-    fullname: 'AurorA · Intake documentaire',
+    fullname: 'AurorA · Ingestion documentaire',
     stats: [
       { value: '~21', label: 'Routes' },
-      { value: 'Imbrique', label: 'Routage' },
-      { value: 'Preview', label: 'Statut' }
+      { value: 'Imbriqué', label: 'Routage' },
+      { value: 'Aperçu', label: 'Statut' }
     ],
     body:
-      'La surface d\'intake imbriquee dans l\'espace de noms COMPASSai. AurorA gere l\'intake documentaire, la classification, l\'extraction et le paquetage de preuve tout en restant dans une posture de previsualisation bornee.',
+      'La surface d’ingestion imbriquée dans l’espace de noms COMPASSai. AurorA prend en charge l’ingestion documentaire, la classification, l’extraction et le paquetage de preuve tout en restant dans une posture bornée en mode aperçu.',
     items: [
-      'Intake et classification documentaire',
+      'Ingestion et classification documentaires',
       'Route canonique : /portal/compassai/aurora',
-      'Verifications d\'etat preview',
-      'Redirection de compatibilite depuis /portal/aurorai',
+      'Vérifications d’état en mode aperçu',
+      'Redirection de compatibilité depuis /portal/aurorai',
       'Phases Perceive et Harmonize de PHAROS'
     ]
   }
@@ -261,15 +261,15 @@ const evidenceSourcesFr = [
     label: 'Paquet source 01',
     name: 'After Reboot Checklist',
     body:
-      'Document de continuite qui capte l\'etat du systeme, la sequence de redemarrage et les etapes de verification de dependances apres un redemarrage de Cerebrhoe.',
+      'Document de continuité qui capte l’état du système, la séquence de redémarrage et les étapes de vérification des dépendances après un redémarrage de Cerebrhoe.',
     status: 'Preuve active',
     statusClassName: 'badge-active'
   },
   {
     label: 'Paquet source 02',
-    name: 'Version markdown une page',
+    name: 'Version markdown sur une page',
     body:
-      'Note d\'architecture condensee qui garde lisibles la topologie de routage et la relation COMPASSai/AurorA dans une reference bornee.',
+      'Note d’architecture condensée qui garde lisibles la topologie de routage et la relation COMPASSai/AurorA dans une référence bornée.',
     status: 'Preuve active',
     statusClassName: 'badge-active'
   },
@@ -277,8 +277,8 @@ const evidenceSourcesFr = [
     label: 'Paquet source 03',
     name: 'Moving Parts',
     body:
-      'Inventaire de composants qui suit les services actifs, les interdependances et les points d\'integration a travers COMPASSai, AurorA et la coquille frontale PHAROS.',
-    status: 'Liaison preview',
+      'Inventaire de composants qui suit les services actifs, les interdépendances et les points d’intégration à travers COMPASSai, AurorA et la surface publique PHAROS.',
+    status: 'Liaison aperçu',
     statusClassName: 'badge-preview'
   }
 ];
@@ -288,19 +288,19 @@ const routeHierarchyFr = [
   { className: 'rt-indent1 rt-compass', text: '/compassai', note: 'espace COMPASSai (~69 routes)' },
   { className: 'rt-indent2 rt-compass', text: '/compassai/dashboard' },
   { className: 'rt-indent2 rt-compass', text: '/compassai/governance' },
-  { className: 'rt-indent2 rt-compass', text: '/compassai/reports', note: 'surface de presentation des rapports clients' },
-  { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora', note: 'espace imbrique AurorA (~21 routes)' },
+  { className: 'rt-indent2 rt-compass', text: '/compassai/reports', note: 'surface de présentation des rapports clients' },
+  { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora', note: 'espace imbriqué AurorA (~21 routes)' },
   { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora/intake' },
   { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora/evidence' },
   { className: 'rt-indent2 rt-aurora', text: '/compassai/aurora/preview' },
-  { className: 'rt-indent2 rt-compass', text: '/compassai/gates', note: 'flux d\'approbation G1–G4' }
+  { className: 'rt-indent2 rt-compass', text: '/compassai/gates', note: 'flux d’approbation G1–G4' }
 ];
 
 const boundedGapItemsFr = [
-  'Certaines routes renvoient a des composants qui peuvent ou non exister aux emplacements attendus.',
-  'Des chemins d\'import supposent des structures de repertoires qui ont peut-etre ete reorganisees plus tard.',
-  'Les references inter-depots n\'ont pas ete toutes reverifiees au moment de la generation.',
-  'La resolution exige encore un audit route par route et une verification des chemins d\'import en conditions reelles.'
+  'Certaines routes renvoient à des composants qui peuvent ou non exister aux emplacements attendus.',
+  'Certains chemins d’import supposent des structures de répertoires qui ont peut-être été réorganisées par la suite.',
+  'Les références interdépôts n’ont pas toutes été revérifiées au moment de la génération.',
+  'La résolution exige encore un audit route par route et une vérification des chemins d’import en conditions réelles.'
 ];
 
 const PORTAL_PAGE_COPY = {
@@ -345,31 +345,31 @@ const PORTAL_PAGE_COPY = {
     routeHierarchy: routeHierarchyFr,
     evidenceSources: evidenceSourcesFr,
     boundedGapItems: boundedGapItemsFr,
-    kicker: 'PHAROS · Reference d\'architecture',
-    titleSub: 'Reference publique des routes COMPASSai et AurorA',
-    subtitle: 'COMPASSai et AurorA restent visibles depuis la coquille publique pendant que les comportements operationnels du portail demeurent bornes.',
-    statusAriaLabel: 'Statut preview du portail',
-    statusTitle: 'Perimetre preview',
+    kicker: 'PHAROS · Référence d’architecture',
+    titleSub: 'Référence publique des routes COMPASSai et AurorA',
+    subtitle: 'COMPASSai et AurorA restent visibles depuis la surface publique pendant que les comportements opérationnels du portail demeurent bornés.',
+    statusAriaLabel: 'Statut du portail en mode aperçu',
+    statusTitle: 'Périmètre d’aperçu',
     statusBody:
-      'Cette route est une reference publique gouvernee. Elle garde la pile lisible sans laisser entendre que le tableau de bord actif ou les API d\'intake sont deja exposes.',
-    bylineRouteLabel: 'route publique d\'architecture',
-    bylineSiteLabel: 'pharos-ai.ca · reference d\'architecture seulement',
+      'Cette route est une référence publique gouvernée. Elle garde la pile lisible sans laisser entendre que le tableau de bord actif ou les API d’ingestion sont déjà exposés.',
+    bylineRouteLabel: 'route publique d’architecture',
+    bylineSiteLabel: 'pharos-ai.ca · référence d’architecture seulement',
     portalStatusHead: 'Statut du portail',
     portalStatusKicker: 'En construction',
-    portalStatusTitle: '/portal reste une reference publique bornee',
+    portalStatusTitle: '/portal reste une référence publique bornée',
     portalStatusBody:
-      'COMPASSai et AurorA sont toujours en developpement. Ces routes gardent visibles l\'architecture, la relation entre les routes et le perimetre d\'etat public pendant que les surfaces operationnelles du portail restent hors ligne.',
-    portalStatusTags: ['Reference d\'architecture seulement', 'COMPASSai en developpement', 'AurorA en developpement'],
+      'COMPASSai et AurorA sont toujours en développement. Ces routes gardent visibles l’architecture, la relation entre les routes et le périmètre d’état public pendant que les surfaces opérationnelles du portail restent hors ligne.',
+    portalStatusTags: ['Référence d’architecture seulement', 'COMPASSai en développement', 'AurorA en développement'],
     stackHead: 'Position dans la pile · Architecture en trois couches',
     applicationsHead: 'Surfaces applicatives · COMPASSai et AurorA',
-    routeHead: 'Hierarchie des routes · Redirection AurorA → COMPASSai',
+    routeHead: 'Hiérarchie des routes · Redirection AurorA → COMPASSai',
     redirectNote: '→ redirection 301 → /portal/compassai/aurora',
-    evidenceHead: 'Base de preuve · Sources d\'archive partagees',
-    integrityHead: 'Avis d\'integrite',
-    integrityTitle: 'La fragilite du graphe de dependances reste non resolue',
+    evidenceHead: 'Base de preuve · Sources d’archives partagées',
+    integrityHead: 'Avis d’intégrité',
+    integrityTitle: 'La fragilité du graphe de dépendances reste non résolue',
     integrityBody:
-      'La logique d\'integration a ete generee sur plusieurs sessions avec des prompts faisant reference a des composants dans d\'autres depots sans verification de leur etat courant. Il s\'agit toujours d\'un ecart borne connu, et non d\'un point resolu.',
-    footerLeft: 'Pile PHAROS · Reference d\'architecture COMPASSai et AurorA',
+      'La logique d’intégration a été générée sur plusieurs sessions avec des prompts faisant référence à des composants dans d’autres dépôts sans vérification de leur état courant. Il s’agit toujours d’un écart borné connu, et non d’un point résolu.',
+    footerLeft: 'Pile PHAROS · Référence d’architecture COMPASSai et AurorA',
     footerRight: 'pharos-ai.ca · /portal en construction · 2026'
   }
 };

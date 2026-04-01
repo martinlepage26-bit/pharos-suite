@@ -68,66 +68,66 @@ const COPY = {
   },
   fr: {
     eyebrow: 'Conditions',
-    title: 'Conditions d utilisation du site public PHAROS',
+    title: 'Conditions d’utilisation du site public PHAROS',
     body:
-      'Ces conditions definissent la frontiere du site public, les non-revendications et les conditions d usage attendues pour le contenu, les outils et les routes de contact PHAROS.',
-    updated: 'Derniere mise a jour 25 mars 2026',
+      'Ces conditions définissent les limites du site public, les non-allégations et les conditions d’usage applicables au contenu, aux outils et aux routes de contact de PHAROS.',
+    updated: 'Dernière mise à jour : 25 mars 2026',
     highlights: [
       {
         icon: Scale,
-        title: 'Frontiere informationnelle',
-        body: 'Le contenu public est informatif et ne remplace pas les decisions juridiques, d audit ou reglementaires.'
+        title: 'Limite informationnelle',
+        body: 'Le contenu public est fourni à titre informatif et ne remplace pas les décisions juridiques, d’audit ou réglementaires.'
       },
       {
         icon: FileCheck2,
-        title: 'Non-certification',
-        body: 'Les sorties de preparation sont des signaux de calibration et non des certificats, avis juridiques ou determinations de conformite.'
+        title: 'Aucune certification',
+        body: 'Les résultats de préparation sont des signaux de calibration, non des certificats, des avis juridiques ou des déterminations de conformité.'
       },
       {
         icon: ShieldAlert,
-        title: 'Revue cadree requise',
-        body: 'Une assurance propre a un deploiement exige une revue humaine distincte et une evaluation de preuve.'
+        title: 'Revue encadrée requise',
+        body: 'Toute assurance propre à un déploiement exige une revue humaine distincte et une évaluation de la preuve.'
       }
     ],
     sections: [
       {
         title: 'Usage du contenu du site',
         points: [
-          'Vous pouvez consulter et citer le contenu public PHAROS pour la planification interne et la comprehension de gouvernance.',
-          'Ne presentez pas le texte du site comme certification PHAROS, avis juridique, opinion d audit ou approbation reglementaire.',
-          'Les references a des normes et lois servent de contexte et non de determination juridique propre a une juridiction.'
+          'Vous pouvez consulter et citer le contenu public de PHAROS pour la planification interne et la compréhension de la gouvernance.',
+          'Ne présentez pas le texte du site comme une certification PHAROS, un avis juridique, une opinion d’audit ou une approbation réglementaire.',
+          'Les références à des normes et à des lois servent de contexte et ne constituent pas une détermination juridique propre à une juridiction.'
         ]
       },
       {
-        title: 'Limites des outils et de l intake',
+        title: 'Limites des outils et des prises de contact',
         points: [
-          'Les routes publiques d evaluation et d intake servent au cadrage initial et a la calibration.',
-          'Les resultats doivent etre revus par des responsables humains avant toute decision operationnelle ou juridique.',
-          'Ne televersez pas de donnees illicites, abusives ou non autorisees via les formulaires publics.'
+          'Les routes publiques d’évaluation et de prise de contact servent au cadrage initial et à la calibration.',
+          'Les résultats doivent être revus par des responsables humains avant toute décision opérationnelle ou juridique.',
+          'Ne téléversez pas de données illicites, abusives ou non autorisées au moyen des formulaires publics.'
         ]
       },
       {
         title: 'Liens et sources externes',
         points: [
-          'PHAROS peut referencer des normes, textes de politique et sources de recherche externes.',
-          'Les sites externes sont regis par leurs propres conditions et politiques de confidentialite.',
-          'Une reference publique ne signifie pas approbation de chaque revendication externe.'
+          'PHAROS peut renvoyer à des normes, à des textes de politique publique et à des sources de recherche externes.',
+          'Les sites externes sont régis par leurs propres conditions et politiques de confidentialité.',
+          'Une référence publique n’implique pas l’approbation de chaque allégation externe.'
         ]
       },
       {
-        title: 'Modifications et mises a jour',
+        title: 'Modifications et mises à jour',
         points: [
-          'PHAROS peut mettre a jour le contenu, les routes et les conditions du site selon l evolution des services.',
-          'Les changements materiels de limites ou revendications doivent apparaitre dans les registres d assurance et de transparence.',
-          'L usage continu du site apres mise a jour constitue acceptation des conditions courantes.'
+          'PHAROS peut mettre à jour le contenu, les routes et les conditions du site à mesure que les services évoluent.',
+          'Les changements matériels de limites ou d’allégations doivent apparaître dans les registres d’assurance et de transparence.',
+          'L’usage continu du site après mise à jour constitue une acceptation des conditions en vigueur.'
         ]
       }
     ],
-    ctaTitle: 'Besoin de conditions alignees sur un contexte de deploiement precis?',
+    ctaTitle: 'Besoin de conditions liées à un contexte de déploiement précis?',
     ctaBody:
-      'Quand un acheteur, auditeur ou regulateur exige une preuve de niveau deploiement, utilisez une revue cadree pour garder revendications, seuils et dossiers explicites.',
-    ctaPrimary: 'Reserver une revue',
-    ctaSecondary: 'Lire assurance'
+      'Quand un acheteur, un auditeur ou une autorité réglementaire exige une preuve propre au déploiement, passez par une revue encadrée afin de garder les allégations, les seuils et les dossiers bien explicites.',
+    ctaPrimary: 'Planifier une revue',
+    ctaSecondary: 'Lire l’assurance'
   }
 };
 

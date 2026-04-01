@@ -48,48 +48,48 @@ const COPY = {
     ctaSecondary: 'View services'
   },
   fr: {
-    eyebrow: 'Methode',
-    title: 'Gouvernance deterministe recursive en forme pratique',
+    eyebrow: 'Méthode',
+    title: 'La gouvernance déterministe récursive en pratique',
     body:
-      'La methode transforme la pression de gouvernance en controles inspectables: entree bornee, intention explicite, seuils deterministes, decisions attribuees et preuve reconstructible.',
-    stagesTitle: 'Etapes de la methode',
+      'La méthode transforme la pression de gouvernance en contrôles inspectables : entrée bornée, intention explicite, seuils déterministes, décisions attribuées et preuve reconstructible.',
+    stagesTitle: 'Étapes de la méthode',
     stages: [
       {
-        title: '1. Borner la source',
-        body: 'Definir ce qui entre dans l analyse et ce qui reste hors parcours de decision.'
+        title: '1. Borner l’ensemble de sources',
+        body: 'Définir ce qui entre dans l’analyse et ce qui reste à l’extérieur du parcours décisionnel.'
       },
       {
-        title: '2. Declarer l intention',
-        body: 'Nommer la fonction de chaque passe pour eviter les glissements implicites.'
+        title: '2. Déclarer l’intention',
+        body: 'Nommer la fonction de chaque passage afin d’éviter les glissements implicites.'
       },
       {
-        title: '3. Comparer et tester',
-        body: 'Tester les sorties contre la source et le contexte pour voir derive et contradictions.'
+        title: '3. Comparer et mettre sous tension',
+        body: 'Comparer les sorties à la source et au contexte pour faire ressortir la dérive, les contradictions et les manques.'
       },
       {
-        title: '4. Extraire les controles',
-        body: 'Traduire les patterns en seuils, escalation, responsabilites et exigences de preuve.'
+        title: '4. Extraire les contrôles',
+        body: 'Traduire les schémas récurrents en seuils, règles d’escalade, responsabilités et exigences de preuve.'
       },
       {
-        title: '5. Lier au workflow',
-        body: 'Attacher les controles aux interfaces ou les decisions reelles ont lieu.'
+        title: '5. Lier au flux de travail',
+        body: 'Attacher les contrôles aux interfaces où les décisions réelles se prennent.'
       },
       {
-        title: '6. Preserver la reconstruction',
-        body: 'Garder les traces de decision et de suivi pour verification ulterieure.'
+        title: '6. Préserver la reconstruction',
+        body: 'Conserver les traces de décision et de suivi pour une vérification ultérieure.'
       }
     ],
     doctrineTitle: 'Doctrine',
     doctrine: [
-      'La hierarchie des artefacts prime sur la fluidite du langage.',
-      'Les artefacts generes sont des preuves de processus, pas des preuves factuelles automatiques.',
-      'La recursion doit justifier une nouvelle passe.',
-      'Un controle reste incomplet sans proprietaire, declencheur et cadence de revue.'
+      'La hiérarchie des artefacts prime sur la fluidité du langage.',
+      'Les artefacts générés sont des preuves de processus, pas une autorité factuelle automatique.',
+      'La récursivité doit justifier une nouvelle passe par une valeur explicative réelle.',
+      'Un contrôle demeure incomplet tant que le responsable, le déclencheur et la cadence de revue ne sont pas explicites.'
     ],
-    ctaTitle: 'Pret a appliquer la methode a un systeme reel?',
-    ctaBody: 'Commencez par une revue cadree et cartographiez le premier point de controle.',
-    ctaPrimary: 'Reserver',
-    ctaSecondary: 'Voir services'
+    ctaTitle: 'Prêt à appliquer la méthode à un système réel?',
+    ctaBody: 'Commencez par une revue encadrée et cartographiez votre première surface de contrôle.',
+    ctaPrimary: 'Planifier une revue',
+    ctaSecondary: 'Voir les services'
   }
 };
 
