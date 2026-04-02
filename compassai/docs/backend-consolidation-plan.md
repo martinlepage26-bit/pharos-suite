@@ -2,8 +2,8 @@
 
 CompassAI currently has two backend shapes at once:
 
-- a large runnable monolith in [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py)
-- a partial router/module structure under [backend/routers/](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/)
+- a large runnable monolith in [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py)
+- a partial router/module structure under [backend/routers/](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/)
 
 The governance-program integration was added in a way that works with the live monolith today, but long-term maintainability depends on collapsing these two shapes into one coherent architecture.
 
@@ -11,7 +11,7 @@ The governance-program integration was added in a way that works with the live m
 
 ### Runtime entrypoint and models
 
-[backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py) defines:
+[backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py) defines:
 
 - enums
 - Pydantic models
@@ -19,19 +19,19 @@ The governance-program integration was added in a way that works with the live m
 - route handlers
 - application assembly
 
-At the same time, [backend/models/__init__.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/models/__init__.py) defines overlapping Pydantic models for many of the same concepts.
+At the same time, [backend/models/__init__.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/models/__init__.py) defines overlapping Pydantic models for many of the same concepts.
 
 ### Route definitions
 
 The repo already has router files:
 
-- [backend/routers/auth.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/auth.py)
-- [backend/routers/clients.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/clients.py)
-- [backend/routers/ai_systems.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/ai_systems.py)
-- [backend/routers/admin.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/admin.py)
-- [backend/routers/governance_program.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/governance_program.py)
+- [backend/routers/auth.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/auth.py)
+- [backend/routers/clients.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/clients.py)
+- [backend/routers/ai_systems.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/ai_systems.py)
+- [backend/routers/admin.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/admin.py)
+- [backend/routers/governance_program.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/governance_program.py)
 
-But the main route inventory still lives directly in [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py), so the router package is only partially authoritative.
+But the main route inventory still lives directly in [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py), so the router package is only partially authoritative.
 
 ## Target backend shape
 
@@ -49,12 +49,12 @@ The clean target is:
 
 Completed partially by this governance-program work:
 
-- new governance functionality lives in [backend/routers/governance_program.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/governance_program.py)
-- shared schema changes were mirrored into [backend/models/__init__.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/models/__init__.py)
+- new governance functionality lives in [backend/routers/governance_program.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/governance_program.py)
+- shared schema changes were mirrored into [backend/models/__init__.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/models/__init__.py)
 
 Next rule:
 
-- no new route handlers should be added directly to [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py)
+- no new route handlers should be added directly to [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py)
 
 ### Phase 2: extract route families
 
@@ -96,8 +96,8 @@ Routers should become thin transport layers only.
 
 Once route extraction is stable:
 
-- delete duplicated model definitions from [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py)
-- import all schema classes from [backend/models/__init__.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/models/__init__.py)
+- delete duplicated model definitions from [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py)
+- import all schema classes from [backend/models/__init__.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/models/__init__.py)
 - add focused model tests for new governance fields and defaults
 
 ### Phase 5: introduce collection contracts
@@ -111,8 +111,8 @@ CompassAI currently uses Mongo without a hard migration framework. Before any SQ
 
 The governance-program scripts already added in this phase are:
 
-- [backend/scripts/import_governance_deliverables.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/scripts/import_governance_deliverables.py)
-- [backend/scripts/link_governance_context.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/scripts/link_governance_context.py)
+- [backend/scripts/import_governance_deliverables.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/scripts/import_governance_deliverables.py)
+- [backend/scripts/link_governance_context.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/scripts/link_governance_context.py)
 
 ## Regression-testing strategy
 
@@ -141,6 +141,6 @@ The user-facing target architecture mentions SQLAlchemy and PostgreSQL, but the 
 
 The next practical milestone is not a database rewrite. It is:
 
-- finish extracting assessment, evidence, and deliverables logic out of [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py)
+- finish extracting assessment, evidence, and deliverables logic out of [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py)
 - wire the staged frontend workbench against the now-stable governance-program routes
 - then choose the persistence strategy from a cleaner architecture baseline

@@ -4,9 +4,9 @@ Authentication routes for Compass AI.
 from fastapi import APIRouter, HTTPException, Depends
 from typing import Dict, Optional
 
-from config import db
-from models import UserCreate, UserLogin, User, Token, UserRole, AuditAction
-from utils import (
+from compassai.backend.config import db
+from compassai.backend.models import UserCreate, UserLogin, User, Token, UserRole, AuditAction
+from compassai.backend.utils import (
     verify_password, get_password_hash, create_access_token,
     require_auth, log_audit
 )

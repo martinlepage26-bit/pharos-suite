@@ -3,6 +3,5 @@ Allow: /
 Disallow: /admin
 Disallow: /portfolio
 Disallow: /publications/
-Disallow: /portal/lotus
 
 Sitemap: https://pharos-ai.ca/sitemap.xml

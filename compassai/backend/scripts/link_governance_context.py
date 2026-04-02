@@ -17,8 +17,8 @@ BACKEND_DIR = Path(__file__).resolve().parents[1]
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
-from config import client, db  # noqa: E402
-from governance_catalog import build_training_recommendations  # noqa: E402
+from compassai.backend.config import client, db  # noqa: E402
+from compassai.backend.governance_catalog import build_training_recommendations  # noqa: E402
 
 
 def _artifact_ref(artifact: dict, required: bool = False) -> dict:

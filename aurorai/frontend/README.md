@@ -20,10 +20,17 @@ This directory is not a runnable standalone Aurora browser surface as currently 
 - build validation for a standalone frontend
 - standalone hosting or deploy evidence
 
+## What does work now
+
+- the Worker/module surface under `../src/`
+- intake contract validation via `../src/modules/intake/__tests__/intake.test.ts`
+- `npm test` from `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai` when using Node 22+
+- backend API verification via `pytest /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/tests`
+
 ## Current product truth
 
 - the real canonical runtime in this repo is `../server.py`
-- Aurora is the intake workflow within CompassAI, and its current browser presentation is the PHAROS route at `/portal/compassai/aurora` inside `/home/cerebrhoe/repos/pharos-suite`, with `/portal/aurorai` retained as a compatibility route
+- Aurora is the intake workflow within CompassAI, and its current browser presentation is the PHAROS route at `/portal/compassai/aurora` inside `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite`, with `/portal/aurorai` retained as a compatibility route
 
 ## Do not claim yet
 

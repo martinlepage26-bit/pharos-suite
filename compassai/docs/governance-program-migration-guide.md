@@ -6,8 +6,8 @@ CompassAI should be treated as a hosted, browser-based governance platform. End 
 
 ## 1. Pre-deployment checks
 
-1. Ensure the backend environment has valid `MONGO_URL`, `DB_NAME`, and `SECRET_KEY` values in [backend/.env](/home/cerebrhoe/repos/pharos-suite/compassai/backend/.env).
-2. Confirm the application can already start from [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py).
+1. Ensure the backend environment has valid `MONGO_URL`, `DB_NAME`, and `SECRET_KEY` values in [backend/.env](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/.env).
+2. Confirm the application can already start from [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py).
 3. Take a database backup of the target CompassAI environment before running the import and linking scripts.
 4. Collect the governance deliverables markdown bundle into a single directory with these filenames:
    - `ai_governance_framework.md`
@@ -23,11 +23,11 @@ CompassAI should be treated as a hosted, browser-based governance platform. End 
 
 Deploy these files together:
 
-- [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py)
-- [backend/models/__init__.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/models/__init__.py)
-- [backend/governance_catalog.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/governance_catalog.py)
-- [backend/routers/governance_program.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/governance_program.py)
-- [backend/routers/__init__.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/routers/__init__.py)
+- [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py)
+- [backend/models/__init__.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/models/__init__.py)
+- [backend/governance_catalog.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/governance_catalog.py)
+- [backend/routers/governance_program.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/governance_program.py)
+- [backend/routers/__init__.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/routers/__init__.py)
 
 The new router is mounted under `/api`, so the new endpoints become available without changing the external base path.
 
@@ -36,7 +36,7 @@ The new router is mounted under `/api`, so the new endpoints become available wi
 Run:
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/compassai/backend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend
 python3 scripts/import_governance_deliverables.py --bundle-dir /path/to/governance-package
 ```
 
@@ -67,7 +67,7 @@ python3 scripts/import_governance_deliverables.py --bundle-dir /path/to/governan
 Run:
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/compassai/backend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend
 python3 scripts/link_governance_context.py
 ```
 
@@ -117,13 +117,13 @@ Spot-check a representative assessment and verify:
 
 ## 6. Frontend dependency note
 
-The repository currently does **not** contain a complete runnable CompassAI React app. There is a `frontend/` scaffold, but not a working package manifest. Deploy the backend first, then wire a hosted web workbench against the published API surface using the schemas in [docs/governance-program-openapi.yaml](/home/cerebrhoe/repos/pharos-suite/compassai/docs/governance-program-openapi.yaml).
+The repository currently does **not** contain a complete runnable CompassAI React app. There is a `frontend/` scaffold, but not a working package manifest. Deploy the backend first, then wire a hosted web workbench against the published API surface using the schemas in [docs/governance-program-openapi.yaml](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/docs/governance-program-openapi.yaml).
 
 ## 7. Rollback plan
 
 If you need to roll back:
 
-1. Deploy the prior version of [backend/server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py) and related backend files.
+1. Deploy the prior version of [backend/server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py) and related backend files.
 2. Restore the pre-migration Mongo backup.
 3. If partial rollback is required, delete the new collections only after confirming nothing else depends on them.
 

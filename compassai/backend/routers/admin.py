@@ -8,13 +8,13 @@ import uuid
 import secrets
 import hashlib
 
-from config import db
-from models import (
+from compassai.backend.config import db
+from compassai.backend.models import (
     AuditAction, AuditLog, APIKeyCreate, APIKey, 
     ScheduledAssessmentCreate, ScheduledAssessment, ScheduleFrequency,
     ShareableReportCreate, ShareableReport, BenchmarkData, UserRole
 )
-from utils import require_auth, require_admin, log_audit
+from compassai.backend.utils import require_auth, require_admin, log_audit
 
 router = APIRouter(tags=["Admin"])
 

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, Depends, Header, HTTPException
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -305,13 +306,6 @@ class ServicePackageUpdate(BaseModel):
     active: Optional[bool] = None
 
 
-def raise_lotus_surface_removed() -> None:
-    raise HTTPException(
-        status_code=410,
-        detail="Lotus is not part of the PHAROS public surface. Use the separate Lotus service or workspace instead."
-    )
-
-
 def raise_publications_surface_removed() -> None:
     raise HTTPException(
         status_code=410,
@@ -438,39 +432,6 @@ async def get_platform_status(admin_ok: None = Depends(require_admin)):
         "cloudflare": cloudflare,
     }
 
-
-# ─── Legacy Lotus-disabled endpoints ───
-
-def raise_lotus_surface_removed() -> None:
-    raise HTTPException(
-        status_code=410,
-        detail="Lotus endpoints are not available on this PHAROS backend."
-    )
-
-
-@api_router.get("/lotus/notes")
-async def get_lotus_notes():
-    raise_lotus_surface_removed()
-
-
-@api_router.get("/lotus/notes/detail")
-async def get_lotus_note_detail():
-    raise_lotus_surface_removed()
-
-
-@api_router.post("/lotus/score")
-async def preview_lotus_draft():
-    raise_lotus_surface_removed()
-
-
-@api_router.post("/lotus/drafts")
-async def save_lotus_draft():
-    raise_lotus_surface_removed()
-
-
-@api_router.post("/lotus/upload")
-async def upload_lotus_notes():
-    raise_lotus_surface_removed()
 
 # ─── Publications ───
 
@@ -818,16 +779,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-@app.on_event("startup")
-async def startup_db_client():
+@asynccontextmanager
+async def pharos_backend_lifespan(_app: FastAPI):
     await get_database()
     await seed_faq_items()
     await seed_service_packages()
     logger.info("Database connection initialized")
+    try:
+        yield
+    finally:
+        global client
+        if client:
+            client.close()
+            logger.info("Database connection closed")
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    global client
-    if client:
-        client.close()
-        logger.info("Database connection closed")
+
+app.router.lifespan_context = pharos_backend_lifespan

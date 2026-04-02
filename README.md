@@ -1,11 +1,11 @@
 # pharos-suite
 
 Pharos Suite monorepo for the PHAROS shell and module stack:
-`pharos-ai.ca` + AurorAI + CompassAI.
+`pharos-ai.ca` + Aurora + CompassAI.
 
 ## Repository
 
-- Canonical URL: `https://github.com/martinlepage26-bit/pharos-suite`
+- Repository URL: `https://github.com/martinlepage26-bit/pharos-suite`
 - Default branch: `main`
 
 ## Layout
@@ -13,7 +13,7 @@ Pharos Suite monorepo for the PHAROS shell and module stack:
 - `frontend/` - PHAROS public shell and portal frontend
 - `backend/` - PHAROS API for bookings, services, and platform status
 - `compassai/` - CompassAI governance application services and tests
-- `aurorai/` - AurorAI intake and document processing service
+- `aurorai/` - Aurora intake and document processing service
 - `pharos_integrations/` - local OpenAI-compatible integration shim
 - `docs/`, `infra/`, `scripts/` - operations, deployment, and tooling
 

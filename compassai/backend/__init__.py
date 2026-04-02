@@ -1,0 +1,1 @@
+"""CompassAI backend package."""

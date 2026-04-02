@@ -2,6 +2,7 @@
 Governance program routes for integrating the AI governance deliverables package.
 """
 from datetime import datetime, timezone
+import hashlib
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 import uuid
@@ -9,9 +10,9 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import BaseModel, Field
 
-from config import db
-from governance_catalog import build_training_recommendations, infer_policy_links, load_governance_artifact_bundle
-from models import (
+from compassai.backend.config import db
+from compassai.backend.governance_catalog import build_training_recommendations, infer_policy_links, load_governance_artifact_bundle
+from compassai.backend.models import (
     AssessmentCriteria,
     AssessmentWorkflow,
     Contact,
@@ -23,7 +24,7 @@ from models import (
     TrainingModule,
     AuditAction,
 )
-from utils import log_audit, require_assessor_or_admin, require_auth
+from compassai.backend.utils import log_audit, require_assessor_or_admin, require_auth
 
 router = APIRouter(tags=["Governance Program"])
 
@@ -31,6 +32,34 @@ router = APIRouter(tags=["Governance Program"])
 class GovernanceArtifactImportRequest(BaseModel):
     bundle_dir: Optional[str] = None
     upsert: bool = True
+
+
+class GovernanceArtifactCreate(BaseModel):
+    slug: str
+    filename: str
+    title: str
+    artifact_type: str
+    summary: str = ""
+    tags: List[str] = []
+    policy_domain: Optional[str] = None
+    competencies: List[str] = []
+    linked_control_ids: List[str] = []
+    taxonomy: Optional[Dict[str, Any]] = None
+    content_markdown: str = ""
+
+
+class GovernanceArtifactUpdate(BaseModel):
+    slug: Optional[str] = None
+    filename: Optional[str] = None
+    title: Optional[str] = None
+    artifact_type: Optional[str] = None
+    summary: Optional[str] = None
+    tags: Optional[List[str]] = None
+    policy_domain: Optional[str] = None
+    competencies: Optional[List[str]] = None
+    linked_control_ids: Optional[List[str]] = None
+    taxonomy: Optional[Dict[str, Any]] = None
+    content_markdown: Optional[str] = None
 
 
 class GovernancePolicyCreate(BaseModel):
@@ -114,6 +143,44 @@ async def _artifact_lookup_by_ids(artifact_ids: List[str]) -> List[Dict[str, Any
     return await db.governance_artifacts.find({"id": {"$in": artifact_ids}}, {"_id": 0}).to_list(len(artifact_ids))
 
 
+def _artifact_content_hash(content_markdown: str) -> Optional[str]:
+    body = content_markdown.strip()
+    if not body:
+        return None
+    return f"sha256:{hashlib.sha256(body.encode('utf-8')).hexdigest()}"
+
+
+def _deserialize_artifact(document: Dict[str, Any]) -> Dict[str, Any]:
+    return _deserialize_datetimes([document], ["created_at", "updated_at"])[0]
+
+
+async def _ensure_unique_artifact_slug(slug: str, *, exclude_id: Optional[str] = None) -> None:
+    existing = await db.governance_artifacts.find_one({"slug": slug}, {"_id": 0})
+    if existing and existing.get("id") != exclude_id:
+        raise HTTPException(status_code=409, detail="Governance artifact slug already exists")
+
+
+@router.post("/governance/artifacts", status_code=201)
+async def create_governance_artifact(
+    payload: GovernanceArtifactCreate,
+    user: Dict = Depends(require_assessor_or_admin()),
+):
+    await _ensure_unique_artifact_slug(payload.slug)
+
+    now = datetime.now(timezone.utc).isoformat()
+    artifact = {
+        "id": str(uuid.uuid4()),
+        **payload.model_dump(),
+        "content_hash": _artifact_content_hash(payload.content_markdown),
+        "created_at": now,
+        "updated_at": now,
+    }
+
+    await db.governance_artifacts.insert_one(artifact)
+    await log_audit(AuditAction.CREATE, "governance_artifact", artifact["id"], artifact["title"], user=user)
+    return _deserialize_artifact(artifact)
+
+
 @router.post("/governance/artifacts/import")
 async def import_governance_artifacts(
     request: GovernanceArtifactImportRequest,
@@ -163,6 +230,41 @@ async def list_governance_artifacts(user: Dict = Depends(require_auth)):
     return _deserialize_datetimes(artifacts, ["created_at", "updated_at"])
 
 
+@router.get("/governance/artifacts/{artifact_id}")
+async def get_governance_artifact(
+    artifact_id: str,
+    user: Dict = Depends(require_auth),
+):
+    _ = user
+    artifact = await db.governance_artifacts.find_one({"id": artifact_id}, {"_id": 0})
+    if not artifact:
+        raise HTTPException(status_code=404, detail="Governance artifact not found")
+    return _deserialize_artifact(artifact)
+
+
+@router.put("/governance/artifacts/{artifact_id}")
+async def update_governance_artifact(
+    artifact_id: str,
+    payload: GovernanceArtifactUpdate,
+    user: Dict = Depends(require_assessor_or_admin()),
+):
+    artifact = await db.governance_artifacts.find_one({"id": artifact_id}, {"_id": 0})
+    if not artifact:
+        raise HTTPException(status_code=404, detail="Governance artifact not found")
+
+    update_data = payload.model_dump(exclude_unset=True)
+    if "slug" in update_data:
+        await _ensure_unique_artifact_slug(update_data["slug"], exclude_id=artifact_id)
+    if "content_markdown" in update_data:
+        update_data["content_hash"] = _artifact_content_hash(update_data["content_markdown"])
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+
+    await db.governance_artifacts.update_one({"id": artifact_id}, {"$set": update_data})
+    updated = {**artifact, **update_data}
+    await log_audit(AuditAction.UPDATE, "governance_artifact", artifact_id, updated.get("title"), user=user)
+    return _deserialize_artifact(updated)
+
+
 @router.get("/governance/artifacts/{artifact_id}/download")
 async def download_governance_artifact(
     artifact_id: str,
@@ -179,6 +281,20 @@ async def download_governance_artifact(
         media_type="text/markdown",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
+
+
+@router.delete("/governance/artifacts/{artifact_id}")
+async def delete_governance_artifact(
+    artifact_id: str,
+    user: Dict = Depends(require_assessor_or_admin()),
+):
+    artifact = await db.governance_artifacts.find_one({"id": artifact_id}, {"_id": 0})
+    if not artifact:
+        raise HTTPException(status_code=404, detail="Governance artifact not found")
+
+    await db.governance_artifacts.delete_one({"id": artifact_id})
+    await log_audit(AuditAction.DELETE, "governance_artifact", artifact_id, artifact.get("title"), user=user)
+    return {"status": "deleted", "id": artifact_id}
 
 
 @router.get("/governance/policies")

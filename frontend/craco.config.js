@@ -1,6 +1,11 @@
 ﻿const path = require('path');
 
 module.exports = {
+  jest: {
+    configure: {
+      resolver: path.resolve(__dirname, 'scripts/jest-punycode-resolver.cjs'),
+    },
+  },
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

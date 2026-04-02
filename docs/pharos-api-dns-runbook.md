@@ -1,8 +1,8 @@
 # PHAROS API + DNS Runbook
 
-Last updated: 2026-03-13
+Last updated: 2026-03-30
 
-This is the concrete rollout for publishing the existing local FastAPI backend at:
+This is the production-facing rollout for the existing local FastAPI backend behind:
 
 - frontend: `https://pharos-ai.ca`
 - redirects:
@@ -13,17 +13,27 @@ This is the concrete rollout for publishing the existing local FastAPI backend a
 
 Preview-only note:
 
-- The currently working interactive preview backend path is documented separately in [pharos-preview-backend-runbook.md](/home/cerebrhoe/repos/pharos-suite/docs/pharos-preview-backend-runbook.md).
-- This runbook remains production-facing for the `api.pharos-ai.ca` bridge and should not be used as the source of truth for preview-only backend values.
+- No active PHAROS preview Pages or preview backend surface exists as of 2026-03-30.
+- `pharos-preview-backend-runbook.md` is retained only as a retired historical note.
+
+Mail note:
+
+- PHAROS mail DNS and routing for `pharos@`, `consult@`, and `ml@pharos-ai.ca` are documented separately in `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/EMAIL-INFRA.md`.
 
 ## 1. Cloudflare Pages hostnames
 
-In the Cloudflare Pages project that currently serves the PHAROS frontend:
+Canonical state:
 
-- attach `pharos-ai.ca` as the canonical public hostname
+- PHAROS production Pages project: `pharos-suite`
+- No active PHAROS preview Pages project
+- PHAROS public hostname: `https://pharos-ai.ca`
+
+Controlled hostname cutover:
+
+- attach `pharos-ai.ca` as the canonical public hostname on `pharos-suite`
 - attach `www.pharos-ai.ca` and redirect it to `https://pharos-ai.ca`
-- attach `pharos-suite.ca` and `www.pharos-suite.ca` only if you intend to preserve legacy PHAROS traffic with redirects
-- do not attach `pharossuite.ca` to this project
+- attach `pharos-suite.ca` and `www.pharos-suite.ca` only if you intentionally preserve them as redirect-only legacy PHAROS hostnames
+- do not attach external non-PHAROS hostnames to the PHAROS Pages project
 
 ## 2. Install `cloudflared` on the backend machine
 
@@ -91,7 +101,12 @@ In Cloudflare Pages production variables, set:
 REACT_APP_BACKEND_URL=https://api.pharos-ai.ca
 ```
 
-Then trigger a production deploy.
+Then trigger a production deploy:
+
+```bash
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend
+npm run cf:deploy
+```
 
 ## 7. Verification
 
@@ -104,10 +119,12 @@ curl https://api.pharos-ai.ca/api/health
 
 Then verify in the browser:
 
-- `https://pharos-ai.ca/admin`
+- ~~`https://pharos-ai.ca/admin`~~ <!-- DEPRECATED: this path no longer resolves; original target was the PHAROS admin login route -->
 - `https://pharos-ai.ca/about`
 - `https://pharos-ai.ca/observatory`
 - `https://pharos-ai.ca/services`
+- `https://www.pharos-ai.ca` redirects to `https://pharos-ai.ca`
+- `https://pharos-suite.ca` redirects to `https://pharos-ai.ca`
 
 ## 8. Important note
 

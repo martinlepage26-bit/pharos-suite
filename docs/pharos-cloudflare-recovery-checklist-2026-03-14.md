@@ -51,10 +51,10 @@ This is the smallest safe recovery sequence for the current PHAROS public-domain
 
 ## Local files to trust during verification
 
-- Canonical metadata target: `/home/cerebrhoe/repos/pharos-suite/frontend/public/index.html`
-- Redirect middleware target: `/home/cerebrhoe/repos/pharos-suite/frontend/functions/_middleware.js`
-- Repo-side Pages expectations: `/home/cerebrhoe/repos/pharos-suite/docs/cloudflare-pages.md`
-- Repeatable verification script: `/home/cerebrhoe/repos/pharos-suite/scripts/verify_pharos_domains.sh`
+- Canonical metadata target: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend/public/index.html`
+- Redirect middleware target: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend/functions/_middleware.js`
+- Repo-side Pages expectations: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/docs/cloudflare-pages.md`
+- Repeatable verification script: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/scripts/verify_pharos_domains.sh`
 
 ## What this checklist does not prove
 

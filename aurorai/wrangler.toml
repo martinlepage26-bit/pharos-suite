@@ -1,0 +1,22 @@
+# AurorA — Cloudflare Worker config
+# Source: docs/d1-r2-endpoint-mapping.md
+
+name = "aurorai"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[[r2_buckets]]
+binding = "AURORA_FILES"
+# UNRESOLVED: exact bucket_name not specified in d1-r2-endpoint-mapping.md
+# R2 key prefix from mapping doc: "govern-artifacts"
+bucket_name = "govern-artifacts"
+
+[[d1_databases]]
+binding = "AURORA_DB"
+# UNRESOLVED: database_id not specified in d1-r2-endpoint-mapping.md
+database_name = "aurorai-dev"
+database_id = "UNRESOLVED-SET-AFTER-D1-CREATION"
+
+[dev]
+local_protocol = "http"
+port = 8787

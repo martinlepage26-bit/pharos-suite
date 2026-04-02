@@ -5,19 +5,20 @@ from datetime import datetime, timezone, timedelta
 from typing import Dict, Optional, List, Any
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from passlib.context import CryptContext
 from jose import JWTError, jwt
 import resend
 import logging
 
-from config import db, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, RESEND_API_KEY, SENDER_EMAIL
-from models import AuditAction, AuditLog, UserRole
+from compassai.backend.config import db, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, RESEND_API_KEY, SENDER_EMAIL
+from compassai.backend.models import AuditAction, AuditLog, UserRole
+from compassai.backend.security import (
+    get_password_hash as bcrypt_get_password_hash,
+    verify_password as bcrypt_verify_password,
+)
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
-# Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer(auto_error=False)
 
 # Initialize Resend
@@ -26,11 +27,11 @@ resend.api_key = RESEND_API_KEY
 
 # ==================== AUTH HELPERS ====================
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    return bcrypt_verify_password(plain_password, hashed_password)
 
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt_get_password_hash(password)
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:

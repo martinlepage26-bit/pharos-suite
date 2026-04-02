@@ -20,15 +20,15 @@
   - readiness results drawer,
   - compatibility styles for remaining operational portal pages.
 - Removed legacy/dead artifacts and unused components:
-  - `src/site.css`
   - `src/components/TypographyPolish.js`
   - `src/components/StarterKitCTA.js`
   - `src/components/HeroRadiantEmblem.js`
   - `src/components/MeridianField.js`
   - `src/components/RichTextContent.js`
-  - `src/components/HomeHeroLogo.css`
   - `public/normalized-results.html`
   - `public/tracker_dashboard.js`
+- Removed dead legacy CSS surfaces that were no longer imported anywhere in the live frontend.
+- Scoped non-shell CSS more tightly so `src/game.css` is loaded only by `src/pages/Game.js` instead of by the global app shell.
 - Removed legacy bottom-page/build-trail tags/artifacts (including prior rebuild trail content in public files).
 
 ## Design Principles Applied

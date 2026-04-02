@@ -9,10 +9,10 @@ from typing import Any, Dict, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
-from config import db
-from models import AuditAction
-from pharos_method_catalog import build_compassai_control_register, build_method_pack
-from utils import log_audit, require_assessor_or_admin, require_auth
+from compassai.backend.config import db
+from compassai.backend.models import AuditAction
+from compassai.backend.pharos_method_catalog import build_compassai_control_register, build_method_pack
+from compassai.backend.utils import log_audit, require_assessor_or_admin, require_auth
 
 router = APIRouter(tags=["PHAROS Method"])
 

@@ -2,6 +2,8 @@
 
 Date: 2026-03-13
 
+Historical note: this audit records a migration moment before the final 2026-03-30 two-surface cutover. The current Martin-side public hostname is `martin.govern-ai.ca`, not `pharossuite.ca`.
+
 Scope: `/home/cerebrhoe/repos/pharos-ai`
 
 This is a boundary-enforcement audit for the PharosSuite -> PHAROS migration. It does not treat every legacy string as a blind rename target. Some references are current PHAROS naming work, some are historical lineage, some should move out of the PHAROS public surface, and some are tied to external infrastructure that should only be changed in a coordinated follow-up.
@@ -18,7 +20,7 @@ This is a boundary-enforcement audit for the PharosSuite -> PHAROS migration. It
 
 - `pharos-ai.ca`: PHAROS public surface only
 - `pharos-suite.ca`: legacy product hostname redirected into PHAROS
-- `pharossuite.ca`: Martin Lepage personal/professional and non-PHAROS surface
+- `martin.govern-ai.ca`: Martin Lepage personal/professional and non-PHAROS surface
 - `AurorAI` and `CompassAI`: kept under PHAROS
 - `LOTUS`, resume/profile/portfolio/publication surfaces: kept out of PHAROS
 
@@ -54,7 +56,7 @@ Reason:
 - `frontend/src/App.js` should keep boundary routes that explicitly block `/portfolio` and legacy publication paths on `pharos-ai.ca`.
 - `frontend/public/_redirects` should keep redirect compatibility behavior for the bounded PHAROS surface.
 - `backend/server.py` should keep PHAROS runtime operations such as bookings, admin, FAQ, services, and platform status while fail-closing Lotus and publication endpoints.
-- Editorial/publication behavior should be re-homed to the Martin-side `pharossuite.ca` stack before being re-enabled anywhere.
+- Editorial/publication behavior should be re-homed to the Martin-side `martin.govern-ai.ca` stack before being re-enabled anywhere.
 
 ### Leave unchanged
 

@@ -468,7 +468,7 @@ Nothing gets flattened into "latest state only."
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L75)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L75)
 
 Mapping:
 
@@ -487,7 +487,7 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L114)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L114)
 
 Mapping:
 
@@ -500,8 +500,8 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L1118)
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L1130)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L1118)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L1130)
 
 Mapping:
 
@@ -515,8 +515,8 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L367)
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1682)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L367)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1682)
 
 Mapping:
 
@@ -526,7 +526,7 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1749)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1749)
 
 Mapping:
 
@@ -538,7 +538,7 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1841)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1841)
 
 Mapping:
 
@@ -550,7 +550,7 @@ Mapping:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1918)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1918)
 
 Mapping:
 

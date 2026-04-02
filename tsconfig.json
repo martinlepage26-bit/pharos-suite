@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noImplicitAny": true,
+    "exactOptionalPropertyTypes": true,
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "paths": {
+      "@pharos/shared/*": ["./shared/*"]
+    }
+  },
+  "include": ["aurorai/src/**/*", "compassai/src/**/*", "shared/**/*"],
+  "exclude": ["node_modules", "**/node_modules", "**/__tests__"]
+}

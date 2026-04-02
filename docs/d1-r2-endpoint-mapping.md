@@ -29,7 +29,7 @@ That means:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L838)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L838)
 
 ### Current behavior
 
@@ -167,7 +167,7 @@ For the first migration, option `1` is simpler.
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L1118)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L1118)
 
 ### Current behavior
 
@@ -207,7 +207,7 @@ It only means a versioned evidence envelope now exists.
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/aurorai/server.py#L1130)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/server.py#L1130)
 
 ### Current behavior
 
@@ -243,7 +243,7 @@ It does not mean the package has cleared governance review.
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1682)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1682)
 
 ### Current behavior
 
@@ -299,7 +299,7 @@ Optional later enhancement:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1749)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1749)
 
 ### Current behavior
 
@@ -350,7 +350,7 @@ If clients need the heavy JSON body:
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1841)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1841)
 
 ### Current behavior
 
@@ -395,7 +395,7 @@ Each new assessment has to be traceable to the evidence set and cycle that produ
 
 Source:
 
-- [server.py](/home/cerebrhoe/repos/pharos-suite/compassai/backend/server.py#L1918)
+- [server.py](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend/server.py#L1918)
 
 ### D1 target
 

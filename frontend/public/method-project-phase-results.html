@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Method Project Phase Results</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf8;
+      --ink: #1e1b18;
+      --muted: #645d55;
+      --line: #d7cfc3;
+      --accent: #1f5c4b;
+      --accent-soft: #dcece6;
+      --warn: #8d5c14;
+      --warn-soft: #f6ead6;
+      --risk: #8a2f2f;
+      --risk-soft: #f4dede;
+      --shadow: 0 18px 36px rgba(30, 27, 24, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #efe8dd 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1, h2 {
+      margin: 0 0 12px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 54px);
+      max-width: 12ch;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      max-width: 88ch;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .meta-card {
+      padding: 14px 16px;
+      background: #faf7f1;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .meta-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+
+    th:last-child, td:last-child {
+      border-right: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th {
+      background: #f6f1e7;
+      color: var(--ink);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .phase {
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.2;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .complete { background: var(--accent-soft); color: var(--accent); border-color: #b7d5ca; }
+    .bounded { background: var(--warn-soft); color: var(--warn); border-color: #e7cfaa; }
+    .partial { background: #ece8ff; color: #4f3a91; border-color: #d6cff7; }
+    .planned { background: #f0f0f0; color: #4e4e4e; border-color: #d6d6d6; }
+    .active { background: #dde9ff; color: #1f4b8f; border-color: #bfd2f5; }
+    .gap { background: var(--risk-soft); color: var(--risk); border-color: #e4baba; }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 12px;
+      color: #24332f;
+      background: #eef3f1;
+      padding: 1px 5px;
+      border-radius: 6px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    ul {
+      margin: 10px 0 0 18px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .wrap {
+        padding: 22px 14px 54px;
+      }
+
+      .hero, .section {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Method Project Results</p>
+      <h1>Phase results and sub-project completion stages</h1>
+      <p>This report was produced from the canonical rebuilt method archive and refreshed with the corrected topology evidence map <code>03_TOPOLOGY_THESEUS_AURYN_HOPF_LIMIT_MAP.md</code>. It distinguishes directly evidenced completion from bounded or scaffold-only states instead of flattening every artifact into "done."</p>
+      <div class="meta">
+        <div class="meta-card">
+          <strong>Primary packet</strong>
+          MASTERxMASTERxMASTER_REBUILT
+        </div>
+        <div class="meta-card">
+          <strong>Build status</strong>
+          116 files classified, 14 phase tests run
+        </div>
+        <div class="meta-card">
+          <strong>Consolidated status</strong>
+          ready_with_bounded_gaps
+        </div>
+        <div class="meta-card">
+          <strong>Generated</strong>
+          March 28, 2026
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Completion Stage Legend</h2>
+      <div class="legend">
+        <div class="legend-item"><span class="badge complete">Complete</span> strong evidence, built packet or retained anchor</div>
+        <div class="legend-item"><span class="badge active">Active</span> implementation surface with live preview/public linkage</div>
+        <div class="legend-item"><span class="badge partial">Partial</span> materially built but not fully closed across the archive</div>
+        <div class="legend-item"><span class="badge bounded">Bounded</span> usable but explicitly limited by evidence boundary</div>
+        <div class="legend-item"><span class="badge planned">Planned</span> conceptually present, not evidenced as a finished artifact</div>
+        <div class="legend-item"><span class="badge gap">Gap</span> scaffold retained because direct evidence is weak or absent</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Phase Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Theme</th>
+            <th>Completion Stage</th>
+            <th>Evidence Strength</th>
+            <th>Primary Result File</th>
+            <th>Why This Stage Was Assigned</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="phase">Phase 1</td>
+            <td>Ignition, laboratory formation, and protocol closure</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>01_PHASE1_KEY_RESULTS_EVIDENCE_TABLE.md</code></td>
+            <td>All four phase tests are marked supported, and the packet summary names three strongest retained prose anchors with explicit closure logic.</td>
+          </tr>
+          <tr>
+            <td class="phase">Phase 2</td>
+            <td>Governance revision, skill distribution, and meta-governance</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>Medium to high</td>
+            <td><code>02_GOVREV_RESULTS_PACKET_SUMMARY.md</code></td>
+            <td>The distributed skill layer, canonical stage tokens, skill-architect object, and Hephaistos forge stage are explicitly mapped. Some legacy stage assignments remain bounded rather than absolute.</td>
+          </tr>
+          <tr>
+            <td class="phase">Phase 3</td>
+            <td>Continuity, coupling topology, and bounded non-finality</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>03_TOPOLOGY_THESEUS_AURYN_HOPF_LIMIT_MAP.md</code></td>
+            <td>The refreshed topology evidence map finds 192 direct mentions across seven files with explicit definitions for Theseus, Auryn, Hopf, and “the limit does not exist.” That supersedes the earlier placeholder read that treated token coverage as weak.</td>
+          </tr>
+          <tr>
+            <td class="phase">Phase 4</td>
+            <td>Implementation surfaces and app method tests</td>
+            <td><span class="badge partial">Partial</span></td>
+            <td>Medium to high</td>
+            <td><code>04_IMPLEMENTATION_SURFACES_OVERVIEW_MATRIX.md</code></td>
+            <td>Govern-AI / PHAROS, CompassAI, and AuroraI have active evidence. Scriptorium is prefigured as a method surface. Lotus and Dr. Sort remain prefigured only. ECHO is still planned/conceptual.</td>
+          </tr>
+          <tr>
+            <td class="phase">Consolidated</td>
+            <td>Cross-phase synthesis and promotion readiness</td>
+            <td><span class="badge partial">Ready with bounded gaps</span></td>
+            <td>High</td>
+            <td><code>90_CONSOLIDATED_RESULTS_MATRIX.md</code></td>
+            <td>The archive is classified, mapped, and promotion-ready. Implementation-surface coverage remains mixed, and the consolidated matrix still needs refresh where it carries the older topology-gap assumption.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Sub-Project Completion Matrix</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Sub-project</th>
+            <th>Type</th>
+            <th>Completion Stage</th>
+            <th>Evidence Strength</th>
+            <th>Primary Evidence</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="phase">1</td>
+            <td>Charging Objects manuscript</td>
+            <td>Paper / source anchor</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>01_PHASE1_RESULTS_PACKET_SUMMARY.md</code></td>
+            <td>Named as one of the strongest retained prose anchors in the packet summary.</td>
+          </tr>
+          <tr>
+            <td class="phase">1</td>
+            <td>Agatha v4.1 manuscript</td>
+            <td>Paper / source anchor</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>01_PHASE1_RESULTS_PACKET_SUMMARY.md</code></td>
+            <td>Named as a strongest retained prose anchor and treated as source-bearing in the phase README.</td>
+          </tr>
+          <tr>
+            <td class="phase">1</td>
+            <td>Sealed Card protocol manuscript</td>
+            <td>Protocol / source anchor</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>01_PHASE1_RESULTS_PACKET_SUMMARY.md</code></td>
+            <td>Explicitly named as an anchor and carried forward as the closure stack core.</td>
+          </tr>
+          <tr>
+            <td class="phase">1</td>
+            <td>Phase-1 synthesis paper</td>
+            <td>Phase paper</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>01_PHASE1_PAPER_IGNITION_TO_PROTOCOL_CLOSURE.md</code></td>
+            <td>A full paper draft exists with abstract, sections, and conclusion.</td>
+          </tr>
+          <tr>
+            <td class="phase">1</td>
+            <td>Key results evidence table</td>
+            <td>Evidence table</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>01_PHASE1_KEY_RESULTS_EVIDENCE_TABLE.md</code></td>
+            <td>Ignition, laboratory, closure, and carriage tests are all marked supported.</td>
+          </tr>
+          <tr>
+            <td class="phase">2</td>
+            <td>AIGOV1 / VOICEOP1 containment baseline</td>
+            <td>Governance lineage</td>
+            <td><span class="badge bounded">Bounded</span></td>
+            <td>Medium</td>
+            <td><code>02_GOVERNANCE_REVISION_MANIFEST.json</code></td>
+            <td>Mapped as bounded equivalence because canonical filenames postdate the earliest containment files.</td>
+          </tr>
+          <tr>
+            <td class="phase">2</td>
+            <td>AIGOV2 / VOICEOP2 revised containment</td>
+            <td>Governance revision</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>Medium to high</td>
+            <td><code>02_GOVERNANCE_REVISION_MANIFEST.json</code></td>
+            <td>Explicitly tokenized as revised containment with manifest-backed evidence mapping.</td>
+          </tr>
+          <tr>
+            <td class="phase">2</td>
+            <td>Distributed skill layer</td>
+            <td>Method distribution</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>02_GOVERNANCE_REVISION_KEY_RESULTS_RECURSIVE_GOVERNANCE_INTENSIFICATION_AND_DISTRIBUTION.md</code></td>
+            <td>14 skill units are mapped and counted as a strongly evidenced distributed layer.</td>
+          </tr>
+          <tr>
+            <td class="phase">2</td>
+            <td>skill-architect canonical meta-governance</td>
+            <td>Meta-governance object</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>02_GOVERNANCE_REVISION_KEY_RESULTS_RECURSIVE_GOVERNANCE_INTENSIFICATION_AND_DISTRIBUTION.md</code></td>
+            <td>Named as the canonical meta-governance file and reinforced throughout the packet summary.</td>
+          </tr>
+          <tr>
+            <td class="phase">2</td>
+            <td>Hephaistos forge layer</td>
+            <td>Implementation governance</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>02_GOVERNANCE_REVISION_MANIFEST.json</code></td>
+            <td>Encoded as <code>HEPHAISTOS_WSL</code> with dual runtime mapping and high confidence.</td>
+          </tr>
+          <tr>
+            <td class="phase">2</td>
+            <td>Phase-2 revision/distribution paper</td>
+            <td>Phase paper</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>02_GOVREV_PAPER_REVISION_DISTRIBUTION_AND_FORGE.md</code></td>
+            <td>A full paper draft exists and ties containment, distribution, skill-architect, and forge layers together.</td>
+          </tr>
+          <tr>
+            <td class="phase">3</td>
+            <td>Continuity and coupling explainer</td>
+            <td>Control note</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>Medium</td>
+            <td><code>03_TOPOLOGY_CONTINUITY_AND_COUPLING_EXPLAINER.md</code></td>
+            <td>The continuity, coupling, and bounded non-convergence logic is explicitly written and usable as a control frame.</td>
+          </tr>
+          <tr>
+            <td class="phase">3</td>
+            <td>Non-convergence governance note</td>
+            <td>Control note</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>Medium</td>
+            <td><code>03_TOPOLOGY_NONCONVERGENCE_GOVERNANCE_NOTE.md</code></td>
+            <td>Contains explicit controls for contradiction arbitration, severity handling, and bounded claims.</td>
+          </tr>
+          <tr>
+            <td class="phase">3</td>
+            <td>Topology paper</td>
+            <td>Phase paper</td>
+            <td><span class="badge partial">Partial</span></td>
+            <td>Medium</td>
+            <td><code>03_TOPOLOGY_PAPER_CONTINUITY_COUPLING_AND_BOUNDED_NONFINALITY.md</code></td>
+            <td>The paper draft is present, but its evidence-boundary language is now stale relative to the corrected topology evidence map and should be refreshed.</td>
+          </tr>
+          <tr>
+            <td class="phase">3</td>
+            <td>Theseus / Auryn / Hopf / limit token map</td>
+            <td>Token map</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>03_TOPOLOGY_THESEUS_AURYN_HOPF_LIMIT_MAP.md</code></td>
+            <td>The corrected evidence map finds 192 direct mentions across seven files and states that the earlier weak/absent assessment was caused by an incomplete keyword index, not by missing archive evidence.</td>
+          </tr>
+          <tr>
+            <td class="phase">3</td>
+            <td>Pass-chain recursive sequence</td>
+            <td>Process map</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>Medium</td>
+            <td><code>03_TOPOLOGY_PASS_CHAIN_RECURSIVE_SEQUENCE.md</code></td>
+            <td>The six-step pass chain is explicitly documented as the anti-erasure control path.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>Govern-AI / PHAROS</td>
+            <td>App / public surface</td>
+            <td><span class="badge active">Active</span></td>
+            <td>High</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_govern_ai___pharos_PROFILE.md</code></td>
+            <td>Marked <code>active_preview_and_public_surface</code> with publication, backend, and routing evidence.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>CompassAI</td>
+            <td>App / preview surface</td>
+            <td><span class="badge active">Active</span></td>
+            <td>High</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_compassai_PROFILE.md</code></td>
+            <td>Marked <code>active_preview_linkage</code> with routing and preview support evidence.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>AuroraI</td>
+            <td>App / preview surface</td>
+            <td><span class="badge active">Active</span></td>
+            <td>High</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_aurorai_PROFILE.md</code></td>
+            <td>Marked <code>active_preview_linkage</code> with preview-state and route evidence.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>Scriptorium</td>
+            <td>Method surface</td>
+            <td><span class="badge partial">Partial</span></td>
+            <td>Medium</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_scriptorium_PROFILE.md</code></td>
+            <td>Mapped as <code>prefigured_method_surface</code>; more than conceptual, but not evidenced here as a fully active standalone app surface.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>ECHO</td>
+            <td>Conceptual app layer</td>
+            <td><span class="badge planned">Planned</span></td>
+            <td>Bounded low</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_echo_PROFILE.md</code></td>
+            <td>Explicitly marked <code>planned_or_conceptual</code>; no standalone app package is evidenced in the snapshot.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>Lotus</td>
+            <td>Future surface token</td>
+            <td><span class="badge planned">Planned</span></td>
+            <td>Bounded low</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_lotus_PROFILE.md</code></td>
+            <td>Reserved as a later surface token and explicitly marked <code>prefigured_only</code>.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>Dr. Sort</td>
+            <td>Future surface token</td>
+            <td><span class="badge planned">Planned</span></td>
+            <td>Bounded low</td>
+            <td><code>04_IMPLEMENTATION_SURFACE_dr._sort_PROFILE.md</code></td>
+            <td>No direct artifact is present in this archive snapshot; status is <code>prefigured_only</code>.</td>
+          </tr>
+          <tr>
+            <td class="phase">4</td>
+            <td>Implementation surfaces overview matrix</td>
+            <td>Matrix / test surface summary</td>
+            <td><span class="badge complete">Complete</span></td>
+            <td>High</td>
+            <td><code>04_IMPLEMENTATION_SURFACES_OVERVIEW_MATRIX.md</code></td>
+            <td>The matrix exists and already consolidates evidence basis, confidence, controls, output types, and lifecycle status across surfaces.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Bounded Notes</h2>
+      <ul>
+        <li>Phase 1 and Phase 2 have the strongest explicit “results packet” structure in the archive.</li>
+        <li>Phase 3 now has strong direct token evidence for Theseus, Auryn, Hopf, and “the limit does not exist.” The older bounded-gap wording belongs to an incomplete earlier scan, not to the corrected topology evidence map.</li>
+        <li>Phase 4 is mixed by design: some app surfaces are active, some are only prefigured, and the matrix should not be flattened into a single done/not-done label.</li>
+        <li>The consolidated project status remains <code>ready_with_bounded_gaps</code> because implementation surfaces are still mixed, even though the topology row is now materially stronger.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

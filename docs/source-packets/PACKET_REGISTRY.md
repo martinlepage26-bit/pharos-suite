@@ -1,0 +1,49 @@
+# Source Packet Registry
+
+- Realignment date: 2026-03-25
+- Governance mode: as-is preservation, no content normalization
+- Layout policy: single-level control (`archives/`, `manifests/`, registry); no exploded packet trees
+
+## Packets
+- `recurso_for_codex_full`
+  - mode: `as-is-original-zip`
+  - source: `/mnt/c/Users/softinfo/Documents/MASTER PACK/RECURSO_FOR_CODEX.zip`
+  - archive: `docs/source-packets/archives/RECURSO_FOR_CODEX.zip`
+  - entries: 1602
+  - sha256: `b55c2cda8bc2caea89f7e33fd4d67ba014ee4c18cabe2172a151c8ad9365dd99`
+- `master_pack_selected_7`
+  - mode: `as-is-selected-zip`
+  - source: `/mnt/c/Users/softinfo/Documents/MASTER PACK`
+  - archive: `docs/source-packets/archives/master-pack-selected-2026-03-25.zip`
+  - entries: 7
+  - sha256: `010433c7cfa44ca2d708857fa65a415d2bd4084c906d8c4a18c2d49be343eea1`
+- `post_recurs_stress_tests_selected_31`
+  - mode: `as-is-selected-zip`
+  - source: `/mnt/c/Users/softinfo/Documents/MASTER PACK/POST-RECURS/STRESS-TESTS`
+  - archive: `docs/source-packets/archives/post-recurs-stress-tests-selected-2026-03-25.zip`
+  - entries: 31
+  - sha256: `52d62975d767f1f83214467fff19f0577d2b519d889ccec1e3bc686eb759054f`
+- `sealed_card_master_markdown_20260325`
+  - mode: `as-is-original-zip`
+  - source: `/mnt/c/Users/softinfo/Downloads/SEALED CARD MASTER MARKDOWN-20260325T091824Z-1-001.zip`
+  - archive: `docs/source-packets/archives/SEALED CARD MASTER MARKDOWN-20260325T091824Z-1-001.zip`
+  - entries: 172
+  - sha256: `7295844254a8d78eec801361f9be014f508d98abfc1a017e8487d209dec18367`
+- `sciencedirect_articles_13feb2026`
+  - mode: `as-is-original-zip`
+  - source: `/mnt/c/Users/softinfo/Downloads/ScienceDirect_articles_13Feb2026_16-18-40.406.zip`
+  - archive: `docs/source-packets/archives/ScienceDirect_articles_13Feb2026_16-18-40.406.zip`
+  - entries: 26
+  - sha256: `2814c53666e08f7fed95f954d0a21bc4a83d4ac17111cfecff3b166ca5a70380`
+- `compress_20260325`
+  - mode: `as-is-original-zip`
+  - source: `/mnt/c/Users/softinfo/Downloads/COMPRESS-20260325T091906Z-1-001.zip`
+  - archive: `docs/source-packets/archives/COMPRESS-20260325T091906Z-1-001.zip`
+  - entries: 17
+  - sha256: `e183c6e147d75a6d1330d52fca2edf1d32f09238fbf15a2b964b989a8791dfe6`
+- `compress_desktop_folder_snapshot_20260325`
+  - mode: `as-is-folder-snapshot-zip`
+  - source: `/mnt/c/Users/softinfo/Desktop/COMPRESS`
+  - archive: `docs/source-packets/archives/COMPRESS-desktop-2026-03-25.zip`
+  - entries: 17
+  - sha256: `4f70a6eb3c91841cd3c4a9c898bc707f228b446c7e321b4f7a2b44e56c5c3d6e`

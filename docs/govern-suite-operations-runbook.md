@@ -12,6 +12,17 @@ Current public/private split:
 - Local frontend preview: `http://127.0.0.1:9201/`
 - Local backends only: `pharos-suite`, `AurorAI`, `CompassAI`
 
+## Post-Consolidation Changes
+
+- Canonical repo root moved from `/home/cerebrhoe/repos/pharos-suite` to `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite`
+- `pharos_integrations/` now resolves as a bundled monorepo package under that consolidated root
+- CompassAI no longer carries a standalone Worker/browser entrypoint; its live surfaces are the backend API and the PHAROS shell architecture-reference routes
+- If you memorized the old repo path, update shell aliases, `PYTHONPATH` snippets, and ad hoc scripts before using this runbook
+
+## Architecture decisions
+
+- [ADR 001 — retire CompassAI standalone edge surface](./adr/001-compassai-edge-surface-retirement.md)
+
 ## 1. What runs where
 
 | Service | Purpose | Local URL | Port |
@@ -51,13 +62,29 @@ Open a Linux terminal in WSL and use these commands.
 /home/cerebrhoe/repo-hosting/build-pharos-suite.sh
 ```
 
+### Run the local CI gate
+
+```bash
+/home/cerebrhoe/repo-hosting/ci-check.sh
+```
+
+This runs the consolidated CompassAI + AurorAI backend pytest suites, the AurorAI Vitest suite, and the PHAROS shell smoke test as a single local go/no-go check.
+
+### Pre-push hook
+
+```bash
+/home/cerebrhoe/repo-hosting/build-pharos-suite.sh
+```
+
+That build helper refreshes `.git/hooks/pre-push` from the tracked hook source at `/home/cerebrhoe/repo-hosting/pre-push.hook.sh`. Every push from the local `pharos-suite` repo then runs the same CI gate automatically before Git is allowed to continue.
+
 ## 3. Main folders
 
 Linux paths:
 
-- pharos-suite repo: `/home/cerebrhoe/repos/pharos-suite`
-- AurorAI repo: `/home/cerebrhoe/repos/pharos-suite/aurorai`
-- CompassAI repo: `/home/cerebrhoe/repos/pharos-suite/compassai`
+- pharos-suite repo: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite`
+- AurorAI repo: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai`
+- CompassAI repo: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai`
 - hosting scripts: `/home/cerebrhoe/repo-hosting`
 - logs: `/home/cerebrhoe/repo-hosting/logs`
 - pid files: `/home/cerebrhoe/repo-hosting/pids`
@@ -95,6 +122,7 @@ Local stack wiring already sets:
 
 - `COMPASSAI_BASE_URL=http://127.0.0.1:9205`
 - `COMPASSAI_INGEST_TOKEN=compassai-local-ingest-token`
+- `COMPASSAI_CLOSURE_READ_TOKEN=compassai-local-closure-read-token`
 
 That means:
 
@@ -102,6 +130,15 @@ That means:
 2. AurorAI posts it to `CompassAI /api/v1/evidence`
 3. CompassAI stores it against a use case
 4. CompassAI can then assess that use case
+
+For the bounded closure fetch-through path:
+
+1. AurorAI resolves the linked `use_case_id` from its local evidence packages
+2. AurorAI calls `GET /api/v1/use-cases/{usecase_id}/closure`
+3. When `COMPASSAI_CLOSURE_READ_TOKEN` is set, AurorAI must send it as a bearer token
+4. CompassAI rejects missing or invalid closure-read tokens with `401` / `403`
+
+AurorAI keeps that closure read pinned to its configured `COMPASSAI_BASE_URL`; request-time base URL overrides are not part of the closure-read contract.
 
 ## 5. Health and smoke-check URLs
 
@@ -143,13 +180,13 @@ tail -f /home/cerebrhoe/repo-hosting/logs/compassai.log
 ### Open the repo
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite
 ```
 
 ### Frontend dev mode
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/frontend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend
 npm install
 npm start
 ```
@@ -162,21 +199,29 @@ This runs:
 ### Frontend production build
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/frontend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend
 npm run build
+```
+
+### CI gate before deploy or handoff
+
+```bash
+/home/cerebrhoe/repo-hosting/ci-check.sh
 ```
 
 ### Cloudflare Pages deploy
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/frontend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend
 npm run cf:deploy
 ```
+
+Canonical production target is the `pharos-suite` Pages project serving `pharos-ai.ca`.
 
 ### Backend manual run
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/backend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/backend
 env MONGO_URL=mongodb://127.0.0.1:27017 DB_NAME=pharos_suite /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9202
 ```
 
@@ -185,7 +230,7 @@ env MONGO_URL=mongodb://127.0.0.1:27017 DB_NAME=pharos_suite /home/cerebrhoe/.lo
 ### Open the repo
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/aurorai
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai
 ```
 
 ### Important local prerequisite
@@ -193,20 +238,20 @@ cd /home/cerebrhoe/repos/pharos-suite/aurorai
 Make sure the local uploads directory exists:
 
 ```bash
-mkdir -p /home/cerebrhoe/repos/pharos-suite/aurorai/uploads
+mkdir -p /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/uploads
 ```
 
 ### Manual run
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/aurorai
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai
 env \
   MONGO_URL=mongodb://127.0.0.1:27017 \
   DB_NAME=aurorai \
   AURORAI_API_TOKEN=aurorai-local-dev-token \
   COMPASSAI_BASE_URL=http://127.0.0.1:9205 \
   COMPASSAI_INGEST_TOKEN=compassai-local-ingest-token \
-  PYTHONPATH="/home/cerebrhoe/repos/pharos-suite/pharos_integrations${PYTHONPATH:+:$PYTHONPATH}" \
+  PYTHONPATH="/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite${PYTHONPATH:+:$PYTHONPATH}" \
   /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9206
 ```
 
@@ -256,18 +301,18 @@ curl -X POST http://127.0.0.1:9206/api/documents/<DOC_ID>/handoff-to-compassai \
 ### Open the repo
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/compassai/backend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend
 ```
 
 ### Manual run
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/compassai/backend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/compassai/backend
 env \
   MONGO_URL=mongodb://127.0.0.1:27017 \
   DB_NAME=compassai \
   COMPASSAI_INGEST_TOKEN=compassai-local-ingest-token \
-  PYTHONPATH="/home/cerebrhoe/repos/pharos-suite/pharos_integrations${PYTHONPATH:+:$PYTHONPATH}" \
+  PYTHONPATH="/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite${PYTHONPATH:+:$PYTHONPATH}" \
   /home/cerebrhoe/.local/bin/uvicorn server:app --host 127.0.0.1 --port 9205
 ```
 
@@ -374,13 +419,14 @@ Observed result:
 ## 11. Known local caveats
 
 - `pharos-suite` frontend is public on Cloudflare Pages, but the backends are still local-only
-- `AurorAI` currently accepts `PDF` and `TXT`, not `DOC` or `DOCX`
+- `AurorAI` currently accepts `PDF`, `TXT`, and `DOCX`; legacy `DOC` stays unsupported
+- image-only PDFs attempt OCR first through the guarded local OCR path; if the runtime is unavailable, the document is kept with an explicit `OCR required/unavailable` state instead of pretending extraction succeeded
 - `AurorAI` falls back to heuristic extraction if the LLM path is not fully configured
 - `CompassAI` requires JWT auth for most routes
 - if a local upload path disappears, recreate it with:
 
 ```bash
-mkdir -p /home/cerebrhoe/repos/pharos-suite/aurorai/uploads
+mkdir -p /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/aurorai/uploads
 ```
 
 ## 12. Daily operator checklist
@@ -395,7 +441,7 @@ mkdir -p /home/cerebrhoe/repos/pharos-suite/aurorai/uploads
 ### Before editing frontend
 
 ```bash
-cd /home/cerebrhoe/repos/pharos-suite/frontend
+cd /home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/frontend
 npm run build
 ```
 

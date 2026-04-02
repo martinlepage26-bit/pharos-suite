@@ -1,11 +1,16 @@
 # Public Backend Plan
 
-As of 2026-03-13, the PHAROS frontend is being normalized to `pharos-ai.ca`, while the FastAPI backend still runs locally on `127.0.0.1:9202`.
+As of 2026-03-30, the PHAROS frontend is normalized to `pharos-ai.ca`, while the FastAPI backend still runs locally on `127.0.0.1:9202`.
 
 Preview-only note:
 
-- The currently working interactive preview path is documented separately in [pharos-preview-backend-runbook.md](/home/cerebrhoe/repos/pharos-suite/docs/pharos-preview-backend-runbook.md).
-- That preview path uses `https://pharos-suite-review.pages.dev` with a preview-only backend host and should not be confused with the production-facing `api.pharos-ai.ca` bridge described below.
+- The former preview-only Pages and backend path is retired.
+- [pharos-preview-backend-runbook.md](/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/docs/pharos-preview-backend-runbook.md) is now a retired historical note, not a live setup guide.
+- Do not confuse deleted preview surfaces with the production-facing `api.pharos-ai.ca` bridge described below.
+
+Mail note:
+
+- The live PHAROS mail baseline for `pharos@`, `consult@`, and `ml@pharos-ai.ca` is documented in `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/EMAIL-INFRA.md`.
 
 ## Decision
 
@@ -96,7 +101,7 @@ Add Cloudflare controls on `api.pharos-ai.ca`:
 6. Set `REACT_APP_BACKEND_URL=https://api.pharos-ai.ca` in Cloudflare Pages production environment variables.
 7. Trigger a new Pages production deployment.
 8. Verify:
-   - `https://pharos-ai.ca/admin`
+   - ~~`https://pharos-ai.ca/admin`~~ <!-- DEPRECATED: this path no longer resolves; original target was the PHAROS admin login route -->
    - `https://pharos-ai.ca/about`
    - `https://pharos-ai.ca/observatory`
    - `https://pharos-ai.ca/services`

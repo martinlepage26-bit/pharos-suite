@@ -5,9 +5,9 @@ from fastapi import APIRouter, HTTPException, Depends
 from typing import List, Dict, Optional
 from datetime import datetime
 
-from config import db
-from models import AISystemCreate, AISystem, AuditAction
-from utils import require_auth, require_assessor_or_admin, log_audit
+from compassai.backend.config import db
+from compassai.backend.models import AISystemCreate, AISystem, AuditAction
+from compassai.backend.utils import require_auth, require_assessor_or_admin, log_audit
 
 router = APIRouter(prefix="/ai-systems", tags=["AI Systems"])
 

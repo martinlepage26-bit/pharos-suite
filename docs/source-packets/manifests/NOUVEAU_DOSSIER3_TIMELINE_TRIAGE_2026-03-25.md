@@ -1,0 +1,190 @@
+# Nouveau Dossier (3) Timeline Triage (2026-03-25)
+
+- Source root: `/mnt/c/Users/softinfo/Desktop/Nouveau dossier (3)`
+- Files reviewed: `1115` (full scan)
+- Decision model: deterministic score using format, path role, chronology/protocol terms, and telemetry de-ranking rules
+
+## Decision Counts
+- `take-into-timeline`: `70`
+- `supporting-context`: `159`
+- `de-rank`: `886`
+
+## File-Type Snapshot
+- `.json`: `620`
+- `.md`: `291`
+- `.txt`: `69`
+- `.py`: `41`
+- `.pyc`: `41`
+- `.docx`: `22`
+- `.zip`: `11`
+- `.pdf`: `7`
+- `.mmd`: `4`
+- `.odt`: `2`
+- `.svg`: `2`
+- `.litcoffee`: `2`
+- `.csv`: `1`
+- `.html`: `1`
+- `.cmd`: `1`
+
+## A) Take Into Timeline (Top Candidates)
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/MASTER_KEY.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1) (1).docx` | score `10` | anchor-term:draft|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1) (2).docx` | score `10` | anchor-term:draft|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1).docx` | score `10` | anchor-term:draft|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1-FULL-INTEGRATION.docx` | score `10` | anchor-term:draft|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1.docx` | score `10` | anchor-term:draft|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1_intro-lit-review-revised.docx` | score `10` | anchor-term:draft|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Algorithmic management in the workplace (EN).pdf` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Queer_Experiences_of_Religion_How_Marginalization_.pdf` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Queer_Methods_and_Methodologies.pdf` | score `10` | anchor-term:method|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Stuttering Machines_ Algorithmic Dysfluency and the Ethics of Interruption.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/mythe_de_sisyphe.pdf` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1).docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_cleaned.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_completed_clean.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso_cleaned.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso_completed_clean.docx` | score `10` | anchor-term:recurso|source-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/AI GOV CONSTITUTION (1).pdf` | score `10` | anchor-term:constitution|source-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY Voice Spec v3 OFFICIAL (2).pdf` | score `10` | anchor-term:governance|source-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/MASTER_KEY.odt` | score `10` | anchor-term:governance|source-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/12-agent-cleaning-pass.txt` | score `8` | anchor-term:pass|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/7-reviewer-protocol-debate.txt` | score `8` | anchor-term:protocol|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/7-subagent-expansion-pass.txt` | score `8` | anchor-term:pass|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 0.0 NOTES PX3 Explainer.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 0.0 NOTES PX3 Explainer_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 3.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 3_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC0.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC0_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/Doc4.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/MAIN EXPLAIN.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/MAIN EXPLAIN_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/NOTES PX3 Explainer.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/NOTES PX3 Explainer_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1) (2).md` | score `8` | anchor-term:draft|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 1.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 1_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 2.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 2_cleaned.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Governance by Denial How Legibility.txt` | score `8` | anchor-term:governance|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Mod.1-Algorythmic Biais ans Surveillance.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_completed_9000_clean.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso_completed_9000_clean.txt` | score `8` | anchor-term:recurso|narrative-format|source-path:RAW RECURSIVE DATA/RECURSUS
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY APP VOCAB.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY APP WF.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY APP.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY WF Sum.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY WK SocialStudies.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY voice CODE.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/Henry.txt` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/README.md` | score `8` | anchor-term:governance|narrative-format|source-path:governance-authority
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/00_README.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/01_Project_Brief.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/03_Concept_Note_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/04_Research_Blueprint_and_Deviation_Memo.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/05_Alignment_Gate_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/06_Versioned_Packet_and_Change_Log.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/07_Stabilizer_QA_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/08_Incident_and_Drift_Protocol.md` | score `8` | anchor-term:protocol|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/09_Field_Map_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/10_Method_SOP_Package.md` | score `8` | anchor-term:method|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/11_Governance_Findings_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/12_Decision_Document_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/13_Public_Translation_Package.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/14_Twelve_Agent_QA_Note.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/15_Executive_Facing_Summary.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/16_Operator_Runbook.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/19_Sample_Decision_Packet.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/README.md` | score `8` | anchor-term:governance|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+
+## B) Supporting Context (Selected)
+- `Governance of Generative AI.pdf` | score `6` | anchor-term:governance|source-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/AGATHAFULLAUDIT.odt` | score `6` | anchor-term:recurso|source-format
+- `RECURSO/METAMETADATA/METADATA/3.claude/RECURSO-DRAFT1-merged-revisedGEM.docx` | score `6` | anchor-term:draft|source-format
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package.zip` | score `6` | anchor-term:governance|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/17_Governance_Flow.mmd` | score `6` | anchor-term:governance|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/18_Governance_Flow_Sequence.mmd` | score `6` | anchor-term:governance|source-path:METAMETADATA/ai_governance_deliverables_package
+- `SCRIPTS/Paper outcomes RESTART-2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` | score `6` | anchor-term:draft|source-format
+- `SCRIPTS/Paper outcomes RESTART-3/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` | score `6` | anchor-term:draft|source-format
+- `SCRIPTS/Paper outcomes RESTART-4/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` | score `6` | anchor-term:draft|source-format
+- `SCRIPTS/Paper outcomes RESTART/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` | score `6` | anchor-term:draft|source-format
+- `SCRIPTS/Paper outcomes ROUND2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` | score `6` | anchor-term:draft|source-format
+- `SCRIPTS/Paper outcomes/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` | score `6` | anchor-term:draft|source-format
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/02_Evidence_Packet.md` | score `5` | anchor-term:governance|control-telemetry:evidence_packet|narrative-format|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/cabinet-epistemic-audit-rigor.v1.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/concept-fluency-interruption.v1.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/concept.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/outcome.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/panel-if-gov-core.v1.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/panel.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/seat.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/triage.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/voice-dissent-labor-legibility.v1.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/voice.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/votes.schema.json` | score `5` | anchor-term:governance|schema-contract|source-path:METAMETADATA/ai_governance_deliverables_package
+- `PEER_REVIEW_READY_MANUSCRIPT.md` | score `4` | anchor-term:manuscript|narrative-format
+- `RECURSO/METAMETADATA/CONSOLIDATED-PACK.txt` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/DELIVEREX.txt` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/ETYMO.txt` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/EXPLAIN PHASE 1 PASS.txt` | score `4` | anchor-term:phase|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_ARCHIVE_STATUS.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_CANONICAL_STACK.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_GOVERNANCE_AUTHORITY.md` | score `4` | anchor-term:governance|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_MASTER_ANCHOR.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_STRUCTURE_MAP.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_THREE_AGENT_ALIGNMENT_NOTE.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/EXPLAIN PHASE 1 PASS.txt` | score `4` | anchor-term:phase|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RECURSIVE VOICE-PHASE1_mathematical_analysis.md` | score `4` | anchor-term:phase|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RECURSIVE VOICE-PHASE1_state_model.md` | score `4` | anchor-term:phase|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/anchor-paragraph.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/confidence-matrix.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/four-part-architecture.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/governing-claim.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/project-brief.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/evidence-assessment.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/evidence-classes.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/evidence-packet.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/receipts-skeleton.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/source-function-ledger.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/02_layer-2-compression/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/02_layer-2-compression/concept-note-package.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/03_layer-3-blueprint/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/03_layer-3-blueprint/research-blueprint-and-deviation-memo.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/04_layer-4-alignment-gate/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/04_layer-4-alignment-gate/alignment-gate-package.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/05_layer-5-versioned-packet/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/05_layer-5-versioned-packet/versioned-packet-and-change-log.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/06_layer-6-stabilizers/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/06_layer-6-stabilizers/stabilizer-qa-package.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/07_layer-7-incidents/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/07_layer-7-incidents/incident-and-drift-protocol.md` | score `4` | anchor-term:protocol|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/08_layer-8-field-map/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/08_layer-8-field-map/field-map-package.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/09_layer-9-method-sop/README.md` | score `4` | anchor-term:method|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/09_layer-9-method-sop/method-sop-package.md` | score `4` | anchor-term:method|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/10_layer-10-findings/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/10_layer-10-findings/governance-findings-package.md` | score `4` | anchor-term:governance|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/conclusion.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/decision-document-package.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/executive-memo.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/next-step-recommendations.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/12_layer-12-public-translation/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/12_layer-12-public-translation/public-translation-package.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/README.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/council-procedure.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/executive-facing-summary.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/memory-writeback-discipline.md` | score `4` | anchor-term:recurso|narrative-format
+- `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/operator-runbook.md` | score `4` | anchor-term:recurso|narrative-format
+
+## C) De-Rank Rule
+- Governance run telemetry (`casefile`, `decision-packet`, `outcome`, `triage`, `votes`, `dataset_manifest`) is retained for auditability but not used as primary chronology anchors.
+- Runtime/cache artifacts (`__pycache__`, `.pyc`) are excluded from timeline construction.
+- Contracts and schema samples are control infrastructure, not developmental chronology evidence.
+
+## Output Files
+- CSV full register: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-ai/docs/source-packets/manifests/NOUVEAU_DOSSIER3_TIMELINE_TRIAGE_2026-03-25.csv`
+- Markdown summary: `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-ai/docs/source-packets/manifests/NOUVEAU_DOSSIER3_TIMELINE_TRIAGE_2026-03-25.md`

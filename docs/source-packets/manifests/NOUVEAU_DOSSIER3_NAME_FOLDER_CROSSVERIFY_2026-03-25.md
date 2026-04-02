@@ -1,0 +1,248 @@
+# Nouveau Dossier (3) Name + Folder Structure Cross-Verification
+
+- Scope: full folder scan (`1115` files).
+- Date policy: filesystem metadata ignored; only names/content/structure used.
+
+## Structure Integrity
+- Passed checks: `45`
+- Failed checks: `0`
+- All required layer and deliverables structure checks passed.
+
+## Governance Run Packets
+- Run folders checked: `5`
+- Complete packets: `5`
+- Partial packets: `0`
+
+## Name Lineage Clusters
+- Clusters with 2+ files: `81`
+- `dataset_manifest` (91)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/dataset_manifest.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/dataset_manifest.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/dataset_manifest.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/dataset_manifest.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/dataset_manifest.json` [base-or-copy]
+  - ... +86 more
+- `evidence_packet` (91)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/evidence_packet.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/evidence_packet.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/evidence_packet.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/evidence_packet.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/evidence_packet.md` [base-or-copy]
+  - ... +86 more
+- `claim_bridge` (54)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/claim_bridge.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/claim_bridge.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/claim_bridge.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/claim_bridge.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/salomon/restart-salomon-00297d4e97/claim_bridge.json` [base-or-copy]
+  - ... +49 more
+- `decision_packet` (54)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/decision_packet.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/decision_packet.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/decision_packet.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/decision_packet.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/salomon/restart-salomon-00297d4e97/decision_packet.json` [base-or-copy]
+  - ... +49 more
+- `governed_claims` (54)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/governed_claims.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/governed_claims.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/governed_claims.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/governed_claims.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/salomon/restart-salomon-00297d4e97/governed_claims.json` [base-or-copy]
+  - ... +49 more
+- `reconciliation` (54)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/reconciliation.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/reconciliation.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/reconciliation.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/reconciliation.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/salomon/restart-salomon-00297d4e97/reconciliation.json` [base-or-copy]
+  - ... +49 more
+- `votes` (54)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/master/restart-master-00297d4e97/votes.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/next-pass-master/restart-next-pass-97c87f3d4c/votes.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/pharos/restart-pharos-00297d4e97/votes.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/phenixking/restart-phenixking-00297d4e97/votes.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/salomon/restart-salomon-00297d4e97/votes.json` [base-or-copy]
+  - ... +49 more
+- `postmortem` (37)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/postmortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/runner/restart-runner-00297d4e97/postmortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2 TESTS/runner/restart2-runner-6eed7729eb/postmortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/postmortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/postmortem.md` [base-or-copy]
+  - ... +32 more
+- `premortem` (37)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/premortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/runner/restart-runner-00297d4e97/premortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2 TESTS/runner/restart2-runner-6eed7729eb/premortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/premortem.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/premortem.md` [base-or-copy]
+  - ... +32 more
+- `parallel_script_crosswalk` (35)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/parallel_script_crosswalk.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/runner/restart-runner-00297d4e97/parallel_script_crosswalk.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2 TESTS/runner/restart2-runner-6eed7729eb/parallel_script_crosswalk.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/parallel_script_crosswalk.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_crosswalk.json` [base-or-copy]
+  - ... +30 more
+- `parallel_script_recalibration` (35)
+  - `SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/parallel_script_recalibration.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART TESTS/runner/restart-runner-00297d4e97/parallel_script_recalibration.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2 TESTS/runner/restart2-runner-6eed7729eb/parallel_script_recalibration.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/parallel_script_recalibration.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md` [base-or-copy]
+  - ... +30 more
+- `readme` (17)
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/README.md` [base-or-copy]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/README.md` [base-or-copy]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/02_layer-2-compression/README.md` [base-or-copy]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/03_layer-3-blueprint/README.md` [base-or-copy]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/04_layer-4-alignment-gate/README.md` [base-or-copy]
+  - ... +12 more
+- `p0-ag-recurso-draft1-merged` (12)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` [draft+revised]
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md` [draft+revised]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` [draft+revised]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md` [draft+revised]
+  - `SCRIPTS/Paper outcomes RESTART-4/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx` [draft+revised]
+  - ... +7 more
+- `governance_deterministic_runner.cpython-312` (8)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/__pycache__/governance_deterministic_runner.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/__pycache__/governance_deterministic_runner.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/AG-runner/__pycache__/governance_deterministic_runner.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/AG-runner/__pycache__/governance_deterministic_runner.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/__pycache__/governance_deterministic_runner.cpython-312.pyc` [base-or-copy]
+  - ... +3 more
+- `kingmalek` (8)
+  - `SCRIPTS/KINGMALEK.litcoffee` [base-or-copy]
+  - `SCRIPTS/KINGMALEK.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/KINGMALEK.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/KINGMALEK.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/GEM-MALEK-PHENIX/KINGMALEK.py` [base-or-copy]
+  - ... +3 more
+- `recurso` (8)
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1).docx` [base-or-copy]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_cleaned.docx` [cleaned]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_completed_9000_clean.txt` [completed]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_completed_clean.docx` [completed]
+  - `RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso.docx` [base-or-copy]
+  - ... +3 more
+- `final_pass_unified_master_governance.cpython-312` (7)
+  - `SCRIPTS/Paper outcomes RESTART-2/__pycache__/final_pass_unified_master_governance.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/__pycache__/final_pass_unified_master_governance.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/__pycache__/final_pass_unified_master_governance.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/__pycache__/final_pass_unified_master_governance.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/__pycache__/final_pass_unified_master_governance.cpython-312.pyc` [base-or-copy]
+  - ... +2 more
+- `governance_deterministic_runner` (7)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_deterministic_runner.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/governance_deterministic_runner.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/AG-runner/governance_deterministic_runner.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/governance_deterministic_runner.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/AG-runner/governance_deterministic_runner.py` [base-or-copy]
+  - ... +2 more
+- `pharos prince` (7)
+  - `SCRIPTS/PHAROS PRINCE.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/PHAROS PRINCE.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/PHAROS PRINCE.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/AG-runner/PHAROS PRINCE.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/PHAROS PRINCE.py` [base-or-copy]
+  - ... +2 more
+- `pharos prince.cpython-312` (7)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/__pycache__/PHAROS PRINCE.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/__pycache__/PHAROS PRINCE.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/AG-runner/__pycache__/PHAROS PRINCE.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/AG-runner/__pycache__/PHAROS PRINCE.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/__pycache__/PHAROS PRINCE.cpython-312.pyc` [base-or-copy]
+  - ... +2 more
+- `phenixking` (7)
+  - `SCRIPTS/PHENIXKING.md` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/PHENIXKING.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/PHENIXKING.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/GEM-MALEK-PHENIX/PHENIXKING.py` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/PHENIXKING.py` [base-or-copy]
+  - ... +2 more
+- `salomon.cpython-312` (7)
+  - `SCRIPTS/Paper outcomes RESTART-2/ANTHRO-SALOMON/__pycache__/SALOMON.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/ANTHRO-SALOMON/__pycache__/SALOMON.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/ANTHRO-SALOMON/__pycache__/SALOMON.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4/ANTHRO-SALOMON/__pycache__/SALOMON.cpython-312.pyc` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/ANTHRO-SALOMON/__pycache__/SALOMON.cpython-312.pyc` [base-or-copy]
+  - ... +2 more
+- `ag-runner-md-with-readme-key-2426d4903d` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d.zip` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d.zip` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d.zip` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d.zip` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d.zip` [base-or-copy]
+  - ... +1 more
+- `casefile-ag-runner-md-with-readme-key-2426d4903d` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/casefile-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/casefile-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/casefile-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/casefile-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/casefile-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - ... +1 more
+- `casefile-debug-kingmalek-smoke-16a6b2387f` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/casefile-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/casefile-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/casefile-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/casefile-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/casefile-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - ... +1 more
+- `casefile-kingmalek-md-readme-zip-afaf0136e9` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/casefile-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/casefile-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/casefile-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/casefile-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/casefile-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - ... +1 more
+- `casefile-parallel-kingmalek-wrapper-5861bc1349` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/casefile-parallel-kingmalek-wrapper-5861bc1349.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/casefile-parallel-kingmalek-wrapper-5861bc1349.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/casefile-parallel-kingmalek-wrapper-5861bc1349.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/casefile-parallel-kingmalek-wrapper-5861bc1349.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/casefile-parallel-kingmalek-wrapper-5861bc1349.v1.json` [base-or-copy]
+  - ... +1 more
+- `decision-packet-ag-runner-md-with-readme-key-2426d4903d` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/decision-packet-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/decision-packet-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/decision-packet-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/decision-packet-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/AG-runner/governance_runs/ag-runner-md-with-readme-key-2426d4903d/decision-packet-ag-runner-md-with-readme-key-2426d4903d.v1.json` [base-or-copy]
+  - ... +1 more
+- `decision-packet-debug-kingmalek-smoke-16a6b2387f` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/decision-packet-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/decision-packet-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/decision-packet-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/decision-packet-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/decision-packet-debug-kingmalek-smoke-16a6b2387f.v1.json` [base-or-copy]
+  - ... +1 more
+- `decision-packet-kingmalek-md-readme-zip-afaf0136e9` (6)
+  - `SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/decision-packet-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/decision-packet-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/decision-packet-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/decision-packet-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - `SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/decision-packet-kingmalek-md-readme-zip-afaf0136e9.v1.json` [base-or-copy]
+  - ... +1 more
+
+## Timeline Decision x Folder Role
+- `take-into-timeline`
+  - `timeline_source_raw`: `41`
+  - `timeline_layered_method`: `10`
+  - `timeline_deliverables`: `19`
+- `supporting-context`
+  - `timeline_layered_method`: `47`
+  - `timeline_deliverables`: `18`
+  - `support_scripts`: `71`
+  - `other`: `23`
+- `de-rank`
+  - `timeline_layered_method`: `22`
+  - `timeline_deliverables`: `4`
+  - `support_runtime_runs`: `51`
+  - `support_scripts`: `795`
+  - `other`: `14`
+
+## Outputs
+- `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-ai/docs/source-packets/manifests/NOUVEAU_DOSSIER3_NAME_FOLDER_CROSSVERIFY_2026-03-25.md`
+- `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-ai/docs/source-packets/manifests/NOUVEAU_DOSSIER3_NAME_LINEAGE_GROUPS_2026-03-25.csv`

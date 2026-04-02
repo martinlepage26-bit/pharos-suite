@@ -1,0 +1,26 @@
+{
+  "name": "aurorai",
+  "version": "1.0.0",
+  "description": "Compatibility directory name: `aurorai/`",
+  "private": true,
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.13.5",
+    "@cloudflare/workers-types": "^4.20260329.1",
+    "vitest": "^4.1.2",
+    "wrangler": "^4.78.0"
+  }
+}

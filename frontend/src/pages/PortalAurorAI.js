@@ -48,8 +48,8 @@ const heroSignals = [
   },
   {
     label: 'Current backend truth',
-    title: 'PDF and TXT only today',
-    description: 'The PHAROS route exposes the live upload contract honestly while flagging `.doc`, `.docx`, and OCR as the next backend lift.'
+    title: 'PDF, TXT, DOCX, guarded OCR',
+    description: 'Aurora now accepts `.pdf`, `.txt`, and `.docx`. Image-only PDFs attempt OCR, and if the OCR runtime is unavailable the record stays explicit about that boundary.'
   },
   {
     label: 'Governance value',
@@ -112,7 +112,7 @@ const PortalAurorAI = () => {
     ? 'Pipeline metadata and category stats are public. Upload, document actions, and handoff flows require the Aurora API token.'
     : 'Preview unavailable. The Aurora module API is not publicly configured for this PHAROS preview.';
   const connectionHelper = moduleOriginConfigured
-    ? 'Default local target is http://127.0.0.1:9206. The current backend only accepts PDF and TXT uploads; DOC/DOCX extraction and OCR still need implementation.'
+    ? 'Default local target is http://127.0.0.1:9206. The backend accepts PDF, TXT, and DOCX uploads. OCR is attempted for scan-heavy PDFs and degrades explicitly when the OCR runtime is unavailable.'
     : 'Live module data is not exposed on this preview until a public Aurora origin is configured.';
 
   const categoryBreakdown = useMemo(() => normalizeList(stats, 'stats'), [stats]);
@@ -249,7 +249,7 @@ const PortalAurorAI = () => {
     resetActionState();
 
     if (!uploadForm.file) {
-      setActionError('Choose a PDF or TXT file before upload.');
+      setActionError('Choose a PDF, TXT, or DOCX file before upload.');
       return;
     }
 
@@ -632,14 +632,14 @@ const PortalAurorAI = () => {
                       <h2>Ingest documents into the evidence pipeline</h2>
                     </div>
                     <p className="body-sm">
-                      The frontend now targets the live upload endpoint directly. Current backend support is PDF and TXT only; DOC, DOCX, and OCR remain next-phase work.
+                      The frontend now targets the live upload endpoint directly. Current backend support covers PDF, TXT, and DOCX, with OCR fallback for scan-heavy PDFs when the local runtime can provide it.
                     </p>
                   </div>
 
                   <div className="portal-status portal-status-warning">
                     <AlertTriangle size={16} />
                     <span>
-                      Current backend constraint: `.doc`, `.docx`, and scanned-document OCR are not implemented yet, so this route deliberately reflects the real upload boundary instead of masking it.
+                      Current backend boundary: legacy `.doc` remains unsupported. For image-only PDFs, Aurora will either recover text through OCR or record clearly that OCR was required but unavailable.
                     </span>
                   </div>
 
@@ -649,7 +649,7 @@ const PortalAurorAI = () => {
                       <input
                         type="file"
                         className="portal-input portal-input-file"
-                        accept=".pdf,.txt"
+                        accept=".pdf,.txt,.docx"
                         onChange={(event) => setUploadForm({ file: event.target.files?.[0] || null })}
                         required
                       />

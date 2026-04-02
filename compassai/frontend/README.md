@@ -26,7 +26,7 @@ This directory is not a runnable standalone CompassAI browser surface as current
 - the real canonical runtime in this repo is `../backend/server.py`
 - CompassAI is the governance app within PHAROS, and Aurora is its intake workflow.
 - the frontend state is staged/partial, not a proven runnable standalone app
-- the current browser presentation for CompassAI is the PHAROS route at `/portal/compassai` inside `/home/cerebrhoe/repos/pharos-suite`
+- the current browser presentation for CompassAI is the PHAROS route at `/portal/compassai` inside `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite`
 
 ## Do not claim yet
 

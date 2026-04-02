@@ -1,0 +1,230 @@
+decision,relative_path,ext,chronology_signal_strength,signal_score,internal_signals
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY APP WF.txt,.txt,high,12,content_phase:v1 | content_phase:v2 | content_phase:v3 | content_phase:PHASE 0 | content_phase:V0 | content_phase:PHASE 1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY APP.txt,.txt,high,12,content_phase:v1 | content_phase:v2 | content_phase:v3 | content_phase:PHASE 0 | content_phase:V0 | content_phase:PHASE 1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY WK SocialStudies.txt,.txt,high,8,content_phase:PHASE 0 | content_phase:V0 | content_phase:PHASE 1 | content_phase:V1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY WF Sum.txt,.txt,high,6,content_phase:Phase 1 | content_phase:Phase 2 | content_phase:Phase 3
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/06_Versioned_Packet_and_Change_Log.md,.md,high,6,content_phase:v1 | content_phase:v2 | content_phase:v3
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/05_Alignment_Gate_Package.md,.md,medium,4,content_phase:Phase 1 | content_phase:Phase 2
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 3.txt,.txt,low,2,content_phase:PHASE 1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 3_cleaned.txt,.txt,low,2,content_phase:Phase 1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC0.txt,.txt,low,2,content_phase:LAYER 0
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC0_cleaned.txt,.txt,low,2,content_phase:Phase 1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 1_cleaned.txt,.txt,low,2,content_phase:Phase 1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 2_cleaned.txt,.txt,low,2,content_phase:Phase 2
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY Voice Spec v3 OFFICIAL (2).pdf,.pdf,low,2,path_phase:v3
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/00_README.md,.md,low,2,content_phase:v1
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/19_Sample_Decision_Packet.md,.md,low,2,content_phase:v1
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/README.md,.md,low,2,content_phase:v1
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/12-agent-cleaning-pass.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/7-reviewer-protocol-debate.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/7-subagent-expansion-pass.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 0.0 NOTES PX3 Explainer.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/DOC 0.0 NOTES PX3 Explainer_cleaned.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/Doc4.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/MAIN EXPLAIN.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/MAIN EXPLAIN_cleaned.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/MASTER_KEY.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/NOTES PX3 Explainer.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/NOTES PX3 Explainer_cleaned.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1) (1).docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1) (2).docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1) (2).md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1 (1).docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1-FULL-INTEGRATION.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/RECURSO-DRAFT1_intro-lit-review-revised.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 1.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/doc 2.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Algorithmic management in the workplace (EN).pdf,.pdf,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Governance by Denial How Legibility.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Mod.1-Algorythmic Biais ans Surveillance.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Queer_Experiences_of_Religion_How_Marginalization_.pdf,.pdf,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Queer_Methods_and_Methodologies.pdf,.pdf,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/Stuttering Machines_ Algorithmic Dysfluency and the Ethics of Interruption.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/pack 1-2-3/mythe_de_sisyphe.pdf,.pdf,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1).docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_cleaned.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_completed_9000_clean.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso (1)_completed_clean.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso_cleaned.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso_completed_9000_clean.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RAW RECURSIVE DATA/RECURSUS/recurso_completed_clean.docx,.docx,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/AI GOV CONSTITUTION (1).pdf,.pdf,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY APP VOCAB.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/HENRY voice CODE.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/HENRY/Henry.txt,.txt,low,0,
+take-into-timeline,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/governance-authority/README.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/01_Project_Brief.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/03_Concept_Note_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/04_Research_Blueprint_and_Deviation_Memo.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/07_Stabilizer_QA_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/08_Incident_and_Drift_Protocol.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/09_Field_Map_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/10_Method_SOP_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/11_Governance_Findings_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/12_Decision_Document_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/13_Public_Translation_Package.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/14_Twelve_Agent_QA_Note.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/15_Executive_Facing_Summary.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/16_Operator_Runbook.md,.md,low,0,
+take-into-timeline,RECURSO/METAMETADATA/ai_governance_deliverables_package/MASTER_KEY.odt,.odt,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_STRUCTURE_MAP.md,.md,high,28,content_phase:Layer 0 | content_phase:Layer 1 | content_phase:Layer 2 | content_phase:Layer 3 | content_phase:Layer 4 | content_phase:Layer 5 | content_phase:Layer 6 | content_phase:Layer 7 | content_phase:Layer 8 | content_phase:Layer 9 | content_phase:Layer 10 | content_phase:Layer 11 | content_phase:Layer 12 | content_phase:Layer 13
+supporting-context,SCRIPTS/Paper outcomes RESTART-4 TESTS/runner/restart4-corrected-runner-v2-0d39e54855/parallel_script_recalibration.md,.md,high,22,path_phase:v2 | content_phase:v2 | content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:v1
+supporting-context,SCRIPTS/Paper outcomes RESTART TESTS/kingmalek/restart-kingmalek-00297d4e97/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART TESTS/runner/restart-runner-00297d4e97/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART-2 TESTS/runner/restart2-runner-6eed7729eb/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/ANTHRO-SALOMON/SALOMON.composite-reference.py.txt,.txt,high,16,content_phase:pass_0 | content_phase:Pass 0 | content_phase:pass_1 | content_phase:Pass 1 | content_phase:pass_2 | content_phase:Pass 2 | content_phase:pass_3 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-3 TESTS/runner/restart3-runner-34adc61c1a/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/ANTHRO-SALOMON/SALOMON.composite-reference.py.txt,.txt,high,16,content_phase:pass_0 | content_phase:Pass 0 | content_phase:pass_1 | content_phase:Pass 1 | content_phase:pass_2 | content_phase:Pass 2 | content_phase:pass_3 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-4 TESTS/runner/restart4-corrected-runner-c35d594f4c/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/ANTHRO-SALOMON/SALOMON.composite-reference.py.txt,.txt,high,16,content_phase:pass_0 | content_phase:Pass 0 | content_phase:pass_1 | content_phase:Pass 1 | content_phase:pass_2 | content_phase:Pass 2 | content_phase:pass_3 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART/ANTHRO-SALOMON/SALOMON.composite-reference.py.txt,.txt,high,16,content_phase:pass_0 | content_phase:Pass 0 | content_phase:pass_1 | content_phase:Pass 1 | content_phase:pass_2 | content_phase:Pass 2 | content_phase:pass_3 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes ROUND2 TESTS/kingmalek/round2-kingmalek-e9baa5535f/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes ROUND2 TESTS/runner/round2-runner-e9baa5535f/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes ROUND2/ANTHRO-SALOMON/SALOMON.composite-reference.py.txt,.txt,high,16,content_phase:pass_0 | content_phase:Pass 0 | content_phase:pass_1 | content_phase:Pass 1 | content_phase:pass_2 | content_phase:Pass 2 | content_phase:pass_3 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes/ANTHRO-SALOMON/SALOMON.composite-reference.py.txt,.txt,high,16,content_phase:pass_0 | content_phase:Pass 0 | content_phase:pass_1 | content_phase:Pass 1 | content_phase:pass_2 | content_phase:Pass 2 | content_phase:pass_3 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes/GEM-MALEK-PHENIX/parallel_runs/kingmalek/kingmalek-md-readme-zip-afaf0136e9/parallel_script_recalibration.md,.md,high,16,content_phase:pass_0 | content_phase:pass_1 | content_phase:pass_2 | content_phase:pass_3 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/README3.txt,.txt,high,10,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/README3.txt,.txt,high,10,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-4 RUNTIME-ARCHIVE/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/README3.txt,.txt,high,10,content:2026-03-10 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART/README3.txt,.txt,high,10,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes/GEM-MALEK-PHENIX/debug_runs/kingmalek/debug-kingmalek-smoke-16a6b2387f/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes/GEM-MALEK-PHENIX/parallel_runs/kingmalek-wrapper/parallel-kingmalek-wrapper-5861bc1349/parallel_script_recalibration.md,.md,high,10,content_phase:pass_0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3 | content_phase:Pass 0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/05_layer-5-versioned-packet/versioned-packet-and-change-log.md,.md,high,8,path_phase:layer-5 | content_phase:v1 | content_phase:v2 | content_phase:v3
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/GEM-MALEK-PHENIX/README1.txt,.txt,high,8,content:2026-03-10 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes ROUND2/README3.txt,.txt,high,8,"content:March 10, 2026 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes/README3.txt,.txt,high,8,"content:March 10, 2026 | content_phase:Pass 0 | content_phase:Pass 1 | content_phase:Pass 2 | content_phase:Pass 3"
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/evidence-packet.md,.md,high,6,path_phase:layer-1 | content_phase:Phase 1 | content_phase:Phase 2
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/source-function-ledger.md,.md,high,6,path_phase:layer-1 | content_phase:Phase 1 | content_phase:Phase 2
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/04_layer-4-alignment-gate/alignment-gate-package.md,.md,high,6,path_phase:layer-4 | content_phase:Phase 1 | content_phase:Phase 2
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/ANTHRO-SALOMON/README2.txt,.txt,high,6,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 1 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/ANTHRO-SALOMON/README2.txt,.txt,high,6,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 1 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/ANTHRO-SALOMON/README2.txt,.txt,high,6,content:2026-03-10 | content_phase:Pass 1 | content_phase:Pass 3
+supporting-context,SCRIPTS/Paper outcomes RESTART/ANTHRO-SALOMON/README2.txt,.txt,high,6,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 1 | content_phase:Pass 3"
+supporting-context,RECURSO/METAMETADATA/CONSOLIDATED-PACK.txt,.txt,medium,4,content_phase:v3 | content_phase:v4
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RECURSIVE VOICE-PHASE1_mathematical_analysis.md,.md,medium,4,path_phase:PHASE1 | content_phase:PHASE1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/RECURSIVE VOICE-PHASE1_state_model.md,.md,medium,4,path_phase:PHASE1 | content_phase:PHASE1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/README.md,.md,medium,4,path_phase:layer-0 | content_phase:Layer 0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/README.md,.md,medium,4,path_phase:layer-1 | content_phase:Layer 1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/02_layer-2-compression/README.md,.md,medium,4,path_phase:layer-2 | content_phase:Layer 2
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/03_layer-3-blueprint/README.md,.md,medium,4,path_phase:layer-3 | content_phase:Layer 3
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/04_layer-4-alignment-gate/README.md,.md,medium,4,path_phase:layer-4 | content_phase:Layer 4
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/05_layer-5-versioned-packet/README.md,.md,medium,4,path_phase:layer-5 | content_phase:Layer 5
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/06_layer-6-stabilizers/README.md,.md,medium,4,path_phase:layer-6 | content_phase:Layer 6
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/07_layer-7-incidents/README.md,.md,medium,4,path_phase:layer-7 | content_phase:Layer 7
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/08_layer-8-field-map/README.md,.md,medium,4,path_phase:layer-8 | content_phase:Layer 8
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/09_layer-9-method-sop/README.md,.md,medium,4,path_phase:layer-9 | content_phase:Layer 9
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/10_layer-10-findings/README.md,.md,medium,4,path_phase:layer-10 | content_phase:Layer 10
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/README.md,.md,medium,4,path_phase:layer-11 | content_phase:Layer 11
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/12_layer-12-public-translation/README.md,.md,medium,4,path_phase:layer-12 | content_phase:Layer 12
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/README.md,.md,medium,4,path_phase:layer-13 | content_phase:Layer 13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/runtime-overview.md,.md,medium,4,path_phase:layer-13 | content_phase:Layer 13
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/02_Evidence_Packet.md,.md,medium,4,content_phase:Phase 1 | content_phase:Phase 2
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/cabinet-epistemic-audit-rigor.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/concept-fluency-interruption.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/panel-if-gov-core.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/sample-outcome.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/sample-triage.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/sample-votes.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/voice-dissent-labor-legibility.v1.json,.json,medium,4,path_phase:v1 | content_phase:v1
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/AG-runner/README0.txt,.txt,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0"
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/GEM-MALEK-PHENIX/README1.txt,.txt,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 1"
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/AG-runner/README0.txt,.txt,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0"
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/GEM-MALEK-PHENIX/README1.txt,.txt,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 1"
+supporting-context,SCRIPTS/Paper outcomes RESTART-4 TESTS/RUN_HISTORY_REPORT_2026-03-10.md,.md,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0"
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/AG-runner/README0.txt,.txt,medium,4,content:2026-03-10 | content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes RESTART/AG-runner/README0.txt,.txt,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 0"
+supporting-context,SCRIPTS/Paper outcomes RESTART/GEM-MALEK-PHENIX/README1.txt,.txt,medium,4,"content:2026-03-10 | content:March 10, 2026 | content_phase:Pass 1"
+supporting-context,SCRIPTS/Paper outcomes ROUND2/ANTHRO-SALOMON/README2.txt,.txt,medium,4,"content:March 10, 2026 | content_phase:Pass 1 | content_phase:Pass 3"
+supporting-context,SCRIPTS/Paper outcomes/ANTHRO-SALOMON/README2.txt,.txt,medium,4,"content:March 10, 2026 | content_phase:Pass 1 | content_phase:Pass 3"
+supporting-context,RECURSO/METAMETADATA/EXPLAIN PHASE 1 PASS.txt,.txt,low,2,path_phase:PHASE 1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/EXPLAIN PHASE 1 PASS.txt,.txt,low,2,path_phase:PHASE 1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/anchor-paragraph.md,.md,low,2,path_phase:layer-0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/confidence-matrix.md,.md,low,2,path_phase:layer-0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/four-part-architecture.md,.md,low,2,path_phase:layer-0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/governing-claim.md,.md,low,2,path_phase:layer-0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/00_layer-0-root/project-brief.md,.md,low,2,path_phase:layer-0
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/evidence-assessment.md,.md,low,2,path_phase:layer-1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/evidence-classes.md,.md,low,2,path_phase:layer-1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/01_layer-1-evidence/receipts-skeleton.md,.md,low,2,path_phase:layer-1
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/02_layer-2-compression/concept-note-package.md,.md,low,2,path_phase:layer-2
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/03_layer-3-blueprint/research-blueprint-and-deviation-memo.md,.md,low,2,path_phase:layer-3
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/06_layer-6-stabilizers/stabilizer-qa-package.md,.md,low,2,path_phase:layer-6
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/07_layer-7-incidents/incident-and-drift-protocol.md,.md,low,2,path_phase:layer-7
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/08_layer-8-field-map/field-map-package.md,.md,low,2,path_phase:layer-8
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/09_layer-9-method-sop/method-sop-package.md,.md,low,2,path_phase:layer-9
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/10_layer-10-findings/governance-findings-package.md,.md,low,2,path_phase:layer-10
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/conclusion.md,.md,low,2,path_phase:layer-11
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/decision-document-package.md,.md,low,2,path_phase:layer-11
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/executive-memo.md,.md,low,2,path_phase:layer-11
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/11_layer-11-decision/next-step-recommendations.md,.md,low,2,path_phase:layer-11
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/12_layer-12-public-translation/public-translation-package.md,.md,low,2,path_phase:layer-12
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/council-procedure.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/executive-facing-summary.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/memory-writeback-discipline.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/operator-runbook.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/pre-run-checklist.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/twelve-agent-qa-note.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/13_layer-13-runtime-and-operations/visualization-index.md,.md,low,2,path_phase:layer-13
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/recurso-AG_layered_structure/14_contracts/README.md,.md,low,2,content_phase:v1
+supporting-context,RECURSO/METAMETADATA/METADATA/2.GEMINI - META LAYER ANALYSIS/GEMFULLAUDIT.txt,.txt,low,2,content_phase:Layer 0
+supporting-context,RECURSO/METAMETADATA/SKILL ANALYZE.txt,.txt,low,2,content_phase:v0.112
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/METHOD_LOCK.txt,.txt,low,2,content_phase:Pass 0
+supporting-context,SCRIPTS/Paper outcomes ROUND2/AG-runner/README0.txt,.txt,low,2,"content:March 10, 2026 | content_phase:Pass 0"
+supporting-context,SCRIPTS/Paper outcomes ROUND2/GEM-MALEK-PHENIX/README1.txt,.txt,low,2,"content:March 10, 2026 | content_phase:Pass 1"
+supporting-context,SCRIPTS/Paper outcomes/AG-runner/README0.txt,.txt,low,2,"content:March 10, 2026 | content_phase:Pass 0"
+supporting-context,SCRIPTS/Paper outcomes/GEM-MALEK-PHENIX/README1.txt,.txt,low,2,"content:March 10, 2026 | content_phase:Pass 1"
+supporting-context,Governance of Generative AI.pdf,.pdf,low,0,
+supporting-context,PEER_REVIEW_READY_MANUSCRIPT.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/DELIVEREX.txt,.txt,low,0,
+supporting-context,RECURSO/METAMETADATA/ETYMO.txt,.txt,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_ARCHIVE_STATUS.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_CANONICAL_STACK.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_GOVERNANCE_AUTHORITY.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_MASTER_ANCHOR.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/00_THREE_AGENT_ALIGNMENT_NOTE.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/1.ChatGPT-AgathaAgent/AGATHAFULLAUDIT.odt,.odt,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/2.GEMINI - META LAYER ANALYSIS/SHADOWMASTER_REVERSED_LOGIC.txt,.txt,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/3.claude/CLAUDEFULLAUDIT.txt,.txt,low,0,
+supporting-context,RECURSO/METAMETADATA/METADATA/3.claude/RECURSO-DRAFT1-merged-revisedGEM.docx,.docx,low,0,
+supporting-context,RECURSO/METAMETADATA/SKILL.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/TRIANGULATION_FULL_REPORT.md,.md,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package.zip,.zip,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/17_Governance_Flow.mmd,.mmd,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/18_Governance_Flow_Sequence.mmd,.mmd,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/concept.schema.json,.json,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/outcome.schema.json,.json,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/panel.schema.json,.json,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/seat.schema.json,.json,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/triage.schema.json,.json,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/voice.schema.json,.json,low,0,
+supporting-context,RECURSO/METAMETADATA/ai_governance_deliverables_package/contracts/votes.schema.json,.json,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx,.docx,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART-2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md,.md,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx,.docx,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART-3/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md,.md,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx,.docx,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART-4/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md,.md,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx,.docx,low,0,
+supporting-context,SCRIPTS/Paper outcomes RESTART/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md,.md,low,0,
+supporting-context,SCRIPTS/Paper outcomes ROUND2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx,.docx,low,0,
+supporting-context,SCRIPTS/Paper outcomes ROUND2/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md,.md,low,0,
+supporting-context,SCRIPTS/Paper outcomes/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.docx,.docx,low,0,
+supporting-context,SCRIPTS/Paper outcomes/AG-runner/P0-AG-RECURSO-DRAFT1-merged-revised.md,.md,low,0,
+supporting-context,SCRIPTS/pharos_recalibration.docx,.docx,low,0,

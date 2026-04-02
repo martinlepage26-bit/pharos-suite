@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PHAROS | AI Governance Protocol for Auditing Reasoning Continuity</title>
+  <meta name="description" content="PHAROS is an AI governance protocol for auditing reasoning continuity, revision fidelity, perturbation robustness, and path-dependent synthesis in institutional AI workflows.">
+  <style>
+    :root {
+      --bg-hero: #091523;
+      --bg-footer: #08111b;
+      --bg-page: #f4f2ed;
+      --bg-panel: #ffffff;
+      --bg-muted: #ebe7df;
+      --text-strong: #142033;
+      --text-body: #2f3a48;
+      --text-muted: #677283;
+      --border: #d8d2c8;
+      --border-strong: #b9b1a3;
+      --link: #173d74;
+      --accent: #d6c4a0;
+      --shadow: 0 18px 40px rgba(7, 17, 27, 0.08);
+      --radius: 18px;
+      --content-width: 1180px;
+      --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --layer-source: #534AB7;
+      --layer-method: #0F6E56;
+      --layer-working: #BA7517;
+      --layer-distribution: #3C3489;
+      --layer-implementation: #993C1D;
+      --layer-generated: #888780;
+      --turn-bg: #f2ead7;
+      --turn-border: #d9c6a0;
+      --turn-text: #694a0c;
+      --current-bg: #e8f1df;
+      --current-border: #9ab56b;
+      --current-text: #35531a;
+      --timeline-panel: rgba(255, 255, 255, 0.86);
+      --timeline-rail: rgba(20, 32, 51, 0.14);
+      --timeline-glow: rgba(83, 74, 183, 0.1);
+      --timeline-glow-warm: rgba(214, 196, 160, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-page);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--content-width));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--text-strong);
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.08;
+    }
+
+    .section-intro {
+      max-width: 58rem;
+      margin: 1rem 0 0;
+      font-size: 1.05rem;
+      color: var(--text-body);
+    }
+
+    .hero {
+      background: var(--bg-hero);
+      color: #f8f5ee;
+      padding: 1.25rem 0 5.5rem;
+    }
+
+    .hero-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.25rem 0 2.5rem;
+    }
+
+    .brand-mark {
+      font-size: 0.86rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(248, 245, 238, 0.74);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.95rem;
+      color: rgba(248, 245, 238, 0.86);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #ffffff;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(17rem, 0.7fr);
+      gap: 3rem;
+      align-items: end;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(3.1rem, 9vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-copy h2 {
+      margin: 1rem 0 0;
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: rgba(248, 245, 238, 0.9);
+    }
+
+    .hero-copy p {
+      max-width: 42rem;
+      margin: 1.5rem 0 0;
+      font-size: 1.08rem;
+      color: rgba(248, 245, 238, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3.25rem;
+      padding: 0.95rem 1.35rem;
+      border: 1px solid rgba(248, 245, 238, 0.3);
+      border-radius: 999px;
+      background: #f7f2e7;
+      color: #142033;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+      background: #ffffff;
+    }
+
+    .hero-note {
+      padding: 1.5rem;
+      border: 1px solid rgba(248, 245, 238, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(248, 245, 238, 0.78);
+      font-size: 0.97rem;
+    }
+
+    .hero-note strong {
+      display: block;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.2rem;
+    }
+
+    .card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 0.8rem;
+      color: var(--text-strong);
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-body);
+      font-size: 0.98rem;
+    }
+
+    .timeline-shell {
+      position: relative;
+      margin-top: 2.2rem;
+      padding: 1.9rem;
+      border: 1px solid rgba(20, 32, 51, 0.12);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top left, var(--timeline-glow-warm), transparent 27rem),
+        radial-gradient(circle at top right, var(--timeline-glow), transparent 22rem),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 241, 0.98));
+      box-shadow: 0 24px 60px rgba(7, 17, 27, 0.08);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .timeline-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.52);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    .timeline-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) repeat(3, minmax(0, 0.72fr));
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 1.35rem;
+      padding-bottom: 1.35rem;
+      border-bottom: 1px solid rgba(20, 32, 51, 0.1);
+    }
+
+    .timeline-caption {
+      margin: 0;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--link);
+    }
+
+    .timeline-summary {
+      max-width: 34rem;
+      margin: 0.45rem 0 0;
+      color: var(--text-body);
+      font-size: 0.98rem;
+    }
+
+    .overview-stat {
+      display: grid;
+      gap: 0.22rem;
+      min-height: 100%;
+      padding-left: 1rem;
+      border-left: 1px solid rgba(20, 32, 51, 0.1);
+    }
+
+    .overview-value {
+      color: var(--text-strong);
+      font-family: var(--font-serif);
+      font-size: clamp(1.55rem, 2vw, 2rem);
+      line-height: 1;
+    }
+
+    .overview-label {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .overview-note {
+      color: var(--text-body);
+      font-size: 0.93rem;
+      line-height: 1.45;
+    }
+
+    .timeline-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .legend-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.58rem 0.86rem;
+      border: 1px solid rgba(20, 32, 51, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.66);
+      color: var(--text-body);
+      font-size: 0.83rem;
+      cursor: pointer;
+      transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .legend-button:hover,
+    .legend-button:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .legend-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.35rem;
+      height: 1.35rem;
+      padding: 0 0.38rem;
+      border-radius: 999px;
+      background: rgba(20, 32, 51, 0.08);
+      color: var(--text-strong);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .legend-button.is-active,
+    .legend-button:hover,
+    .legend-button:focus-visible {
+      border-color: var(--text-strong);
+      background: rgba(245, 240, 231, 0.92);
+      color: var(--text-strong);
+    }
+
+    .layer-dot {
+      display: inline-block;
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .phase-block {
+      margin-bottom: 1.5rem;
+      padding: 1.35rem 1.4rem 1.3rem;
+      border: 1px solid rgba(20, 32, 51, 0.08);
+      border-radius: 24px;
+      background: linear-gradient(180deg, var(--timeline-panel), rgba(248, 244, 237, 0.78));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .phase-badge {
+      padding: 0.28rem 0.72rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .phase-label {
+      color: var(--text-strong);
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .phase-date {
+      margin-left: auto;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .phase-result {
+      margin: 0 0 1rem 4.4rem;
+      max-width: 58rem;
+      color: var(--text-body);
+      font-size: 0.97rem;
+    }
+
+    .phase-result strong {
+      color: var(--text-strong);
+    }
+
+    .event-list {
+      margin-left: 0.8rem;
+      padding-left: 1.5rem;
+      border-left: 1px solid var(--timeline-rail);
+    }
+
+    .event {
+      position: relative;
+      display: grid;
+      grid-template-columns: 6.2rem minmax(0, 1fr);
+      gap: 1rem;
+      margin-bottom: 0.55rem;
+      padding: 0.9rem 1rem 0.95rem 1.15rem;
+      border: 1px solid rgba(20, 32, 51, 0.06);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 24px rgba(7, 17, 27, 0.04);
+      transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .event:last-child {
+      margin-bottom: 0;
+    }
+
+    .event::before {
+      content: "";
+      position: absolute;
+      left: -1.92rem;
+      top: 1.35rem;
+      width: 0.72rem;
+      height: 0.72rem;
+      border: 2px solid rgba(20, 32, 51, 0.18);
+      border-radius: 999px;
+      background: #ffffff;
+      box-shadow: 0 0 0 0.35rem rgba(255, 255, 255, 0.82);
+    }
+
+    .event.is-muted {
+      opacity: 0.28;
+      filter: grayscale(0.2);
+    }
+
+    .event.is-match {
+      transform: translateX(8px);
+      border-color: rgba(23, 61, 116, 0.16);
+      background: rgba(252, 249, 243, 0.98);
+      box-shadow: 0 14px 32px rgba(7, 17, 27, 0.08);
+    }
+
+    .event:hover,
+    .event:focus-within {
+      transform: translateX(4px);
+      border-color: rgba(20, 32, 51, 0.12);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 14px 28px rgba(7, 17, 27, 0.08);
+    }
+
+    .ev-date {
+      align-self: start;
+      width: fit-content;
+      padding: 0.45rem 0.68rem;
+      border-radius: 999px;
+      background: rgba(20, 32, 51, 0.05);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ev-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      color: var(--text-strong);
+      font-size: 0.97rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .ev-title .layer-dot {
+      margin-top: 0.35rem;
+    }
+
+    .ev-note {
+      margin-top: 0.18rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .turn-marker {
+      margin: 0.95rem 0 1.45rem;
+      padding: 1.15rem 1.2rem 1.25rem;
+      border: 1px solid rgba(217, 198, 160, 0.88);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(244, 236, 217, 0.96), rgba(240, 226, 194, 0.8));
+      color: var(--turn-text);
+      box-shadow: 0 18px 32px rgba(105, 74, 12, 0.08);
+    }
+
+    .turn-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .turn-header strong {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: #4f3606;
+    }
+
+    .turn-date {
+      font-size: 0.85rem;
+      color: rgba(79, 54, 6, 0.8);
+    }
+
+    .turn-text,
+    .turn-result {
+      margin: 0.45rem 0 0;
+      font-size: 0.94rem;
+    }
+
+    .divider {
+      margin: 1.5rem 0;
+      border: none;
+      border-top: 1px dashed var(--border-strong);
+    }
+
+    .operator-layer {
+      margin: 1rem 0 0 4.4rem;
+      border: 1px solid rgba(20, 32, 51, 0.08);
+      border-radius: 16px;
+      background: rgba(250, 248, 243, 0.82);
+      overflow: hidden;
+    }
+
+    .operator-layer summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.9rem 1rem;
+      font-weight: 600;
+      color: var(--text-strong);
+    }
+
+    .operator-layer summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .operator-layer summary::after {
+      content: "+";
+      float: right;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .operator-layer[open] summary::after {
+      content: "−";
+    }
+
+    .operator-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 0.9rem;
+      padding: 0 1rem 1rem;
+    }
+
+    .operator-card {
+      padding: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #ffffff;
+    }
+
+    .operator-card strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--text-strong);
+      font-size: 0.92rem;
+    }
+
+    .operator-card span {
+      color: var(--text-body);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .current-block {
+      padding: 0.15rem 0 0;
+    }
+
+    .current-shell {
+      border: 1px solid var(--current-border);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(232, 241, 223, 0.98), rgba(222, 236, 208, 0.9));
+      padding: 1rem 1.1rem;
+      box-shadow: 0 18px 36px rgba(70, 98, 24, 0.1);
+    }
+
+    .current-shell .phase-label,
+    .current-shell .phase-result,
+    .current-shell .ev-title,
+    .current-shell .ev-note,
+    .current-shell .phase-date {
+      color: var(--current-text);
+    }
+
+    .current-shell .event-list {
+      border-left-color: rgba(53, 83, 26, 0.45);
+    }
+
+    .protocol-preamble {
+      max-width: 60rem;
+      margin-top: 1.15rem;
+      font-size: 1rem;
+      color: var(--text-body);
+    }
+
+    .protocol-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.2rem;
+      margin: 2rem 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: stage;
+    }
+
+    .protocol-item {
+      counter-increment: stage;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      padding: 1.15rem;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg-panel);
+      box-shadow: var(--shadow);
+    }
+
+    .protocol-item::before {
+      content: counter(stage, decimal-leading-zero);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.35rem;
+      height: 2.35rem;
+      border-radius: 999px;
+      background: #efe8da;
+      color: var(--text-strong);
+      font-weight: 700;
+      font-size: 0.85rem;
+      line-height: 1;
+    }
+
+    .protocol-item h3 {
+      margin: 0 0 0.35rem;
+      color: var(--text-strong);
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .protocol-item p {
+      margin: 0;
+      color: var(--text-body);
+      font-size: 0.95rem;
+    }
+
+    .about-block {
+      margin-top: 1.5rem;
+      max-width: 52rem;
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--bg-panel);
+      box-shadow: var(--shadow);
+      color: var(--text-body);
+      font-size: 1.03rem;
+    }
+
+    footer {
+      background: var(--bg-footer);
+      color: rgba(248, 245, 238, 0.84);
+      padding: 3rem 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 2rem;
+      align-items: end;
+    }
+
+    .footer-title {
+      margin: 0;
+      color: #ffffff;
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+    }
+
+    .footer-copy {
+      margin: 0.8rem 0 0;
+      max-width: 36rem;
+      font-size: 0.98rem;
+    }
+
+    .footer-meta {
+      display: grid;
+      gap: 0.35rem;
+      justify-items: start;
+    }
+
+    .footer-meta a {
+      color: #ffffff;
+    }
+
+    .footer-meta a:hover,
+    .footer-meta a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .footer-copyline {
+      margin-top: 1rem;
+      color: rgba(248, 245, 238, 0.6);
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .footer-grid,
+      .cards-grid,
+      .protocol-list {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-overview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .timeline-overview > :first-child {
+        grid-column: 1 / -1;
+      }
+
+      .hero-note {
+        max-width: 34rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .section {
+        padding: 4rem 0;
+      }
+
+      .hero {
+        padding-bottom: 4.5rem;
+      }
+
+      .hero-nav,
+      .phase-header,
+      .turn-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .phase-date,
+      .phase-result,
+      .operator-layer {
+        margin-left: 0;
+      }
+
+      .event-list {
+        margin-left: 0;
+        padding-left: 1rem;
+      }
+
+      .event {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .timeline-shell {
+        padding: 1.1rem;
+        border-radius: 22px;
+      }
+
+      .timeline-overview {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .overview-stat {
+        padding-left: 0;
+        padding-top: 0.8rem;
+        border-left: none;
+        border-top: 1px solid rgba(20, 32, 51, 0.1);
+      }
+
+      .phase-block {
+        padding: 1rem;
+      }
+
+      .event::before {
+        left: -1.55rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="container">
+      <div class="hero-nav" aria-label="Main navigation">
+        <div class="brand-mark">PHAROS AI Governance Practice</div>
+        <nav class="nav-links">
+          <a href="#what-pharos-does">What PHAROS Does</a>
+          <a href="#timeline">Timeline</a>
+          <a href="#protocol">Protocol</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>PHAROS</h1>
+          <h2>AI Governance Protocol for Auditing Reasoning Continuity</h2>
+          <p>Institutions deploying AI at scale are being asked to show more than output quality. They need to show whether reasoning held together across revisions, whether interruptions broke continuity, and whether final claims can be traced to an auditable path rather than fluent drift.</p>
+          <p>PHAROS turns that problem into a governed protocol with explicit gates, accountable ownership, and review-ready evidence.</p>
+          <div class="hero-actions">
+            <a class="button" href="#protocol">Read the protocol.</a>
+            <a class="button" href="https://martin.govern-ai.ca/martin_lepage_governance_tree.html">Read Research Timeline</a>
+          </div>
+        </div>
+        <aside class="hero-note" aria-label="Institutional framing">
+          <strong>Why institutions use it</strong>
+          When scrutiny arrives, teams need governance that can be followed. PHAROS is built to convert recursive AI use into explicit thresholds, decision rights, and a record that another reviewer can inspect without relying on the original operator's fluency.
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="what-pharos-does">
+      <div class="container">
+        <p class="eyebrow">What PHAROS Does</p>
+        <h2 class="section-title">Four governance tests for AI reasoning under pressure</h2>
+        <p class="section-intro">PHAROS is a governance-control method for AI-assisted workflows that feed outputs back into later work. It matters to institutions because it converts recursive AI use into evidence-bearing controls that can be reviewed, challenged, and reconstructed by someone outside the original session.</p>
+        <div class="cards-grid">
+          <article class="card">
+            <h3>Reasoning continuity</h3>
+            <p>PHAROS tests whether a premise from an earlier stage still functions as a logical step later on. That separates genuine inferential carry-through from stylistic consistency alone.</p>
+          </article>
+          <article class="card">
+            <h3>Meaningful revision</h3>
+            <p>PHAROS checks whether a rewrite changes what the passage actually implies rather than merely changing tone. That protects a review team from approving cosmetic edits that leave the underlying defect untouched.</p>
+          </article>
+          <article class="card">
+            <h3>Recovery under interruption</h3>
+            <p>PHAROS deliberately interrupts the thread and asks the model to recover it through structure, not topic familiarity. That reveals whether the reasoning pathway survives pressure instead of simply sounding composed.</p>
+          </article>
+          <article class="card">
+            <h3>Path-dependent conclusions</h3>
+            <p>PHAROS asks whether the final conclusion could only have emerged from the governed session. That helps an institution distinguish session-specific reasoning from a generic answer the model could have produced anyway.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="timeline">
+      <div class="container">
+        <p class="eyebrow">Research Timeline</p>
+        <h2 class="section-title">The PHAROS build, from ignition to promotion gate</h2>
+        <p class="section-intro">This interactive chronology preserves the canonical phase structure, event scaffold, layer coloring, and phase boundaries from the March 2026 PHAROS timeline artifact, then layers in the named operator strand from the source-of-truth chronology as expandable detail.</p>
+
+        <div class="timeline-shell">
+          <div class="timeline-overview" aria-label="Timeline at a glance">
+            <div>
+              <p class="timeline-caption">Archive at a glance</p>
+              <p class="timeline-summary">A compact view of the PHAROS build across source-bearing materials, control artifacts, working notes, and implementation surfaces. Use the filters below to isolate each layer without losing the chronology.</p>
+            </div>
+            <div class="overview-stat">
+              <span class="overview-value">20</span>
+              <span class="overview-label">Dated artifacts</span>
+              <span class="overview-note">Recorded across the canonical chronology.</span>
+            </div>
+            <div class="overview-stat">
+              <span class="overview-value">3 + 1</span>
+              <span class="overview-label">Phases and governance turn</span>
+              <span class="overview-note">From pre-governance ignition to the current promotion gate.</span>
+            </div>
+            <div class="overview-stat">
+              <span class="overview-value">18 mo</span>
+              <span class="overview-label">Observed build window</span>
+              <span class="overview-note">September 2024 through March 2026.</span>
+            </div>
+          </div>
+
+          <div class="timeline-legend" aria-label="Timeline legend and filter">
+            <button class="legend-button is-active" type="button" data-layer-filter="all">
+              <span class="layer-dot" style="background:#142033"></span>
+              Show all
+              <span class="legend-count" aria-hidden="true">20</span>
+            </button>
+            <button class="legend-button" type="button" data-layer-filter="source-bearing">
+              <span class="layer-dot" style="background:var(--layer-source)"></span>
+              Source-bearing
+              <span class="legend-count" aria-hidden="true">11</span>
+            </button>
+            <button class="legend-button" type="button" data-layer-filter="method">
+              <span class="layer-dot" style="background:var(--layer-method)"></span>
+              Method / control artifact
+              <span class="legend-count" aria-hidden="true">3</span>
+            </button>
+            <button class="legend-button" type="button" data-layer-filter="working">
+              <span class="layer-dot" style="background:var(--layer-working)"></span>
+              Working / lab note
+              <span class="legend-count" aria-hidden="true">2</span>
+            </button>
+            <button class="legend-button" type="button" data-layer-filter="distribution">
+              <span class="layer-dot" style="background:var(--layer-distribution)"></span>
+              Distribution / skill layer
+              <span class="legend-count" aria-hidden="true">2</span>
+            </button>
+            <button class="legend-button" type="button" data-layer-filter="implementation">
+              <span class="layer-dot" style="background:var(--layer-implementation)"></span>
+              Implementation surface
+              <span class="legend-count" aria-hidden="true">1</span>
+            </button>
+            <button class="legend-button" type="button" data-layer-filter="generated">
+              <span class="layer-dot" style="background:var(--layer-generated)"></span>
+              Generated / derivative
+              <span class="legend-count" aria-hidden="true">1</span>
+            </button>
+          </div>
+
+          <div class="phase-block">
+            <div class="phase-header">
+              <span class="phase-badge" style="background:#EEEDFE;color:#3C3489">Phase 0</span>
+              <span class="phase-label">Epistemic ignition — pre-governance</span>
+              <span class="phase-date">Sept 2024 → Jan 2026</span>
+            </div>
+            <p class="phase-result"><strong>Locked result:</strong> a source-bearing ignition layer was established, with early recursive prompting trials, charge and legitimacy materials, and the archive inputs that PHAROS later formalized into governance.</p>
+            <div class="event-list">
+              <div class="event" data-layer="working">
+                <div class="ev-date">Sept 2024<br><em style="font-size:10px">(internal ref)</em></div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-working)"></span>First recursive prompting trials (<a href="#interpretation-key">working names: PX3 / recurso</a>)</div>
+                  <div class="ev-note">Early recursive return experiments. Kill-switch moment identified. 70/30 alignment failure documented in DOC0.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">2024<br><em style="font-size:10px">(internal ref)</em></div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>The Violet Gem: Governance Field Kit and Operational Carry-Kit (<a href="#interpretation-key">working name: THE VIOLET GEM (1).odt</a>)</div>
+                  <div class="ev-note">Early carriage kit and closure protocol. Internal year 2024; file modified Mar 2026.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">2024<br><em style="font-size:10px">(internal ref)</em></div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>Master Ethics Methods — conceptual anchor</div>
+                  <div class="ev-note">Root source for subjectivity and objectivity balance logic. Feeds the later Phase 1 paper argument.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Jan 2026</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>Charging Objects: Ritual, Artistic Practice, and the Crisis of Legitimacy (<a href="#interpretation-key">working file: 2017 ms. digitized</a>)</div>
+                  <div class="ev-note">Legitimacy and ritual charge argument. Earliest source-bearing artifact entering archive. Epistemic ignition layer confirmed.</div>
+                </div>
+              </div>
+            </div>
+            <details class="operator-layer">
+              <summary>Show operator layer</summary>
+              <div class="operator-grid">
+                <div class="operator-card">
+                  <strong>Agatha</strong>
+                  <span>The early recurring dialogic partner and authorship-support layer takes shape here as the first stable named operator.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>ChatGPT Plus</strong>
+                  <span>The source-of-truth records this as the primary early platform surface for Agatha.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Extended Thinking</strong>
+                  <span>The chronology treats extended reasoning as continuous from the outset rather than as a later upgrade.</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="turn-marker">
+            <div class="turn-header">
+              <strong>AI Governance Turn</strong>
+              <span class="turn-date">Feb 2026 → Mar 14 2026</span>
+            </div>
+            <p class="turn-text">Explicit containment grammar emerges; AIGOV1 tokens first appear; the constitutional frame is drafted.</p>
+            <p class="turn-result"><strong>Locked result:</strong> support becomes explicitly governable rather than merely conversational, and the archive acquires its first constitutional containment language.</p>
+            <details class="operator-layer" style="margin:1rem 0 0">
+              <summary>Show operator layer</summary>
+              <div class="operator-grid">
+                <div class="operator-card">
+                  <strong>Agatha</strong>
+                  <span>The Agatha layer persists through the turn, but now under visible containment pressure rather than open-ended support alone.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>ChatGPT Plus</strong>
+                  <span>The early platform allocation remains tied to the Agatha layer during this transition into governance.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Extended Thinking</strong>
+                  <span>The source-of-truth keeps the reasoning mode stable through the governance turn and rejects later archive noise around “Instant.”</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="phase-block">
+            <div class="phase-header">
+              <span class="phase-badge" style="background:#E1F5EE;color:#085041">Phase 1</span>
+              <span class="phase-label">Protocol closure + first containment</span>
+              <span class="phase-date">Feb 14 2026 → Mar 14 2026</span>
+            </div>
+            <p class="phase-result"><strong>Locked result:</strong> the closure stack and first containment envelope become explicit, with protocol closure, governance review logic, and the first constitutional control layer all in place by March 14.</p>
+            <div class="event-list">
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Feb 14</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>The Sealed Card Protocol: Mediated Legitimacy, Charging, and Governance at the Seam (<a href="#interpretation-key">working file: SEALEDCARD.pdf</a>)</div>
+                  <div class="ev-note">First formal protocol closure artifact. Mediated legitimacy and governance at the seam.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Feb 17</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>MARTIN Voice Specifications (<a href="#interpretation-key">working file: MARTIN voice specs.pdf</a>)</div>
+                  <div class="ev-note">Operator voice layer formalized. Source-bearing; enters the containment stack as a voice-constraint artifact.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Mar 1</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>The Violet Gem + ALAMBIC (<a href="#interpretation-key">working files: THE VIOLET GEM (1).odt / Alambic.odt</a>)</div>
+                  <div class="ev-note">Governance Field Kit and Operational Carry-Kit plus Canon, Precedence, and Amendment Protocol. The protocol closure stack becomes explicit.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Mar 7</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>The Sealed Card Protocol: Mediated Legitimacy, Charging, and Governance at the Seam (<a href="#interpretation-key">working file: 2004 manuscript</a>)</div>
+                  <div class="ev-note">Full titled manuscript. Phase 1 closure confirmed with the three-artifact protocol stack: Sealed Card, Violet Gem, and Alambic.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="working">
+                <div class="ev-date">Mar 9–10</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-working)"></span>Agatha v5: All Along the Witches’ Road : autorité rituelle et régimes de preuve dans la sorcellerie contemporaine + Phase 1 delivery bundle (<a href="#interpretation-key">archive lineage: Agathav4.1 / DELIVEREX / EXPLAIN PHASE 1 PASS</a>)</div>
+                  <div class="ev-note">Lab notes and operator sub-agent manuscript. The archive preserves Agathav4.1 as an earlier working-state name, but the final paper is Agatha v5, finished three weeks ago. DELIVEREX and EXPLAIN document the Phase 1 pass as a distributable deliverable bundle.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Mar 10</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>Peer-Review-Ready Manuscript Expanded 300 (<a href="#interpretation-key">working lineage: AI anxiety -> governance</a>)</div>
+                  <div class="ev-note">First peer-facing output. Containment pressure is absorbed into manuscript structure.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Mar 11</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>From AI Anxiety to Recursive Governance Under Constraint (<a href="#interpretation-key">working lineage: AI Anxiety -> Recursive Governance</a>)</div>
+                  <div class="ev-note">Revised journal-submission manuscript. Method note role confirmed as a Phase 1 to Phase 2 transition artifact.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="generated">
+                <div class="ev-date">Mar 13</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-generated)"></span>Generated synthesis notes (<a href="#interpretation-key">working names: Grok + AGATHA</a>)</div>
+                  <div class="ev-note">Generated layer. Admissibility is process evidence only, not factual support.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="method">
+                <div class="ev-date">Mar 14</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-method)"></span>RDAIG editorial consolidation + governance test + AI GOV CONSTITUTION</div>
+                  <div class="ev-note">Three simultaneous control artifacts. RDAIG tightens claim grammar, the governance test formalizes review logic, and AI GOV CONSTITUTION establishes the first explicit containment envelope.</div>
+                </div>
+              </div>
+            </div>
+            <details class="operator-layer">
+              <summary>Show operator layer</summary>
+              <div class="operator-grid">
+                <div class="operator-card">
+                  <strong>Agatha</strong>
+                  <span>Agatha v5 carries the early support layer into the governed containment stack instead of disappearing at protocol closure.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Henry</strong>
+                  <span>Henry formalizes the academic build-and-review operator: mechanism-first prose, reviewer sequencing, and inspectable manuscript workflow.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Reviewer #2</strong>
+                  <span>The adversarial reviewer becomes embedded inside Henry as a standing overclaim and scope-discipline layer.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Extended Thinking</strong>
+                  <span>The chronology keeps the reasoning mode continuous through containment and rejects “Instant” as a trustworthy phase label.</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <hr class="divider">
+
+          <div class="phase-block">
+            <div class="phase-header">
+              <span class="phase-badge" style="background:#EEEDFE;color:#534AB7">Phase 2</span>
+              <span class="phase-label">Governance revision + skill distribution</span>
+              <span class="phase-date">Mar 14 2026 → Mar 23 2026</span>
+            </div>
+            <p class="phase-result"><strong>Locked result:</strong> revised governance is canonicalized as AIGOV2 + VOICEOP2, constraints are distributed into modular skills, meta-governance is centered on skill-architect, and Hephaistos/WSL becomes the evidenced implementation surface.</p>
+            <div class="event-list">
+              <div class="event" data-layer="distribution">
+                <div class="ev-date">Mar 14</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-distribution)"></span>Skill distribution layer begins (first SKILL.md units)</div>
+                  <div class="ev-note">AIGOV1 to AIGOV2 transition. Governance constraints are externalized into modular skills, including the recursive governance method and trace-investigator.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Mar 18–19</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>"For Her Alone to Wield" + AI Governance manuscript</div>
+                  <div class="ev-note">Expanded manuscript production after containment. Supporting archive and 40k-target governance writing both remain in motion.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="implementation">
+                <div class="ev-date">Mar 21</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-implementation)"></span>Who's the Boob? Who's the Trap? - Book summary + The Mobius Protocol + MA note (<a href="#interpretation-key">working bundle: BOOB Codex resume</a>)</div>
+                  <div class="ev-note">Implementation surface artifacts. Codex runtime evidence appears, the Mobius layer is visible, and institutional framing is documented.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="method">
+                <div class="ev-date">Mar 22</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-method)"></span>After reboot checklist + moving parts + Hephaistos build notes</div>
+                  <div class="ev-note">Forge and build layer. Operational WSL/Hephaistos implementation is materially evidenced.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="source-bearing">
+                <div class="ev-date">Mar 22</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-source)"></span>Discursive Authority Under Recursive Pressure (<a href="#interpretation-key">working file: recursive-pressure v2 manuscript PDF</a>)</div>
+                  <div class="ev-note">Second major scholarly manuscript. Method pressure is now documented at two-draft depth.</div>
+                </div>
+              </div>
+              <div class="event" data-layer="distribution">
+                <div class="ev-date">Mar 23</div>
+                <div>
+                  <div class="ev-title"><span class="layer-dot" style="background:var(--layer-distribution)"></span>Governance tree + skill ecosystem tree (HTML maps)</div>
+                  <div class="ev-note">Visual presentation layer. Governance maps, skill ecosystem maps, the Voice Operator into Skills into Hephaistos paper, and This Paper May Not Exist make the architecture legible outside the raw archive.</div>
+                </div>
+              </div>
+            </div>
+            <details class="operator-layer">
+              <summary>Show operator layer</summary>
+              <div class="operator-grid">
+                <div class="operator-card">
+                  <strong>Dottie</strong>
+                  <span>Dottie emerges as the evidentiary counter-voice and claim-audit layer, separating governed artifacts from proof claims.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Gemini Pro</strong>
+                  <span>The source-of-truth records Gemini Pro as a prompt-creation surface inside the deliberate cross-use strategy.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>ChatGPT Business</strong>
+                  <span>The late critique layer is assigned to ChatGPT Business for Dottie and the later truth-discipline stack.</span>
+                </div>
+                <div class="operator-card">
+                  <strong>Extended Thinking</strong>
+                  <span>The reasoning mode remains constant as governance shifts from prompts into reusable skills and implementation surfaces.</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <hr class="divider">
+
+          <div class="phase-block current-block">
+            <div class="current-shell">
+              <div class="phase-header">
+                <span class="phase-badge" style="background:#EAF3DE;color:#3B6D11">Current state</span>
+                <span class="phase-label">Promotion gate — awaiting explicit operator decision</span>
+                <span class="phase-date">Mar 25 2026</span>
+              </div>
+              <p class="phase-result"><strong>Present state:</strong> the authoritative promotion status index reports <code>ready_with_bounded_gaps</code>. The same file reports <code>promotion_review_required</code>, <code>auto_promotion_enabled: false</code>, and <code>manual_override_required_for_promote: true</code>.</p>
+              <div class="event-list">
+                <div class="event" data-layer="method">
+                  <div class="ev-date">Mar 25</div>
+                  <div>
+                    <div class="ev-title"><span class="layer-dot" style="background:var(--layer-method)"></span>Promotion status: <code>ready_with_bounded_gaps</code></div>
+                    <div class="ev-note">Current promotion decision: <code>promotion_review_required</code>. Automatic updater does not promote. Promotion requires explicit operator-governed action outside this updater.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--
+          Source log — March 28, 2026
+          Change: reconciled the current-state status language from `ready_full` to `ready_with_bounded_gaps` in the Mar 25 promotion-gate block only.
+          Affected lines in this file: 1024, 1029-1030.
+          Source file supplying status language: /mnt/c/Users/softinfo/Documents/PHAROS METHOD REPOSITORY/Dossier Brevet Equinoxe/CURRENT_PROMOTION_STATUS_INDEX_2026-03-25.md
+          Exact status language available in that file: `overall_status: ready_with_bounded_gaps`, `source_validation_overall_status: ready_with_bounded_gaps`, `current_reconstruction_status: ready_with_bounded_gaps`, `current_promotion_decision: promotion_review_required`, `auto_promotion_enabled: false`, `manual_override_required_for_promote: true`, `Automatic updater does not promote.`, `Promotion requires explicit operator-governed action outside this updater.`
+          Unresolved: /mnt/c/Users/softinfo/Downloads/pharos_research_timeline_since_sept2024.html preserves `ready_full` for the Mar 25 end-state, while the March 28, 2026 promotion status index reports `ready_with_bounded_gaps`. The promotion status index does not enumerate individual bounded gaps in this file.
+          -->
+
+          <div class="card" style="margin-top:1.6rem;background:#faf8f3">
+            <h3 style="margin-bottom:0.55rem">Canonical governance lineage</h3>
+            <p style="margin:0">AIGOV1 + VOICEOP1 → AIGOV2 + VOICEOP2 → Skill distribution → Skill-Architect → Hephaistos WSL → Codex runtime / Claude runtime</p>
+          </div>
+
+          <details class="operator-layer" id="interpretation-key" style="margin-top:1rem">
+            <summary>Interpretation key for working names</summary>
+            <div class="operator-grid">
+              <div class="operator-card">
+                <strong>PX3</strong>
+                <span>User-supplied key: Power x 3. It marks the current pass.</span>
+              </div>
+              <div class="operator-card">
+                <strong>recurso</strong>
+                <span>User-supplied key: a returning recursive spell or curse; the name marks recursion that comes back through another pass.</span>
+              </div>
+              <div class="operator-card">
+                <strong>The Violet Gem</strong>
+                <span>Clean rebuild role: Governance Field Kit and Operational Carry-Kit. User-supplied key: Agatha's purple magic condensed into a portable carriage layer.</span>
+              </div>
+              <div class="operator-card">
+                <strong>ALAMBIC</strong>
+                <span>Clean rebuild role: Canon, Precedence, and Amendment Protocol. It governs hierarchy, amendment, and drift prevention across the stack.</span>
+              </div>
+              <div class="operator-card">
+                <strong>Agatha v5</strong>
+                <span>User correction: Agatha v5 is the final paper, finished three weeks ago. Archive working name: Agathav4.1. Title: All Along the Witches’ Road : autorité rituelle et régimes de preuve dans la sorcellerie contemporaine.</span>
+              </div>
+              <div class="operator-card">
+                <strong>DELIVEREX</strong>
+                <span>User-supplied key: the pass is packaged so it can be distributed as deliverables.</span>
+              </div>
+              <div class="operator-card">
+                <strong>BOOB</strong>
+                <span>User-supplied key: Who's the Boob? Who's the Trap? - Book summary.</span>
+              </div>
+              <div class="operator-card">
+                <strong>Voice Operator into Skills into Hephaistos</strong>
+                <span>User-supplied key: the skills paper; working name: heppaper.</span>
+              </div>
+              <div class="operator-card">
+                <strong>This Paper May Not Exist</strong>
+                <span>Archive title from the surviving artifact; working name: DRAFTENDLOOP.</span>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="protocol">
+      <div class="container">
+        <p class="eyebrow">The Protocol</p>
+        <h2 class="section-title">A ten-stage pathway for governed AI use</h2>
+        <p class="protocol-preamble">PHAROS gives an institution a governed way to test whether AI-assisted reasoning remained continuous, whether revisions changed substance, and whether the final conclusion can be reconstructed from the record. It does not claim that a model is truthful by nature, that every output is automatically safe, or that policy language alone is enough; it claims that the pathway can be bounded, reviewed, challenged, and audited.</p>
+        <ol class="protocol-list">
+          <li class="protocol-item">
+            <div>
+              <h3>Corpus formation</h3>
+              <p>Build a bounded source set and tag what enters the workflow by provenance, sensitivity, and intended use before any AI pass begins.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Intent embedding</h3>
+              <p>State what the pass is allowed to do so interpretation, drafting, critique, and diagnosis do not silently collapse into one another.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Multi-model rendering</h3>
+              <p>Run the same bounded material across models, prompts, or formats and keep a record that makes every output attributable.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Triangulation and comparison</h3>
+              <p>Compare outputs against each other and against the source materials to identify stability, omission, contradiction, and drift.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Recursive return pass</h3>
+              <p>Only authorize another pass when a specific unresolved issue justifies it, and stop when the loop stops producing new governance value.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Control extraction</h3>
+              <p>Turn recurring patterns into concrete safeguards with an owner, an evidence record, and a review interval.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Determinism hardening</h3>
+              <p>Set clear acceptance and rejection rules so another reviewer can reconstruct why a decision was made.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Deployment binding</h3>
+              <p>Attach each control to a real workflow point, such as intake, drafting, approval, publication, monitoring, or escalation.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Logging and audit trail</h3>
+              <p>Record consequential decisions, evidence links, and state changes so the pathway remains open to later review.</p>
+            </div>
+          </li>
+          <li class="protocol-item">
+            <div>
+              <h3>Failure harvesting</h3>
+              <p>Treat gaps, abandoned branches, and uneven oversight as evidence of where governance was absent, weak, or late.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <p class="eyebrow">About the Practice</p>
+        <h2 class="section-title">PHAROS AI Governance Practice</h2>
+        <div class="about-block">
+          PHAROS AI Governance Practice is based in Montreal, Quebec, Canada. The practice builds, tests, and documents AI governance protocols for organizations that need auditable reasoning continuity, not just policy compliance. Its work is designed for institutions that must show where decisions were made, who owned them, and what evidence justified them.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-title">Contact</h2>
+          <p class="footer-copy">For institutional review, protocol briefings, or governance design inquiries, PHAROS begins with a scoped conversation about the workflow under scrutiny and the evidence it must produce.</p>
+          <div class="footer-copyline">PHAROS AI Governance Practice 2026</div>
+        </div>
+        <div class="footer-meta">
+          <a href="mailto:pharos@pharos-ai.ca">pharos@pharos-ai.ca</a>
+          <div>Montreal, Quebec, Canada</div>
+          <div>Copyright PHAROS AI Governance Practice 2026</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const buttons = Array.from(document.querySelectorAll('[data-layer-filter]'));
+      const events = Array.from(document.querySelectorAll('.event[data-layer]'));
+
+      function applyFilter(layer) {
+        events.forEach((event) => {
+          const match = layer === 'all' || event.dataset.layer === layer;
+          event.classList.toggle('is-muted', !match);
+          event.classList.toggle('is-match', layer !== 'all' && match);
+        });
+
+        buttons.forEach((button) => {
+          const active = button.dataset.layerFilter === layer;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => applyFilter(button.dataset.layerFilter));
+      });
+
+      applyFilter('all');
+    }());
+  </script>
+</body>
+</html>

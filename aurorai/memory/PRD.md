@@ -16,7 +16,7 @@ AurorAI transforme des documents “bloqués” (PDF, scans, formulaires, contra
 
 ## Pipeline canonique IDP
 1. Ingestion : upload / boîte mail / dépôt / API
-2. Lecture (OCR) : texte depuis scans, images, PDF
+2. Lecture (OCR) : texte depuis scans et PDF image-only, avec degradation explicite si le runtime OCR local est indisponible
 3. Compréhension (NLP) : contexte, entités, relations
 4. Classification : catégorie + document_type
 5. Extraction : champs clés vers schéma JSON/CSV + score de confiance
@@ -30,7 +30,8 @@ AurorAI transforme des documents “bloqués” (PDF, scans, formulaires, contra
 - Ton d’exécution : rapide, précis, orienté risque.
 
 ## État d’implémentation (actuel)
-- [x] Upload documentaire (PDF, TXT; DOC/DOCX non actives dans la configuration inspectee)
+- [x] Upload documentaire (PDF, TXT, DOCX; `.doc` legacy non supporte)
+- [x] OCR conditionnel pour PDF image-only avec degradation controlee si `tesseract` ou les dependances OCR manquent
 - [x] Catégorisation IA
 - [x] Résumé IA
 - [x] Extraction de citations

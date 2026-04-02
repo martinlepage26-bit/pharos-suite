@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 from reportlab.lib.pagesizes import LETTER
 from reportlab.pdfgen import canvas
 
-from ledger_db import get_conn, new_id, utc_now_iso
+from compassai.backend.ledger_db import get_conn, new_id, utc_now_iso
 
 router = APIRouter(prefix="/ledger", tags=["Ledger"])
 

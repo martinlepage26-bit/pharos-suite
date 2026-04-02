@@ -1,6 +1,7 @@
 from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Form, Depends, BackgroundTasks
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -17,13 +18,13 @@ from datetime import datetime, timezone, timedelta
 from enum import Enum
 import base64
 from io import BytesIO
-from passlib.context import CryptContext
 from jose import JWTError, jwt
 import resend
-from ledger_db import init_ledger_db
-from routers.governance_program import router as governance_program_router
-from routers.ledger import router as ledger_router
-from routers.pharos_method import router as pharos_method_router
+from compassai.backend.ledger_db import init_ledger_db
+from compassai.backend.routers.governance_program import router as governance_program_router
+from compassai.backend.routers.ledger import router as ledger_router
+from compassai.backend.routers.pharos_method import router as pharos_method_router
+from compassai.backend.security import get_password_hash, hash_secret, verify_password
 
 ROOT_DIR = Path(__file__).parent
 UPLOAD_DIR = ROOT_DIR / "uploads"
@@ -40,7 +41,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'compass-ai-governance-secret-key-2026
 COMPASSAI_INGEST_TOKEN = os.environ.get('COMPASSAI_INGEST_TOKEN', '')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer(auto_error=False)
 
 # Email configuration
@@ -1504,13 +1504,6 @@ def build_deliverable_package(
     )
 
 # ==================== AUTH HELPERS ====================
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
-
-def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
-
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
@@ -2962,7 +2955,7 @@ async def export_assessment_pdf(assessment_id: str):
 
 # ==================== AI-POWERED FEATURES ====================
 
-from ai_services import AIService, get_ai_service
+from compassai.backend.ai_services import AIService, get_ai_service
 
 # AI Models for request
 class AIModelChoice(str, Enum):
@@ -3594,7 +3587,7 @@ async def create_api_key(request: APIKeyCreate, user: Dict = Depends(require_aut
     # Generate key
     raw_key = f"cai_{str(uuid.uuid4()).replace('-', '')}"
     key_prefix = raw_key[:12]
-    key_hash = pwd_context.hash(raw_key)
+    key_hash = hash_secret(raw_key)
     
     expires_at = None
     if request.expires_in_days:
@@ -4181,10 +4174,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-async def startup_init_ledgers():
+@asynccontextmanager
+async def compassai_lifespan(_app: FastAPI):
     init_ledger_db()
+    try:
+        yield
+    finally:
+        client.close()
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+
+app.router.lifespan_context = compassai_lifespan

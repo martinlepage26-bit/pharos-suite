@@ -1,6 +1,7 @@
 from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Depends
 from fastapi.responses import FileResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -8,6 +9,7 @@ import os
 import logging
 import hashlib
 import asyncio
+import shutil
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Dict, List, Optional
@@ -20,6 +22,22 @@ import json
 import re
 from urllib import request as urllib_request
 from urllib.error import HTTPError, URLError
+from zipfile import BadZipFile
+
+try:
+    from docx import Document as WordDocument
+except Exception:  # pragma: no cover - optional dependency
+    WordDocument = None
+
+try:
+    from pdf2image import convert_from_path
+except Exception:  # pragma: no cover - optional dependency
+    convert_from_path = None
+
+try:
+    import pytesseract
+except Exception:  # pragma: no cover - optional dependency
+    pytesseract = None
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -42,6 +60,10 @@ security = HTTPBearer(auto_error=False)
 AURORAI_API_TOKEN = os.environ.get("AURORAI_API_TOKEN", "")
 COMPASSAI_BASE_URL = os.environ.get("COMPASSAI_BASE_URL", "http://127.0.0.1:9205").rstrip("/")
 COMPASSAI_INGEST_TOKEN = os.environ.get("COMPASSAI_INGEST_TOKEN", "")
+SUPPORTED_UPLOAD_EXTENSIONS = {".pdf", ".txt", ".docx"}
+OCR_ENABLED = os.environ.get("AURORAI_ENABLE_OCR", "true").strip().lower() not in {"0", "false", "no", "off"}
+PDF_TEXT_MIN_CHARS = max(int(os.environ.get("AURORAI_PDF_TEXT_MIN_CHARS", "40") or "40"), 1)
+OCR_MAX_PAGES = max(int(os.environ.get("AURORAI_OCR_MAX_PAGES", "10") or "10"), 1)
 
 # Categories
 CATEGORIES = [
@@ -94,6 +116,7 @@ class Document(BaseModel):
     review_required: bool = False
     compliance_note: Optional[str] = None
     source_hash: Optional[str] = None
+    ingestion_details: Dict[str, Any] = Field(default_factory=dict)
     audit_log: List[Dict[str, Any]] = Field(default_factory=list)
     current_state: str = "uploaded"
     current_review_state: str = "pending"
@@ -119,6 +142,312 @@ class DocumentUpdate(BaseModel):
     category: Optional[str] = None
     tags: Optional[List[str]] = None
     reading_list_id: Optional[str] = None
+
+
+class DocumentExtractionError(RuntimeError):
+    def __init__(self, message: str, *, status_code: int = 400):
+        super().__init__(message)
+        self.status_code = status_code
+        self.message = message
+
+
+def log_pipeline_event(event: str, **details: Any) -> None:
+    payload = {
+        "component": "aurorai",
+        "event": event,
+        **details,
+    }
+    logging.info(json.dumps(payload, sort_keys=True, ensure_ascii=True, default=str))
+
+
+def build_runtime_capabilities() -> Dict[str, Any]:
+    ocr_reason = []
+    if not OCR_ENABLED:
+        ocr_reason.append("disabled_by_feature_flag")
+    if convert_from_path is None:
+        ocr_reason.append("pdf2image_missing")
+    if pytesseract is None:
+        ocr_reason.append("pytesseract_missing")
+    if shutil.which("pdftoppm") is None:
+        ocr_reason.append("poppler_pdftoppm_missing")
+    if shutil.which("tesseract") is None:
+        ocr_reason.append("tesseract_binary_missing")
+
+    ocr_available = OCR_ENABLED and not ocr_reason
+    return {
+        "supported_upload_extensions": sorted(SUPPORTED_UPLOAD_EXTENSIONS),
+        "docx_enabled": WordDocument is not None,
+        "ocr_enabled": OCR_ENABLED,
+        "ocr_available": ocr_available,
+        "ocr_reason": "available" if ocr_available else ", ".join(ocr_reason) or "disabled",
+        "pdf_text_min_chars": PDF_TEXT_MIN_CHARS,
+        "ocr_max_pages": OCR_MAX_PAGES,
+    }
+
+
+def text_quality(text: str, *, min_chars: int = PDF_TEXT_MIN_CHARS) -> str:
+    stripped = (text or "").strip()
+    if not stripped:
+        return "none"
+
+    compact = re.sub(r"\s+", "", stripped)
+    alnum = re.sub(r"[^A-Za-z0-9]+", "", stripped)
+    words = re.findall(r"[A-Za-z0-9]+", stripped)
+    if len(alnum) < max(8, min_chars // 5):
+        return "insufficient"
+    if len(compact) < min_chars and len(words) < 3:
+        return "insufficient"
+    return "usable"
+
+
+def extract_docx_text(docx_path: str) -> str:
+    if WordDocument is None:
+        raise DocumentExtractionError(
+            "DOCX extraction is unavailable because python-docx is not installed.",
+            status_code=503,
+        )
+
+    try:
+        document = WordDocument(docx_path)
+        blocks: List[str] = []
+        blocks.extend(paragraph.text.strip() for paragraph in document.paragraphs if paragraph.text.strip())
+        for table in document.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    cell_text = cell.text.strip()
+                    if cell_text:
+                        blocks.append(cell_text)
+        text = "\n".join(blocks).strip()
+        if not text:
+            raise DocumentExtractionError("DOCX extraction succeeded but no readable text was found.")
+        log_pipeline_event(
+            "docx_text_extraction_succeeded",
+            path=docx_path,
+            extracted_chars=len(text),
+        )
+        return text
+    except DocumentExtractionError:
+        raise
+    except (BadZipFile, KeyError, ValueError) as exc:
+        log_pipeline_event(
+            "docx_text_extraction_failed",
+            path=docx_path,
+            error=str(exc),
+        )
+        raise DocumentExtractionError(f"DOCX extraction failed: {exc}") from exc
+    except Exception as exc:
+        log_pipeline_event(
+            "docx_text_extraction_failed",
+            path=docx_path,
+            error=str(exc),
+        )
+        raise DocumentExtractionError(f"DOCX extraction failed: {exc}") from exc
+
+
+def run_pdf_ocr(pdf_path: str, max_pages: int) -> Dict[str, Any]:
+    capabilities = build_runtime_capabilities()
+    if not capabilities["ocr_available"]:
+        log_pipeline_event(
+            "ocr_unavailable",
+            path=pdf_path,
+            reason=capabilities["ocr_reason"],
+        )
+        return {
+            "text": "",
+            "ocr_used": False,
+            "ocr_status": "required_unavailable",
+            "ocr_reason": capabilities["ocr_reason"],
+            "warnings": [f"OCR required but unavailable: {capabilities['ocr_reason']}"],
+        }
+
+    try:
+        images = convert_from_path(pdf_path, first_page=1, last_page=max_pages)
+        ocr_text = []
+        for index, image in enumerate(images, start=1):
+            page_text = pytesseract.image_to_string(image)
+            if page_text.strip():
+                ocr_text.append(page_text)
+            log_pipeline_event(
+                "ocr_page_processed",
+                path=pdf_path,
+                page=index,
+                extracted_chars=len(page_text.strip()),
+            )
+
+        text = "\n".join(ocr_text).strip()
+        quality = text_quality(text)
+        log_pipeline_event(
+            "ocr_fallback_triggered",
+            path=pdf_path,
+            pages_processed=min(len(images), max_pages),
+            extracted_chars=len(text),
+            text_quality=quality,
+        )
+        return {
+            "text": text,
+            "ocr_used": True,
+            "ocr_status": "performed" if text else "performed_no_text",
+            "ocr_reason": "available",
+            "warnings": [] if text else ["OCR completed but did not recover readable text."],
+            "text_quality": quality,
+        }
+    except Exception as exc:
+        log_pipeline_event(
+            "ocr_failed",
+            path=pdf_path,
+            error=str(exc),
+        )
+        return {
+            "text": "",
+            "ocr_used": True,
+            "ocr_status": "failed",
+            "ocr_reason": str(exc),
+            "warnings": [f"OCR fallback failed: {exc}"],
+            "text_quality": "none",
+        }
+
+
+def extract_document_content(
+    file_path: Path,
+    *,
+    raw_bytes: Optional[bytes] = None,
+    max_pages: int = 10,
+) -> Dict[str, Any]:
+    file_ext = file_path.suffix.lower()
+
+    if file_ext == ".txt":
+        content = raw_bytes if raw_bytes is not None else file_path.read_bytes()
+        text = content.decode("utf-8", errors="ignore")
+        quality = text_quality(text, min_chars=1)
+        log_pipeline_event(
+            "text_file_extraction_used",
+            path=str(file_path),
+            extracted_chars=len(text.strip()),
+        )
+        return {
+            "text": text,
+            "page_count": 1,
+            "text_source": "txt",
+            "text_quality": quality,
+            "ocr_status": "not_applicable",
+            "ocr_reason": "not_applicable",
+            "warnings": [],
+        }
+
+    if file_ext == ".docx":
+        text = extract_docx_text(str(file_path))
+        quality = text_quality(text, min_chars=1)
+        return {
+            "text": text,
+            "page_count": 1,
+            "text_source": "docx",
+            "text_quality": quality,
+            "ocr_status": "not_applicable",
+            "ocr_reason": "not_applicable",
+            "warnings": [],
+        }
+
+    if file_ext != ".pdf":
+        raise DocumentExtractionError(f"File type {file_ext} is not supported for text extraction.")
+
+    text, page_count = extract_pdf_text(str(file_path), max_pages=max_pages)
+    quality = text_quality(text)
+    if quality == "usable":
+        log_pipeline_event(
+            "pdf_text_extraction_succeeded",
+            path=str(file_path),
+            page_count=page_count,
+            extracted_chars=len(text),
+        )
+        return {
+            "text": text,
+            "page_count": page_count,
+            "text_source": "pdf_text",
+            "text_quality": quality,
+            "ocr_status": "not_needed",
+            "ocr_reason": "fitz_text_sufficient",
+            "warnings": [],
+        }
+
+    log_pipeline_event(
+        "pdf_text_extraction_insufficient",
+        path=str(file_path),
+        page_count=page_count,
+        extracted_chars=len(text),
+        text_quality=quality,
+    )
+    ocr_result = run_pdf_ocr(str(file_path), max_pages=min(page_count or max_pages, OCR_MAX_PAGES, max_pages))
+    ocr_text = ocr_result.get("text", "").strip()
+    ocr_quality = ocr_result.get("text_quality", text_quality(ocr_text))
+    if ocr_quality == "usable":
+        return {
+            "text": ocr_text,
+            "page_count": page_count,
+            "text_source": "pdf_ocr",
+            "text_quality": ocr_quality,
+            "ocr_status": ocr_result["ocr_status"],
+            "ocr_reason": ocr_result["ocr_reason"],
+            "warnings": ocr_result.get("warnings", []),
+        }
+
+    return {
+        "text": text.strip(),
+        "page_count": page_count,
+        "text_source": "pdf_text" if text.strip() else "pdf_unreadable",
+        "text_quality": quality,
+        "ocr_status": ocr_result["ocr_status"],
+        "ocr_reason": ocr_result["ocr_reason"],
+        "warnings": ocr_result.get("warnings", []),
+    }
+
+
+def get_document_text_for_processing(document: Dict[str, Any], *, max_pages: int = 10) -> Dict[str, Any]:
+    stored_text = str(document.get("text_preview") or "").strip()
+    ingestion_details = document.get("ingestion_details", {}) or {}
+    if stored_text and ingestion_details.get("text_quality", "usable") == "usable":
+        return {
+            "text": stored_text,
+            "page_count": document.get("page_count", 0),
+            "text_source": ingestion_details.get("text_source", "stored_preview"),
+            "text_quality": ingestion_details.get("text_quality", "usable"),
+            "ocr_status": ingestion_details.get("ocr_status", "unknown"),
+            "ocr_reason": ingestion_details.get("ocr_reason", "stored_preview"),
+            "warnings": [],
+        }
+
+    file_path = UPLOAD_DIR / document["filename"]
+    if not file_path.exists():
+        return {
+            "text": stored_text,
+            "page_count": document.get("page_count", 0),
+            "text_source": "missing_source_file",
+            "text_quality": text_quality(stored_text),
+            "ocr_status": ingestion_details.get("ocr_status", "unknown"),
+            "ocr_reason": "source_file_missing",
+            "warnings": ["Source file is missing; falling back to stored preview only."],
+        }
+
+    return extract_document_content(file_path, max_pages=max_pages)
+
+
+def no_text_http_exception(result: Dict[str, Any], *, action: str) -> HTTPException:
+    ocr_status = result.get("ocr_status")
+    if ocr_status == "required_unavailable":
+        return HTTPException(
+            status_code=503,
+            detail=f"OCR is required to {action} this PDF, but the OCR runtime is unavailable ({result.get('ocr_reason')}).",
+        )
+    if ocr_status == "failed":
+        return HTTPException(
+            status_code=502,
+            detail=f"OCR fallback failed while trying to {action} this PDF: {result.get('ocr_reason')}",
+        )
+    if ocr_status == "performed_no_text":
+        return HTTPException(
+            status_code=422,
+            detail=f"OCR ran while trying to {action} this PDF, but no usable text was recovered.",
+        )
+    return HTTPException(status_code=400, detail=f"No text content available to {action}.")
 
 class ReadingList(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -682,6 +1011,11 @@ def extract_pdf_text(pdf_path: str, max_pages: int = 10) -> tuple[str, int]:
         doc.close()
         return text.strip(), page_count
     except Exception as e:
+        log_pipeline_event(
+            "pdf_text_extraction_failed",
+            path=pdf_path,
+            error=str(e),
+        )
         logging.error(f"Error extracting PDF text: {e}")
         return "", 0
 
@@ -749,6 +1083,11 @@ async def ai_categorize_document(text: str) -> Dict[str, Any]:
     try:
         if not get_llm_api_key():
             document_type = heuristic_document_type(text)
+            log_pipeline_event(
+                "classification_heuristic_used",
+                reason="llm_key_missing",
+                document_type=document_type,
+            )
             return {
                 "category": infer_category_from_document_type(document_type),
                 "document_type": document_type,
@@ -771,6 +1110,11 @@ Return ONLY valid JSON with keys:
 Allowed categories:
 Academic Papers; Invoices/Receipts; Contracts; Reports; Personal Documents; Resumes; My Writings & Publications; Uncategorized""",
             f"Classify this document:\n\n{text[:3000] if len(text) > 3000 else text}",
+        )
+        log_pipeline_event(
+            "classification_llm_used",
+            model="gpt-4o-mini",
+            prompt_chars=min(len(text), 3000),
         )
 
         payload = parse_json_response(response.strip()) or {}
@@ -806,6 +1150,11 @@ Academic Papers; Invoices/Receipts; Contracts; Reports; Personal Documents; Resu
     except Exception as e:
         logging.error(f"AI categorization error: {e}")
         document_type = heuristic_document_type(text)
+        log_pipeline_event(
+            "classification_heuristic_used",
+            reason=f"llm_error:{str(e)}",
+            document_type=document_type,
+        )
         return {
             "category": infer_category_from_document_type(document_type),
             "document_type": document_type,
@@ -911,6 +1260,7 @@ async def root():
         "message": "AurorAI IDP API",
         "mission": IDP_MISSION,
         "pipeline": IDP_PIPELINE,
+        "capabilities": build_runtime_capabilities(),
     }
 
 
@@ -919,6 +1269,7 @@ async def get_idp_pipeline():
     return {
         "mission": IDP_MISSION,
         "pipeline": IDP_PIPELINE,
+        "capabilities": build_runtime_capabilities(),
         "golden_rules": [
             "Always return one human-readable output and one machine-readable output.",
             "Always include confidence, ambiguity flags, and recommended next actions.",
@@ -965,15 +1316,12 @@ async def upload_document(
     file: UploadFile = File(...),
     _auth: bool = Depends(require_api_token),
 ):
-    """Upload a document (PDF or TXT)."""
-    allowed_extensions = {'.pdf', '.txt'}
+    """Upload a document (PDF, TXT, or DOCX)."""
+    allowed_extensions = SUPPORTED_UPLOAD_EXTENSIONS
     file_ext = Path(file.filename).suffix.lower()
 
-    if file_ext in {'.doc', '.docx'}:
-        raise HTTPException(
-            status_code=400,
-            detail="DOC and DOCX upload is not enabled yet because text extraction is not implemented. Use PDF or TXT for now.",
-        )
+    if file_ext == '.doc':
+        raise HTTPException(status_code=400, detail="Legacy DOC upload is not supported. Use PDF, TXT, or DOCX.")
 
     if file_ext not in allowed_extensions:
         raise HTTPException(status_code=400, detail=f"File type {file_ext} not supported. Allowed: {allowed_extensions}")
@@ -989,15 +1337,29 @@ async def upload_document(
     async with aiofiles.open(file_path, 'wb') as f:
         await f.write(content)
     
-    # Extract text and page count (for PDFs)
-    text_preview = ""
-    page_count = 0
-    
-    if file_ext == '.pdf':
-        text_preview, page_count = extract_pdf_text(str(file_path))
-    elif file_ext == '.txt':
-        text_preview = content.decode('utf-8', errors='ignore')[:5000]
-        page_count = 1
+    try:
+        extraction_result = extract_document_content(file_path, raw_bytes=content)
+    except DocumentExtractionError as exc:
+        log_pipeline_event(
+            "upload_extraction_failed",
+            filename=file.filename,
+            file_ext=file_ext,
+            error=exc.message,
+        )
+        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
+
+    text_preview = extraction_result["text"][:5000] if extraction_result.get("text") else ""
+    page_count = extraction_result.get("page_count", 0)
+    ingestion_details = {
+        "text_source": extraction_result.get("text_source"),
+        "text_quality": extraction_result.get("text_quality"),
+        "ocr_status": extraction_result.get("ocr_status"),
+        "ocr_reason": extraction_result.get("ocr_reason"),
+        "warnings": extraction_result.get("warnings", []),
+    }
+    current_state = "uploaded_requires_ocr" if ingestion_details["ocr_status"] == "required_unavailable" else "uploaded"
+    current_review_state = "ocr_unavailable" if ingestion_details["ocr_status"] == "required_unavailable" else "pending"
+    review_required = ingestion_details["ocr_status"] == "required_unavailable"
     
     # Create document record
     doc = Document(
@@ -1008,6 +1370,10 @@ async def upload_document(
         page_count=page_count,
         text_preview=text_preview[:2000] if text_preview else "",
         source_hash=compute_sha256_bytes(content),
+        ingestion_details=ingestion_details,
+        current_state=current_state,
+        current_review_state=current_review_state,
+        review_required=review_required,
     )
     
     # Save to database
@@ -1020,10 +1386,22 @@ async def upload_document(
             "file_size": len(content),
             "page_count": page_count,
             "source_hash": doc_dict["source_hash"],
+            "text_source": ingestion_details["text_source"],
+            "text_quality": ingestion_details["text_quality"],
+            "ocr_status": ingestion_details["ocr_status"],
+            "ocr_reason": ingestion_details["ocr_reason"],
         },
     )
     doc_dict['uploaded_at'] = doc_dict['uploaded_at'].isoformat()
     await db.documents.insert_one(doc_dict)
+    log_pipeline_event(
+        "document_uploaded",
+        document_id=doc_id,
+        filename=file.filename,
+        file_ext=file_ext,
+        text_source=ingestion_details["text_source"],
+        ocr_status=ingestion_details["ocr_status"],
+    )
     
     return doc_dict
 
@@ -1036,16 +1414,11 @@ async def categorize_document(
     doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
-    
-    # Get full text if needed
-    text = doc.get('text_preview', '')
-    if not text:
-        file_path = UPLOAD_DIR / doc['filename']
-        if file_path.exists() and doc['filename'].endswith('.pdf'):
-            text, _ = extract_pdf_text(str(file_path))
-    
-    if not text:
-        raise HTTPException(status_code=400, detail="No text content to analyze")
+
+    text_result = get_document_text_for_processing(doc, max_pages=10)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="categorize")
     
     # AI categorization
     classification = await ai_categorize_document(text)
@@ -1131,17 +1504,19 @@ async def bulk_categorize_documents(
             if not doc:
                 results.append({"document_id": doc_id, "error": "Not found"})
                 continue
-            
-            text = doc.get('text_preview', '')
-            if not text:
-                file_path = UPLOAD_DIR / doc['filename']
-                if file_path.exists() and doc['filename'].endswith('.pdf'):
-                    text, _ = extract_pdf_text(str(file_path))
-            
-            if not text:
-                results.append({"document_id": doc_id, "error": "No text content"})
+
+            text_result = get_document_text_for_processing(doc, max_pages=10)
+            text = text_result.get("text", "")
+
+            if not text or text_result.get("text_quality") != "usable":
+                if text_result.get("ocr_status") == "required_unavailable":
+                    results.append({"document_id": doc_id, "error": f"OCR required but unavailable: {text_result.get('ocr_reason')}"})
+                elif text_result.get("ocr_status") == "performed_no_text":
+                    results.append({"document_id": doc_id, "error": "OCR ran but did not recover usable text"})
+                else:
+                    results.append({"document_id": doc_id, "error": "No text content"})
                 continue
-            
+
             classification = await ai_categorize_document(text)
             suggested_category = classification["category"]
             is_academic = suggested_category == "Academic Papers" or "My Writings" in suggested_category
@@ -1219,15 +1594,11 @@ async def generate_summary(
     doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
-    
-    text = doc.get('text_preview', '')
-    if not text:
-        file_path = UPLOAD_DIR / doc['filename']
-        if file_path.exists() and doc['filename'].endswith('.pdf'):
-            text, _ = extract_pdf_text(str(file_path))
-    
-    if not text:
-        raise HTTPException(status_code=400, detail="No text content to summarize")
+
+    text_result = get_document_text_for_processing(doc, max_pages=50)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="summarize")
     
     summary = await ai_generate_summary(text)
     processing_runs, run_doc = append_processing_run(
@@ -1264,14 +1635,10 @@ async def extract_fields(
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
 
-    text = doc.get('text_preview', '')
-    if not text:
-        file_path = UPLOAD_DIR / doc['filename']
-        if file_path.exists() and doc['filename'].endswith('.pdf'):
-            text, _ = extract_pdf_text(str(file_path), max_pages=50)
-
-    if not text:
-        raise HTTPException(status_code=400, detail="No text content to analyze")
+    text_result = get_document_text_for_processing(doc, max_pages=50)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="extract structured fields from")
 
     extraction = await ai_extract_fields(text)
     fields = extraction.get("fields", {}) if isinstance(extraction.get("fields"), dict) else {}
@@ -1451,15 +1818,11 @@ async def extract_citations(
     doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
-    
-    text = doc.get('text_preview', '')
-    if not text:
-        file_path = UPLOAD_DIR / doc['filename']
-        if file_path.exists() and doc['filename'].endswith('.pdf'):
-            text, _ = extract_pdf_text(str(file_path), max_pages=50)
-    
-    if not text:
-        raise HTTPException(status_code=400, detail="No text content to analyze")
+
+    text_result = get_document_text_for_processing(doc, max_pages=50)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="extract citations from")
     
     citations = await ai_extract_citations(text)
     processing_runs, run_doc = append_processing_run(
@@ -1715,6 +2078,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+@asynccontextmanager
+async def aurorai_lifespan(_app: FastAPI):
+    try:
+        yield
+    finally:
+        client.close()
+
+
+app.router.lifespan_context = aurorai_lifespan

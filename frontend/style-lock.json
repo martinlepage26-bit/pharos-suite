@@ -1,16 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-29T23:18:47.203Z",
+  "generatedAt": "2026-03-30T15:45:00.000Z",
   "ignoredFiles": [
     "src/tailwind.generated.css"
   ],
   "passwordSha256": "8d610fa186cbf8aea36cb2f9537b111b2aae850479f4cd2ea8cf501666dd6e48",
   "files": {
     "src/App.css": "eadd05e63f61613a3a2a9ca40180444215f07183cecf91c4060e07f644084013",
-    "src/components/HomeHeroLogo.css": "67c3676911744eaf12d0f5d24124e107f09c674517e88b3b6d12c1692c5efe0a",
     "src/game.css": "a81275caf039ffb2f11a1c1ba8b8ea1f9f70dccdf54239a86868a88fa6c6e6ef",
     "src/index.css": "f58d366c74e941948b67f0f3ae5b04dea1d2ea98c69e9b61c86304281a560d1c",
-    "src/observatory.css": "49539e373f342a9a1dfbc08750e1fb9428d9986761ae58c1d7d73fa1a3f42991",
     "src/pages/Home.newlook.css": "0d15b0c18a04c0c4265c60eba58387aaeea02401444a06f849630224e60aa3ae",
     "src/portalArchitecture.css": "72da53a3d0eba0a0d408ad57aa346ea3fd73607beefc023abcbc3ff00fc45890",
     "src/site.css": "a6f5ea4b7a448318e308d4193dec1c464f14655a97ae63defccb2d8f156fe80b"
