@@ -1,0 +1,20 @@
+name = "pharos-aurora-worker"
+main = "aurorai/src/index.ts"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "aurora-pharos"
+
+[[d1_databases]]
+binding = "AURORA_DB"
+database_name = "pharos-governance"
+database_id = "REPLACE_WITH_ACTUAL_ID"
+
+[[r2_buckets]]
+binding = "AURORA_FILES"
+bucket_name = "pharos-files"
+
+[[queues.consumers]]
+queue = "pharos-handoff"
+max_batch_size = 1
+max_batch_timeout = 30
