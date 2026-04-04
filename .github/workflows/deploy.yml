@@ -1,0 +1,64 @@
+name: Deploy PHAROS Workers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - aurorai/**
+      - compassai/**
+      - shared/**
+      - wrangler.toml
+      - tsconfig.json
+  workflow_dispatch:
+
+jobs:
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+
+  deploy-aurora:
+    name: Deploy AurorA
+    runs-on: ubuntu-latest
+    needs: typecheck
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - name: Deploy AurorA
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          environment: production
+
+  deploy-compass:
+    name: Deploy COMPASSai
+    runs-on: ubuntu-latest
+    needs: [typecheck, deploy-aurora]
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - name: Deploy COMPASSai
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          environment: production
+          workingDirectory: compassai
