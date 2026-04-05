@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qualitative"
+  short_description: "Choose and apply qualitative research methods."
+  default_prompt: "Use the qualitative skill to compare methods, design coding workflows, and map research questions to qualitative approaches."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publisher"
+  short_description: "Editorial and publishing workflow support"
+  default_prompt: "Use $publisher to evaluate a manuscript, improve editorial quality, shape market positioning, or coordinate cover and metadata decisions for publication."

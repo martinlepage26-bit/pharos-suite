@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Identity System"
+  short_description: "Diagnose or build coherent brand identity systems."
+  default_prompt: "Use $brand-identity-system to build the strategic brief first, then diagnose or generate identity directions for the brand."

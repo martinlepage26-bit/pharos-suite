@@ -1,0 +1,4 @@
+interface:
+  display_name: "Red Team"
+  short_description: "Lead authorized red team exercises"
+  default_prompt: "Use $red-team to help me scope, run, and report an authorized red team exercise with clear rules of engagement and executive-ready findings."

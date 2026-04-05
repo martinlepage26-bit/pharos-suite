@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA Degree Guide"
+  short_description: "Guide to Master of Arts degrees"
+  default_prompt: "Use $ma-degree-guide to explain MA degrees, compare MA vs MS paths, or outline typical curriculum and career options."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Humanize Rules"
+  short_description: "Rewrite rules around real behavior"
+  default_prompt: "Use $humanize to rewrite this policy in plain, human-centered language and diagnose whether the problem is the rule design or the people."

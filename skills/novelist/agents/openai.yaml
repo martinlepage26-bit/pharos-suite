@@ -1,0 +1,4 @@
+interface:
+  display_name: "Novelist"
+  short_description: "Plan, draft, and revise novels"
+  default_prompt: "Use $novelist to help me outline, draft, or revise a novel with stronger character arcs, pacing, and voice."

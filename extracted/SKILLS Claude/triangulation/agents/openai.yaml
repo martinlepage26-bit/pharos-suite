@@ -1,0 +1,4 @@
+interface:
+  display_name: "Triangulation"
+  short_description: "Explain and solve triangulation"
+  default_prompt: "Use $triangulation to explain triangulation, compare it with trilateration, or solve a triangle or target-location problem from angles."

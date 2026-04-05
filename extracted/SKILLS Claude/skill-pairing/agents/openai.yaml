@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Pairing"
+  short_description: "Chain two skills into one workflow"
+  default_prompt: "Use $skill-pairing to choose two skills for this task, run them in sequence, and pass the first result into the second."

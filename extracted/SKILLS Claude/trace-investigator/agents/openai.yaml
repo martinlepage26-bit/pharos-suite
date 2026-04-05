@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trace Investigator"
+  short_description: "Trace authority across document packs"
+  default_prompt: "Use $trace-investigator to trace how authority, accountability, and definitions move across a policy or document pack."

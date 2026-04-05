@@ -1,0 +1,4 @@
+interface:
+  display_name: "Peer-Reviewed Paper Writer"
+  short_description: "Draft and revise scholarly manuscripts"
+  default_prompt: "Use $peer-reviewed-paper-writer to help me draft, revise, or quality-check a manuscript for peer-reviewed publication without inventing citations, data, or findings."

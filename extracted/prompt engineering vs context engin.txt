@@ -1,0 +1,251 @@
+prompt engineering vs context engineering
+While both aim to improve AI outputs, prompt engineering focuses on the specific instructions you give a model, whereas context engineering is about designing the entire information environment the model sees. 
+Medium
+Medium
+ +1
+The industry has largely shifted toward context engineering because modern AI systems (especially autonomous agents) rely less on "clever wording" and more on having the right data at the right time. 
+Anthropic
+Anthropic
+ +1
+Core Comparison
+Feature 	Prompt Engineering	Context Engineering
+Primary Goal	Writing better instructions	Building better information systems
+Focus	How you phrase the request	What the model "knows" when it responds
+Method	Manual trial-and-error (e.g., "Think step by step")	Programmatic curation of data, memory, and tools
+Scope	One-off, single-turn interactions	Multi-turn, state-aware systems and agents
+Mindset	Copywriter or instructional designer	Systems architect or software engineer
+Key Components of Context Engineering
+Context engineering is often described as the "macro-architecture" that surrounds a prompt. It involves several layers: 
+Medium
+Medium
+ +1
+Knowledge Retrieval (RAG): Dynamically pulling relevant facts from databases or the web so the model doesn't have to rely on its training data alone.
+Memory Management: Maintaining a "short-term" conversation history and "long-term" user preferences to provide continuity across sessions.
+Tool Orchestration: Defining which APIs or functions (like a calculator or calendar) are available to the AI and how their results flow back into the conversation.
+Context Pruning: Actively removing irrelevant tokens to prevent "context rot," where a model loses focus because its input window is too cluttered. 
+Anthropic
+Anthropic
+ +7
+Which one should you use?
+Use Prompt Engineering for simple tasks where the model already has all necessary information (e.g., summarizing a short paragraph or changing the tone of an email).
+Use Context Engineering for production-grade applications that require reliability, accuracy, and the ability to handle complex, multi-step workflows. 
+
+---
+name: [skill-kebab-name]
+description: [What it does] + [When to use it]. (Keep under 1,024 characters).
+---
+
+# 1. Prompt Engineering: The "How-To"
+## Role & Persona
+- Act as a [Senior Role] specializing in [Domain].
+- Tone: [Concise/Professional/Creative].
+
+## Instructions & Steps
+1. [Action Verb] the input to identify [Key Element].
+2. If [Condition], then perform [Action A].
+3. Otherwise, perform [Action B].
+
+## Output Format
+- Use [Markdown/JSON/Code Block] for results.
+- Ensure [Specific Detail] is always included.
+
+# 2. Context Engineering: The "Where-To-Find"
+## Project Knowledge (The Map)
+- **Tech Stack:** [e.g., React 18, Tailwind, Node.js].
+- **Core Files:** 
+  - `src/lib/`: Main logic resides here.
+  - `docs/API.md`: Read this if calling external services.
+
+## Tool & Script Orchestration
+- Use `scripts/validate.py` to check for [Error Type] before finishing.
+- Run `npm test` after any code modification.
+
+## Progressive Disclosure (Token Saving)
+- For detailed [Topic], refer to `references/deep-dive.md`.
+- Read `assets/template.json` only when generating new [Object Type].
+
+
+Implementation Strategies
+1. Optimization for Prompt Engineering
+Few-Shot Examples: Include 1–2 "Input/Output" pairs within the instructions to show the model exactly what a perfect response looks like.
+Negative Constraints: Explicitly list what the AI should not do (e.g., "Do not use deprecated libraries" or "Never hard-code API keys").
+Action Verbs: Use precise verbs like "Extract," "Analyze," or "Synthesize" instead of vague terms like "Help with". 
+The GitHub Blog
+The GitHub Blog
+ +4
+2. Optimization for Context Engineering
+Trigger Keywords: Ensure the description in the YAML frontmatter contains the exact keywords a user might say to activate the skill.
+Token Management: Keep the main SKILL.md under 500 lines. Move heavy reference material to a references/ folder so it only loads into context when the AI specifically needs it.
+Link to Scripts: Instead of telling the AI how to calculate something, tell it which script to run. This is more reliable and saves tokens. 
+Claude Platform
+Claude Platform
+ +4
+Best Practices Checklist
+Naming: Does the folder name match the name in the YAML frontmatter? (Both must be kebab-case).
+Perspective: Is the description written in the third person? (e.g., "Processes files" vs "I process files").
+Efficiency: Have you removed "fluff" like "Please" or "Try your best"? (Assume the model is already capable). 
+
+To build a high-performance SKILL.md, you must combine Prompt Engineering (the instructions) with Context Engineering (the data and systems architecture). 
+Neo4j
+Neo4j
+ +1
+A unified SKILL.md uses YAML frontmatter for discovery and Markdown for execution, following a progressive disclosure pattern where the skill loads only the details it needs at the moment. 
+Claude Platform
+Claude Platform
+ +1
+The Unified SKILL.md Template
+This template uses XML-style tagging to help the AI distinguish between high-level instructions and data-retrieval rules. 
+Anthropic
+Anthropic
+markdown
+---
+name: [skill-command-name]
+description: [Third-person description]. Use when [specific trigger keywords].
+---
+
+# 1. Prompt Engineering: The Execution Logic
+<role>
+- Act as a [Senior Role] with expertise in [Domain].
+- Tone: Concise, objective, and action-oriented.
+</role>
+
+<instructions>
+1. **Analyze:** Parse input for [Key Element].
+2. **Chain-of-Thought:** Before outputting, explain your reasoning in a hidden `<thought>` block.
+3. **Validate:** Check against [Constraint X] before finalizing.
+</instructions>
+
+<few_shot_examples>
+Input: [Example Input]
+Output: [Example Output]
+</few_shot_examples>
+
+# 2. Context Engineering: The Data & Tool Map
+<knowledge_retrieval>
+- **Core Reference:** Read `docs/architecture.md` for project standards.
+- **Code Patterns:** Refer to `src/utils/logger.ts` for logging conventions.
+- **External Data:** If [Condition], use the `search_web` tool for real-time verification.
+</knowledge_retrieval>
+
+<tool_orchestration>
+- **Mandatory:** Run `npm test` after any file modification.
+- **Quality Gate:** If complexity > 10, execute `scripts/refactor_check.py`.
+</tool_orchestration>
+
+<memory_management>
+- **Preferences:** Check `.ai/user_prefs.json` for custom style overrides.
+- **History:** Summarize the last 5 turns if conversation exceeds 4,000 tokens.
+</memory_management>
+
+Comparison of Engineering Tactics in a Skill File
+Strategy 	Prompt Engineering (The "How")	Context Engineering (The "Where")
+Persona	"Act as a security auditor".	Loading security_policy.pdf into active memory.
+Constraints	"Do not use deprecated libraries".	Pointing to a list of approved dependencies in package.json.
+Execution	Step-by-step reasoning (CoT).	Running a specific script (e.g., validate.py) for deterministic results.
+Examples	Adding "Input/Output" pairs to the text.	Dynamically retrieving similar past code snippets from a vector database (RAG).
+Implementation Tips
+Trigger Keywords: Ensure the description field includes the exact terms that should activate the skill automatically.
+Token Efficiency: Keep the body under 500 lines. If you have massive reference lists, move them to a separate file and tell the AI to "Read [file] only if necessary".
+Tool-First Logic: Instead of describing how to do a calculation, provide a tool or script the AI can call. This ensures 100% accuracy and saves context space. 
+
+To build a SKILL.md that effectively does both, you need to treat the file as a dual-layer blueprint: one layer for the "Brain" (Instructions) and one for the "Library" (Data).
+Here is a production-ready template that balances Prompt Engineering (how it thinks) with Context Engineering (what it knows).
+The Unified SKILL.md Template
+markdown
+---
+name: high-performance-agent
+description: Multi-modal skill for [Primary Task]. Activates on keywords: [Key1, Key2].
+---
+
+# 1. THE BRAIN (Prompt Engineering)
+<!-- Focus: Logic, Persona, and Constraints -->
+
+## Role & Persona
+- **Identity:** Senior [Expert Role] specializing in [Domain].
+- **Tone:** Concise, technical, and objective. No conversational filler.
+
+## Execution Logic
+1. **Analyze:** Parse the user input for [Specific Goal].
+2. **Think Step-by-Step:** Wrap your internal reasoning in `<thought>` tags.
+3. **Refine:** If the output involves [Common Error], re-verify against Section 2.
+
+## Negative Constraints
+- NEVER use [Deprecated Library/Method].
+- DO NOT summarize unless explicitly asked.
+
+# 2. THE LIBRARY (Context Engineering)
+<!-- Focus: Data Mapping, Tooling, and Resource Loading -->
+
+## Knowledge Architecture (RAG/Files)
+- **Primary Source:** Always reference `docs/spec-v2.md` before generating code.
+- **Style Guide:** Map all UI components to the definitions in `src/theme/tokens.json`.
+- **Deep Dive:** For complex [Topic], tell the user to "Load `reference/deep_dive.md`" to save tokens now.
+
+## Tool & Environment Orchestration
+- **Validation:** Run `npm run lint` automatically after any file modification.
+- **External Data:** Use the `search_web` tool ONLY if the local `data/cache.json` is older than 24 hours.
+
+## State & Memory
+- **User Prefs:** Check `.ai/config.yaml` for custom naming conventions.
+- **Continuity:** Summarize the current progress if the conversation exceeds 10 turns.
+
+
+How to distinguish the two in your file:
+Engineering Type	Implementation in SKILL.md
+Prompt (The "How")	Using XML tags (<instructions>) and Persona settings to control the model's behavior and linguistic style.
+Context (The "Where")	Creating a Map of your file system and telling the AI exactly which files to read for specific facts (minimizing "hallucinations").
+Pro-Tip for Context Engineering
+Don't paste your entire codebase into the skill. Instead, provide a Table of Contents of your project. This allows the AI to "fetch" the right context only when it needs it, keeping the window clean and the responses fast.
+
+To build a SKILL.md that does both, you must treat it as a Cognitive Architecture (Prompt Engineering) sitting on top of a Knowledge Map (Context Engineering).
+Here is the "Dual-Engine" template ready for use.
+
+---
+name: dual-engine-agent
+description: Expert system for [Domain]. Triggers on: [Keywords].
+---
+
+# 1. THE BRAIN (Prompt Engineering)
+<!-- Focus: How to think and act -->
+
+<persona>
+- **Role:** Senior [Expert Title] specializing in [Niche].
+- **Tone:** Technical, punchy, and objective.
+- **Goal:** Minimize tokens; maximize precision.
+</persona>
+
+<logic_flow>
+1. **Initial Audit:** Scan input for [Key Variables].
+2. **Mental Sandbox:** Before outputting, simulate [Potential Conflict] in a `<thought>` block.
+3. **Format:** Always return results in [Markdown Table/JSON/Code].
+</logic_flow>
+
+<negative_constraints>
+- NEVER use conversational fluff ("As an AI...", "I hope this helps").
+- DO NOT provide solutions for [Out-of-Scope Topic].
+</negative_constraints>
+
+# 2. THE MAP (Context Engineering)
+<!-- Focus: Where to find data and how to use tools -->
+
+<data_environment>
+- **Local Truth:** Always prioritize facts in `/docs/specs.md` over internal training.
+- **Pattern Matching:** Reference `/templates/boilerplate.ts` for all new files.
+- **Token Pruning:** If the task is [X], ignore all files in `/archive/`.
+</data_environment>
+
+<tool_orchestration>
+- **Verification:** Run `scripts/verify.py` before finalizing any logic.
+- **External Bridge:** Use the `fetch_api` tool if `data/local_cache.json` is > 6 hours old.
+</tool_orchestration>
+
+<memory_strategy>
+- **User Context:** Read `.ai/user_preferences.yaml` for custom naming conventions.
+- **Session State:** Summarize current progress every 5 turns to prevent "context drift."
+</memory_strategy>
+
+Why this works:
+Prompt Engineering (The "Software"): The XML tags and persona logic ensure the model's reasoning is sharp. It prevents the AI from being "lazy" or "chatty."
+Context Engineering (The "Hardware"): The directory mapping and tool rules ensure the model has the right tools and data. It solves the "hallucination" problem by giving it a physical file path to follow.
+The "Pro" Secret
+If your project is huge, do not put data inside the SKILL.md. Use the Context Engineering section to give the AI a "Table of Contents" of your file system. This forces it to search and fetch only what it needs, keeping your context window clean.
