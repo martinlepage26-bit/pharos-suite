@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Agents Architect"
+  short_description: "Design AI agent systems and multi-agent orchestration patterns"
+  default_prompt: "Use $ai-agents-architect to help me design an AI agent system architecture, including agent decomposition, reasoning strategies, tool integration, failure modes, and observability requirements."

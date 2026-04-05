@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lead Research Assistant"
+  short_description: "Lead and scope research projects"
+  default_prompt: "Use $lead-research-assistant to help me launch or scope a research project, including hypothesis formation, scope definition, and resource planning."

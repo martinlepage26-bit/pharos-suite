@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Grants"
+  short_description: "Write grant proposals and develop funding strategy"
+  default_prompt: "Use $research-grants to help me develop a funding strategy or write a grant proposal, including funder fit analysis, narrative positioning, and budget justification."

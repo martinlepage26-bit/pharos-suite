@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Development"
+  short_description: "Build and implement AI agents from architectural specifications"
+  default_prompt: "Use $agent-development to help me implement an AI agent based on the architectural design I have, including code structure, reasoning loops, tool integration, error handling, and observability."

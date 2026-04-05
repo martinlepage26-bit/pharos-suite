@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture"
+  short_description: "Design system architecture with components, integration, and scalability"
+  default_prompt: "Use $architecture to help me design a system architecture including components, data flow, integration patterns, scalability, and resilience."

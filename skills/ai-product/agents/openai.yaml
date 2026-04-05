@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Product"
+  short_description: "Productionize AI systems for deployment, scaling, and operations"
+  default_prompt: "Use $ai-product to help me design the productionization strategy for an AI agent or system, including deployment pipeline, scaling model, monitoring, and operational readiness."
