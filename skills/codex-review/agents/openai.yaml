@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Review"
+  short_description: "Review code for quality, security, and maintainability"
+  default_prompt: "Use $codex-review to help me review code for design quality, security vulnerabilities, performance issues, and maintainability improvements."

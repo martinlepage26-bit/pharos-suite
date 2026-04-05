@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Skills"
+  short_description: "Improve writing clarity, structure, and impact"
+  default_prompt: "Use $writing-skills to help me improve my writing, enhance clarity, restructure arguments, and refine tone for the target audience."

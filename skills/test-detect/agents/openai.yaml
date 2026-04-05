@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Detect"
+  short_description: "Design test strategy and coverage analysis"
+  default_prompt: "Use $test-detect to help me design testing strategies, identify gaps in test coverage, plan testing efforts, and establish quality metrics."

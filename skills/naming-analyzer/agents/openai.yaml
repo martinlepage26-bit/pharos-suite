@@ -1,0 +1,4 @@
+interface:
+  display_name: "Naming Analyzer"
+  short_description: "Analyze naming conventions and semantic clarity"
+  default_prompt: "Use $naming-analyzer to help me evaluate and improve naming conventions, ensure consistency, and enhance semantic clarity in my code or systems."

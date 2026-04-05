@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Management"
+  short_description: "Manage agent deployment, monitoring, and operations"
+  default_prompt: "Use $agent-management to help me design deployment strategy, establish monitoring, plan incident response, and manage agent operations at scale."

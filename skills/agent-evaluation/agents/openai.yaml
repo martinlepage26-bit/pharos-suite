@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Evaluation"
+  short_description: "Assess agent quality and production readiness"
+  default_prompt: "Use $agent-evaluation to help me evaluate agent quality, test safety constraints, assess performance, and determine production readiness."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Free Tool Strategy"
+  short_description: "Evaluate tools and route implementation efficiently"
+  default_prompt: "Use $free-tool-strategy to help me evaluate tools, analyze cost-benefit, assess vendor options, and decide between building and buying solutions."

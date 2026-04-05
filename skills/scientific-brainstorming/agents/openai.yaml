@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scientific Brainstorming"
+  short_description: "Generate research ideas and hypotheses"
+  default_prompt: "Use $scientific-brainstorming to help me generate research ideas, formulate research questions, develop hypotheses, and explore novel research directions."
