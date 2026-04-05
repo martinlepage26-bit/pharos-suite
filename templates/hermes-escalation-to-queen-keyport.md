@@ -82,6 +82,15 @@ escalation_categories:
   right_arm_disagreement: <yes|no — Philosopher or Power-Analyst has flagged issue>
   diamond_eyes_concern: <yes|no — decision is not serving flourishing as intended>
 
+(If diamond_eyes_concern == yes, add:)
+diamond_eyes_detail:
+  category: <autonomy|transparency|accountability|dignification|care>
+  what_changed: <what assumption turned out to be false in implementation>
+  expected_flourishing: <what governance decision intended>
+  observed_reality: <what is actually happening>
+  impact_on_care: <how does implementation differ from the care requirement>
+  wisdom_salvageable: <yes|no — can this be fixed, or is the core decision unwise>
+
 detailed_situation:
   what_happened: <clear description>
   when_discovered: <timestamp>

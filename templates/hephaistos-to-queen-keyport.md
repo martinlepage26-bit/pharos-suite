@@ -51,15 +51,40 @@ cross_domain_dependencies:
   - <other systems or decisions that interact>
 ```
 
-### 6. Forging Questions (Diamond Eyes Integration)
+### 6. Diamond Eyes Assessment (Wisdom/Care Validation)
+
+**Apply the Diamond Eyes Protocol** (see `templates/diamond-eyes-protocol.md`) before completing this handoff.
+
 ```
-does_this_serve_flourishing: <yes|no|unknown — HEPHAISTOS's preliminary assessment>
-wisdom_constraints:
-  - <constraint 1 HEPHAISTOS is asserting>
-  - <constraint 2>
-flagged_concerns:
-  - <any concerns that should trigger governance review>
+diamond_eyes_assessment:
+  does_this_serve_flourishing: <yes|conditional|no>
+  
+  clarity_gate: <What exactly is being decided? Who is affected? What does success look like for them?>
+  
+  wisdom_assessment:
+    autonomy: <Does this preserve human choice and agency, or hide constraint behind process?>
+    transparency: <Are tradeoffs visible? Are value choices named?>
+    accountability: <Can someone be held responsible? Or is accountability distributed/avoided?>
+    dignification: <Are people treated as ends or inputs to the system?>
+    care: <Is there genuine concern for those affected, or optimization of metrics?>
+  
+  care_requirement: <What aspect of human flourishing must this scope preserve, protect, or enable?>
+  
+  wisdom_constraints:
+    - <constraint 1 that Diamond Eyes validates>
+    - <constraint 2>
+  
+  flagged_concerns:
+    - <concern 1 that should trigger governance review>
+    - <concern 2 — especially equity/fairness if vulnerable populations exist>
+  
+  escalation_needed: <true|false — set true if wisdom cannot be assured at this stage>
 ```
+
+**Decision Logic:**
+- **If `does_this_serve_flourishing: yes`** → Scope is wise and correct. Proceed to governance with confidence.
+- **If `does_this_serve_flourishing: conditional`** → Scope serves flourishing IF certain conditions are met. Name them explicitly. Governance must validate conditions.
+- **If `does_this_serve_flourishing: no`** → Scope creates theater or enables harm. Escalate to HEPHAISTOS for redesign before governance review.
 
 ### 7. Escalation Triggers
 ```

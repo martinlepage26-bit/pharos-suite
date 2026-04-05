@@ -66,16 +66,39 @@ quality_gates:
 ```
 
 ### 6. Diamond Eyes Validation
+
+**Apply the Diamond Eyes Protocol** (see `templates/diamond-eyes-protocol.md`). This is the final validation gate before promotion.
+
 ```
 diamond_eyes_assessment:
-  serves_flourishing: <yes|no|conditional>
-  wisdom_assessment: <brief assessment of whether decision is wise and caring>
-  care_requirement: <any care requirements or protective measures>
+  serves_flourishing: <yes|conditional|no>
   
-if diamond_eyes_assessment != yes:
-  escalation_required: true
-  escalation_to: HEPHAISTOS
+  wisdom_assessment:
+    autonomy: <Does governance preserve human choice, or hide constraint?>
+    transparency: <Are tradeoffs visible? Are constraints justified?>
+    accountability: <Who is responsible if this fails? Is accountability real?>
+    dignification: <Are people treated as ends or inputs to policy?>
+    care: <Is there genuine concern for those affected?>
+  
+  care_requirement: <What aspect of human flourishing must governance protect?>
+  
+  conditional_triggers:
+    (if serves_flourishing == conditional)
+    - <condition 1 that must be met for yes verdict>
+    - <condition 2>
+  
+  escalation_analysis:
+    (if serves_flourishing != yes)
+    escalation_required: true
+    escalation_reason: <why wisdom/care cannot be assured>
+    escalation_to: HEPHAISTOS
+    remediation_path: <how could this decision become wise?>
 ```
+
+**Decision Logic:**
+- **If `serves_flourishing: yes`** → Decision is wise, correct, and caring. Promote to Hermes with confidence.
+- **If `serves_flourishing: conditional`** → Decision serves flourishing IF conditions are met. Hermes must verify conditions are satisfied before implementation.
+- **If `serves_flourishing: no`** → Decision creates theater or enables harm. ESCALATE back to HEPHAISTOS for redesign before implementation can proceed.
 
 ### 7. Systems and Routing
 ```
