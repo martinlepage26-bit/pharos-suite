@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scientific Critical Thinking"
+  short_description: "Evaluate research logic, assumptions, and soundness"
+  default_prompt: "Use $scientific-critical-thinking to help me evaluate research assumptions, identify logical fallacies, assess generalizability, and critique reasoning."

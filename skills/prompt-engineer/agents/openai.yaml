@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prompt Engineer"
+  short_description: "Design and optimize prompts for model behavior"
+  default_prompt: "Use $prompt-engineer to help me design prompts, optimize instruction clarity, craft examples, and refine prompts for desired model behavior."

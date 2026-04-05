@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scholar Evaluation"
+  short_description: "Evaluate research quality, rigor, and contribution"
+  default_prompt: "Use $scholar-evaluation to help me assess research quality, evaluate methodology, determine publication readiness, and judge scholarly contribution."

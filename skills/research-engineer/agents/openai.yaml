@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Engineer"
+  short_description: "Design research infrastructure and reproducibility systems"
+  default_prompt: "Use $research-engineer to help me design research infrastructure, build data pipelines, establish reproducibility systems, and organize research artifacts."

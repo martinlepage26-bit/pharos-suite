@@ -1,0 +1,4 @@
+interface:
+  display_name: "Peer Review"
+  short_description: "Conduct systematic peer review of research and technical work"
+  default_prompt: "Use $peer-review to help me review research papers, code, proposals, or other work systematically and provide constructive feedback."

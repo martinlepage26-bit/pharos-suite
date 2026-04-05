@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scientific Visualization"
+  short_description: "Create publication-ready scientific figures and visuals"
+  default_prompt: "Use $scientific-visualization to help me design scientific figures, charts, and diagrams that communicate data and methods clearly and accurately."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scientific Writing"
+  short_description: "Write technical and scientific prose with clarity and precision"
+  default_prompt: "Use $scientific-writing to help me write research manuscripts, technical reports, or scientific communication with clarity, precision, and proper structure."

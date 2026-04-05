@@ -1,0 +1,4 @@
+interface:
+  display_name: "Senior Data Scientist"
+  short_description: "Oversee data science strategy and ensure analytical rigor"
+  default_prompt: "Use $senior-data-scientist to help me oversee data science work, select appropriate methods, review analyses, and ensure analytical rigor."

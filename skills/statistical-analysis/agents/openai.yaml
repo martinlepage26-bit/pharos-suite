@@ -1,0 +1,4 @@
+interface:
+  display_name: "Statistical Analysis"
+  short_description: "Apply statistical methods and hypothesis testing"
+  default_prompt: "Use $statistical-analysis to help me select statistical tests, check assumptions, perform hypothesis testing, and interpret results."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Literature Review"
+  short_description: "Conduct comprehensive literature survey and synthesis"
+  default_prompt: "Use $literature-review to help me plan and conduct a literature review, identify research gaps, and synthesize findings."

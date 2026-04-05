@@ -1,0 +1,4 @@
+interface:
+  display_name: "Exploratory Data Analysis"
+  short_description: "Explore data patterns, distributions, outliers, and structure"
+  default_prompt: "Use $exploratory-data-analysis to help me explore a new dataset, identify patterns, detect anomalies, and understand what's in the data before formal analysis."

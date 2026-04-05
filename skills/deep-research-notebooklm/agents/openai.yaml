@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deep Research NotebookLM"
+  short_description: "Conduct structured, systematic research with evidence synthesis"
+  default_prompt: "Use $deep-research-notebooklm to help me conduct deep research, synthesize evidence, develop hypotheses, and organize findings systematically."
