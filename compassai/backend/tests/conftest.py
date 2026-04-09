@@ -18,6 +18,7 @@ if str(REPO_ROOT) not in sys.path:
 
 os.environ.setdefault("MONGO_URL", "mongodb://localhost:27017")
 os.environ.setdefault("DB_NAME", "compassai_test")
+os.environ.setdefault("SECRET_KEY", "test-secret-key-for-unit-tests-only")
 os.environ.setdefault("OPENAI_API_KEY", "test-openai-key")
 os.environ.setdefault("RESEND_API_KEY", "")
 

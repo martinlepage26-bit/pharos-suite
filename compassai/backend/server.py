@@ -2990,28 +2990,25 @@ async def export_assessment_pdf(assessment_id: str):
 from compassai.backend.ai_services import AIService, get_ai_service
 
 # AI Models for request
-class AIModelChoice(str, Enum):
-    GEMINI = "gemini"
-
 class AIGenerateRequest(BaseModel):
-    model: AIModelChoice = AIModelChoice.GEMINI
+    model: str = "gemini"
 
 class DocumentAnalysisRequest(BaseModel):
     document_text: str
-    model: AIModelChoice = AIModelChoice.GEMINI
+    model: str = "gemini"
 
 class ContractAnalysisRequest(BaseModel):
     contract_text: str
-    model: AIModelChoice = AIModelChoice.GEMINI
+    model: str = "gemini"
 
 class MarketIntelRequest(BaseModel):
     sector: str
     topics: Optional[List[str]] = None
-    model: AIModelChoice = AIModelChoice.GEMINI
+    model: str = "gemini"
 
 class AutoFillRequest(BaseModel):
     document_text: str
-    model: AIModelChoice = AIModelChoice.GEMINI
+    model: str = "gemini"
 
 class ClientOnboardingRequest(BaseModel):
     company_name: str
@@ -3053,7 +3050,7 @@ async def generate_executive_summary(assessment_id: str, request: AIGenerateRequ
     ai_service = await get_ai_service()
     summary = await ai_service.generate_executive_summary(result)
     
-    return {"assessment_id": assessment_id, "executive_summary": summary, "model_used": request.model.value}
+    return {"assessment_id": assessment_id, "executive_summary": summary, "model_used": request.model}
 
 @api_router.post("/ai/remediation-plan/{assessment_id}")
 async def generate_remediation_plan(assessment_id: str, request: AIGenerateRequest):
@@ -3073,7 +3070,7 @@ async def generate_remediation_plan(assessment_id: str, request: AIGenerateReque
     ai_service = await get_ai_service()
     plan = await ai_service.generate_remediation_plan(result, sector)
     
-    return {"assessment_id": assessment_id, "remediation_plan": plan, "model_used": request.model.value}
+    return {"assessment_id": assessment_id, "remediation_plan": plan, "model_used": request.model}
 
 @api_router.post("/ai/analyze-policy")
 async def analyze_policy_document(request: DocumentAnalysisRequest):
@@ -3087,7 +3084,7 @@ async def analyze_policy_document(request: DocumentAnalysisRequest):
     ai_service = await get_ai_service()
     analysis = await ai_service.analyze_policy_document(request.document_text, controls)
     
-    return {"analysis": analysis, "model_used": request.model.value}
+    return {"analysis": analysis, "model_used": request.model}
 
 @api_router.post("/ai/analyze-contract")
 async def analyze_contract(request: ContractAnalysisRequest):
@@ -3098,7 +3095,7 @@ async def analyze_contract(request: ContractAnalysisRequest):
     ai_service = await get_ai_service()
     analysis = await ai_service.analyze_contract(request.contract_text)
     
-    return {"analysis": analysis, "model_used": request.model.value}
+    return {"analysis": analysis, "model_used": request.model}
 
 @api_router.post("/ai/market-intelligence")
 async def get_market_intelligence(request: MarketIntelRequest):
@@ -3106,7 +3103,7 @@ async def get_market_intelligence(request: MarketIntelRequest):
     ai_service = await get_ai_service()
     intelligence = await ai_service.get_market_intelligence(request.sector, request.topics)
     
-    return {"sector": request.sector, "intelligence": intelligence, "model_used": request.model.value}
+    return {"sector": request.sector, "intelligence": intelligence, "model_used": request.model}
 
 @api_router.post("/ai/auto-fill")
 async def auto_fill_from_document(request: AutoFillRequest):
@@ -3117,7 +3114,7 @@ async def auto_fill_from_document(request: AutoFillRequest):
     ai_service = await get_ai_service()
     extracted = await ai_service.auto_fill_from_document(request.document_text)
     
-    return {"extracted_data": extracted, "model_used": request.model.value}
+    return {"extracted_data": extracted, "model_used": request.model}
 
 # ==================== CLIENT ONBOARDING PORTAL ====================
 
