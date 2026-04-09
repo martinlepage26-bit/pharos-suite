@@ -69,6 +69,13 @@ const defaultEvidenceForm = {
 };
 
 const fallbackSectors = ['SaaS', 'Healthcare', 'Education', 'Public', 'Finance', 'Construction', 'Other'];
+const boundedWorkerRoutes = [
+  'POST /api/v1/use-cases',
+  'POST /api/v1/evidence',
+  'POST /api/v1/use-cases/{usecase_id}/assess',
+  'GET /api/v1/use-cases/{usecase_id}/audit-trail',
+  'GET /api/v1/use-cases/{usecase_id}/closure'
+];
 
 const heroSignals = [
   {
@@ -77,14 +84,14 @@ const heroSignals = [
     description: 'CompassAI turns evidence, system records, and review logic into assessments, deliverables, and scheduled governance follow-through.'
   },
   {
-    label: 'Live now',
-    title: 'Read surfaces first',
-    description: 'The PHAROS shell can read live stats, records, benchmarks, and deliverables immediately while token-gated actions stay explicit.'
+    label: 'Latest upgrade',
+    title: 'Governance workbench surfaces live',
+    description: 'Policies, artifacts, training modules, committees, and executive dashboard routes now sit beside the core assessment engine.'
   },
   {
-    label: 'Priority',
-    title: 'One coherent flow',
-    description: 'Clients, systems, assessments, evidence, and scheduled reviews now sit in one page instead of fragmented admin threads.'
+    label: 'Bounded method layer',
+    title: 'PHAROS Method and worker slice added',
+    description: 'CompassAI now carries PHAROS Method controls plus a bounded use-case registry, evidence, approval, and closure migration slice.'
   }
 ];
 
@@ -133,6 +140,17 @@ const PortalCompassAI = () => {
   const [deliverables, setDeliverables] = useState(null);
   const [scheduledAssessments, setScheduledAssessments] = useState([]);
   const [dueAssessments, setDueAssessments] = useState([]);
+  const [governanceDashboard, setGovernanceDashboard] = useState(null);
+  const [governanceArtifacts, setGovernanceArtifacts] = useState([]);
+  const [governancePolicies, setGovernancePolicies] = useState([]);
+  const [governanceTraining, setGovernanceTraining] = useState([]);
+  const [governanceCommittees, setGovernanceCommittees] = useState([]);
+  const [selectedCommitteeId, setSelectedCommitteeId] = useState('');
+  const [committeeMeetings, setCommitteeMeetings] = useState([]);
+  const [committeeReport, setCommitteeReport] = useState(null);
+  const [methodPack, setMethodPack] = useState(null);
+  const [methodRegister, setMethodRegister] = useState([]);
+  const [workerUseCases, setWorkerUseCases] = useState([]);
 
   const [clientForm, setClientForm] = useState(defaultClientForm);
   const [editingClientId, setEditingClientId] = useState('');
@@ -148,14 +166,14 @@ const PortalCompassAI = () => {
   const authenticated = Boolean(config?.token);
   const activeHeroSignals = moduleOriginConfigured ? heroSignals : previewHeroSignals;
   const heroBody = moduleOriginConfigured
-    ? 'Govern client records, system inventories, evidence, risk assessments, deliverables, and review cadence from one PHAROS-hosted surface.'
+    ? 'Govern client records, system inventories, evidence, risk assessments, deliverables, committees, and bounded method controls from one PHAROS-hosted surface.'
     : 'Preview route only. The CompassAI module API is not publicly configured, so live module data is not exposed here.';
   const previewUnavailableMessage = 'Preview unavailable. The CompassAI module API is not publicly configured for this PHAROS preview.';
   const connectionBody = moduleOriginConfigured
-    ? 'Public reads work immediately against the configured base URL. Create, update, schedule, and secure actions use the token field.'
+    ? 'Public reads work immediately against the configured base URL. Governance workbench, method, and worker-slice reads use the bearer token when present.'
     : 'Preview unavailable. The CompassAI module API is not publicly configured for this PHAROS preview.';
   const connectionHelper = moduleOriginConfigured
-    ? 'Default local target is http://127.0.0.1:9205. Keep the token empty if you only need dashboard reads, clients, systems, assessments, and deliverables.'
+    ? 'Default local target is http://127.0.0.1:9205. Keep the token empty if you only need dashboard reads; add it to load governance program, PHAROS Method, and use-case registry surfaces.'
     : 'Live module data is not exposed on this preview until a public CompassAI origin is configured.';
 
   const sectorOptions = Array.from(new Set([
@@ -235,6 +253,17 @@ const PortalCompassAI = () => {
     if (!config.baseUrl || !authenticated) {
       setScheduledAssessments([]);
       setDueAssessments([]);
+      setGovernanceDashboard(null);
+      setGovernanceArtifacts([]);
+      setGovernancePolicies([]);
+      setGovernanceTraining([]);
+      setGovernanceCommittees([]);
+      setSelectedCommitteeId('');
+      setCommitteeMeetings([]);
+      setCommitteeReport(null);
+      setMethodPack(null);
+      setMethodRegister([]);
+      setWorkerUseCases([]);
       setSecureLoading(false);
       setSecureError('');
       return;
@@ -244,7 +273,7 @@ const PortalCompassAI = () => {
     setSecureError('');
 
     try {
-      const [scheduledPayload, duePayload] = await Promise.all([
+      const results = await Promise.allSettled([
         requestModuleJson({
           baseUrl: config.baseUrl,
           path: '/api/scheduled-assessments',
@@ -254,11 +283,85 @@ const PortalCompassAI = () => {
           baseUrl: config.baseUrl,
           path: '/api/scheduled-assessments/due',
           token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/executive-dashboard',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/artifacts',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/policies',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/training',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/committees',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/method/pack',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/governance/method/control-register',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/v1/use-cases',
+          token: config.token
         })
       ]);
 
+      const failures = [];
+      const valueOr = (result, fallback, label) => {
+        if (result.status === 'fulfilled') return result.value;
+        failures.push(result.reason?.message || `${label} unavailable`);
+        return fallback;
+      };
+
+      const scheduledPayload = valueOr(results[0], [], 'Scheduled reviews');
+      const duePayload = valueOr(results[1], [], 'Due reviews');
+      const dashboardPayload = valueOr(results[2], null, 'Governance dashboard');
+      const artifactsPayload = valueOr(results[3], [], 'Governance artifacts');
+      const policiesPayload = valueOr(results[4], [], 'Governance policies');
+      const trainingPayload = valueOr(results[5], [], 'Training modules');
+      const committeesPayload = valueOr(results[6], [], 'Governance committees');
+      const methodPackPayload = valueOr(results[7], null, 'PHAROS Method pack');
+      const methodRegisterPayload = valueOr(results[8], { controls: [] }, 'PHAROS control register');
+      const workerUseCasesPayload = valueOr(results[9], { use_cases: [] }, 'Use-case registry');
+
+      const nextCommittees = safeArray(committeesPayload);
+
       setScheduledAssessments(safeArray(scheduledPayload));
       setDueAssessments(safeArray(duePayload));
+      setGovernanceDashboard(dashboardPayload);
+      setGovernanceArtifacts(safeArray(artifactsPayload));
+      setGovernancePolicies(safeArray(policiesPayload));
+      setGovernanceTraining(safeArray(trainingPayload));
+      setGovernanceCommittees(nextCommittees);
+      setMethodPack(methodPackPayload);
+      setMethodRegister(safeArray(methodRegisterPayload?.controls));
+      setWorkerUseCases(safeArray(workerUseCasesPayload?.use_cases));
+
+      if (!selectedCommitteeId && nextCommittees[0]?.id) {
+        setSelectedCommitteeId(nextCommittees[0].id);
+      }
+
+      setSecureError(failures[0] || '');
     } catch (error) {
       setSecureError(error.message || 'Secure CompassAI endpoints could not be loaded.');
     } finally {
@@ -307,6 +410,39 @@ const PortalCompassAI = () => {
   useEffect(() => {
     loadSecureData();
   }, [config.baseUrl, config.token]);
+
+  useEffect(() => {
+    const loadCommitteeContext = async () => {
+      if (!config.baseUrl || !authenticated || !selectedCommitteeId) {
+        setCommitteeMeetings([]);
+        setCommitteeReport(null);
+        return;
+      }
+
+      try {
+        const [meetingsPayload, reportPayload] = await Promise.all([
+          requestModuleJson({
+            baseUrl: config.baseUrl,
+            path: `/api/governance/committees/${selectedCommitteeId}/meetings`,
+            token: config.token
+          }),
+          requestModuleJson({
+            baseUrl: config.baseUrl,
+            path: `/api/governance/committees/${selectedCommitteeId}/report`,
+            token: config.token
+          })
+        ]);
+
+        setCommitteeMeetings(safeArray(meetingsPayload));
+        setCommitteeReport(reportPayload);
+      } catch (error) {
+        setCommitteeMeetings([]);
+        setCommitteeReport(null);
+      }
+    };
+
+    loadCommitteeContext();
+  }, [config.baseUrl, config.token, authenticated, selectedCommitteeId]);
 
   useEffect(() => {
     loadBenchmark();
@@ -1035,6 +1171,252 @@ const PortalCompassAI = () => {
                 <div className="editorial-panel portal-card">
                   <div className="portal-section-head">
                     <div>
+                      <p className="eyebrow">Governance workbench</p>
+                      <h2>Read the expanded governance program layer</h2>
+                    </div>
+                    <p className="body-sm">
+                      The latest CompassAI pass added live governance-artifact, policy, training, committee, and executive-dashboard routes. The PHAROS shell now reads those counts and records directly.
+                    </p>
+                  </div>
+
+                  {!authenticated ? (
+                    <div className="portal-empty">
+                      <ShieldCheck />
+                      <p>Add a CompassAI bearer token above to load governance workbench data.</p>
+                    </div>
+                  ) : (
+                    <div className="portal-stack-sm">
+                      <div className="portal-key-value-grid">
+                        <div className="portal-key-value">
+                          <span>Governance committees</span>
+                          <strong>{governanceDashboard?.summary?.governance_committees ?? governanceCommittees.length}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Policies</span>
+                          <strong>{governanceDashboard?.summary?.policies ?? governancePolicies.length}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Training modules</span>
+                          <strong>{governanceDashboard?.summary?.training_modules ?? governanceTraining.length}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Avg evidence confidence</span>
+                          <strong>{governanceDashboard?.summary?.average_evidence_confidence ?? 0}</strong>
+                        </div>
+                      </div>
+
+                      <div className="portal-summary-grid">
+                        <div className="scope-note">
+                          <strong>Policies</strong>
+                          <ul className="portal-inline-list">
+                            {governancePolicies.slice(0, 4).map((policy) => (
+                              <li key={policy.id || policy.slug}>{policy.title}</li>
+                            ))}
+                            {governancePolicies.length === 0 ? <li>No governance policies loaded yet.</li> : null}
+                          </ul>
+                        </div>
+                        <div className="scope-note">
+                          <strong>Artifacts and training</strong>
+                          <ul className="portal-inline-list">
+                            {governanceArtifacts.slice(0, 2).map((artifact) => (
+                              <li key={artifact.id || artifact.slug}>{artifact.title}</li>
+                            ))}
+                            {governanceTraining.slice(0, 2).map((module) => (
+                              <li key={module.id || module.slug}>{module.title}</li>
+                            ))}
+                            {governanceArtifacts.length === 0 && governanceTraining.length === 0 ? <li>No governance artifacts or training modules loaded yet.</li> : null}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Committee workflow</p>
+                      <h2>Track live review bodies and meeting load</h2>
+                    </div>
+                    <p className="body-sm">
+                      Committee records are now first-class governance data instead of side notes. This lets PHAROS show actual meeting cadence, decisions, and related risk distribution.
+                    </p>
+                  </div>
+
+                  {!authenticated ? (
+                    <div className="portal-empty">
+                      <ShieldCheck />
+                      <p>Add a CompassAI bearer token above to inspect committee workflow.</p>
+                    </div>
+                  ) : governanceCommittees.length === 0 ? (
+                    <div className="portal-empty">
+                      <p>No governance committees loaded yet.</p>
+                    </div>
+                  ) : (
+                    <div className="portal-stack-sm">
+                      <label className="portal-field">
+                        <span className="portal-field-label">Committee</span>
+                        <select
+                          className="portal-select"
+                          value={selectedCommitteeId}
+                          onChange={(event) => setSelectedCommitteeId(event.target.value)}
+                        >
+                          {governanceCommittees.map((committee) => (
+                            <option key={committee.id} value={committee.id}>{committee.name}</option>
+                          ))}
+                        </select>
+                      </label>
+
+                      <div className="portal-key-value-grid">
+                        <div className="portal-key-value">
+                          <span>Meetings</span>
+                          <strong>{committeeReport?.summary?.meetings ?? committeeMeetings.length}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Decisions</span>
+                          <strong>{committeeReport?.summary?.decisions ?? 0}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Related assessments</span>
+                          <strong>{committeeReport?.summary?.related_assessments ?? 0}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Next focus</span>
+                          <strong>{committeeMeetings[0]?.title || 'No meeting loaded'}</strong>
+                        </div>
+                      </div>
+
+                      <div className="scope-note">
+                        <strong>Recent meetings</strong>
+                        <ul className="portal-inline-list">
+                          {committeeMeetings.slice(0, 3).map((meeting) => (
+                            <li key={meeting.id}>{meeting.title} · {formatDateTime(meeting.scheduled_for)}</li>
+                          ))}
+                          {committeeMeetings.length === 0 ? <li>No committee meetings recorded yet.</li> : null}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="portal-grid portal-grid-halves">
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">PHAROS Method</p>
+                      <h2>Apply bounded control rails inside CompassAI</h2>
+                    </div>
+                    <p className="body-sm">
+                      CompassAI now embeds a bounded PHAROS Method pack and control register so governance claims stay explicit, source-grounded, and auditable.
+                    </p>
+                  </div>
+
+                  {!authenticated ? (
+                    <div className="portal-empty">
+                      <ShieldCheck />
+                      <p>Add a CompassAI bearer token above to load PHAROS Method context.</p>
+                    </div>
+                  ) : (
+                    <div className="portal-stack-sm">
+                      <div className="scope-note">
+                        <strong>{methodPack?.method_name || 'PHAROS Method pack unavailable'}</strong>
+                        <p>Applied surface: {methodPack?.applied_surface || 'Not loaded'}.</p>
+                        <p>Quality status: {methodPack?.quality_summary?.overall_status || 'Not loaded'}.</p>
+                      </div>
+
+                      <div className="portal-summary-grid">
+                        <div className="scope-note">
+                          <strong>Method steps</strong>
+                          <ul className="portal-inline-list">
+                            {safeArray(methodPack?.definitive_method_steps).slice(0, 4).map((step) => (
+                              <li key={step}>{step}</li>
+                            ))}
+                            {safeArray(methodPack?.definitive_method_steps).length === 0 ? <li>No method steps loaded yet.</li> : null}
+                          </ul>
+                        </div>
+                        <div className="scope-note">
+                          <strong>Control rails</strong>
+                          <ul className="portal-inline-list">
+                            {methodRegister.slice(0, 4).map((control) => (
+                              <li key={control.control}>{control.control}</li>
+                            ))}
+                            {methodRegister.length === 0 ? <li>No control rails loaded yet.</li> : null}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Bounded worker slice</p>
+                      <h2>Track the new use-case registry layer</h2>
+                    </div>
+                    <p className="body-sm">
+                      The latest CompassAI pass also added a bounded worker-facing use-case registry, evidence, assessment, approval, and closure slice. It is scaffolded, not promoted beyond its stated boundary.
+                    </p>
+                  </div>
+
+                  {!authenticated ? (
+                    <div className="portal-empty">
+                      <ShieldCheck />
+                      <p>Add a CompassAI bearer token above to inspect the live use-case registry.</p>
+                    </div>
+                  ) : (
+                    <div className="portal-stack-sm">
+                      <div className="portal-key-value-grid">
+                        <div className="portal-key-value">
+                          <span>Use cases</span>
+                          <strong>{workerUseCases.length}</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Current slice</span>
+                          <strong>Bounded</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Closure route</span>
+                          <strong>Token-gated</strong>
+                        </div>
+                        <div className="portal-key-value">
+                          <span>Promotion state</span>
+                          <strong>Scaffold, not shell</strong>
+                        </div>
+                      </div>
+
+                      <div className="scope-note">
+                        <strong>Recent use cases</strong>
+                        <ul className="portal-inline-list">
+                          {workerUseCases.slice(0, 4).map((useCase) => (
+                            <li key={useCase.id}>
+                              {useCase.name}
+                              {useCase.latest_risk_tier ? ` · ${useCase.latest_risk_tier}` : ''}
+                              {typeof useCase.evidence_count === 'number' ? ` · ${useCase.evidence_count} evidence item(s)` : ''}
+                            </li>
+                          ))}
+                          {workerUseCases.length === 0 ? <li>No use cases loaded yet.</li> : null}
+                        </ul>
+                      </div>
+
+                      <div className="scope-note">
+                        <strong>Routes in scope</strong>
+                        <ul className="portal-inline-list">
+                          {boundedWorkerRoutes.map((route) => (
+                            <li key={route}>{route}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="portal-grid portal-grid-halves">
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
                       <p className="eyebrow">Assessment engine</p>
                       <h2>Run governance scoring and retrieve deliverables</h2>
                     </div>
@@ -1414,7 +1796,7 @@ const PortalCompassAI = () => {
                     <h2>CompassAI is now live inside the PHAROS shell</h2>
                   </div>
                   <p className="body-sm">
-                    The next backend move is consolidation, not reinvention: keep the PHAROS routes as the product shell, then rationalize auth, secret handling, and repository boundaries behind them.
+                    The next backend move is consolidation, not reinvention: keep the PHAROS routes as the product shell, then keep pulling governance-program, PHAROS Method, and bounded worker-state surfaces forward without over-claiming their maturity.
                   </p>
                 </div>
 

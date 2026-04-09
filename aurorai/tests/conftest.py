@@ -19,7 +19,13 @@ if str(REPO_ROOT) not in sys.path:
 
 os.environ.setdefault("MONGO_URL", "mongodb://localhost:27017")
 os.environ.setdefault("DB_NAME", "aurorai_test")
-os.environ.setdefault("AURORAI_API_TOKEN", "aurorai-local-dev-token")
+os.environ.setdefault("AURORAI_SESSION_SECRET", "aurorai-test-secret")
+os.environ.setdefault("AURORAI_BOOTSTRAP_ADMIN_EMAIL", "admin@aurora.test")
+os.environ.setdefault("AURORAI_BOOTSTRAP_ADMIN_PASSWORD", "admin-pass")
+os.environ.setdefault("AURORAI_BOOTSTRAP_OPERATOR_EMAIL", "operator@aurora.test")
+os.environ.setdefault("AURORAI_BOOTSTRAP_OPERATOR_PASSWORD", "operator-pass")
+os.environ.setdefault("AURORAI_BOOTSTRAP_REVIEWER_EMAIL", "reviewer@aurora.test")
+os.environ.setdefault("AURORAI_BOOTSTRAP_REVIEWER_PASSWORD", "reviewer-pass")
 os.environ.setdefault("COMPASSAI_INGEST_TOKEN", "compassai-local-ingest-token")
 
 
@@ -41,6 +47,10 @@ def _matches_query(document: Dict[str, Any], query: Dict[str, Any]) -> bool:
                     if needle.lower() not in haystack.lower():
                         return False
                 elif needle not in haystack:
+                    return False
+                continue
+            if "$in" in expected:
+                if actual not in expected["$in"]:
                     return False
                 continue
         if document.get(key) != expected:
@@ -75,6 +85,15 @@ class InMemoryCollection:
         self.name = name
         self._documents: List[Dict[str, Any]] = []
 
+    def _apply_projection(self, document: Dict[str, Any], projection: Optional[Dict[str, Any]] = None):
+        stored = copy.deepcopy(document)
+        if not projection:
+            return stored
+        excluded = {key for key, value in projection.items() if value == 0}
+        for key in excluded:
+            stored.pop(key, None)
+        return stored
+
     async def insert_one(self, document: Dict[str, Any]):
         self._documents.append(copy.deepcopy(document))
         return None
@@ -82,10 +101,7 @@ class InMemoryCollection:
     async def find_one(self, query: Dict[str, Any], projection: Optional[Dict[str, Any]] = None):
         for document in self._documents:
             if _matches_query(document, query):
-                stored = copy.deepcopy(document)
-                if projection and projection.get("_id") == 0:
-                    stored.pop("_id", None)
-                return stored
+                return self._apply_projection(document, projection)
         return None
 
     def find(self, query: Optional[Dict[str, Any]] = None, projection: Optional[Dict[str, Any]] = None):
@@ -93,10 +109,7 @@ class InMemoryCollection:
         matched = []
         for document in self._documents:
             if _matches_query(document, query):
-                stored = copy.deepcopy(document)
-                if projection and projection.get("_id") == 0:
-                    stored.pop("_id", None)
-                matched.append(stored)
+                matched.append(self._apply_projection(document, projection))
         return InMemoryCursor(matched)
 
     async def update_one(self, query: Dict[str, Any], update: Dict[str, Any]):
@@ -113,6 +126,34 @@ class InMemoryCollection:
                 for key, value in update.get("$set", {}).items():
                     document[key] = copy.deepcopy(value)
         return None
+
+    async def find_one_and_update(
+        self,
+        query: Dict[str, Any],
+        update: Dict[str, Any],
+        sort: Optional[List[tuple[str, int]]] = None,
+        return_document: Optional[Any] = None,
+    ):
+        matched_indexes = [
+            index for index, document in enumerate(self._documents)
+            if _matches_query(document, query)
+        ]
+        if not matched_indexes:
+            return None
+
+        if sort:
+            field, direction = sort[0]
+            matched_indexes.sort(
+                key=lambda index: self._documents[index].get(field, ""),
+                reverse=direction < 0,
+            )
+
+        index = matched_indexes[0]
+        document = self._documents[index]
+        before = copy.deepcopy(document)
+        for key, value in update.get("$set", {}).items():
+            document[key] = copy.deepcopy(value)
+        return copy.deepcopy(document if return_document is not None else before)
 
     async def delete_one(self, query: Dict[str, Any]):
         for index, document in enumerate(self._documents):
@@ -229,5 +270,20 @@ def client(aurorai_module):
 
 
 @pytest.fixture()
-def auth_headers():
-    return {"Authorization": "Bearer aurorai-local-dev-token"}
+def auth_headers(client):
+    response = client.post(
+        "/api/session/login",
+        json={"email": "operator@aurora.test", "password": "operator-pass"},
+    )
+    assert response.status_code == 200
+    return {"Authorization": f"Bearer {response.json()['access_token']}"}
+
+
+@pytest.fixture()
+def reviewer_headers(client):
+    response = client.post(
+        "/api/session/login",
+        json={"email": "reviewer@aurora.test", "password": "reviewer-pass"},
+    )
+    assert response.status_code == 200
+    return {"Authorization": f"Bearer {response.json()['access_token']}"}

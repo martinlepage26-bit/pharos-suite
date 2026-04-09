@@ -22,6 +22,12 @@ Use a dedicated API subdomain:
 
 Do not use a same-origin `/api/*` path on the apex yet.
 
+Foundation note:
+
+- a bounded Worker migration foundation now exists at `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/infra/pharos-api-worker`
+- its governing memo is `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/docs/pharos-workers-foundation-2026-04-02.md`
+- keep the current tunnel-backed API path until the Worker cutover is explicit and the D1/R2 binding plan is real
+
 ## Hostname plan
 
 Create now:

@@ -1,0 +1,39 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "pharos-api-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-02",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "PHAROS_ENV": "foundation"
+  },
+  // Workers AI binding — free tier, edge inference.
+  // Used for lightweight intent classification on /api/ai/* routes.
+  // No configuration required beyond this binding; the runtime provides the model.
+  "ai": {
+    "binding": "AI"
+  },
+  "d1_databases": [],
+  "r2_buckets": [],
+  // Rate limiting for admin login — pending namespace_id resolution.
+  // Requires wrangler 4.81.0+ and a resolved namespace_id before activation.
+  // Steps: (1) wrangler rate-limit create --description "pharos-admin-login"
+  //         (2) replace namespace_id below with returned value
+  //         (3) uncomment "rate_limits" block and redeploy
+  // "rate_limits": [
+  //   {
+  //     "binding": "ADMIN_LOGIN_RL",
+  //     "namespace_id": "UNRESOLVED-create-via-wrangler-rate-limit-create"
+  //   }
+  // ],
+  // Route attachment active — requires zone_name "pharos-ai.ca" to exist in your CF account.
+  "routes": [
+    {
+      "pattern": "api.pharos-ai.ca/*",
+      "zone_name": "pharos-ai.ca"
+    }
+  ]
+}

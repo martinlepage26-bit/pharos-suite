@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "cf:api:dev": "npx wrangler dev --config infra/pharos-api-worker/wrangler.jsonc",
+    "cf:api:deploy": "npx wrangler deploy --config infra/pharos-api-worker/wrangler.jsonc",
+    "cf:api:typecheck": "npx tsc --noEmit -p infra/pharos-api-worker/tsconfig.json"
+  },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260329.1",
     "typescript": "^6.0.2"

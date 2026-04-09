@@ -11,6 +11,7 @@ Updated: 2026-03-30
   - `https://www.pharos-ai.ca`
 - No active PHAROS preview Pages project exists. The former preview project `pharos-suite-review` was deleted on 2026-03-30.
 - The only other surviving Pages project in the account is `martin-lepage-site`, which serves `https://martin.govern-ai.ca` and is outside this repo boundary.
+- Pages remains the correct host for the PHAROS public shell while the API migration is staged separately through `/home/cerebrhoe/PHAROS-SUITE/repos/pharos-suite/infra/pharos-api-worker`.
 
 ## Boundary rule
 

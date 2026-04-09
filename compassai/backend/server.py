@@ -4,6 +4,9 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
+from starlette.responses import Response as StarletteResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -37,7 +40,9 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Auth configuration
-SECRET_KEY = os.environ.get('SECRET_KEY', 'compass-ai-governance-secret-key-2026')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY environment variable is required — refusing to start with no signing secret")
 COMPASSAI_INGEST_TOKEN = os.environ.get('COMPASSAI_INGEST_TOKEN', '')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
@@ -47,7 +52,18 @@ security = HTTPBearer(auto_error=False)
 resend.api_key = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'pharos@pharos-ai.ca')
 
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: StarletteRequest, call_next):
+        response: StarletteResponse = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        return response
+
 app = FastAPI(title="Compass AI Governance Engine")
+app.add_middleware(SecurityHeadersMiddleware)
 api_router = APIRouter(prefix="/api")
 
 # Configure logging
@@ -2570,29 +2586,29 @@ async def upload_evidence(
     control_id: str = Form(...),
     description: str = Form(None),
     file: UploadFile = File(...),
-    current_user: Optional[Dict] = Depends(get_current_user)
+    current_user: Dict = Depends(require_auth)
 ):
     """Upload evidence file for a specific control."""
     # Verify assessment exists
     assessment = await db.assessments.find_one({"id": assessment_id}, {"_id": 0})
     if not assessment:
         raise HTTPException(status_code=404, detail="Assessment not found")
-    
+
     # Read file content
     content = await file.read()
     file_size = len(content)
-    
+
     # Save file to disk
     file_id = str(uuid.uuid4())
     file_ext = Path(file.filename).suffix if file.filename else ""
     saved_filename = f"{file_id}{file_ext}"
     file_path = UPLOAD_DIR / saved_filename
-    
+
     with open(file_path, "wb") as f:
         f.write(content)
-    
+
     # Get uploader info
-    uploaded_by = current_user.get('name', 'Unknown') if current_user else "Anonymous"
+    uploaded_by = current_user.get('name', 'Unknown')
     
     # Create evidence record
     evidence = EvidenceFile(
@@ -2645,7 +2661,11 @@ async def upload_evidence(
     return {"message": "File uploaded successfully", "evidence": evidence.model_dump()}
 
 @api_router.get("/evidence/{assessment_id}")
-async def get_evidence_files(assessment_id: str, control_id: Optional[str] = None):
+async def get_evidence_files(
+    assessment_id: str,
+    control_id: Optional[str] = None,
+    current_user: Dict = Depends(require_auth)
+):
     """Get all evidence files for an assessment."""
     query = {"assessment_id": assessment_id}
     if control_id:
@@ -2658,20 +2678,29 @@ async def get_evidence_files(assessment_id: str, control_id: Optional[str] = Non
     return files
 
 @api_router.get("/evidence/download/{file_id}")
-async def download_evidence(file_id: str):
+async def download_evidence(
+    file_id: str,
+    current_user: Dict = Depends(require_auth)
+):
     """Download an evidence file."""
     evidence = await db.evidence_files.find_one({"id": file_id}, {"_id": 0})
     if not evidence:
         raise HTTPException(status_code=404, detail="Evidence file not found")
-    
-    file_path = UPLOAD_DIR / evidence.get('saved_filename', '')
+
+    saved_filename = evidence.get('saved_filename', '')
+    file_path = (UPLOAD_DIR / saved_filename).resolve()
+
+    # Guard against path traversal: resolved path must remain inside UPLOAD_DIR
+    if not file_path.is_relative_to(UPLOAD_DIR.resolve()):
+        raise HTTPException(status_code=400, detail="Invalid file path")
+
     if not file_path.exists():
         raise HTTPException(status_code=404, detail="File not found on disk")
-    
+
     def iterfile():
         with open(file_path, "rb") as f:
             yield from f
-    
+
     return StreamingResponse(
         iterfile(),
         media_type=evidence.get('content_type', 'application/octet-stream'),
@@ -2679,7 +2708,10 @@ async def download_evidence(file_id: str):
     )
 
 @api_router.delete("/evidence/{file_id}")
-async def delete_evidence(file_id: str):
+async def delete_evidence(
+    file_id: str,
+    current_user: Dict = Depends(require_auth)
+):
     """Delete an evidence file."""
     evidence = await db.evidence_files.find_one({"id": file_id}, {"_id": 0})
     if not evidence:
@@ -2959,29 +2991,27 @@ from compassai.backend.ai_services import AIService, get_ai_service
 
 # AI Models for request
 class AIModelChoice(str, Enum):
-    GPT = "gpt-5.2"
-    CLAUDE = "claude"
     GEMINI = "gemini"
 
 class AIGenerateRequest(BaseModel):
-    model: AIModelChoice = AIModelChoice.GPT
+    model: AIModelChoice = AIModelChoice.GEMINI
 
 class DocumentAnalysisRequest(BaseModel):
     document_text: str
-    model: AIModelChoice = AIModelChoice.GPT
+    model: AIModelChoice = AIModelChoice.GEMINI
 
 class ContractAnalysisRequest(BaseModel):
     contract_text: str
-    model: AIModelChoice = AIModelChoice.GPT
+    model: AIModelChoice = AIModelChoice.GEMINI
 
 class MarketIntelRequest(BaseModel):
     sector: str
     topics: Optional[List[str]] = None
-    model: AIModelChoice = AIModelChoice.GPT
+    model: AIModelChoice = AIModelChoice.GEMINI
 
 class AutoFillRequest(BaseModel):
     document_text: str
-    model: AIModelChoice = AIModelChoice.GPT
+    model: AIModelChoice = AIModelChoice.GEMINI
 
 class ClientOnboardingRequest(BaseModel):
     company_name: str
@@ -3020,7 +3050,7 @@ async def generate_executive_summary(assessment_id: str, request: AIGenerateRequ
     if not result:
         raise HTTPException(status_code=400, detail="Assessment has no results yet")
     
-    ai_service = await get_ai_service(request.model.value)
+    ai_service = await get_ai_service()
     summary = await ai_service.generate_executive_summary(result)
     
     return {"assessment_id": assessment_id, "executive_summary": summary, "model_used": request.model.value}
@@ -3040,7 +3070,7 @@ async def generate_remediation_plan(assessment_id: str, request: AIGenerateReque
     client = await db.clients.find_one({"id": assessment.get('client_id')}, {"_id": 0})
     sector = client.get('sector', 'Other') if client else 'Other'
     
-    ai_service = await get_ai_service(request.model.value)
+    ai_service = await get_ai_service()
     plan = await ai_service.generate_remediation_plan(result, sector)
     
     return {"assessment_id": assessment_id, "remediation_plan": plan, "model_used": request.model.value}
@@ -3054,7 +3084,7 @@ async def analyze_policy_document(request: DocumentAnalysisRequest):
     # Get standard controls for comparison
     controls = list(CONTROL_LIBRARY.values())
     
-    ai_service = await get_ai_service(request.model.value)
+    ai_service = await get_ai_service()
     analysis = await ai_service.analyze_policy_document(request.document_text, controls)
     
     return {"analysis": analysis, "model_used": request.model.value}
@@ -3065,7 +3095,7 @@ async def analyze_contract(request: ContractAnalysisRequest):
     if not request.contract_text or len(request.contract_text) < 50:
         raise HTTPException(status_code=400, detail="Contract text too short")
     
-    ai_service = await get_ai_service(request.model.value)
+    ai_service = await get_ai_service()
     analysis = await ai_service.analyze_contract(request.contract_text)
     
     return {"analysis": analysis, "model_used": request.model.value}
@@ -3073,7 +3103,7 @@ async def analyze_contract(request: ContractAnalysisRequest):
 @api_router.post("/ai/market-intelligence")
 async def get_market_intelligence(request: MarketIntelRequest):
     """Get AI-powered market intelligence for a sector"""
-    ai_service = await get_ai_service(request.model.value)
+    ai_service = await get_ai_service()
     intelligence = await ai_service.get_market_intelligence(request.sector, request.topics)
     
     return {"sector": request.sector, "intelligence": intelligence, "model_used": request.model.value}
@@ -3084,7 +3114,7 @@ async def auto_fill_from_document(request: AutoFillRequest):
     if not request.document_text or len(request.document_text) < 50:
         raise HTTPException(status_code=400, detail="Document text too short")
     
-    ai_service = await get_ai_service(request.model.value)
+    ai_service = await get_ai_service()
     extracted = await ai_service.auto_fill_from_document(request.document_text)
     
     return {"extracted_data": extracted, "model_used": request.model.value}
@@ -3246,7 +3276,6 @@ async def analyze_and_save_document(
     file: UploadFile = File(...),
     client_id: Optional[str] = Form(None),
     document_type: str = Form("policy"),
-    model: str = Form("gpt-5.2")
 ):
     """Upload, analyze, and save document analysis"""
     # Read file content
@@ -3255,9 +3284,9 @@ async def analyze_and_save_document(
         text = content.decode('utf-8')
     except:
         raise HTTPException(status_code=400, detail="Could not read document. Please upload a text-based file.")
-    
+
     # Analyze based on type
-    ai_service = await get_ai_service(model)
+    ai_service = await get_ai_service()
     
     if document_type == "contract":
         analysis = await ai_service.analyze_contract(text)
@@ -3324,14 +3353,14 @@ async def get_cached_market_intelligence(sector: str, refresh: bool = False):
             return cached
     
     # Generate new intelligence
-    ai_service = await get_ai_service("gpt-5.2")
+    ai_service = await get_ai_service()
     intelligence = await ai_service.get_market_intelligence(sector)
     
     # Cache result
     cache_entry = MarketIntelCache(
         sector=sector.lower(),
         intelligence=intelligence,
-        model_used="gpt-5.2"
+        model_used="gemini-2.0-flash"
     )
     
     # Upsert cache
@@ -4166,12 +4195,23 @@ api_router.include_router(ledger_router)
 api_router.include_router(pharos_method_router)
 app.include_router(api_router)
 
+_CORS_DEFAULT_ORIGINS = [
+    "https://pharos-ai.ca",
+    "https://www.pharos-ai.ca",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+_cors_origins_raw = os.environ.get('CORS_ORIGINS', ','.join(_CORS_DEFAULT_ORIGINS))
+_cors_origins = [o.strip() for o in _cors_origins_raw.split(',') if o.strip()]
+if "*" in _cors_origins:
+    raise RuntimeError("CORS_ORIGINS must not contain '*' when allow_credentials is True")
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_cors_origins,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "Accept"],
 )
 
 @asynccontextmanager

@@ -14,6 +14,7 @@ import Admin from './pages/Admin';
 import Game from './pages/Game';
 import Home from './pages/Home';
 import PortalArchitectureReference from './pages/PortalArchitectureReference';
+import PortalAurorAI from './pages/PortalAurorAI';
 import Privacy from './pages/Privacy';
 import SealedCard from './pages/SealedCard';
 import SurfaceBoundary from './pages/SurfaceBoundary';
@@ -161,7 +162,7 @@ function AppRoutes() {
             <Route
               key={`portal-aurora-${language}`}
               path={localized('/portal/compassai/aurora', language)}
-              element={<PortalArchitectureReference routePath={localized('/portal/compassai/aurora', language)} testId="portal-aurorai-page" />}
+              element={<PortalAurorAI />}
             />
           ))}
           {languages.map((language) => (

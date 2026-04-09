@@ -40,6 +40,8 @@ const defaultPackageForm = {
   compassai_base_url: process.env.REACT_APP_COMPASSAI_URL || ''
 };
 
+const reviewJobTypes = ['ocr', 'classify', 'summary', 'extract', 'citations'];
+
 const heroSignals = [
   {
     label: 'Module',
@@ -91,12 +93,18 @@ const PortalAurorAI = () => {
   const [busyAction, setBusyAction] = useState('');
 
   const [pipelineInfo, setPipelineInfo] = useState(null);
+  const [moduleConfigInfo, setModuleConfigInfo] = useState(null);
   const [stats, setStats] = useState(null);
+  const [statusOverview, setStatusOverview] = useState(null);
   const [categories, setCategories] = useState([]);
   const [documents, setDocuments] = useState([]);
+  const [reviewQueue, setReviewQueue] = useState([]);
+  const [reviewQueueNotice, setReviewQueueNotice] = useState('');
   const [selectedDocId, setSelectedDocId] = useState('');
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [operationResult, setOperationResult] = useState(null);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reprocessJobType, setReprocessJobType] = useState('extract');
 
   const [uploadForm, setUploadForm] = useState(defaultUploadForm);
   const [packageForm, setPackageForm] = useState(defaultPackageForm);
@@ -109,13 +117,15 @@ const PortalAurorAI = () => {
     : 'Preview route only. The Aurora module API is not publicly configured, so live module data is not exposed here.';
   const previewUnavailableMessage = 'Preview unavailable. The Aurora module API is not publicly configured for this PHAROS preview.';
   const connectionBody = moduleOriginConfigured
-    ? 'Pipeline metadata and category stats are public. Upload, document actions, and handoff flows require the Aurora API token.'
+    ? 'Pipeline metadata and runtime capability reads are public. Queue, review, upload, and handoff flows require an Aurora bearer token.'
     : 'Preview unavailable. The Aurora module API is not publicly configured for this PHAROS preview.';
   const connectionHelper = moduleOriginConfigured
-    ? 'Default local target is http://127.0.0.1:9206. The backend accepts PDF, TXT, and DOCX uploads. OCR is attempted for scan-heavy PDFs and degrades explicitly when the OCR runtime is unavailable.'
+    ? 'Default local target is http://127.0.0.1:9206. The backend now exposes runtime config, async job status, and reviewer queue endpoints alongside PDF, TXT, and DOCX ingestion.'
     : 'Live module data is not exposed on this preview until a public Aurora origin is configured.';
 
   const categoryBreakdown = useMemo(() => normalizeList(stats, 'stats'), [stats]);
+  const runtimeCapabilities = moduleConfigInfo?.capabilities || {};
+  const activeSessionUser = moduleConfigInfo?.session?.user || null;
 
   const resetActionState = () => {
     setActionMessage('');
@@ -126,6 +136,7 @@ const PortalAurorAI = () => {
   const loadPublicData = async () => {
     if (!config.baseUrl) {
       setPipelineInfo(null);
+      setModuleConfigInfo(null);
       setStats(null);
       setCategories([]);
       setLoading(false);
@@ -137,15 +148,17 @@ const PortalAurorAI = () => {
     setLoadError('');
 
     try {
-      const [pipelinePayload, statsPayload, categoriesPayload] = await Promise.all([
+      const [pipelinePayload, statsPayload, categoriesPayload, configPayload] = await Promise.all([
         requestModuleJson({ baseUrl: config.baseUrl, path: '/api/idp/pipeline' }),
         requestModuleJson({ baseUrl: config.baseUrl, path: '/api/stats' }),
-        requestModuleJson({ baseUrl: config.baseUrl, path: '/api/categories' })
+        requestModuleJson({ baseUrl: config.baseUrl, path: '/api/categories' }),
+        requestModuleJson({ baseUrl: config.baseUrl, path: '/api/config', token: config.token })
       ]);
 
       setPipelineInfo(pipelinePayload);
       setStats(statsPayload);
       setCategories(normalizeList(categoriesPayload, 'categories'));
+      setModuleConfigInfo(configPayload);
     } catch (error) {
       setLoadError(error.message || 'Could not load Aurora pipeline metadata.');
     } finally {
@@ -156,6 +169,9 @@ const PortalAurorAI = () => {
   const loadDocuments = async () => {
     if (!config.baseUrl) {
       setDocuments([]);
+      setStatusOverview(null);
+      setReviewQueue([]);
+      setReviewQueueNotice('');
       setSelectedDoc(null);
       setSelectedDocId('');
       setSecureLoading(false);
@@ -165,6 +181,9 @@ const PortalAurorAI = () => {
 
     if (!authenticated) {
       setDocuments([]);
+      setStatusOverview(null);
+      setReviewQueue([]);
+      setReviewQueueNotice('');
       setSelectedDoc(null);
       setSecureError('');
       return;
@@ -174,17 +193,42 @@ const PortalAurorAI = () => {
     setSecureError('');
 
     try {
-      const payload = await requestModuleJson({
-        baseUrl: config.baseUrl,
-        path: '/api/documents',
-        token: config.token
-      });
+      const [payload, statusPayload] = await Promise.all([
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/documents',
+          token: config.token
+        }),
+        requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/status/overview',
+          token: config.token
+        })
+      ]);
 
       const nextDocuments = normalizeList(payload, 'documents');
       setDocuments(nextDocuments);
+      setStatusOverview(statusPayload);
 
       if (!selectedDocId && nextDocuments[0]?.id) {
         setSelectedDocId(nextDocuments[0].id);
+      }
+
+      try {
+        const reviewPayload = await requestModuleJson({
+          baseUrl: config.baseUrl,
+          path: '/api/queue/review',
+          token: config.token
+        });
+        setReviewQueue(normalizeList(reviewPayload, 'documents'));
+        setReviewQueueNotice('');
+      } catch (error) {
+        setReviewQueue([]);
+        if (error.status === 401 || error.status === 403) {
+          setReviewQueueNotice('Reviewer access is required to load the Aurora review queue.');
+        } else {
+          setReviewQueueNotice(error.message || 'Review queue unavailable.');
+        }
       }
     } catch (error) {
       setSecureError(error.message || 'Could not load secure document records.');
@@ -213,7 +257,7 @@ const PortalAurorAI = () => {
 
   useEffect(() => {
     loadPublicData();
-  }, [config.baseUrl]);
+  }, [config.baseUrl, config.token]);
 
   useEffect(() => {
     loadDocuments();
@@ -387,6 +431,63 @@ const PortalAurorAI = () => {
       await Promise.all([loadDocuments(), loadPublicData()]);
     } catch (error) {
       setActionError(error.message || 'Delete failed.');
+    } finally {
+      setBusyAction('');
+    }
+  };
+
+  const submitReviewDecision = async (decision) => {
+    if (!selectedDocId) {
+      setActionError('Select a document before recording a review decision.');
+      return;
+    }
+
+    resetActionState();
+    setBusyAction(`review-${decision}`);
+
+    try {
+      const payload = await requestModuleJson({
+        baseUrl: config.baseUrl,
+        path: `/api/review/${selectedDocId}`,
+        token: config.token,
+        method: 'POST',
+        body: {
+          decision,
+          comment: reviewComment
+        }
+      });
+      setOperationResult(payload);
+      setActionMessage(`Review decision recorded: ${decision}.`);
+      setReviewComment('');
+      await Promise.all([loadDocuments(), loadDocumentDetail(), loadPublicData()]);
+    } catch (error) {
+      setActionError(error.message || 'Review decision failed.');
+    } finally {
+      setBusyAction('');
+    }
+  };
+
+  const reprocessSelectedDocument = async () => {
+    if (!selectedDocId) {
+      setActionError('Select a document before reprocessing.');
+      return;
+    }
+
+    resetActionState();
+    setBusyAction(`reprocess-${reprocessJobType}`);
+
+    try {
+      const payload = await requestModuleJson({
+        baseUrl: config.baseUrl,
+        path: `/api/reprocess/${selectedDocId}?job_type=${encodeURIComponent(reprocessJobType)}`,
+        token: config.token,
+        method: 'POST'
+      });
+      setOperationResult(payload);
+      setActionMessage(`Reprocess job queued for ${reprocessJobType}.`);
+      await Promise.all([loadDocuments(), loadDocumentDetail()]);
+    } catch (error) {
+      setActionError(error.message || 'Reprocess request failed.');
     } finally {
       setBusyAction('');
     }
@@ -628,6 +729,105 @@ const PortalAurorAI = () => {
                 <div className="editorial-panel portal-card">
                   <div className="portal-section-head">
                     <div>
+                      <p className="eyebrow">Runtime boundary</p>
+                      <h2>Read the live capability contract</h2>
+                    </div>
+                    <p className="body-sm">
+                      The April runtime pass added a config endpoint, session-aware identity reporting, and explicit OCR capability boundaries. The PHAROS shell now reads that contract directly.
+                    </p>
+                  </div>
+
+                  <div className="portal-key-value-grid">
+                    <div className="portal-key-value">
+                      <span>Supported uploads</span>
+                      <strong>{safeArray(runtimeCapabilities.supported_upload_extensions).join(', ') || 'Loading'}</strong>
+                    </div>
+                    <div className="portal-key-value">
+                      <span>OCR runtime</span>
+                      <strong>{runtimeCapabilities.ocr_available ? 'Available' : 'Bounded'}</strong>
+                    </div>
+                    <div className="portal-key-value">
+                      <span>DOCX parser</span>
+                      <strong>{runtimeCapabilities.docx_enabled ? 'Enabled' : 'Unavailable'}</strong>
+                    </div>
+                    <div className="portal-key-value">
+                      <span>Active identity</span>
+                      <strong>{activeSessionUser ? `${activeSessionUser.name} (${activeSessionUser.role})` : 'Token/session not active'}</strong>
+                    </div>
+                  </div>
+
+                  <div className="scope-note">
+                    <strong>Current OCR note</strong>
+                    <p>{runtimeCapabilities.ocr_reason || 'Waiting for runtime config.'}</p>
+                    <p>Job poll interval: {moduleConfigInfo?.job_poll_interval_seconds ?? 'Not loaded'} second(s).</p>
+                  </div>
+                </div>
+
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
+                      <p className="eyebrow">Queue and review</p>
+                      <h2>Track async jobs and reviewer load</h2>
+                    </div>
+                    <p className="body-sm">
+                      Aurora now exposes async process status and reviewer queue endpoints, so the PHAROS shell can show where the pipeline is waiting, failing, or asking for human judgment.
+                    </p>
+                  </div>
+
+                  <div className="portal-key-value-grid">
+                    <div className="portal-key-value">
+                      <span>Documents</span>
+                      <strong>{statusOverview?.documents?.total ?? documents.length}</strong>
+                    </div>
+                    <div className="portal-key-value">
+                      <span>Review pending</span>
+                      <strong>{statusOverview?.documents?.review_pending ?? reviewQueue.length}</strong>
+                    </div>
+                    <div className="portal-key-value">
+                      <span>Queued jobs</span>
+                      <strong>{statusOverview?.jobs?.queued ?? 0}</strong>
+                    </div>
+                    <div className="portal-key-value">
+                      <span>Failed jobs</span>
+                      <strong>{statusOverview?.jobs?.failed ?? 0}</strong>
+                    </div>
+                  </div>
+
+                  <div className="scope-note">
+                    <strong>Reviewer queue</strong>
+                    {!authenticated ? (
+                      <p>Add an Aurora bearer token above to inspect queue and review state.</p>
+                    ) : reviewQueue.length === 0 ? (
+                      <p>{reviewQueueNotice || 'No review-queue items returned right now.'}</p>
+                    ) : (
+                      <ul className="portal-inline-list">
+                        {reviewQueue.slice(0, 4).map((item) => (
+                          <li key={item.document?.id || item.document?.original_filename}>
+                            {(item.document?.original_filename || 'Document')}
+                            {safeArray(item.flags).length > 0 ? ` · ${safeArray(item.flags).join(', ')}` : ''}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  {safeArray(statusOverview?.recent_failed_jobs).length > 0 ? (
+                    <div className="scope-note">
+                      <strong>Recent failed jobs</strong>
+                      <ul className="portal-inline-list">
+                        {safeArray(statusOverview.recent_failed_jobs).slice(0, 3).map((job) => (
+                          <li key={job.id}>{job.job_type} · {job.document_id}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className="portal-grid portal-grid-halves">
+                <div className="editorial-panel portal-card">
+                  <div className="portal-section-head">
+                    <div>
                       <p className="eyebrow">Upload</p>
                       <h2>Ingest documents into the evidence pipeline</h2>
                     </div>
@@ -781,6 +981,72 @@ const PortalAurorAI = () => {
                       <Layers3 size={16} />
                       Citations
                     </button>
+                  </div>
+
+                  <div className="portal-summary-grid">
+                    <div className="scope-note">
+                      <strong>Reviewer decision</strong>
+                      <textarea
+                        className="portal-textarea"
+                        value={reviewComment}
+                        onChange={(event) => setReviewComment(event.target.value)}
+                        rows={3}
+                        placeholder="Optional reviewer note"
+                      />
+                      <div className="portal-action-row">
+                        <button
+                          type="button"
+                          className="btn-secondary portal-secondary-button"
+                          disabled={!authenticated || !selectedDocId || busyAction === 'review-approve'}
+                          onClick={() => submitReviewDecision('approve')}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-secondary portal-secondary-button"
+                          disabled={!authenticated || !selectedDocId || busyAction === 'review-flag'}
+                          onClick={() => submitReviewDecision('flag')}
+                        >
+                          Flag
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-secondary portal-secondary-button"
+                          disabled={!authenticated || !selectedDocId || busyAction === 'review-reject'}
+                          onClick={() => submitReviewDecision('reject')}
+                        >
+                          Reject
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="scope-note">
+                      <strong>Reprocess selected document</strong>
+                      <label className="portal-field">
+                        <span className="portal-field-label">Job type</span>
+                        <select
+                          className="portal-select"
+                          value={reprocessJobType}
+                          onChange={(event) => setReprocessJobType(event.target.value)}
+                        >
+                          {reviewJobTypes.map((jobType) => (
+                            <option key={jobType} value={jobType}>{jobType}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <div className="portal-action-row">
+                        <button
+                          type="button"
+                          className="btn-secondary portal-secondary-button"
+                          disabled={!authenticated || !selectedDocId || busyAction === `reprocess-${reprocessJobType}`}
+                          onClick={reprocessSelectedDocument}
+                        >
+                          <RefreshCw size={16} />
+                          Queue reprocess
+                        </button>
+                      </div>
+                    </div>
                   </div>
 
                   {operationResult ? (
@@ -943,7 +1209,7 @@ const PortalAurorAI = () => {
                     <h2>Aurora now feeds CompassAI inside the PHAROS shell</h2>
                   </div>
                   <p className="body-sm">
-                    The next backend step is to close the document-format and OCR gaps, then normalize bulk and single-document audit behavior behind this same PHAROS front end.
+                    The next PHAROS-facing step is to keep the public shell aligned with Aurora’s async queue, reviewer workflow, and capability contract while the backend keeps tightening OCR and bulk-processing boundaries.
                   </p>
                 </div>
 

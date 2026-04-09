@@ -1,3 +1,4 @@
+# UNIT TESTS — mock-only. Uses InMemoryDatabase + FakeAIService. No live services required.
 from __future__ import annotations
 
 import uuid

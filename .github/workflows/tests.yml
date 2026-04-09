@@ -1,0 +1,77 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, wip/**]
+  pull_request:
+    branches: [main]
+
+jobs:
+  compassai-unit:
+    name: CompassAI — unit tests (mock-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r compassai/backend/requirements.txt pytest pytest-asyncio httpx
+
+      - name: Run unit tests
+        run: pytest compassai/backend/tests/ -m "not integration" -v --tb=short
+        env:
+          MONGO_URL: mongodb://localhost:27017
+          DB_NAME: compassai_test
+          OPENAI_API_KEY: test-key
+          RESEND_API_KEY: ""
+
+  aurorai-unit:
+    name: AurorAI — unit tests (mock-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r aurorai/requirements.txt pytest pytest-asyncio httpx
+
+      - name: Run unit tests
+        run: pytest aurorai/tests/ -m "not integration" -v --tb=short
+        env:
+          MONGO_URL: mongodb://localhost:27017
+          DB_NAME: aurorai_test
+          AURORAI_SESSION_SECRET: ci-test-secret
+          AURORAI_BOOTSTRAP_ADMIN_EMAIL: admin@aurora.test
+          AURORAI_BOOTSTRAP_ADMIN_PASSWORD: admin-pass
+          AURORAI_BOOTSTRAP_OPERATOR_EMAIL: operator@aurora.test
+          AURORAI_BOOTSTRAP_OPERATOR_PASSWORD: operator-pass
+          AURORAI_BOOTSTRAP_REVIEWER_EMAIL: reviewer@aurora.test
+          AURORAI_BOOTSTRAP_REVIEWER_PASSWORD: reviewer-pass
+          COMPASSAI_INGEST_TOKEN: ci-ingest-token
+          COMPASSAI_BASE_URL: http://127.0.0.1:9205
+
+  aurorai-ts:
+    name: AurorAI — TypeScript unit tests (vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: aurorai/package-lock.json
+
+      - name: Install dependencies
+        working-directory: aurorai
+        run: npm ci
+
+      - name: Run vitest
+        working-directory: aurorai
+        run: npx vitest run --reporter=verbose

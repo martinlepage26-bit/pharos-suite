@@ -129,3 +129,62 @@ Then verify in the browser:
 ## 8. Important note
 
 If the backend machine sleeps, loses internet, or the local stack stops, `api.pharos-ai.ca` will fail. This tunnel is a bridge, not the final uptime architecture.
+
+## 9. Tunnel failover and recovery procedure
+
+### 9a. Check tunnel health
+
+```bash
+cloudflared tunnel info pharos-api
+```
+
+If the tunnel shows no active connections, the backend is unreachable at the edge.
+
+### 9b. Restart the tunnel
+
+```bash
+# Start the tunnel in the foreground (use screen/tmux to keep it alive):
+cloudflared tunnel run pharos-api
+
+# Or run as a background service (Linux systemd):
+sudo systemctl restart cloudflared
+```
+
+### 9c. Find the active tunnel ID and credential file
+
+```bash
+cloudflared tunnel list
+# Note the ID column for pharos-api — credentials file is at:
+# ~/.cloudflared/<TUNNEL_ID>.json
+```
+
+Keep a copy of `~/.cloudflared/<TUNNEL_ID>.json` and `~/.cloudflared/config.yml` in a secure offline backup. Loss of the credential file requires creating a new tunnel and updating the DNS CNAME in Cloudflare.
+
+### 9d. Rotate tunnel credentials (if credential file is lost or compromised)
+
+```bash
+# Delete the old tunnel:
+cloudflared tunnel delete pharos-api
+
+# Create a new one:
+cloudflared tunnel create pharos-api
+
+# Update config.yml with the new tunnel ID:
+# credentials-file: /home/cerebrhoe/.cloudflared/<NEW_TUNNEL_ID>.json
+
+# Update the Cloudflare DNS CNAME for api.pharos-ai.ca to the new tunnel address:
+# <NEW_TUNNEL_ID>.cfargotunnel.com
+```
+
+After credential rotation, redeploy the CF Worker (`npm run cf:api:deploy` from repo root) so `LEGACY_API_ORIGIN` still resolves correctly.
+
+### 9e. Verify recovery
+
+```bash
+curl https://api.pharos-ai.ca/health
+# Expected: {"ok":true, "mode":"proxy_foundation", ...}
+```
+
+### 9f. Tunnel availability monitoring (manual)
+
+No automated alerting is currently configured. Until a monitoring solution is in place, check tunnel health manually before sessions where the API is expected to be live.

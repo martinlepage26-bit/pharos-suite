@@ -339,11 +339,7 @@ describe('PHAROS route smoke coverage', () => {
     expect(document.documentElement.lang).toBe('en');
   });
 
-  test('renders the shared architecture reference on the Aurora route without module API requests', async () => {
-    setStoredModuleConfig('aurorai', {
-      baseUrl: 'http://preview-aurora',
-      token: 'secret'
-    });
+  test('renders the Aurora operator surface in preview mode without module API requests', async () => {
     global.fetch.mockClear();
     window.history.pushState({}, '', '/portal/compassai/aurora');
 
@@ -353,10 +349,9 @@ describe('PHAROS route smoke coverage', () => {
 
     const element = await waitForTestId(container, 'portal-aurorai-page');
     expect(element).toBeTruthy();
-    expect(element.getAttribute('data-portal-state')).toBe('under-construction');
-    expect(container.textContent).toContain('Status: /portal under construction');
-    expect(container.textContent).toContain('COMPASSai and AurorA');
-    expect(container.textContent).toContain('pharos-ai.ca');
+    expect(container.textContent).toContain('Aurora backend');
+    expect(container.textContent).toContain('Preview unavailable. The Aurora module API is not publicly configured for this PHAROS preview.');
+    expect(container.textContent).toContain('Aurora stays in preview-only mode');
     expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/idp/pipeline'))).toBe(false);
     expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/stats'))).toBe(false);
     expect(global.fetch.mock.calls.some(([url]) => String(url).includes('/api/categories'))).toBe(false);

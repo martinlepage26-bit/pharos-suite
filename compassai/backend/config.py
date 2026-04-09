@@ -17,7 +17,9 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Auth configuration
-SECRET_KEY = os.environ.get('SECRET_KEY', 'compass-ai-governance-secret-key-2026')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY environment variable is required — refusing to start with no signing secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 
@@ -25,5 +27,5 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'pharos@pharos-ai.ca')
 
-# LLM configuration  
-PHAROS_LLM_KEY = os.environ.get('PHAROS_LLM_KEY', '')
+# LLM configuration
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')

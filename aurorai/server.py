@@ -1,5 +1,5 @@
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Depends
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Depends, Request, Response, Query
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
@@ -12,17 +12,24 @@ import asyncio
 import shutil
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import fitz  # PyMuPDF
 import aiofiles
 import tempfile
 import json
 import re
+from enum import Enum
+from io import BytesIO
+import socket
 from urllib import request as urllib_request
 from urllib.error import HTTPError, URLError
-from zipfile import BadZipFile
+from zipfile import BadZipFile, ZipFile
+from jose import JWTError, jwt
+from pymongo import ReturnDocument
+
+from compassai.backend.security import get_password_hash, verify_password
 
 try:
     from docx import Document as WordDocument
@@ -57,8 +64,21 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer(auto_error=False)
-AURORAI_API_TOKEN = os.environ.get("AURORAI_API_TOKEN", "")
-COMPASSAI_BASE_URL = os.environ.get("COMPASSAI_BASE_URL", "http://127.0.0.1:9205").rstrip("/")
+_session_secret = os.environ.get("AURORAI_SESSION_SECRET")
+if not _session_secret:
+    raise RuntimeError("AURORAI_SESSION_SECRET env var is required and must not be empty")
+AURORAI_SESSION_SECRET = _session_secret
+AURORAI_SESSION_COOKIE = os.environ.get("AURORAI_SESSION_COOKIE", "aurorai_session")
+AURORAI_SESSION_TTL_MINUTES = max(int(os.environ.get("AURORAI_SESSION_TTL_MINUTES", "720") or "720"), 30)
+AURORAI_SESSION_COOKIE_SECURE = os.environ.get("AURORAI_SESSION_COOKIE_SECURE", "false").strip().lower() in {"1", "true", "yes", "on"}
+AURORAI_REQUIRE_OCR_RUNTIME = os.environ.get("AURORAI_REQUIRE_OCR_RUNTIME", "false").strip().lower() in {"1", "true", "yes", "on"}
+AURORAI_JOB_POLL_INTERVAL_SECONDS = max(float(os.environ.get("AURORAI_JOB_POLL_INTERVAL_SECONDS", "0.5") or "0.5"), 0.1)
+AURORAI_JOB_MAX_RETRIES = max(int(os.environ.get("AURORAI_JOB_MAX_RETRIES", "3") or "3"), 0)
+AURORAI_WORKER_ID = os.environ.get("AURORAI_WORKER_ID", f"{socket.gethostname()}:{os.getpid()}")
+_compassai_base_url = os.environ.get("COMPASSAI_BASE_URL")
+if not _compassai_base_url:
+    raise RuntimeError("COMPASSAI_BASE_URL env var is required — set to the CompassAI backend base URL (e.g. http://127.0.0.1:9205 locally)")
+COMPASSAI_BASE_URL = _compassai_base_url.rstrip("/")
 COMPASSAI_INGEST_TOKEN = os.environ.get("COMPASSAI_INGEST_TOKEN", "")
 SUPPORTED_UPLOAD_EXTENSIONS = {".pdf", ".txt", ".docx"}
 OCR_ENABLED = os.environ.get("AURORAI_ENABLE_OCR", "true").strip().lower() not in {"0", "false", "no", "off"}
@@ -93,6 +113,85 @@ IDP_PIPELINE = [
     "Gouvernance: audit trail, versioning, rétention et contrôle d'accès",
 ]
 
+class UserRole(str, Enum):
+    OPERATOR = "operator"
+    REVIEWER = "reviewer"
+    ADMIN = "admin"
+
+
+class ProcessingJobType(str, Enum):
+    OCR = "ocr"
+    CLASSIFY = "classify"
+    SUMMARY = "summary"
+    EXTRACT = "extract"
+    CITATIONS = "citations"
+
+
+class ProcessingJobStatus(str, Enum):
+    QUEUED = "queued"
+    RUNNING = "running"
+    SUCCESS = "success"
+    FAILED = "failed"
+
+
+class UserCreate(BaseModel):
+    email: str
+    password: str
+    name: str
+    role: UserRole
+
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+
+class SessionToken(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: Dict[str, Any]
+
+
+class InternalUser(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: str
+    name: str
+    role: UserRole
+    hashed_password: str
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class ProcessingJob(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    document_id: str
+    job_type: ProcessingJobType
+    status: ProcessingJobStatus = ProcessingJobStatus.QUEUED
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    started_at: Optional[str] = None
+    completed_at: Optional[str] = None
+    error_log: List[str] = Field(default_factory=list)
+    retry_count: int = 0
+    worker_id: Optional[str] = None
+    requested_by_user_id: Optional[str] = None
+    requested_by_role: Optional[str] = None
+    output: Dict[str, Any] = Field(default_factory=dict)
+    next_job_types: List[str] = Field(default_factory=list)
+
+
+class ProcessingJobRequest(BaseModel):
+    document_id: str
+    job_type: ProcessingJobType
+    next_job_types: List[ProcessingJobType] = Field(default_factory=list)
+
+
+class ReviewDecisionRequest(BaseModel):
+    decision: Literal["approve", "reject", "flag"]
+    comment: str = ""
+
+
 # Define Models
 class Document(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -123,10 +222,14 @@ class Document(BaseModel):
     latest_run_id: Optional[str] = None
     latest_package_id: Optional[str] = None
     latest_handoff_id: Optional[str] = None
+    latest_job_id: Optional[str] = None
+    assigned_reviewer_user_id: Optional[str] = None
     processing_runs: List[Dict[str, Any]] = Field(default_factory=list)
+    review_decision: Optional[Dict[str, Any]] = None
     review_decisions: List[Dict[str, Any]] = Field(default_factory=list)
     package_history: List[Dict[str, Any]] = Field(default_factory=list)
     handoff_history: List[Dict[str, Any]] = Field(default_factory=list)
+    artifact_versions: List[Dict[str, Any]] = Field(default_factory=list)
     reading_list_id: Optional[str] = None
     tags: List[str] = []
 
@@ -312,6 +415,7 @@ def extract_document_content(
     *,
     raw_bytes: Optional[bytes] = None,
     max_pages: int = 10,
+    allow_ocr: bool = True,
 ) -> Dict[str, Any]:
     file_ext = file_path.suffix.lower()
 
@@ -376,6 +480,25 @@ def extract_document_content(
         extracted_chars=len(text),
         text_quality=quality,
     )
+    if not allow_ocr:
+        capabilities = build_runtime_capabilities()
+        ocr_status = "queued" if capabilities["ocr_available"] else "required_unavailable"
+        ocr_reason = "queued_for_async_ocr" if capabilities["ocr_available"] else capabilities["ocr_reason"]
+        warnings = (
+            ["OCR deferred to asynchronous processing."]
+            if capabilities["ocr_available"]
+            else [f"OCR required but unavailable: {capabilities['ocr_reason']}"]
+        )
+        return {
+            "text": text.strip(),
+            "page_count": page_count,
+            "text_source": "pdf_text" if text.strip() else "pdf_scan_pending_ocr",
+            "text_quality": quality,
+            "ocr_status": ocr_status,
+            "ocr_reason": ocr_reason,
+            "warnings": warnings,
+        }
+
     ocr_result = run_pdf_ocr(str(file_path), max_pages=min(page_count or max_pages, OCR_MAX_PAGES, max_pages))
     ocr_text = ocr_result.get("text", "").strip()
     ocr_quality = ocr_result.get("text_quality", text_quality(ocr_text))
@@ -401,7 +524,12 @@ def extract_document_content(
     }
 
 
-def get_document_text_for_processing(document: Dict[str, Any], *, max_pages: int = 10) -> Dict[str, Any]:
+def get_document_text_for_processing(
+    document: Dict[str, Any],
+    *,
+    max_pages: int = 10,
+    allow_ocr: bool = False,
+) -> Dict[str, Any]:
     stored_text = str(document.get("text_preview") or "").strip()
     ingestion_details = document.get("ingestion_details", {}) or {}
     if stored_text and ingestion_details.get("text_quality", "usable") == "usable":
@@ -427,11 +555,16 @@ def get_document_text_for_processing(document: Dict[str, Any], *, max_pages: int
             "warnings": ["Source file is missing; falling back to stored preview only."],
         }
 
-    return extract_document_content(file_path, max_pages=max_pages)
+    return extract_document_content(file_path, max_pages=max_pages, allow_ocr=allow_ocr)
 
 
 def no_text_http_exception(result: Dict[str, Any], *, action: str) -> HTTPException:
     ocr_status = result.get("ocr_status")
+    if ocr_status == "queued":
+        return HTTPException(
+            status_code=409,
+            detail=f"OCR is queued before AurorA can {action} this document.",
+        )
     if ocr_status == "required_unavailable":
         return HTTPException(
             status_code=503,
@@ -486,20 +619,100 @@ class EvidenceHandoffRequest(EvidencePackageRequest):
     compassai_base_url: Optional[str] = None
 
 
-async def require_api_token(
+def normalize_email(email: str) -> str:
+    return (email or "").strip().lower()
+
+
+def build_role_capabilities(role: Optional[str]) -> Dict[str, bool]:
+    normalized = (role or "").strip().lower()
+    return {
+        "can_upload": normalized in {UserRole.OPERATOR.value, UserRole.ADMIN.value},
+        "can_process": normalized in {UserRole.OPERATOR.value, UserRole.ADMIN.value},
+        "can_review": normalized in {UserRole.REVIEWER.value, UserRole.ADMIN.value},
+        "can_admin": normalized == UserRole.ADMIN.value,
+        "can_view_logs": normalized == UserRole.ADMIN.value,
+        "can_batch_upload": normalized in {UserRole.OPERATOR.value, UserRole.ADMIN.value},
+        "can_retry_jobs": normalized in {UserRole.REVIEWER.value, UserRole.ADMIN.value},
+    }
+
+
+def create_session_token(data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=AURORAI_SESSION_TTL_MINUTES))
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, AURORAI_SESSION_SECRET, algorithm="HS256")
+
+
+def set_session_cookie(response: Response, token: str) -> None:
+    response.set_cookie(
+        key=AURORAI_SESSION_COOKIE,
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=AURORAI_SESSION_COOKIE_SECURE,
+        max_age=AURORAI_SESSION_TTL_MINUTES * 60,
+        path="/",
+    )
+
+
+def clear_session_cookie(response: Response) -> None:
+    response.delete_cookie(AURORAI_SESSION_COOKIE, path="/")
+
+
+async def get_current_user(
+    request: Request,
     credentials: HTTPAuthorizationCredentials = Depends(security),
-):
-    """Protect sensitive document routes until shared auth is introduced."""
-    if not AURORAI_API_TOKEN:
-        raise HTTPException(
-            status_code=503,
-            detail="AURORAI_API_TOKEN is not configured on the server.",
-        )
+) -> Optional[Dict[str, Any]]:
+    token = None
+    if credentials and credentials.credentials:
+        token = credentials.credentials
+    elif request.cookies.get(AURORAI_SESSION_COOKIE):
+        token = request.cookies.get(AURORAI_SESSION_COOKIE)
 
-    if not credentials or credentials.credentials != AURORAI_API_TOKEN:
+    if not token:
+        return None
+
+    try:
+        payload = jwt.decode(token, AURORAI_SESSION_SECRET, algorithms=["HS256"])
+        user_id = payload.get("sub")
+        if not user_id:
+            return None
+        user = await db.users.find_one({"id": user_id, "is_active": True}, {"_id": 0, "hashed_password": 0})
+        request.state.user = user
+        return user
+    except JWTError:
+        return None
+
+
+async def require_auth_user(
+    request: Request,
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+) -> Dict[str, Any]:
+    user = await get_current_user(request, credentials)
+    if not user:
         raise HTTPException(status_code=401, detail="Not authenticated")
+    request.state.user = user
+    return user
 
-    return True
+
+def require_role(allowed_roles: List[UserRole]):
+    async def _require_role(
+        request: Request,
+        credentials: HTTPAuthorizationCredentials = Depends(security),
+    ) -> Dict[str, Any]:
+        user = await require_auth_user(request, credentials)
+        allowed = {role.value for role in allowed_roles}
+        if user.get("role") not in allowed:
+            raise HTTPException(status_code=403, detail="Not authorized")
+        return user
+
+    return _require_role
+
+
+require_operator_access = require_role([UserRole.OPERATOR, UserRole.ADMIN])
+require_reviewer_access = require_role([UserRole.REVIEWER, UserRole.ADMIN])
+require_document_read_access = require_role([UserRole.OPERATOR, UserRole.REVIEWER, UserRole.ADMIN])
+require_admin_access = require_role([UserRole.ADMIN])
 
 
 def append_audit_event(document: Dict[str, Any], action: str, details: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -528,19 +741,26 @@ def append_processing_run(
     triggered_by: str,
     status: str,
     details: Optional[Dict[str, Any]] = None,
+    job_id: Optional[str] = None,
+    started_at: Optional[str] = None,
+    completed_at: Optional[str] = None,
 ) -> tuple[List[Dict[str, Any]], Dict[str, Any]]:
     runs = list(document.get("processing_runs", []))
     stage_runs = [run for run in runs if run.get("stage") == stage]
     run_doc = {
         "id": str(uuid.uuid4()),
+        "job_id": job_id,
+        "job_type": stage,
         "stage": stage,
         "status": status,
         "triggered_by": triggered_by,
         "parent_run_id": latest_stage_run_id(document, stage),
         "iteration_index": len(stage_runs) + 1,
-        "started_at": iso_now(),
-        "completed_at": iso_now(),
+        "started_at": started_at or iso_now(),
+        "completed_at": completed_at or iso_now(),
+        "timestamp": completed_at or iso_now(),
         "details": details or {},
+        "output": details or {},
     }
     runs.append(run_doc)
     return runs[-150:], run_doc
@@ -555,6 +775,8 @@ def append_review_decision(
     resulting_state: str,
     actor_type: str = "system",
     actor_id: str = "aurorai",
+    reviewer_user_id: Optional[str] = None,
+    comment: Optional[str] = None,
 ) -> tuple[List[Dict[str, Any]], Dict[str, Any]]:
     decisions = list(document.get("review_decisions", []))
     decision_doc = {
@@ -565,9 +787,13 @@ def append_review_decision(
         "actor_type": actor_type,
         "actor_id": actor_id,
         "decision_type": decision_type,
+        "decision": decision_type,
+        "reviewer_user_id": reviewer_user_id,
         "rationale": rationale,
+        "comment": comment or rationale,
         "resulting_state": resulting_state,
         "created_at": iso_now(),
+        "timestamp": iso_now(),
     }
     decisions.append(decision_doc)
     return decisions[-150:], decision_doc
@@ -606,14 +832,39 @@ def append_handoff_history(
     handoff_doc = {
         "id": str(uuid.uuid4()),
         "evidence_id": evidence_id,
+        "handoff_id": str(uuid.uuid4()),
         "target": target,
+        "target_system": target,
         "target_url": target_url,
         "status_code": status_code,
         "status": "succeeded" if status_code < 400 else "failed",
         "created_at": iso_now(),
+        "timestamp": iso_now(),
+        "payload": {
+            "evidence_id": evidence_id,
+            "target_url": target_url,
+            "status_code": status_code,
+        },
     }
     history.append(handoff_doc)
     return history[-100:], handoff_doc
+
+
+def append_artifact_version(
+    document: Dict[str, Any],
+    *,
+    source: str,
+    data: Dict[str, Any],
+) -> tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    versions = list(document.get("artifact_versions", []))
+    version_doc = {
+        "version": len(versions) + 1,
+        "created_at": iso_now(),
+        "source": source,
+        "data": data,
+    }
+    versions.append(version_doc)
+    return versions[-150:], version_doc
 
 
 def parse_json_response(raw: str) -> Optional[Dict[str, Any]]:
@@ -1253,7 +1504,788 @@ Return ONLY the citations, one per line, no numbering or bullets.""",
         logging.error(f"AI citation extraction error: {e}")
         return extract_citations_from_text(text)
 
+
+def serialize_user(user: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not user:
+        return None
+    role = user.get("role")
+    return {
+        "id": user.get("id"),
+        "email": user.get("email"),
+        "name": user.get("name"),
+        "role": role,
+        "capabilities": build_role_capabilities(role),
+    }
+
+
+async def ensure_bootstrap_user(email: str, password: str, name: str, role: UserRole) -> None:
+    normalized_email = normalize_email(email)
+    if not normalized_email or not password:
+        return
+
+    existing = await db.users.find_one({"email": normalized_email}, {"_id": 0})
+    if existing:
+        return
+
+    user = InternalUser(
+        email=normalized_email,
+        name=name,
+        role=role,
+        hashed_password=get_password_hash(password),
+    )
+    user_doc = user.model_dump()
+    user_doc["created_at"] = user_doc["created_at"].isoformat()
+    await db.users.insert_one(user_doc)
+
+
+async def seed_bootstrap_users() -> None:
+    await ensure_bootstrap_user(
+        os.environ.get("AURORAI_BOOTSTRAP_ADMIN_EMAIL", ""),
+        os.environ.get("AURORAI_BOOTSTRAP_ADMIN_PASSWORD", ""),
+        os.environ.get("AURORAI_BOOTSTRAP_ADMIN_NAME", "AurorA Admin"),
+        UserRole.ADMIN,
+    )
+    await ensure_bootstrap_user(
+        os.environ.get("AURORAI_BOOTSTRAP_OPERATOR_EMAIL", ""),
+        os.environ.get("AURORAI_BOOTSTRAP_OPERATOR_PASSWORD", ""),
+        os.environ.get("AURORAI_BOOTSTRAP_OPERATOR_NAME", "AurorA Operator"),
+        UserRole.OPERATOR,
+    )
+    await ensure_bootstrap_user(
+        os.environ.get("AURORAI_BOOTSTRAP_REVIEWER_EMAIL", ""),
+        os.environ.get("AURORAI_BOOTSTRAP_REVIEWER_PASSWORD", ""),
+        os.environ.get("AURORAI_BOOTSTRAP_REVIEWER_NAME", "AurorA Reviewer"),
+        UserRole.REVIEWER,
+    )
+
+
+async def backfill_document_schema() -> None:
+    documents = await db.documents.find({}, {"_id": 0}).to_list(5000)
+    for document in documents:
+        updates: Dict[str, Any] = {}
+        defaults = {
+            "processing_runs": [],
+            "artifact_versions": [],
+            "review_decision": None,
+            "review_decisions": [],
+            "handoff_history": [],
+            "package_history": [],
+            "current_state": "uploaded",
+            "current_review_state": "pending",
+            "assigned_reviewer_user_id": None,
+            "latest_job_id": None,
+        }
+        for key, default_value in defaults.items():
+            if key not in document:
+                updates[key] = default_value
+        if updates:
+            await db.documents.update_one({"id": document["id"]}, {"$set": updates})
+
+
+def enforce_required_runtime() -> None:
+    capabilities = build_runtime_capabilities()
+    if AURORAI_REQUIRE_OCR_RUNTIME and not capabilities["ocr_available"]:
+        raise RuntimeError(
+            f"AurorAI requires OCR runtime in this environment, but it is unavailable ({capabilities['ocr_reason']})."
+        )
+
+
+async def persist_processing_run_record(document_id: str, run_doc: Dict[str, Any]) -> None:
+    payload = {"document_id": document_id, **run_doc}
+    await db.processing_runs.insert_one(dict(payload))
+
+
+async def append_document_audit(document_id: str, action: str, details: Dict[str, Any]) -> None:
+    document = await db.documents.find_one({"id": document_id}, {"_id": 0})
+    if not document:
+        return
+    await db.documents.update_one(
+        {"id": document_id},
+        {"$set": {"audit_log": append_audit_event(document, action, details)}},
+    )
+
+
+async def enqueue_processing_job(
+    document_id: str,
+    job_type: ProcessingJobType,
+    user: Optional[Dict[str, Any]],
+    *,
+    next_job_types: Optional[List[ProcessingJobType]] = None,
+) -> Dict[str, Any]:
+    document = await db.documents.find_one({"id": document_id}, {"_id": 0})
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    existing_jobs = await db.processing_jobs.find(
+        {"document_id": document_id, "job_type": job_type.value},
+        {"_id": 0},
+    ).to_list(500)
+    job = ProcessingJob(
+        document_id=document_id,
+        job_type=job_type,
+        retry_count=len(existing_jobs),
+        requested_by_user_id=user.get("id") if user else None,
+        requested_by_role=user.get("role") if user else None,
+        next_job_types=[item.value for item in (next_job_types or [])],
+    )
+    job_doc = job.model_dump()
+    if isinstance(job_doc.get("job_type"), Enum):
+        job_doc["job_type"] = job_doc["job_type"].value
+    if isinstance(job_doc.get("status"), Enum):
+        job_doc["status"] = job_doc["status"].value
+    await db.processing_jobs.insert_one(dict(job_doc))
+
+    await db.documents.update_one(
+        {"id": document_id},
+        {
+            "$set": {
+                "latest_job_id": job_doc["id"],
+                "current_state": "processing_queued",
+                "audit_log": append_audit_event(
+                    document,
+                    "job_enqueued",
+                    {
+                        "job_id": job_doc["id"],
+                        "job_type": job_doc["job_type"],
+                        "requested_by_user_id": job_doc.get("requested_by_user_id"),
+                    },
+                ),
+            }
+        },
+    )
+    return job_doc
+
+
+async def claim_next_processing_job() -> Optional[Dict[str, Any]]:
+    return await db.processing_jobs.find_one_and_update(
+        {"status": ProcessingJobStatus.QUEUED.value},
+        {
+            "$set": {
+                "status": ProcessingJobStatus.RUNNING.value,
+                "started_at": iso_now(),
+                "worker_id": AURORAI_WORKER_ID,
+            }
+        },
+        sort=[("created_at", 1)],
+        return_document=ReturnDocument.AFTER,
+    )
+
+
+async def mark_job_result(
+    job: Dict[str, Any],
+    *,
+    status: ProcessingJobStatus,
+    output: Optional[Dict[str, Any]] = None,
+    error_message: Optional[str] = None,
+) -> None:
+    update_payload: Dict[str, Any] = {
+        "status": status.value,
+        "completed_at": iso_now(),
+        "output": output or {},
+    }
+    if error_message:
+        update_payload["error_log"] = list(job.get("error_log", [])) + [error_message]
+
+    await db.processing_jobs.update_one({"id": job["id"]}, {"$set": update_payload})
+    if status == ProcessingJobStatus.FAILED:
+        document = await db.documents.find_one({"id": job["document_id"]}, {"_id": 0})
+        if document:
+            await db.documents.update_one(
+                {"id": job["document_id"]},
+                {
+                    "$set": {
+                        "current_state": "processing_failed",
+                        "latest_job_id": job["id"],
+                        "audit_log": append_audit_event(
+                            document,
+                            "job_failed",
+                            {
+                                "job_id": job["id"],
+                                "job_type": job["job_type"],
+                                "error": error_message,
+                            },
+                        ),
+                    }
+                },
+            )
+
+
+async def process_ocr_job(document: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
+    file_path = UPLOAD_DIR / document["filename"]
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found on server")
+
+    extraction_result = extract_document_content(file_path, max_pages=OCR_MAX_PAGES, allow_ocr=True)
+    text = extraction_result.get("text", "").strip()
+    if extraction_result.get("text_quality") != "usable":
+        raise no_text_http_exception(extraction_result, action="recover text from")
+
+    processing_runs, run_doc = append_processing_run(
+        document,
+        ProcessingJobType.OCR.value,
+        triggered_by="job_worker",
+        status="completed",
+        job_id=job["id"],
+        started_at=job.get("started_at"),
+        completed_at=iso_now(),
+        details={
+            "text_source": extraction_result.get("text_source"),
+            "ocr_status": extraction_result.get("ocr_status"),
+            "extracted_chars": len(text),
+        },
+    )
+    artifact_versions, _ = append_artifact_version(
+        document,
+        source="ocr",
+        data={
+            "text_preview": text[:2000],
+            "ingestion_details": {
+                "text_source": extraction_result.get("text_source"),
+                "text_quality": extraction_result.get("text_quality"),
+                "ocr_status": extraction_result.get("ocr_status"),
+                "ocr_reason": extraction_result.get("ocr_reason"),
+                "warnings": extraction_result.get("warnings", []),
+            },
+        },
+    )
+    updated_document = {
+        "text_preview": text[:2000],
+        "page_count": extraction_result.get("page_count", document.get("page_count", 0)),
+        "ingestion_details": {
+            "text_source": extraction_result.get("text_source"),
+            "text_quality": extraction_result.get("text_quality"),
+            "ocr_status": extraction_result.get("ocr_status"),
+            "ocr_reason": extraction_result.get("ocr_reason"),
+            "warnings": extraction_result.get("warnings", []),
+        },
+        "current_state": "ocr_complete",
+        "current_review_state": "pending",
+        "review_required": False,
+        "processing_runs": processing_runs,
+        "artifact_versions": artifact_versions,
+        "latest_run_id": run_doc["id"],
+        "latest_job_id": job["id"],
+        "audit_log": append_audit_event(
+            document,
+            "ocr",
+            {
+                "job_id": job["id"],
+                "ocr_status": extraction_result.get("ocr_status"),
+                "text_source": extraction_result.get("text_source"),
+            },
+        ),
+    }
+    await db.documents.update_one({"id": document["id"]}, {"$set": updated_document})
+    await persist_processing_run_record(document["id"], run_doc)
+    return {"document_id": document["id"], "ocr_status": extraction_result.get("ocr_status")}
+
+
+async def process_classify_job(document: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
+    text_result = get_document_text_for_processing(document, max_pages=10)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="categorize")
+
+    classification = await ai_categorize_document(text)
+    suggested_category = classification["category"]
+    review_required = classification.get("confidence", 0.0) < 0.75
+    processing_runs, run_doc = append_processing_run(
+        document,
+        ProcessingJobType.CLASSIFY.value,
+        triggered_by="job_worker",
+        status="completed",
+        job_id=job["id"],
+        started_at=job.get("started_at"),
+        completed_at=iso_now(),
+        details={
+            "category": suggested_category,
+            "document_type": classification.get("document_type"),
+            "confidence": classification.get("confidence"),
+        },
+    )
+    review_decisions = list(document.get("review_decisions", []))
+    latest_review_decision = document.get("review_decision")
+    current_review_state = "classification_complete"
+    if review_required:
+        review_decisions, latest_review_decision = append_review_decision(
+            document,
+            run_id=run_doc["id"],
+            decision_type="flag",
+            rationale="Classification confidence fell below the configured auto-accept threshold.",
+            resulting_state="awaiting_review",
+        )
+        current_review_state = "awaiting_review"
+
+    is_academic = suggested_category == "Academic Papers" or "My Writings" in suggested_category
+    updated_document = {
+        "ai_suggested_category": suggested_category,
+        "category": suggested_category,
+        "document_type": classification.get("document_type"),
+        "classification_confidence": classification.get("confidence"),
+        "classification_rationale": classification.get("rationale"),
+        "is_academic": is_academic,
+        "review_required": review_required,
+        "current_state": "classified",
+        "current_review_state": current_review_state,
+        "processing_runs": processing_runs,
+        "review_decision": latest_review_decision,
+        "review_decisions": review_decisions,
+        "latest_run_id": run_doc["id"],
+        "latest_job_id": job["id"],
+        "audit_log": append_audit_event(
+            document,
+            "categorize",
+            {
+                "job_id": job["id"],
+                "category": suggested_category,
+                "document_type": classification.get("document_type"),
+                "confidence": classification.get("confidence"),
+            },
+        ),
+    }
+    await db.documents.update_one({"id": document["id"]}, {"$set": updated_document})
+    await persist_processing_run_record(document["id"], run_doc)
+    return {
+        "document_id": document["id"],
+        "suggested_category": suggested_category,
+        "document_type": classification.get("document_type"),
+        "confidence": classification.get("confidence"),
+    }
+
+
+async def process_summary_job(document: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
+    text_result = get_document_text_for_processing(document, max_pages=50)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="summarize")
+
+    summary = await ai_generate_summary(text)
+    processing_runs, run_doc = append_processing_run(
+        document,
+        ProcessingJobType.SUMMARY.value,
+        triggered_by="job_worker",
+        status="completed",
+        job_id=job["id"],
+        started_at=job.get("started_at"),
+        completed_at=iso_now(),
+        details={"summary_length": len(summary)},
+    )
+    await db.documents.update_one(
+        {"id": document["id"]},
+        {"$set": {
+            "summary": summary,
+            "current_state": "summarized",
+            "processing_runs": processing_runs,
+            "latest_run_id": run_doc["id"],
+            "latest_job_id": job["id"],
+            "audit_log": append_audit_event(document, "summary", {"job_id": job["id"], "summary_length": len(summary)}),
+        }},
+    )
+    await persist_processing_run_record(document["id"], run_doc)
+    return {"document_id": document["id"], "summary": summary}
+
+
+async def process_extract_job(document: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
+    text_result = get_document_text_for_processing(document, max_pages=50)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="extract structured fields from")
+
+    extraction = await ai_extract_fields(text)
+    fields = extraction.get("fields", {}) if isinstance(extraction.get("fields"), dict) else {}
+    controls = run_control_checks(fields)
+    review_required = bool(controls["missing_fields"] or controls["invalid_values"])
+    processing_runs, run_doc = append_processing_run(
+        document,
+        ProcessingJobType.EXTRACT.value,
+        triggered_by="job_worker",
+        status="completed",
+        job_id=job["id"],
+        started_at=job.get("started_at"),
+        completed_at=iso_now(),
+        details={
+            "field_count": len(fields),
+            "missing_count": len(controls["missing_fields"]),
+            "invalid_count": len(controls["invalid_values"]),
+        },
+    )
+    review_decisions = list(document.get("review_decisions", []))
+    latest_review_decision = document.get("review_decision")
+    current_review_state = "extraction_complete"
+    if review_required:
+        review_decisions, latest_review_decision = append_review_decision(
+            document,
+            run_id=run_doc["id"],
+            decision_type="flag",
+            rationale="Control checks identified missing or invalid fields.",
+            resulting_state="awaiting_review",
+        )
+        current_review_state = "awaiting_review"
+    else:
+        review_decisions, latest_review_decision = append_review_decision(
+            document,
+            run_id=run_doc["id"],
+            decision_type="approve",
+            rationale="Extraction passed configured control checks without requiring reviewer intervention.",
+            resulting_state="reviewed_approved",
+        )
+        current_review_state = "reviewed_approved"
+
+    compliance_note = (
+        "Contains potentially sensitive data; apply restricted access and masking where required."
+        if any(tag in text.lower() for tag in ["patient", "ssn", "iban", "account", "medical"]) else
+        "No obvious sensitive marker found; enforce standard retention and least-privilege access."
+    )
+    artifact_versions, _ = append_artifact_version(
+        document,
+        source="extracted",
+        data={
+            "document_type": extraction.get("document_type") or document.get("document_type"),
+            "fields": fields,
+            "control_checks": controls,
+        },
+    )
+    updated_document = {
+        "document_type": extraction.get("document_type") or document.get("document_type"),
+        "extraction": extraction,
+        "control_checks": controls,
+        "review_required": review_required,
+        "compliance_note": compliance_note,
+        "current_state": "extracted",
+        "current_review_state": current_review_state,
+        "processing_runs": processing_runs,
+        "review_decision": latest_review_decision,
+        "review_decisions": review_decisions,
+        "artifact_versions": artifact_versions,
+        "latest_run_id": run_doc["id"],
+        "latest_job_id": job["id"],
+        "audit_log": append_audit_event(
+            document,
+            "extract",
+            {
+                "job_id": job["id"],
+                "field_count": len(fields),
+                "missing_count": len(controls["missing_fields"]),
+                "invalid_count": len(controls["invalid_values"]),
+            },
+        ),
+    }
+    await db.documents.update_one({"id": document["id"]}, {"$set": updated_document})
+    await persist_processing_run_record(document["id"], run_doc)
+    return {
+        "document_id": document["id"],
+        "document_type": updated_document["document_type"],
+        "data": extraction,
+        "review_required": review_required,
+        "controls": controls,
+    }
+
+
+async def process_citations_job(document: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
+    text_result = get_document_text_for_processing(document, max_pages=50)
+    text = text_result.get("text", "")
+    if not text or text_result.get("text_quality") != "usable":
+        raise no_text_http_exception(text_result, action="extract citations from")
+
+    citations = await ai_extract_citations(text)
+    processing_runs, run_doc = append_processing_run(
+        document,
+        ProcessingJobType.CITATIONS.value,
+        triggered_by="job_worker",
+        status="completed",
+        job_id=job["id"],
+        started_at=job.get("started_at"),
+        completed_at=iso_now(),
+        details={"citation_count": len(citations)},
+    )
+    await db.documents.update_one(
+        {"id": document["id"]},
+        {"$set": {
+            "citations": citations,
+            "current_state": "citations_extracted",
+            "processing_runs": processing_runs,
+            "latest_run_id": run_doc["id"],
+            "latest_job_id": job["id"],
+            "audit_log": append_audit_event(document, "citations", {"job_id": job["id"], "citation_count": len(citations)}),
+        }},
+    )
+    await persist_processing_run_record(document["id"], run_doc)
+    return {"document_id": document["id"], "citations": citations}
+
+
+async def execute_processing_job(job: Dict[str, Any]) -> Dict[str, Any]:
+    document = await db.documents.find_one({"id": job["document_id"]}, {"_id": 0})
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    job_type = job.get("job_type")
+    if job_type == ProcessingJobType.OCR.value:
+        return await process_ocr_job(document, job)
+    if job_type == ProcessingJobType.CLASSIFY.value:
+        return await process_classify_job(document, job)
+    if job_type == ProcessingJobType.SUMMARY.value:
+        return await process_summary_job(document, job)
+    if job_type == ProcessingJobType.EXTRACT.value:
+        return await process_extract_job(document, job)
+    if job_type == ProcessingJobType.CITATIONS.value:
+        return await process_citations_job(document, job)
+    raise HTTPException(status_code=400, detail=f"Unsupported job type: {job_type}")
+
+
+async def run_processing_job(job: Dict[str, Any]) -> None:
+    try:
+        output = await execute_processing_job(job)
+        await mark_job_result(job, status=ProcessingJobStatus.SUCCESS, output=output)
+        requested_by = None
+        if job.get("requested_by_user_id"):
+            requested_by = {
+                "id": job.get("requested_by_user_id"),
+                "role": job.get("requested_by_role"),
+            }
+        for next_job_type in job.get("next_job_types", []):
+            try:
+                await enqueue_processing_job(job["document_id"], ProcessingJobType(next_job_type), requested_by)
+            except Exception as exc:  # pragma: no cover - best-effort chaining
+                await append_document_audit(
+                    job["document_id"],
+                    "job_chain_failed",
+                    {"parent_job_id": job["id"], "next_job_type": next_job_type, "error": str(exc)},
+                )
+    except HTTPException as exc:
+        await mark_job_result(job, status=ProcessingJobStatus.FAILED, error_message=exc.detail)
+    except Exception as exc:  # pragma: no cover - defensive worker protection
+        await mark_job_result(job, status=ProcessingJobStatus.FAILED, error_message=str(exc))
+
+
+async def processing_job_worker(stop_event: asyncio.Event) -> None:
+    while not stop_event.is_set():
+        job = await claim_next_processing_job()
+        if not job:
+            try:
+                await asyncio.wait_for(stop_event.wait(), timeout=AURORAI_JOB_POLL_INTERVAL_SECONDS)
+            except asyncio.TimeoutError:
+                continue
+            continue
+        await run_processing_job(job)
+
+
+async def create_document_record(
+    original_filename: str,
+    content: bytes,
+) -> Dict[str, Any]:
+    allowed_extensions = SUPPORTED_UPLOAD_EXTENSIONS
+    file_ext = Path(original_filename).suffix.lower()
+
+    if file_ext == ".doc":
+        raise HTTPException(status_code=400, detail="Legacy DOC upload is not supported. Use PDF, TXT, or DOCX.")
+    if file_ext not in allowed_extensions:
+        raise HTTPException(status_code=400, detail=f"File type {file_ext} not supported. Allowed: {allowed_extensions}")
+
+    doc_id = str(uuid.uuid4())
+    new_filename = f"{doc_id}{file_ext}"
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = UPLOAD_DIR / new_filename
+
+    async with aiofiles.open(file_path, "wb") as handle:
+        await handle.write(content)
+
+    try:
+        extraction_result = extract_document_content(file_path, raw_bytes=content, allow_ocr=False)
+    except DocumentExtractionError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
+
+    text_preview = extraction_result.get("text", "")[:5000] if extraction_result.get("text") else ""
+    ingestion_details = {
+        "text_source": extraction_result.get("text_source"),
+        "text_quality": extraction_result.get("text_quality"),
+        "ocr_status": extraction_result.get("ocr_status"),
+        "ocr_reason": extraction_result.get("ocr_reason"),
+        "warnings": extraction_result.get("warnings", []),
+    }
+    current_state = (
+        "uploaded_queued_for_ocr"
+        if ingestion_details["ocr_status"] == "queued"
+        else "uploaded_requires_ocr"
+        if ingestion_details["ocr_status"] == "required_unavailable"
+        else "uploaded"
+    )
+    current_review_state = (
+        "awaiting_ocr"
+        if ingestion_details["ocr_status"] == "queued"
+        else "ocr_unavailable"
+        if ingestion_details["ocr_status"] == "required_unavailable"
+        else "pending"
+    )
+    review_required = ingestion_details["ocr_status"] == "required_unavailable"
+    base_document: Dict[str, Any] = {}
+    artifact_versions, _ = append_artifact_version(
+        base_document,
+        source="original",
+        data={
+            "filename": original_filename,
+            "file_size": len(content),
+            "source_hash": compute_sha256_bytes(content),
+            "text_preview": text_preview[:2000] if text_preview else "",
+            "ingestion_details": ingestion_details,
+        },
+    )
+    document = Document(
+        id=doc_id,
+        filename=new_filename,
+        original_filename=original_filename,
+        file_size=len(content),
+        page_count=extraction_result.get("page_count", 0),
+        text_preview=text_preview[:2000] if text_preview else "",
+        source_hash=compute_sha256_bytes(content),
+        ingestion_details=ingestion_details,
+        current_state=current_state,
+        current_review_state=current_review_state,
+        review_required=review_required,
+        artifact_versions=artifact_versions,
+    )
+    doc_dict = document.model_dump()
+    doc_dict["uploaded_at"] = doc_dict["uploaded_at"].isoformat()
+    doc_dict["audit_log"] = append_audit_event(
+        doc_dict,
+        "upload",
+        {
+            "original_filename": original_filename,
+            "file_size": len(content),
+            "page_count": extraction_result.get("page_count", 0),
+            "source_hash": doc_dict["source_hash"],
+            "text_source": ingestion_details["text_source"],
+            "text_quality": ingestion_details["text_quality"],
+            "ocr_status": ingestion_details["ocr_status"],
+            "ocr_reason": ingestion_details["ocr_reason"],
+        },
+    )
+    await db.documents.insert_one(doc_dict)
+    return doc_dict
+
+
 # Routes
+class BulkCategorizeRequest(BaseModel):
+    document_ids: List[str]
+
+
+def summarize_job_counts(jobs: List[Dict[str, Any]]) -> Dict[str, int]:
+    counts = {
+        ProcessingJobStatus.QUEUED.value: 0,
+        ProcessingJobStatus.RUNNING.value: 0,
+        ProcessingJobStatus.SUCCESS.value: 0,
+        ProcessingJobStatus.FAILED.value: 0,
+    }
+    for job in jobs:
+        status = job.get("status")
+        if status in counts:
+            counts[status] += 1
+    return counts
+
+
+def build_review_flags(document: Dict[str, Any]) -> List[Dict[str, Any]]:
+    flags: List[Dict[str, Any]] = []
+    if document.get("review_required"):
+        flags.append({"type": "review_required", "label": "Human review required"})
+
+    confidence = document.get("classification_confidence")
+    if isinstance(confidence, (int, float)) and float(confidence) < 0.75:
+        flags.append({
+            "type": "classification_confidence",
+            "label": "Low classification confidence",
+            "value": round(float(confidence), 4),
+        })
+
+    ingestion_details = document.get("ingestion_details", {}) or {}
+    if ingestion_details.get("ocr_status") in {"required_unavailable", "failed"}:
+        flags.append({
+            "type": "ocr",
+            "label": "OCR requires attention",
+            "value": ingestion_details.get("ocr_reason"),
+        })
+
+    for key in ("missing_fields", "invalid_values", "duplicate_values", "inconsistencies"):
+        values = document.get("control_checks", {}).get(key, [])
+        if values:
+            flags.append({
+                "type": key,
+                "label": key.replace("_", " "),
+                "count": len(values),
+            })
+
+    return flags
+
+
+async def list_document_jobs(document_id: str, *, limit: int = 100) -> List[Dict[str, Any]]:
+    return await db.processing_jobs.find({"document_id": document_id}, {"_id": 0}).sort("created_at", -1).limit(limit).to_list(limit)
+
+
+async def build_document_status_payload(document: Dict[str, Any]) -> Dict[str, Any]:
+    jobs = await list_document_jobs(document["id"], limit=100)
+    job_counts = summarize_job_counts(jobs)
+    latest_job = jobs[0] if jobs else None
+    return {
+        "document": document,
+        "latest_job": latest_job,
+        "jobs": jobs,
+        "job_counts": job_counts,
+        "has_active_job": job_counts[ProcessingJobStatus.QUEUED.value] > 0 or job_counts[ProcessingJobStatus.RUNNING.value] > 0,
+        "review_flags": build_review_flags(document),
+    }
+
+
+async def maybe_enqueue_initial_ocr_job(document: Dict[str, Any], user: Dict[str, Any]) -> List[Dict[str, Any]]:
+    if (document.get("ingestion_details", {}) or {}).get("ocr_status") != "queued":
+        return []
+    return [await enqueue_processing_job(document["id"], ProcessingJobType.OCR, user)]
+
+
+async def ensure_document_exists(doc_id: str) -> Dict[str, Any]:
+    document = await db.documents.find_one({"id": doc_id}, {"_id": 0})
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+    return document
+
+
+async def queue_document_job(
+    document_id: str,
+    job_type: ProcessingJobType,
+    user: Dict[str, Any],
+    *,
+    next_job_types: Optional[List[ProcessingJobType]] = None,
+) -> Dict[str, Any]:
+    document = await ensure_document_exists(document_id)
+    ingestion_details = document.get("ingestion_details", {}) or {}
+    capabilities = build_runtime_capabilities()
+
+    if job_type == ProcessingJobType.OCR and not capabilities["ocr_available"]:
+        raise HTTPException(status_code=503, detail=f"OCR runtime is unavailable ({capabilities['ocr_reason']}).")
+
+    if job_type != ProcessingJobType.OCR and ingestion_details.get("ocr_status") == "required_unavailable":
+        raise HTTPException(
+            status_code=503,
+            detail=f"OCR is required before AurorA can {job_type.value} this document, but the runtime is unavailable ({ingestion_details.get('ocr_reason')}).",
+        )
+
+    if job_type != ProcessingJobType.OCR and ingestion_details.get("ocr_status") == "queued":
+        existing_jobs = await list_document_jobs(document_id, limit=50)
+        has_existing_ocr = any(job.get("job_type") == ProcessingJobType.OCR.value for job in existing_jobs)
+        if not has_existing_ocr:
+            job = await enqueue_processing_job(document_id, ProcessingJobType.OCR, user, next_job_types=[job_type])
+            return {
+                "accepted": True,
+                "queued_via": "ocr_preflight",
+                "document_id": document_id,
+                "job": job,
+            }
+
+    job = await enqueue_processing_job(document_id, job_type, user, next_job_types=next_job_types)
+    return {
+        "accepted": True,
+        "document_id": document_id,
+        "job": job,
+    }
+
+
 @api_router.get("/")
 async def root():
     return {
@@ -1277,456 +2309,360 @@ async def get_idp_pipeline():
         ],
     }
 
+
 @api_router.get("/categories")
 async def get_categories():
     return {"categories": CATEGORIES}
 
+
 @api_router.get("/stats")
 async def get_stats():
-    """Get category statistics"""
     pipeline = [
         {"$group": {"_id": "$category", "count": {"$sum": 1}}},
-        {"$sort": {"count": -1}}
+        {"$sort": {"count": -1}},
     ]
-    
     results = await db.documents.aggregate(pipeline).to_list(100)
-    total = sum(r["count"] for r in results)
-    
-    stats = []
-    for r in results:
-        stats.append({
-            "category": r["_id"],
-            "count": r["count"],
-            "percentage": round((r["count"] / total * 100) if total > 0 else 0, 1)
-        })
-    
-    # Add categories with 0 documents
-    existing_cats = {s["category"] for s in stats}
-    for cat in CATEGORIES:
-        if cat not in existing_cats:
-            stats.append({"category": cat, "count": 0, "percentage": 0})
-    
+    total = sum(result["count"] for result in results)
+
+    stats = [
+        {
+            "category": result["_id"],
+            "count": result["count"],
+            "percentage": round((result["count"] / total * 100) if total > 0 else 0, 1),
+        }
+        for result in results
+    ]
+
+    existing_categories = {item["category"] for item in stats}
+    for category in CATEGORIES:
+        if category not in existing_categories:
+            stats.append({"category": category, "count": 0, "percentage": 0})
+
+    return {"stats": stats, "total_documents": total}
+
+
+@api_router.get("/config")
+@api_router.get("/internal/config")
+async def get_config(request: Request, current_user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+    origin = str(request.base_url).rstrip("/")
     return {
-        "stats": stats,
-        "total_documents": total
+        "surface": "aurorai",
+        "origin": origin,
+        "proxy_path": "/internal-api/aurorai",
+        "api_base_path": "/internal-api/aurorai/api",
+        "job_poll_interval_seconds": AURORAI_JOB_POLL_INTERVAL_SECONDS,
+        "capabilities": build_runtime_capabilities(),
+        "session": {
+            "authenticated": bool(current_user),
+            "user": serialize_user(current_user),
+        },
+        "available_roles": [role.value for role in UserRole],
     }
+
+
+@api_router.post("/session/login")
+@api_router.post("/internal/session/login")
+async def login_session(payload: UserLogin, response: Response):
+    email = normalize_email(payload.email)
+    user = await db.users.find_one({"email": email, "is_active": True}, {"_id": 0})
+    if not user or not verify_password(payload.password, user.get("hashed_password", "")):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    token = create_session_token({"sub": user["id"], "role": user.get("role")})
+    set_session_cookie(response, token)
+    return SessionToken(access_token=token, user=serialize_user(user)).model_dump()
+
+
+@api_router.post("/session/logout")
+@api_router.post("/internal/session/logout")
+async def logout_session(response: Response):
+    clear_session_cookie(response)
+    return {"signed_out": True}
+
+
+@api_router.get("/session/me")
+@api_router.get("/internal/session/me")
+async def get_session_me(current_user: Dict[str, Any] = Depends(require_auth_user)):
+    return {"authenticated": True, "user": serialize_user(current_user)}
+
 
 @api_router.post("/documents/upload")
 async def upload_document(
     file: UploadFile = File(...),
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Upload a document (PDF, TXT, or DOCX)."""
-    allowed_extensions = SUPPORTED_UPLOAD_EXTENSIONS
-    file_ext = Path(file.filename).suffix.lower()
-
-    if file_ext == '.doc':
-        raise HTTPException(status_code=400, detail="Legacy DOC upload is not supported. Use PDF, TXT, or DOCX.")
-
-    if file_ext not in allowed_extensions:
-        raise HTTPException(status_code=400, detail=f"File type {file_ext} not supported. Allowed: {allowed_extensions}")
-    
-    # Generate unique filename
-    doc_id = str(uuid.uuid4())
-    new_filename = f"{doc_id}{file_ext}"
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    file_path = UPLOAD_DIR / new_filename
-    
-    # Save file
     content = await file.read()
-    async with aiofiles.open(file_path, 'wb') as f:
-        await f.write(content)
-    
-    try:
-        extraction_result = extract_document_content(file_path, raw_bytes=content)
-    except DocumentExtractionError as exc:
-        log_pipeline_event(
-            "upload_extraction_failed",
-            filename=file.filename,
-            file_ext=file_ext,
-            error=exc.message,
-        )
-        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
-
-    text_preview = extraction_result["text"][:5000] if extraction_result.get("text") else ""
-    page_count = extraction_result.get("page_count", 0)
-    ingestion_details = {
-        "text_source": extraction_result.get("text_source"),
-        "text_quality": extraction_result.get("text_quality"),
-        "ocr_status": extraction_result.get("ocr_status"),
-        "ocr_reason": extraction_result.get("ocr_reason"),
-        "warnings": extraction_result.get("warnings", []),
-    }
-    current_state = "uploaded_requires_ocr" if ingestion_details["ocr_status"] == "required_unavailable" else "uploaded"
-    current_review_state = "ocr_unavailable" if ingestion_details["ocr_status"] == "required_unavailable" else "pending"
-    review_required = ingestion_details["ocr_status"] == "required_unavailable"
-    
-    # Create document record
-    doc = Document(
-        id=doc_id,
-        filename=new_filename,
-        original_filename=file.filename,
-        file_size=len(content),
-        page_count=page_count,
-        text_preview=text_preview[:2000] if text_preview else "",
-        source_hash=compute_sha256_bytes(content),
-        ingestion_details=ingestion_details,
-        current_state=current_state,
-        current_review_state=current_review_state,
-        review_required=review_required,
-    )
-    
-    # Save to database
-    doc_dict = doc.model_dump()
-    doc_dict["audit_log"] = append_audit_event(
-        doc_dict,
-        "upload",
-        {
-            "original_filename": file.filename,
-            "file_size": len(content),
-            "page_count": page_count,
-            "source_hash": doc_dict["source_hash"],
-            "text_source": ingestion_details["text_source"],
-            "text_quality": ingestion_details["text_quality"],
-            "ocr_status": ingestion_details["ocr_status"],
-            "ocr_reason": ingestion_details["ocr_reason"],
-        },
-    )
-    doc_dict['uploaded_at'] = doc_dict['uploaded_at'].isoformat()
-    await db.documents.insert_one(doc_dict)
+    document = await create_document_record(file.filename or "upload", content)
+    queued_jobs = await maybe_enqueue_initial_ocr_job(document, current_user)
     log_pipeline_event(
         "document_uploaded",
-        document_id=doc_id,
+        document_id=document["id"],
         filename=file.filename,
-        file_ext=file_ext,
-        text_source=ingestion_details["text_source"],
-        ocr_status=ingestion_details["ocr_status"],
+        file_ext=Path(file.filename or "").suffix.lower(),
+        text_source=(document.get("ingestion_details", {}) or {}).get("text_source"),
+        ocr_status=(document.get("ingestion_details", {}) or {}).get("ocr_status"),
     )
-    
-    return doc_dict
+    return {
+        **document,
+        "queued_jobs": queued_jobs,
+    }
 
-@api_router.post("/documents/{doc_id}/categorize")
-async def categorize_document(
-    doc_id: str,
-    _auth: bool = Depends(require_api_token),
+
+@api_router.post("/upload/batch")
+async def upload_batch(
+    archive: Optional[UploadFile] = File(None),
+    files: Optional[List[UploadFile]] = File(None),
+    folder_reference: Optional[str] = Form(None),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Use AI to categorize a document"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
+    if archive is None and not files:
+        raise HTTPException(status_code=400, detail="Provide a zip archive or one or more files.")
 
-    text_result = get_document_text_for_processing(doc, max_pages=10)
-    text = text_result.get("text", "")
-    if not text or text_result.get("text_quality") != "usable":
-        raise no_text_http_exception(text_result, action="categorize")
-    
-    # AI categorization
-    classification = await ai_categorize_document(text)
-    suggested_category = classification["category"]
-    review_required = classification.get("confidence", 0.0) < 0.75
-    processing_runs, run_doc = append_processing_run(
-        doc,
-        "classification",
-        triggered_by="categorize_endpoint",
-        status="completed",
-        details={
-            "category": suggested_category,
-            "document_type": classification.get("document_type"),
-            "confidence": classification.get("confidence"),
+    uploads: List[tuple[str, bytes]] = []
+    if archive is not None:
+        if Path(archive.filename or "").suffix.lower() != ".zip":
+            raise HTTPException(status_code=400, detail="Batch archive uploads must be provided as a .zip file.")
+        try:
+            payload = await archive.read()
+            with ZipFile(BytesIO(payload)) as zip_file:
+                for item in zip_file.infolist():
+                    if item.is_dir():
+                        continue
+                    uploads.append((Path(item.filename).name, zip_file.read(item.filename)))
+        except BadZipFile as exc:
+            raise HTTPException(status_code=400, detail=f"Could not read zip archive: {exc}") from exc
+
+    for upload in files or []:
+        uploads.append((upload.filename or "upload", await upload.read()))
+
+    created_documents = []
+    queued_jobs = []
+    errors = []
+    for filename, content in uploads:
+        try:
+            document = await create_document_record(filename, content)
+            created_documents.append(document)
+            queued_jobs.extend(await maybe_enqueue_initial_ocr_job(document, current_user))
+        except HTTPException as exc:
+            errors.append({"filename": filename, "error": exc.detail, "status_code": exc.status_code})
+
+    return {
+        "folder_reference": folder_reference,
+        "created_count": len(created_documents),
+        "failed_count": len(errors),
+        "documents": created_documents,
+        "queued_jobs": queued_jobs,
+        "errors": errors,
+    }
+
+
+@api_router.post("/process", status_code=202)
+async def create_process_job(
+    request: ProcessingJobRequest,
+    current_user: Dict[str, Any] = Depends(require_operator_access),
+):
+    return await queue_document_job(
+        request.document_id,
+        request.job_type,
+        current_user,
+        next_job_types=request.next_job_types or None,
+    )
+
+
+@api_router.get("/process/{job_id}")
+async def get_process_job(job_id: str, _current_user: Dict[str, Any] = Depends(require_document_read_access)):
+    job = await db.processing_jobs.find_one({"id": job_id}, {"_id": 0})
+    if not job:
+        raise HTTPException(status_code=404, detail="Processing job not found")
+
+    document = await db.documents.find_one({"id": job["document_id"]}, {"_id": 0})
+    return {
+        "job": job,
+        "document": document,
+    }
+
+
+@api_router.get("/status/overview")
+async def get_status_overview(_current_user: Dict[str, Any] = Depends(require_document_read_access)):
+    documents = await db.documents.find({}, {"_id": 0}).to_list(5000)
+    jobs = await db.processing_jobs.find({}, {"_id": 0}).to_list(5000)
+    job_counts = summarize_job_counts(jobs)
+    review_pending = [
+        document for document in documents
+        if document.get("review_required") or document.get("current_review_state") in {"awaiting_review", "ocr_unavailable", "review_flagged"}
+    ]
+
+    return {
+        "documents": {
+            "total": len(documents),
+            "review_pending": len(review_pending),
+        },
+        "jobs": job_counts,
+        "recent_failed_jobs": [job for job in jobs if job.get("status") == ProcessingJobStatus.FAILED.value][:10],
+    }
+
+
+@api_router.get("/status/{doc_id}")
+async def get_document_status(doc_id: str, _current_user: Dict[str, Any] = Depends(require_document_read_access)):
+    document = await ensure_document_exists(doc_id)
+    return await build_document_status_payload(document)
+
+
+@api_router.get("/queue/review")
+async def get_review_queue(
+    status: str = Query("pending"),
+    assigned_to: Optional[str] = Query(None),
+    current_user: Dict[str, Any] = Depends(require_reviewer_access),
+):
+    documents = await db.documents.find({}, {"_id": 0}).sort("uploaded_at", -1).to_list(1000)
+
+    def matches_status(document: Dict[str, Any]) -> bool:
+        review_state = document.get("current_review_state")
+        pending = document.get("review_required") or review_state in {"awaiting_review", "ocr_unavailable", "review_flagged"}
+        reviewed = review_state in {"reviewed_approved", "reviewed_rejected"}
+        if status == "pending":
+            return pending
+        if status == "reviewed":
+            return reviewed
+        return True
+
+    queue = []
+    for document in documents:
+        if not matches_status(document):
+            continue
+        if assigned_to == "me":
+            assigned_user_id = document.get("assigned_reviewer_user_id")
+            if assigned_user_id not in {None, current_user["id"]}:
+                continue
+
+        queue.append({
+            "document": document,
+            "flags": build_review_flags(document),
+            "thumbnail": {
+                "label": document.get("original_filename"),
+                "file_extension": Path(document.get("original_filename", "")).suffix.lower(),
+            },
+        })
+
+    return {"documents": queue, "count": len(queue)}
+
+
+@api_router.post("/review/{doc_id}")
+async def submit_review_decision(
+    doc_id: str,
+    payload: ReviewDecisionRequest,
+    current_user: Dict[str, Any] = Depends(require_reviewer_access),
+):
+    document = await ensure_document_exists(doc_id)
+    state_map = {
+        "approve": ("reviewed", "reviewed_approved"),
+        "reject": ("reviewed", "reviewed_rejected"),
+        "flag": ("review_flagged", "awaiting_review"),
+    }
+    current_state, current_review_state = state_map[payload.decision]
+    review_required = payload.decision == "flag"
+    review_decisions, review_decision = append_review_decision(
+        document,
+        run_id=document.get("latest_run_id"),
+        decision_type=payload.decision,
+        rationale=payload.comment or f"Reviewer marked the document as {payload.decision}.",
+        resulting_state=current_review_state,
+        actor_type="user",
+        actor_id=current_user["id"],
+        reviewer_user_id=current_user["id"],
+        comment=payload.comment,
+    )
+    updated_audit = append_audit_event(
+        document,
+        "review",
+        {
+            "reviewer_user_id": current_user["id"],
+            "decision": payload.decision,
+            "comment": payload.comment,
         },
     )
-    review_decisions = list(doc.get("review_decisions", []))
-    current_review_state = "classification_complete"
-    if review_required:
-        review_decisions, _ = append_review_decision(
-            doc,
-            run_id=run_doc["id"],
-            decision_type="escalate_to_hitl",
-            rationale="Classification confidence fell below the configured auto-accept threshold.",
-            resulting_state="awaiting_hitl",
-        )
-        current_review_state = "awaiting_hitl"
-    
-    # Check if it's academic
-    is_academic = suggested_category == "Academic Papers" or "My Writings" in suggested_category
-    
-    # Update document
+
     await db.documents.update_one(
         {"id": doc_id},
         {"$set": {
-            "ai_suggested_category": suggested_category,
-            "category": suggested_category,
-            "document_type": classification.get("document_type"),
-            "classification_confidence": classification.get("confidence"),
-            "classification_rationale": classification.get("rationale"),
-            "is_academic": is_academic,
             "review_required": review_required,
-            "current_state": "classified",
+            "current_state": current_state,
             "current_review_state": current_review_state,
-            "processing_runs": processing_runs,
+            "assigned_reviewer_user_id": current_user["id"],
+            "review_decision": review_decision,
             "review_decisions": review_decisions,
-            "latest_run_id": run_doc["id"],
-            "audit_log": append_audit_event(
-                doc,
-                "categorize",
-                {
-                    "category": suggested_category,
-                    "document_type": classification.get("document_type"),
-                    "confidence": classification.get("confidence"),
-                },
-            ),
-        }}
+            "audit_log": updated_audit,
+        }},
     )
-    
+
+    updated_document = await ensure_document_exists(doc_id)
     return {
-        "document_id": doc_id,
-        "suggested_category": suggested_category,
-        "document_type": classification.get("document_type"),
-        "confidence": classification.get("confidence"),
-        "rationale": classification.get("rationale"),
-        "is_academic": is_academic
+        "document": updated_document,
+        "review_decision": review_decision,
     }
 
-class BulkUploadRequest(BaseModel):
-    document_ids: List[str]
 
-@api_router.post("/documents/bulk-categorize")
-async def bulk_categorize_documents(
-    request: BulkUploadRequest,
-    _auth: bool = Depends(require_api_token),
+@api_router.post("/reprocess/{doc_id}", status_code=202)
+async def reprocess_document(
+    doc_id: str,
+    job_type: ProcessingJobType = Query(...),
+    current_user: Dict[str, Any] = Depends(require_reviewer_access),
 ):
-    """Bulk categorize multiple documents with AI"""
+    return await queue_document_job(doc_id, job_type, current_user)
+
+
+@api_router.post("/documents/{doc_id}/categorize", status_code=202)
+async def categorize_document(
+    doc_id: str,
+    current_user: Dict[str, Any] = Depends(require_operator_access),
+):
+    return await queue_document_job(doc_id, ProcessingJobType.CLASSIFY, current_user)
+
+
+@api_router.post("/documents/bulk-categorize", status_code=202)
+async def bulk_categorize_documents(
+    request: BulkCategorizeRequest,
+    current_user: Dict[str, Any] = Depends(require_operator_access),
+):
     results = []
-    
-    for doc_id in request.document_ids:
+    for document_id in request.document_ids:
         try:
-            doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-            if not doc:
-                results.append({"document_id": doc_id, "error": "Not found"})
-                continue
-
-            text_result = get_document_text_for_processing(doc, max_pages=10)
-            text = text_result.get("text", "")
-
-            if not text or text_result.get("text_quality") != "usable":
-                if text_result.get("ocr_status") == "required_unavailable":
-                    results.append({"document_id": doc_id, "error": f"OCR required but unavailable: {text_result.get('ocr_reason')}"})
-                elif text_result.get("ocr_status") == "performed_no_text":
-                    results.append({"document_id": doc_id, "error": "OCR ran but did not recover usable text"})
-                else:
-                    results.append({"document_id": doc_id, "error": "No text content"})
-                continue
-
-            classification = await ai_categorize_document(text)
-            suggested_category = classification["category"]
-            is_academic = suggested_category == "Academic Papers" or "My Writings" in suggested_category
-            review_required = classification.get("confidence", 0.0) < 0.75
-            processing_runs, run_doc = append_processing_run(
-                doc,
-                "classification",
-                triggered_by="bulk_categorize_endpoint",
-                status="completed",
-                details={
-                    "category": suggested_category,
-                    "document_type": classification.get("document_type"),
-                    "confidence": classification.get("confidence"),
-                    "bulk": True,
-                },
-            )
-            review_decisions = list(doc.get("review_decisions", []))
-            current_review_state = "classification_complete"
-            if review_required:
-                review_decisions, _ = append_review_decision(
-                    doc,
-                    run_id=run_doc["id"],
-                    decision_type="escalate_to_hitl",
-                    rationale="Bulk classification confidence fell below the configured auto-accept threshold.",
-                    resulting_state="awaiting_hitl",
-                )
-                current_review_state = "awaiting_hitl"
-            
-            await db.documents.update_one(
-                {"id": doc_id},
-                {"$set": {
-                    "ai_suggested_category": suggested_category,
-                    "category": suggested_category,
-                    "document_type": classification.get("document_type"),
-                    "classification_confidence": classification.get("confidence"),
-                    "classification_rationale": classification.get("rationale"),
-                    "is_academic": is_academic,
-                    "review_required": review_required,
-                    "current_state": "classified",
-                    "current_review_state": current_review_state,
-                    "processing_runs": processing_runs,
-                    "review_decisions": review_decisions,
-                    "latest_run_id": run_doc["id"],
-                    "audit_log": append_audit_event(
-                        doc,
-                        "bulk_categorize",
-                        {
-                            "category": suggested_category,
-                            "document_type": classification.get("document_type"),
-                            "confidence": classification.get("confidence"),
-                        },
-                    ),
-                }}
-            )
-            
-            results.append({
-                "document_id": doc_id,
-                "suggested_category": suggested_category,
-                "document_type": classification.get("document_type"),
-                "confidence": classification.get("confidence"),
-                "is_academic": is_academic,
-                "review_required": review_required,
-            })
-        except Exception as e:
-            results.append({"document_id": doc_id, "error": str(e)})
-    
+            results.append(await queue_document_job(document_id, ProcessingJobType.CLASSIFY, current_user))
+        except HTTPException as exc:
+            results.append({"document_id": document_id, "error": exc.detail, "status_code": exc.status_code})
     return {"results": results}
 
-@api_router.post("/documents/{doc_id}/summary")
+
+@api_router.post("/documents/{doc_id}/summary", status_code=202)
 async def generate_summary(
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Generate AI summary for a document"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-
-    text_result = get_document_text_for_processing(doc, max_pages=50)
-    text = text_result.get("text", "")
-    if not text or text_result.get("text_quality") != "usable":
-        raise no_text_http_exception(text_result, action="summarize")
-    
-    summary = await ai_generate_summary(text)
-    processing_runs, run_doc = append_processing_run(
-        doc,
-        "summary",
-        triggered_by="summary_endpoint",
-        status="completed",
-        details={"summary_length": len(summary)},
-    )
-    
-    await db.documents.update_one(
-        {"id": doc_id},
-        {
-            "$set": {
-                "summary": summary,
-                "current_state": "summarized",
-                "processing_runs": processing_runs,
-                "latest_run_id": run_doc["id"],
-                "audit_log": append_audit_event(doc, "summary", {"summary_length": len(summary)}),
-            }
-        }
-    )
-    
-    return {"document_id": doc_id, "summary": summary}
+    return await queue_document_job(doc_id, ProcessingJobType.SUMMARY, current_user)
 
 
-@api_router.post("/documents/{doc_id}/extract")
+@api_router.post("/documents/{doc_id}/extract", status_code=202)
 async def extract_fields(
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Extract machine-readable fields and control signals from a document."""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
+    return await queue_document_job(doc_id, ProcessingJobType.EXTRACT, current_user)
 
-    text_result = get_document_text_for_processing(doc, max_pages=50)
-    text = text_result.get("text", "")
-    if not text or text_result.get("text_quality") != "usable":
-        raise no_text_http_exception(text_result, action="extract structured fields from")
 
-    extraction = await ai_extract_fields(text)
-    fields = extraction.get("fields", {}) if isinstance(extraction.get("fields"), dict) else {}
-    controls = run_control_checks(fields)
-    review_required = bool(controls["missing_fields"] or controls["invalid_values"])
-    processing_runs, run_doc = append_processing_run(
-        doc,
-        "extraction",
-        triggered_by="extract_endpoint",
-        status="completed",
-        details={
-            "field_count": len(fields),
-            "missing_count": len(controls["missing_fields"]),
-            "invalid_count": len(controls["invalid_values"]),
-        },
-    )
-    review_decisions = list(doc.get("review_decisions", []))
-    current_review_state = "extraction_complete"
-    if review_required:
-        review_decisions, _ = append_review_decision(
-            doc,
-            run_id=run_doc["id"],
-            decision_type="escalate_to_hitl",
-            rationale="Control checks identified missing or invalid fields.",
-            resulting_state="awaiting_hitl",
-        )
-        current_review_state = "awaiting_hitl"
-    else:
-        review_decisions, _ = append_review_decision(
-            doc,
-            run_id=run_doc["id"],
-            decision_type="auto_accept",
-            rationale="Extraction passed configured control checks without requiring HITL.",
-            resulting_state="auto_approved",
-        )
-        current_review_state = "auto_approved"
-
-    compliance_note = (
-        "Contains potentially sensitive data; apply restricted access and masking where required."
-        if any(tag in text.lower() for tag in ["patient", "ssn", "iban", "account", "medical"]) else
-        "No obvious sensitive marker found; enforce standard retention and least-privilege access."
-    )
-
-    await db.documents.update_one(
-        {"id": doc_id},
-        {
-            "$set": {
-                "document_type": extraction.get("document_type") or doc.get("document_type"),
-                "extraction": extraction,
-                "control_checks": controls,
-                "review_required": review_required,
-                "compliance_note": compliance_note,
-                "current_state": "extracted",
-                "current_review_state": current_review_state,
-                "processing_runs": processing_runs,
-                "review_decisions": review_decisions,
-                "latest_run_id": run_doc["id"],
-                "audit_log": append_audit_event(
-                    doc,
-                    "extract",
-                    {
-                        "field_count": len(fields),
-                        "missing_count": len(controls["missing_fields"]),
-                        "invalid_count": len(controls["invalid_values"]),
-                    },
-                ),
-            }
-        },
-    )
-
-    return {
-        "document_id": doc_id,
-        "document_type": extraction.get("document_type"),
-        "data": extraction,
-        "controls": controls,
-        "compliance_note": compliance_note,
-        "recommended_next_actions": extraction.get("recommended_next_actions", []),
-        "review_required": review_required,
-    }
+@api_router.post("/documents/{doc_id}/citations", status_code=202)
+async def extract_citations(
+    doc_id: str,
+    current_user: Dict[str, Any] = Depends(require_operator_access),
+):
+    return await queue_document_job(doc_id, ProcessingJobType.CITATIONS, current_user)
 
 
 @api_router.post("/documents/{doc_id}/evidence-package")
 async def generate_evidence_package(
     doc_id: str,
     request: EvidencePackageRequest,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Build a spec-aligned evidence package for downstream governance ingestion."""
     evidence_record = await create_evidence_record(doc_id, request)
     evidence_record.pop("document_audit_log", None)
     return evidence_record
@@ -1736,15 +2672,13 @@ async def generate_evidence_package(
 async def handoff_to_compassai(
     doc_id: str,
     request: EvidenceHandoffRequest,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Generate an evidence package and hand it off to CompassAI."""
     if not COMPASSAI_INGEST_TOKEN:
         raise HTTPException(status_code=503, detail="COMPASSAI_INGEST_TOKEN is not configured on the server.")
 
     evidence_record = await create_evidence_record(doc_id, request)
     evidence_record.pop("document_audit_log", None)
-
     target_base_url = (request.compassai_base_url or COMPASSAI_BASE_URL).rstrip("/")
     response = await post_json(
         f"{target_base_url}/api/v1/evidence",
@@ -1759,13 +2693,23 @@ async def handoff_to_compassai(
         headers={"Authorization": f"Bearer {COMPASSAI_INGEST_TOKEN}"},
     )
 
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0}) or {}
+    document = await ensure_document_exists(doc_id)
     handoff_history, handoff_doc = append_handoff_history(
-        doc,
+        document,
         evidence_id=evidence_record["id"],
         target="compassai",
         target_url=f"{target_base_url}/api/v1/evidence",
         status_code=response["status_code"],
+    )
+    updated_audit = append_audit_event(
+        document,
+        "handoff_to_compassai",
+        {
+            "user_id": current_user["id"],
+            "target_url": f"{target_base_url}/api/v1/evidence",
+            "status_code": response["status_code"],
+            "evidence_id": evidence_record["id"],
+        },
     )
 
     await db.evidence_handoffs.insert_one(
@@ -1784,13 +2728,12 @@ async def handoff_to_compassai(
 
     await db.documents.update_one(
         {"id": doc_id},
-        {
-            "$set": {
-                "handoff_history": handoff_history,
-                "latest_handoff_id": handoff_doc["id"],
-                "current_state": "handed_off_to_compassai" if response["status_code"] < 400 else "handoff_failed",
-            }
-        },
+        {"$set": {
+            "handoff_history": handoff_history,
+            "latest_handoff_id": handoff_doc["id"],
+            "current_state": "handed_off_to_compassai" if response["status_code"] < 400 else "handoff_failed",
+            "audit_log": updated_audit,
+        }},
     )
 
     if response["status_code"] >= 400:
@@ -1809,43 +2752,6 @@ async def handoff_to_compassai(
         "compassai_response": response["body"],
     }
 
-@api_router.post("/documents/{doc_id}/citations")
-async def extract_citations(
-    doc_id: str,
-    _auth: bool = Depends(require_api_token),
-):
-    """Extract citations from a document"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-
-    text_result = get_document_text_for_processing(doc, max_pages=50)
-    text = text_result.get("text", "")
-    if not text or text_result.get("text_quality") != "usable":
-        raise no_text_http_exception(text_result, action="extract citations from")
-    
-    citations = await ai_extract_citations(text)
-    processing_runs, run_doc = append_processing_run(
-        doc,
-        "citation_extraction",
-        triggered_by="citation_endpoint",
-        status="completed",
-        details={"citation_count": len(citations)},
-    )
-    
-    await db.documents.update_one(
-        {"id": doc_id},
-        {
-            "$set": {
-                "citations": citations,
-                "current_state": "citations_extracted",
-                "processing_runs": processing_runs,
-                "latest_run_id": run_doc["id"],
-            }
-        }
-    )
-    
-    return {"document_id": doc_id, "citations": citations}
 
 @api_router.get("/documents")
 async def get_documents(
@@ -1853,11 +2759,9 @@ async def get_documents(
     search: Optional[str] = None,
     is_academic: Optional[bool] = None,
     reading_list_id: Optional[str] = None,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_document_read_access),
 ):
-    """Get all documents with optional filtering"""
-    query = {}
-    
+    query: Dict[str, Any] = {}
     if category:
         query["category"] = category
     if is_academic is not None:
@@ -1867,198 +2771,177 @@ async def get_documents(
     if search:
         query["$or"] = [
             {"original_filename": {"$regex": search, "$options": "i"}},
-            {"text_preview": {"$regex": search, "$options": "i"}}
+            {"text_preview": {"$regex": search, "$options": "i"}},
         ]
-    
-    docs = await db.documents.find(query, {"_id": 0}).sort("uploaded_at", -1).to_list(500)
-    
-    # Convert datetime strings back
-    for doc in docs:
-        if isinstance(doc.get('uploaded_at'), str):
-            doc['uploaded_at'] = datetime.fromisoformat(doc['uploaded_at'])
-    
-    return {"documents": docs}
+
+    documents = await db.documents.find(query, {"_id": 0}).sort("uploaded_at", -1).to_list(500)
+    return {"documents": documents}
+
 
 @api_router.get("/documents/{doc_id}")
 async def get_document(
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_document_read_access),
 ):
-    """Get a single document"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-    
-    if isinstance(doc.get('uploaded_at'), str):
-        doc['uploaded_at'] = datetime.fromisoformat(doc['uploaded_at'])
-    
-    return doc
+    return await ensure_document_exists(doc_id)
+
 
 @api_router.get("/documents/{doc_id}/download")
 async def download_document(
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_document_read_access),
 ):
-    """Download a document file"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-    
-    file_path = UPLOAD_DIR / doc['filename']
+    document = await ensure_document_exists(doc_id)
+    file_path = UPLOAD_DIR / document["filename"]
     if not file_path.exists():
         raise HTTPException(status_code=404, detail="File not found on server")
-    
+
     return FileResponse(
         path=str(file_path),
-        filename=doc['original_filename'],
-        media_type='application/octet-stream'
+        filename=document["original_filename"],
+        media_type="application/octet-stream",
     )
+
 
 @api_router.patch("/documents/{doc_id}")
 async def update_document(
     doc_id: str,
     update: DocumentUpdate,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Update document metadata"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-    
-    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
-    
+    document = await ensure_document_exists(doc_id)
+    update_data = {key: value for key, value in update.model_dump().items() if value is not None}
+    if "category" in update_data:
+        update_data["is_academic"] = update_data["category"] in {"Academic Papers", "My Writings & Publications"}
+
     if update_data:
-        # Update is_academic based on category
-        if 'category' in update_data:
-            update_data['is_academic'] = update_data['category'] in ["Academic Papers", "My Writings & Publications"]
-        
+        update_data["audit_log"] = append_audit_event(
+            document,
+            "document_update",
+            {
+                "user_id": current_user["id"],
+                "fields": sorted(update_data.keys()),
+            },
+        )
         await db.documents.update_one({"id": doc_id}, {"$set": update_data})
-    
-    updated_doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    return updated_doc
+
+    return await ensure_document_exists(doc_id)
+
 
 @api_router.delete("/documents/{doc_id}")
 async def delete_document(
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Delete a document"""
-    doc = await db.documents.find_one({"id": doc_id}, {"_id": 0})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-    
-    # Delete file
-    file_path = UPLOAD_DIR / doc['filename']
+    document = await ensure_document_exists(doc_id)
+    file_path = UPLOAD_DIR / document["filename"]
     if file_path.exists():
         file_path.unlink()
-    
-    # Delete from database
+
+    await db.deleted_documents.insert_one(
+        {
+            "document_id": doc_id,
+            "deleted_at": iso_now(),
+            "deleted_by_user_id": current_user["id"],
+            "document": document,
+        }
+    )
     await db.documents.delete_one({"id": doc_id})
-    
     return {"message": "Document deleted", "id": doc_id}
 
-# Reading Lists
+
 @api_router.post("/reading-lists")
 async def create_reading_list(
     data: ReadingListCreate,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Create a new reading list"""
-    reading_list = ReadingList(
-        name=data.name,
-        description=data.description
-    )
-    
-    doc = reading_list.model_dump()
-    doc['created_at'] = doc['created_at'].isoformat()
-    await db.reading_lists.insert_one(doc)
-    
-    return reading_list.model_dump()
+    reading_list = ReadingList(name=data.name, description=data.description)
+    reading_list_doc = reading_list.model_dump()
+    reading_list_doc["created_at"] = reading_list_doc["created_at"].isoformat()
+    await db.reading_lists.insert_one(reading_list_doc)
+    return reading_list_doc
+
 
 @api_router.get("/reading-lists")
-async def get_reading_lists(
-    _auth: bool = Depends(require_api_token),
-):
-    """Get all reading lists"""
-    lists = await db.reading_lists.find({}, {"_id": 0}).to_list(100)
-    
-    # Get document counts for each list
-    for lst in lists:
-        count = await db.documents.count_documents({"reading_list_id": lst["id"]})
-        lst["document_count"] = count
-    
-    return {"reading_lists": lists}
+async def get_reading_lists(_current_user: Dict[str, Any] = Depends(require_document_read_access)):
+    reading_lists = await db.reading_lists.find({}, {"_id": 0}).to_list(100)
+    for reading_list in reading_lists:
+        reading_list["document_count"] = await db.documents.count_documents({"reading_list_id": reading_list["id"]})
+    return {"reading_lists": reading_lists}
+
 
 @api_router.get("/reading-lists/{list_id}")
 async def get_reading_list(
     list_id: str,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_document_read_access),
 ):
-    """Get a reading list with its documents"""
-    lst = await db.reading_lists.find_one({"id": list_id}, {"_id": 0})
-    if not lst:
+    reading_list = await db.reading_lists.find_one({"id": list_id}, {"_id": 0})
+    if not reading_list:
         raise HTTPException(status_code=404, detail="Reading list not found")
-    
-    docs = await db.documents.find({"reading_list_id": list_id}, {"_id": 0}).to_list(100)
-    lst["documents"] = docs
-    
-    return lst
+
+    reading_list["documents"] = await db.documents.find({"reading_list_id": list_id}, {"_id": 0}).to_list(100)
+    return reading_list
+
 
 @api_router.post("/reading-lists/{list_id}/documents/{doc_id}")
 async def add_to_reading_list(
     list_id: str,
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Add a document to a reading list"""
-    lst = await db.reading_lists.find_one({"id": list_id})
-    if not lst:
+    reading_list = await db.reading_lists.find_one({"id": list_id}, {"_id": 0})
+    if not reading_list:
         raise HTTPException(status_code=404, detail="Reading list not found")
-    
-    doc = await db.documents.find_one({"id": doc_id})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
-    
+
+    document = await ensure_document_exists(doc_id)
     await db.documents.update_one(
         {"id": doc_id},
-        {"$set": {"reading_list_id": list_id}}
+        {"$set": {
+            "reading_list_id": list_id,
+            "audit_log": append_audit_event(
+                document,
+                "reading_list_add",
+                {"list_id": list_id, "user_id": current_user["id"]},
+            ),
+        }},
     )
-    
     return {"message": "Document added to reading list"}
+
 
 @api_router.delete("/reading-lists/{list_id}/documents/{doc_id}")
 async def remove_from_reading_list(
     list_id: str,
     doc_id: str,
-    _auth: bool = Depends(require_api_token),
+    current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Remove a document from a reading list"""
+    document = await ensure_document_exists(doc_id)
     await db.documents.update_one(
         {"id": doc_id, "reading_list_id": list_id},
-        {"$set": {"reading_list_id": None}}
+        {"$set": {
+            "reading_list_id": None,
+            "audit_log": append_audit_event(
+                document,
+                "reading_list_remove",
+                {"list_id": list_id, "user_id": current_user["id"]},
+            ),
+        }},
     )
-    
     return {"message": "Document removed from reading list"}
+
 
 @api_router.delete("/reading-lists/{list_id}")
 async def delete_reading_list(
     list_id: str,
-    _auth: bool = Depends(require_api_token),
+    _current_user: Dict[str, Any] = Depends(require_operator_access),
 ):
-    """Delete a reading list"""
-    lst = await db.reading_lists.find_one({"id": list_id})
-    if not lst:
+    reading_list = await db.reading_lists.find_one({"id": list_id}, {"_id": 0})
+    if not reading_list:
         raise HTTPException(status_code=404, detail="Reading list not found")
-    
-    # Remove reading list reference from documents
-    await db.documents.update_many(
-        {"reading_list_id": list_id},
-        {"$set": {"reading_list_id": None}}
-    )
-    
+
+    await db.documents.update_many({"reading_list_id": list_id}, {"$set": {"reading_list_id": None}})
     await db.reading_lists.delete_one({"id": list_id})
-    
     return {"message": "Reading list deleted"}
+
 
 # Include the router in the main app
 app.include_router(api_router)
@@ -2066,7 +2949,7 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -2074,15 +2957,31 @@ app.add_middleware(
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
+
 @asynccontextmanager
 async def aurorai_lifespan(_app: FastAPI):
+    stop_event = asyncio.Event()
+    worker_task: Optional[asyncio.Task[Any]] = None
     try:
+        await seed_bootstrap_users()
+        await backfill_document_schema()
+        enforce_required_runtime()
+        worker_task = asyncio.create_task(processing_job_worker(stop_event))
+        _app.state.processing_stop_event = stop_event
+        _app.state.processing_worker_task = worker_task
         yield
     finally:
+        stop_event.set()
+        if worker_task is not None:
+            worker_task.cancel()
+            try:
+                await worker_task
+            except asyncio.CancelledError:
+                pass
         client.close()
 
 

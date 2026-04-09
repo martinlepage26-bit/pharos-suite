@@ -4,11 +4,16 @@ Backend API tests for PHAROS boundary and bookings behavior.
 Coverage in this file:
 - Publications: explicit fail-closed boundary assertions
 - Bookings: GET, POST, PUT (status), DELETE, booked-slots
+
+INTEGRATION TESTS — require a live server at REACT_APP_BACKEND_URL.
+Not run in CI by default. Run with: pytest -m integration
 """
 import pytest
 import requests
 import os
 import uuid
+
+pytestmark = pytest.mark.integration
 
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 

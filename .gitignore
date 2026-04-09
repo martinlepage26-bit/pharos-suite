@@ -1,6 +1,8 @@
 # Secrets
 **/.env
 **/.env.*
+**/.dev.vars
+**/.dev.vars.*
 *.pem
 *.key
 *.pfx
@@ -43,7 +45,8 @@ venv/
 
 # Backup and package residue
 *.bak_*
-artifact.zip
-pharos-backup.zip
+*.zip
 
-docs/source-packets/archives/SEALED CARD MASTER MARKDOWN-20260325T091824Z-1-001.zip
+# Exception: intentional template/example env files
+!**/.env.example
+!**/.env.template

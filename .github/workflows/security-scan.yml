@@ -1,0 +1,52 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main, wip/**]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 8 * * 1'  # Weekly Monday 08:00 UTC
+
+jobs:
+  python-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install scanning tools
+        run: pip install bandit pip-audit
+
+      - name: Bandit - static analysis (backend)
+        run: bandit -r backend/ -c pyproject.toml --severity-level medium -f txt || true
+
+      - name: Bandit - static analysis (CompassAI)
+        run: bandit -r compassai/ -c pyproject.toml --severity-level medium -f txt || true
+
+      - name: Bandit - static analysis (AurorAI)
+        run: bandit -r aurorai/ -c pyproject.toml --severity-level medium -f txt || true
+
+      - name: pip-audit - dependency vulnerabilities
+        run: |
+          if [ -f backend/requirements.txt ]; then
+            pip-audit -r backend/requirements.txt --desc || true
+          fi
+
+  frontend-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: npm audit (frontend)
+        working-directory: frontend
+        run: |
+          npm install --package-lock-only 2>/dev/null || true
+          npm audit --production || true
