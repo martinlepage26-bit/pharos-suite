@@ -26,6 +26,7 @@ import {
   requestModuleJson,
   saveModuleConfig
 } from '../lib/modulePortalApi';
+import '../portalAurorai.css';
 
 const MODULE_KEY = 'aurorai';
 
